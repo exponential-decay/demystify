@@ -71,6 +71,20 @@ def countExtensionPUIDS(c):
 	
 	return count
 
+def countExtensions(c):
+	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File'"
+	c.execute(countfiles)
+	count = c.fetchone()[0]
+	print "Number of unique extensions: " + str(count)
+	
+	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File'"
+	c.execute(countfiles)
+	test = c.fetchall()
+	for t in test:
+		print t[0]
+
+	return count
+
 def queryDB(c):
 	countFilesQuery(c)
 	countFoldersQuery(c)
@@ -79,6 +93,7 @@ def queryDB(c):
 	countExtensionIDOnly(c)
 	countSignaturePUIDS(c)
 	countExtensionPUIDS(c)
+	countExtensions(c)
 
 def droidDBSetup(droidcsv):
 
