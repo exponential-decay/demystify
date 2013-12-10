@@ -1,3 +1,4 @@
+from __future__ import division
 import argparse
 import sys
 import sqlite3
@@ -6,37 +7,47 @@ import csv
 def countFilesQuery(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File'"
 	c.execute(countfiles)
-	count = c.fetchone()
-	print "Number of Files in collection: " + str(count[0])
+	count = c.fetchone()[0]
+	print "Number of Files in collection: " + str(count)
+	return count
 
 def countFoldersQuery(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'"
 	c.execute(countfiles)
 	count = c.fetchone()
 	print "Number of Folders in collection: " + str(count[0])
+	return count
 
-def countUnidentifiedQuery(c):
+def countTotalUnidentifiedQuery(c):
+	allcount = countFilesQuery(c)
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND (METHOD='no value' OR METHOD='Extension')"
 	c.execute(countfiles)
-	count = c.fetchone()
-	print "Number of Unidentified Files in collection (ext only and zero ID method): " + str(count[0])
+	count = c.fetchone()[0]
+	print "Number of Unidentified Files in collection (ext only and zero ID method): " + str(count)
+	
+	percentage = (count/allcount)*100
+	print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
+	return count
+	
 
 def countZeroIDMethod(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND METHOD='no value'"
 	c.execute(countfiles)
-	count = c.fetchone()
-	print "Number of Unidentified files (zero ID method): " + str(count[0])
+	count = c.fetchone()[0]
+	print "Number of Unidentified files (zero ID method): " + str(count)
+	return count
 
 def countExtensionIDOnly(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND METHOD='Extension'"
 	c.execute(countfiles)
-	count = c.fetchone()
-	print "Number of Extension only identifications: " + str(count[0])
+	count = c.fetchone()[0]
+	print "Number of Extension only identifications: " + str(count)
+	return count
 
 def queryDB(c):
 	countFilesQuery(c)
 	countFoldersQuery(c)
-	countUnidentifiedQuery(c)
+	countTotalUnidentifiedQuery(c)
 	countZeroIDMethod(c)
 	countExtensionIDOnly(c)
 
