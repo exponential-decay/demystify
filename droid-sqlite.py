@@ -29,7 +29,6 @@ def countTotalUnidentifiedQuery(c):
 	print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
 	return count
 	
-
 def countZeroIDMethod(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND METHOD='no value'"
 	c.execute(countfiles)
@@ -44,12 +43,27 @@ def countExtensionIDOnly(c):
 	print "Number of Extension only identifications: " + str(count)
 	return count
 
+def countPUIDS(c):
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND METHOD='Signature'"
+	c.execute(countfiles)
+	count = c.fetchone()[0]
+	print "Number of unique PUIDs: " + str(count)
+	
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND METHOD='Signature'"
+	c.execute(countfiles)
+	test = c.fetchall()
+	for t in test:
+		print t[0]
+	
+	return count
+
 def queryDB(c):
 	countFilesQuery(c)
 	countFoldersQuery(c)
 	countTotalUnidentifiedQuery(c)
 	countZeroIDMethod(c)
 	countExtensionIDOnly(c)
+	countPUIDS(c)
 
 def droidDBSetup(droidcsv):
 
