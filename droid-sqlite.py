@@ -43,13 +43,27 @@ def countExtensionIDOnly(c):
 	print "Number of Extension only identifications: " + str(count)
 	return count
 
-def countPUIDS(c):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND METHOD='Signature'"
+def countSignaturePUIDS(c):
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
-	print "Number of unique PUIDs: " + str(count)
+	print "Number of unique 'signature' PUIDs: " + str(count)
 	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND METHOD='Signature'"
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND (METHOD='Signature' OR METHOD='Container')"
+	c.execute(countfiles)
+	test = c.fetchall()
+	for t in test:
+		print t[0]
+	
+	return count
+	
+def countExtensionPUIDS(c):
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND METHOD='Extension'"
+	c.execute(countfiles)
+	count = c.fetchone()[0]
+	print "Number of unique 'extension' PUIDs: " + str(count)
+	
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND METHOD='Extension'"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
@@ -63,7 +77,8 @@ def queryDB(c):
 	countTotalUnidentifiedQuery(c)
 	countZeroIDMethod(c)
 	countExtensionIDOnly(c)
-	countPUIDS(c)
+	countSignaturePUIDS(c)
+	countExtensionPUIDS(c)
 
 def droidDBSetup(droidcsv):
 
