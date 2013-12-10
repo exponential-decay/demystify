@@ -115,7 +115,7 @@ def droidDBSetup(droidcsv):
 	c.execute('''CREATE TABLE droid
 					 (ID, PARENT_ID, URI, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, MIME_TYPE, FORMAT_NAME, FORMAT_VERSION)''')
 
-	with open('droid-report.csv', 'rb') as csvfile:
+	with open(droidcsv, 'rb') as csvfile:
 		droidreader = csv.reader(csvfile)
 		for row in droidreader:
 			rowstr = ""
