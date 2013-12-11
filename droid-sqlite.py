@@ -80,7 +80,7 @@ def countExtensions(c):
 	count = c.fetchone()[0]
 	print "Number of unique extensions: " + str(count)
 	
-	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='COntainer'"
+	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='Container'"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
