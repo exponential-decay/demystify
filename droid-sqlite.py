@@ -5,7 +5,7 @@ import sqlite3
 import csv
 
 def countFilesQuery(c):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File'"
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Files in collection: " + str(count)
@@ -20,36 +20,39 @@ def countFoldersQuery(c):
 
 def countTotalUnidentifiedQuery(c):
 	allcount = countFilesQuery(c)
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND (METHOD='no value' OR METHOD='Extension')"
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='no value' OR METHOD='Extension')"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Unidentified Files in collection (ext only and zero ID method): " + str(count)
 	
-	percentage = (count/allcount)*100
-	print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
+	if allcount > 0:
+		percentage = (count/allcount)*100
+		print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
+	else:
+		print "Zero files" 
 	return count
 	
 def countZeroIDMethod(c):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND METHOD='no value'"
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Unidentified files (zero ID method): " + str(count)
 	return count
 
 def countExtensionIDOnly(c):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' AND METHOD='Extension'"
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Extension only identifications: " + str(count)
 	return count
 
 def countSignaturePUIDS(c):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND (METHOD='Signature' OR METHOD='Container')"
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of unique 'signature' PUIDs: " + str(count)
 	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND (METHOD='Signature' OR METHOD='Container')"
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
@@ -58,12 +61,12 @@ def countSignaturePUIDS(c):
 	return count
 	
 def countExtensionPUIDS(c):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' AND METHOD='Extension'"
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of unique 'extension' PUIDs: " + str(count)
 	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' AND METHOD='Extension'"
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
@@ -72,12 +75,12 @@ def countExtensionPUIDS(c):
 	return count
 
 def countExtensions(c):
-	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File'"
+	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' or TYPE='Container'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of unique extensions: " + str(count)
 	
-	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File'"
+	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='COntainer'"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
