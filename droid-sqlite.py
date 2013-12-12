@@ -3,6 +3,7 @@ import argparse
 import sys
 import sqlite3
 import csv
+from urlparse import urlparse
 
 def countFilesQuery(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container'"
@@ -114,21 +115,34 @@ def droidDBSetup(droidcsv):
 	if c.fetchone() is not None:
 		c.execute("DROP table droid")	# DROP just in case
 
+	# DROID Table: Standard Columns
+	# ID, PARENT_ID, URI, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, 
+	# EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, 
+	# MIME_TYPE, FORMAT_NAME, FORMAT_VERSION
+
 	# Create table
 	c.execute('''CREATE TABLE droid
-					 (ID, PARENT_ID, URI, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, MIME_TYPE, FORMAT_NAME, FORMAT_VERSION)''')
+					 (ID, PARENT_ID, URI, URI_SCHEME, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, MIME_TYPE, FORMAT_NAME, FORMAT_VERSION)''')
+
+	URI_COL = 2
 
 	with open(droidcsv, 'rb') as csvfile:
 		droidreader = csv.reader(csvfile)
 		for row in droidreader:
 			rowstr = ""
-			if droidreader.line_num != 1:					# ignore headers
+			if droidreader.line_num != 1:								# ignore column headers
+			
 				for i,item in enumerate(row[0:DROID_COLUMNS]):
+									
 					if item == "":
 						rowstr = rowstr + "'no value'"
 					else:
 						rowstr = rowstr + "'" + item + "'"
-					
+				
+					if i == URI_COL:
+						url = item
+						rowstr = rowstr + ",'" + urlparse(url).scheme + "'"
+	
 					if i < DROID_COLUMNS-1:
 						rowstr = rowstr + ","
 				
@@ -142,11 +156,7 @@ def droidDBSetup(droidcsv):
 
 	### TEMPORARY READ FUNCTIONS ###
 
-
 	queryDB(c)
-
-
-
 
 	### TEMPORARY READ FUNCTIONS ###
 
