@@ -18,6 +18,13 @@ def countContainerObjects(c):
 	count = c.fetchone()[0]
 	print "Number of Container objects in collection: " + str(count)
 	return count
+	
+def countFilesInContainerObjects(c):
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME='zip' AND (TYPE='File' OR TYPE='Container')"
+	c.execute(countfiles)
+	count = c.fetchone()[0]
+	print "Number of Files inside container objects: " + str(count)
+	return count
 
 def countFoldersQuery(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'"
@@ -99,6 +106,7 @@ def countExtensions(c):
 def queryDB(c):
 	countFilesQuery(c)
 	countContainerObjects(c)
+	countFilesInContainerObjects(c)
 	countFoldersQuery(c)
 	countTotalUnidentifiedQuery(c)
 	countZeroIDMethod(c)
