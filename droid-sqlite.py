@@ -127,39 +127,50 @@ def countExtensions(c):
 	return count
 
 def identifiedPUIDFrequency(c):
-	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL"
+	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
 	c.execute(test)
 	test = c.fetchall()
 	return test
+
+def allExtensionsFrequency(c):
+	test = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
+	c.execute(test)
+	test = c.fetchall()
+	return test
+
+def listTopTwenty(freqTuple, matchTotal, total, text):
+	x = 0
+	index = "null"
+	for i,t in enumerate(freqTuple):
+		if t[1] <= matchTotal:
+			x = x + t[1]
+			if x >= matchTotal:
+				index = i
+				break
+	
+	if index is not "null":
+		print 
+		print "Top 20% (out of " + str(total) + " ) " + text + ": "
+		for i in range(index):
+			print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
+	
+	else:
+		print "Format frequency: "
+		for t in test:
+			print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 
 def paretoListings(c):
 	# duplication in this function can potentially be removed through
 	# effective use of classes...
 	
-	totalidentifiedfiles = countIdentifiedQuery(c)
+	puidTotal = countIdentifiedQuery(c)
+	puidPareto = int(puidTotal * 0.80)
 	
-	pareto = int(totalidentifiedfiles * 0.80)
-	
-	test = identifiedPUIDFrequency(c)
+	extTotal = countExtensions(c)
+	extPareto = int(extTotal * 0.80)
 
-	x = 0
-	index = "null"
-	for i,t in enumerate(test):
-		x = x + t[1]
-		if x >= pareto:
-			index = i
-			break
-	
-	if index is not "null":
-		print 
-		print "Top 20% identified file formats: "
-		for i in range(index):
-			print test[i][0] + "       COUNT: " + str(test[i][1])
-	
-	else:
-		print "Format frequency: "
-		for t in test:
-			print test[i][0] + "       COUNT: " + str(test[i][1])
+	listTopTwenty(identifiedPUIDFrequency(c), puidPareto, puidTotal, "identified PUIDS")
+	listTopTwenty(allExtensionsFrequency(c), puidPareto, extTotal, "format extensions")
 	
 
 def queryDB(c):
