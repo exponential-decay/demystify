@@ -83,6 +83,7 @@ def countExtensionIDOnly(c):
 	print "Number of Extension only identifications: " + str(count)
 	return count
 
+# PUIDS for files identified by DROID using binary matching techniques
 def countSignaturePUIDS(c):
 	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
@@ -125,11 +126,24 @@ def countExtensions(c):
 
 	return count
 
+def identifiedPUIDFrequency(c):
+	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID"
+	c.execute(test)
+	test = c.fetchall()
+	for t in test:
+		print "PUID: " + t[0] + "       Count: " + str(t[1])
+
 def paretoListings(c):
 	# duplication in this function can potentially be removed through
 	# effective use of classes...
 	
-	totalIdentifiedfiles = countIdentifiedQuery(c)
+	totalidentifiedfiles = countIdentifiedQuery(c)
+	
+	print int(totalidentifiedfiles * 0.80)
+	
+	identifiedPUIDFrequency(c)
+
+	
 
 def queryDB(c):
 	countFilesQuery(c)
