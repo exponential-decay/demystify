@@ -20,7 +20,7 @@ def countContainerObjects(c):
 	return count
 	
 def countFilesInContainerObjects(c):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME='zip' AND (TYPE='File' OR TYPE='Container')"
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Files inside container objects: " + str(count)
