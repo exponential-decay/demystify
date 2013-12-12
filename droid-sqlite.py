@@ -41,6 +41,20 @@ def countFoldersQuery(c):
 	print "Number of Folders in collection: " + str(count[0])
 	return count
 
+def countIdentifiedQuery(c):
+	allcount = countFilesQuery(c)
+	countfiles = "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'"
+	c.execute(countfiles)
+	count = c.fetchone()[0]
+	print "Number of Identified Files in collectionxx: " + str(count)
+	
+	if allcount > 0:
+		percentage = (count/allcount)*100
+		print "Percentage of the collection identified: " + '%.1f' % round(percentage, 1) + "%"
+	else:
+		print "Zero files" 
+	return count
+
 def countTotalUnidentifiedQuery(c):
 	allcount = countFilesQuery(c)
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='no value' OR METHOD='Extension')"
@@ -98,7 +112,7 @@ def countExtensionPUIDS(c):
 	return count
 
 def countExtensions(c):
-	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' or TYPE='Container'"
+	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of unique extensions: " + str(count)
@@ -111,6 +125,12 @@ def countExtensions(c):
 
 	return count
 
+def paretoListings(c):
+	# duplication in this function can potentially be removed through
+	# effective use of classes...
+	
+	totalIdentifiedfiles = countIdentifiedQuery(c)
+
 def queryDB(c):
 	countFilesQuery(c)
 	countContainerObjects(c)
@@ -122,6 +142,7 @@ def queryDB(c):
 	countSignaturePUIDS(c)
 	countExtensionPUIDS(c)
 	countExtensions(c)
+	paretoListings(c)
 
 def droidDBSetup(droidcsv):
 
