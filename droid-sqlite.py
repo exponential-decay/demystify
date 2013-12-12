@@ -12,11 +12,19 @@ def countFilesQuery(c):
 	print "Number of Files in collection: " + str(count)
 	return count
 
+# Container objects known by DROID...
 def countContainerObjects(c):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of Container objects in collection: " + str(count)
+	
+	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='Container'"
+	c.execute(countfiles)
+	test = c.fetchall()
+	for t in test:
+		print t[0]
+	
 	return count
 	
 def countFilesInContainerObjects(c):
