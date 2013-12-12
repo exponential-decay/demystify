@@ -85,12 +85,12 @@ def countExtensionIDOnly(c):
 
 # PUIDS for files identified by DROID using binary matching techniques
 def countSignaturePUIDS(c):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container')"
+	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
 	count = c.fetchone()[0]
 	print "Number of unique 'signature' PUIDs: " + str(count)
 	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container')"
+	countfiles = "SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
 	c.execute(countfiles)
 	test = c.fetchall()
 	for t in test:
@@ -127,7 +127,7 @@ def countExtensions(c):
 	return count
 
 def identifiedPUIDFrequency(c):
-	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID"
+	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL"
 	c.execute(test)
 	test = c.fetchall()
 	for t in test:
