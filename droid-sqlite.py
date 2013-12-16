@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import division
 import argparse
 import sys
 import sqlite3
 import csv
+import re
 from urlparse import urlparse
 
 def countFilesQuery(c):
@@ -186,6 +189,41 @@ def queryDB(c):
 	countExtensions(c)
 	paretoListings(c)
 
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)
+
+def detect_invalid_characters(s):
+	#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+	
+	#CON|PRN|AUX|NUL
+	msdn_three_files = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"
+		
+	#COM1-COM9 | LPT1-LPT9
+	msdn_no_files = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"
+	
+	regexes = [re.compile(msdn_three_files, re.IGNORECASE), \
+				re.compile(msdn_no_files, re.IGNORECASE)]	
+	
+	#for unit tests
+	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ó', 'é', 'ö', '-=_|\"']
+	
+	for r in regexes:
+		for s in test_strings:
+			results_tuples = re.findall(r, s)
+			if results_tuples:
+				for pattern_tuple in results_tuples:
+					print pattern_tuple
+					#disc_string = ""
+					#for tuple_part in patt_tuple:
+					#	disc_string = disc_string + "" + tuple_part
+					#print disc_string
+			else:
+				print "No regex matches"
+
+
+	for s in test_strings:
+		print is_ascii(s)
+
 def droidDBSetup(droidcsv):
 
 	DROID_COLUMNS = 18
@@ -243,7 +281,10 @@ def droidDBSetup(droidcsv):
 
 	### TEMPORARY READ FUNCTIONS ###
 
-	queryDB(c)
+	#queryDB(c)
+
+	detect_invalid_characters("test")
+
 
 	### TEMPORARY READ FUNCTIONS ###
 
