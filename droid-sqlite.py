@@ -195,34 +195,38 @@ def is_ascii(s):
 def detect_invalid_characters(s):
 	#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 	
+	#Strings for unit tests
+	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']
+	
+	# First test, all ASCII characters?
+	for s in test_strings:
+		if not is_ascii(s):
+			print "We have some characters outside of ASCII range: " + s
+	
+	#regex strings...
+	
 	#CON|PRN|AUX|NUL
 	msdn_three_files = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"
 		
 	#COM1-COM9 | LPT1-LPT9
 	msdn_no_files = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"
 	
-	regexes = [re.compile(msdn_three_files, re.IGNORECASE), \
-				re.compile(msdn_no_files, re.IGNORECASE)]	
+	#<, >, :, ", /, \, ?, *, |, \x00-\x1f
+	non_recommended_chars = '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)'
 	
-	#for unit tests
-	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', '-=_|\"']
+	characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
+	non_num_filename_regex = re.compile(msdn_three_files, re.IGNORECASE)
+	num_filename_regex = re.compile(msdn_no_files, re.IGNORECASE)
+		
+	for s in test_strings:	
+		char_tuples = re.findall(characters_regex, s)
+		nonnum_tuples = re.findall(non_num_filename_regex, s)
+		num_tuples = re.findall(num_filename_regex, s)
 	
-	for r in regexes:
-		for s in test_strings:
-			results_tuples = re.findall(r, s)
-			if results_tuples:
-				for pattern_tuple in results_tuples:
-					print pattern_tuple
-					#disc_string = ""
-					#for tuple_part in patt_tuple:
-					#	disc_string = disc_string + "" + tuple_part
-					#print disc_string
-			else:
-				print "No regex matches"
-
-
-	for s in test_strings:
-		print is_ascii(s)
+		if char_tuples:
+			print "got some bad characters: " + s
+		if nonnum_tuples or num_tuples:
+			print "Got some bad filenames: " + s
 
 def droidDBSetup(droidcsv):
 
