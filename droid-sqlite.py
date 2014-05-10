@@ -285,7 +285,7 @@ def droidDBSetup(droidcsv):
 
 	### TEMPORARY READ FUNCTIONS ###
 
-	#queryDB(c)
+	queryDB(c)
 
 	detect_invalid_characters("test")
 
