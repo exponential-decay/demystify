@@ -6,6 +6,7 @@ import sys
 import sqlite3
 import csv
 import re
+import droid-2-sqlite
 from urlparse import urlparse
 
 def countFilesQuery(c):
@@ -229,73 +230,7 @@ def detect_invalid_characters(s):
 			print "Got some bad filenames: " + s
 
 def droidDBSetup(droidcsv):
-
-	DROID_COLUMNS = 18
-
-	print sqlite3.version
-	
-	conn = sqlite3.connect(droidcsv.replace(".csv", "") + ".db")
-	
-	c = conn.cursor()
-
-	c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='droid';")
-
-	# Can't DROP something that doesn't exist...
-	if c.fetchone() is not None:
-		c.execute("DROP table droid")	# DROP just in case
-
-	# DROID Table: Standard Columns
-	# ID, PARENT_ID, URI, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, 
-	# EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, 
-	# MIME_TYPE, FORMAT_NAME, FORMAT_VERSION
-
-	# Create table
-	c.execute('''CREATE TABLE droid
-					 (ID, PARENT_ID, URI, URI_SCHEME, FILE_PATH, NAME, METHOD, STATUS, SIZE, TYPE, EXT, LAST_MODIFIED, EXTENSION_MISMATCH, MD5_HASH, FORMAT_COUNT, PUID, MIME_TYPE, FORMAT_NAME, FORMAT_VERSION)''')
-
-	URI_COL = 2
-
-	with open(droidcsv, 'rb') as csvfile:
-		droidreader = csv.reader(csvfile)
-		for row in droidreader:
-			rowstr = ""
-			if droidreader.line_num != 1:								# ignore column headers
-			
-				for i,item in enumerate(row[0:DROID_COLUMNS]):
-									
-					if item == "":
-						rowstr = rowstr + "'no value'"
-					else:
-						rowstr = rowstr + "'" + item + "'"
-				
-					if i == URI_COL:
-						url = item
-						rowstr = rowstr + ",'" + urlparse(url).scheme + "'"
-	
-					if i < DROID_COLUMNS-1:
-						rowstr = rowstr + ","
-				
-				#test = "INSERT INTO stocks VALUES (" + rowstr + ")"
-				#print test
-				
-				c.execute("INSERT INTO droid VALUES (" + rowstr + ")")
-
-	# Save (commit) the changes
-	conn.commit()
-
-	### TEMPORARY READ FUNCTIONS ###
-
-	queryDB(c)
-
-	detect_invalid_characters("test")
-
-
-	### TEMPORARY READ FUNCTIONS ###
-
-
-	# We can also close the connection if we are done with it.
-	# Just be sure any changes have been committed or they will be lost.
-	conn.close()
+	droid-2-sqlite.handleDROIDCSV(droidcsv)
 
 def handleDROIDCSV(droidcsv):
 	droidDBSetup(droidcsv)
@@ -305,11 +240,9 @@ def main():
 	#	Usage: 	--csv [jp2file]
 
 	#	Handle command line arguments for the script
-	parser = argparse.ArgumentParser(description='Place DROID profiles into a SQLite DB')
-	parser.add_argument('--csv', help='Optional: Single DROID CSV to read.')
-	
-	#parser.add_argument('--pro', help='Optional: XML profile to validate against.', default=False)
-	#parser.add_argument('--dif', help='Optional: Generate diff in errorlog if validation fails.', default=False)
+	parser = argparse.ArgumentParser(description='Analyse DROID results stored in a SQLite DB')
+	parser.add_argument('--csv', help='Optional: Single DROID CSV to read.', default=False)
+	parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
 
 	if len(sys.argv)==1:
 		parser.print_help()
