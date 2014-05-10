@@ -5,7 +5,6 @@ import argparse
 import sys
 import sqlite3
 import csv
-import re
 import hashlib
 import os
 import time
