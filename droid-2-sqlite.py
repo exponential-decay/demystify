@@ -13,6 +13,8 @@ from urlparse import urlparse
 class DROIDLoader:
 
 	csvcolumncount = 0
+	moduleversion = sqlite3.version
+	sqliteversion = sqlite3.sqlite_version
 
 	def hashCSV(self, droidcsv):
 		#http://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python
@@ -36,7 +38,7 @@ class DROIDLoader:
 		# turn csv headers list into a csv string
 		# wrap sql create table query
 
-		csvcolumncount = (csvcolumnheaders)
+		self.csvcolumncount = len(csvcolumnheaders)
 		
 		columns = ""
 		for header in csvcolumnheaders:
