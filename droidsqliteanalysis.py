@@ -6,7 +6,7 @@ import sys
 import sqlite3
 import csv
 import re
-import droid-2-sqlite
+import droid2sqlite
 from urlparse import urlparse
 
 def countFilesQuery(c):
@@ -230,7 +230,7 @@ def detect_invalid_characters(s):
 			print "Got some bad filenames: " + s
 
 def droidDBSetup(droidcsv):
-	droid-2-sqlite.handleDROIDCSV(droidcsv)
+	droid2sqlite.handleDROIDCSV(droidcsv)
 
 def handleDROIDCSV(droidcsv):
 	droidDBSetup(droidcsv)
