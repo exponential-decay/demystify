@@ -91,10 +91,8 @@ class DROIDLoader:
 			sys.exit(0)
 
 	def checkDBExists(self, dbfilename):
-		#if .db file exists, read MD5 column
-		#if different, do something, else do nothing...
-		#both optimisation and protection
-		#md5, date added
+		# if .db file exists, read MD5 column
+		# provide option to do something... 
 		overwrite = False
 		if os.path.isfile(dbfilename):
 			# File exists			
