@@ -10,6 +10,10 @@ from urlparse import urlparse
 
 class DROIDAnalysis:
 
+	# DB self.cursor
+	cursor = None
+
+	# Counts
 	filecount = 0
 	containercount = 0
 	filesincontainercount = 0	
@@ -23,102 +27,109 @@ class DROIDAnalysis:
 	distinctextpuidcount = 0
 	distinctbinpuidcount = 0
 
-	def __countQuery__(self, cursor, query):
-		cursor.execute(query)
-		count = cursor.fetchone()[0]
+	def __countQuery__(self, query):
+		self.cursor.execute(query)
+		count = self.cursor.fetchone()[0]
 		print "XXXX: " + str(count)
 		return count
-	
-	def countFilesQuery(self, cursor):
-		self.filecount = self.__countQuery__(cursor, 
+
+	def __listQuery__(self, query):
+		self.cursor.execute(query)
+		result = self.cursor.fetchall()
+		row = ""
+		for r in result:
+			if len(r) > 1:
+				item = ""
+				for t in r:
+					item = item + str(t) + ", "
+				row = row + item[:-2] + " | "
+			else:
+				row = row + str(r[0]) + ", " 
+		print row[:-2]
+
+	def countFilesQuery(self):
+		self.filecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
 	# Container objects known by DROID...
-	def countContainerObjects(self, cursor):
-		self.containercount = self.__countQuery__(cursor, 
+	def countContainerObjects(self):
+		self.containercount = self.__countQuery__(
 			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'")
 	
-	def countFilesInContainerObjects(self, cursor):
-		self.filesincontainercount = self.__countQuery__(cursor, 
+	def countFilesInContainerObjects(self):
+		self.filesincontainercount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')")
 
-	def countUniqueDirs(self, cursor):
-		self.uniquedirs = self.__countQuery__(cursor, 
+	def countUniqueDirs(self):
+		self.uniquedirs = self.__countQuery__( 
 			"SELECT COUNT(DISTINCT DIR_NAME) FROM droid")
 
-	def countIdentifiedQuery(self, cursor):
-		self.identifiedfilecount = self.__countQuery__(cursor, 
+	def countIdentifiedQuery(self):
+		self.identifiedfilecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'")
 
-	def countFoldersQuery(self, cursor):
-		self.foldercount = self.__countQuery__(cursor, 
+	def countFoldersQuery(self):
+		self.foldercount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
 
-	def countTotalUnidentifiedQuery(self, cursor):
-		self.unidentifiedfilecount = self.__countQuery__(cursor, 
+	def countTotalUnidentifiedQuery(self):
+		self.unidentifiedfilecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='no value' OR METHOD='Extension')")	
 
-	def countZeroID(self, cursor):
-		self.zeroidcount = self.__countQuery__(cursor, 
+	def countZeroID(self):
+		self.zeroidcount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
 
-	def countExtensionIDOnly(self, cursor):
-		self.extensionIDOnlyCount = self.__countQuery__(cursor, 
+	def countExtensionIDOnly(self):
+		self.extensionIDOnlyCount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")
 	
 	# PUIDS for files identified by DROID using binary matching techniques
-	def countSignaturePUIDS(self, cursor):
-		self.distinctbinpuidcount = self.__countQuery__(cursor, 
+	def countSignaturePUIDS(self):
+		self.distinctbinpuidcount = self.__countQuery__( 
 			"SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')")
 		
-	def countExtensionPUIDS(self, cursor):
-		self.distinctextpuidcount = self.__countQuery__(cursor, 
+	def countExtensionPUIDS(self):
+		self.distinctextpuidcount = self.__countQuery__( 
 			"SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
 
-	def countExtensions(self, cursor):
-		self.distinctextensioncount = self.__countQuery__(cursor, 
+	def countExtensions(self):
+		self.distinctextensioncount = self.__countQuery__( 
 			"SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'")
 
 
 
 
-	def identifiedPUIDFrequency(self, cursor):
-		#self.zeroidcount = self.__countQuery__(cursor, "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'")
-		test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-		cursor.execute(test)
-		test = cursor.fetchall()
-		return test
-
-	def allExtensionsFrequency(self, cursor):
-		#self.zeroidcount = self.__countQuery__(cursor, "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'")		
-		test = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
-		cursor.execute(test)
-		test = cursor.fetchall()
-		return test
 
 
 
 
-	def listUniqueMatchedPUIDS(self, cursor):
-		countfiles = "SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
-		cursor.execute(countfiles)
-		test = cursor.fetchall()
-		for t in test:
-			print t[0]
+	# Frequency list queries
+	def identifiedBinaryMatchedPUIDFrequency(self):
+		self.__listQuery__( 
+			"SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC")
 
-	def listAllUniqueExtensions(self, cursor):	
-		countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='Container'"
-		cursor.execute(countfiles)
-		test = cursor.fetchall()
-		for t in test:
-			print t[0]
+	def allExtensionsFrequency(self):
+		self.__listQuery__(
+			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
 
-	def listExtensionOnlyIdentification(self, cursor):	
-		countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-		cursor.execute(countfiles)
-		test = cursor.fetchall()
-		for t in test:
-			print t[0]
+
+
+
+
+	# List queries
+	def listUniqueBinaryMatchedPUIDS(self):
+		self.__listQuery__(
+			"SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')")
+
+	def listAllUniqueExtensions(self):	
+		self.__listQuery__(
+			"SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')")
+
+	def listExtensionOnlyIdentificationPUIDS(self):	
+		self.__listQuery__(		
+			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
+
 
 
 
@@ -153,18 +164,18 @@ class DROIDAnalysis:
 
 
 
-	def paretoListings(self, cursor):
+	def paretoListings(self):
 		# duplication in this function can potentially be removed through
 		# effective use of classes...
 	
 		puidTotal = self.identifiedfilecount
 		puidPareto = int(puidTotal * 0.80)
 	
-		extTotal = self.countExtensions(cursor)
+		extTotal = self.countExtensions(self.cursor)
 		extPareto = int(extTotal * 0.80)
 
-		self.listTopTwenty(self.identifiedPUIDFrequency(cursor), puidPareto, puidTotal, "identified PUIDS")
-		self.listTopTwenty(self.allExtensionsFrequency(cursor), puidPareto, extTotal, "format extensions")
+		self.listTopTwenty(self.identifiedPUIDFrequency(self.cursor), puidPareto, puidTotal, "identified PUIDS")
+		self.listTopTwenty(self.allExtensionsFrequency(self.cursor), puidPareto, extTotal, "format extensions")
 
 
 
@@ -237,33 +248,54 @@ class DROIDAnalysis:
 			if bracket_tuples:
 				print "Got some square brackets: " + s
 
-	def checkDodgyCharacters(self, cursor):
+	def checkDodgyCharacters(self):
 		countDirs = "SELECT DISTINCT DIR_NAME FROM droid"
-		cursor.execute(countDirs)
-		dirlist = cursor.fetchall()
+		self.cursor.execute(countDirs)
+		dirlist = self.cursor.fetchall()
 		for d in dirlist:
 			print d[0]
 
 	
 
-	def queryDB(self, cursor):
-		self.countFilesQuery(cursor)
-		self.countContainerObjects(cursor)
-		self.countFilesInContainerObjects(cursor)
-		self.countFoldersQuery(cursor)
-		self.countTotalUnidentifiedQuery(cursor)
-		self.countZeroID(cursor)
-		self.countExtensionIDOnly(cursor)
-		self.countSignaturePUIDS(cursor)
-		self.countExtensionPUIDS(cursor)
-		self.countExtensions(cursor)
-		#self.paretoListings(cursor)
-		#self.countUniqueDirs(cursor)
+	def queryDB(self):
+		self.countFilesQuery()
+		self.countContainerObjects()
+		self.countFilesInContainerObjects()
+		self.countFoldersQuery()
+		self.countTotalUnidentifiedQuery()
+		self.countZeroID()
+		self.countExtensionIDOnly()
+		self.countSignaturePUIDS()
+		self.countExtensionPUIDS()
+		self.countExtensions()
+
+		print
+		print "Binary matched PUIDs in collection:"
+		self.listUniqueBinaryMatchedPUIDS()
+
+		print
+		print "Frequency of all binary matched PUIDs:"
+		self.identifiedBinaryMatchedPUIDFrequency()
+
+		print
+		print "Extension only identification in collection:"
+		self.listExtensionOnlyIdentificationPUIDS()
+
+		print
+		print "Unique extensions identified in collection:"
+		self.listAllUniqueExtensions()
+
+		print
+		print "Frequency of all extensions:"
+		self.allExtensionsFrequency()
+
+		#self.paretoListings(self.cursor)
+		#self.countUniqueDirs(self.cursor)
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
-		cursor = conn.cursor()
-		self.queryDB(cursor)		# primary db query functions
+		self.cursor = conn.cursor()
+		self.queryDB()		# primary db query functions
 		#self.detect_invalid_characters("s")		# need to pass strings to this... 
 		conn.close()
 
