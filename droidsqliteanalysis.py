@@ -67,7 +67,7 @@ class DROIDAnalysis:
 	def countIdentifiedQuery(self):
 		self.identifiedfilecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'")
-
+	
 	def countFoldersQuery(self):
 		self.foldercount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
@@ -139,6 +139,9 @@ class DROIDAnalysis:
 
 
 	def listTopTwenty(self, freqTuple, matchTotal, total, text):
+
+		print matchTotal
+
 		x = 0
 		index = "null"
 		for i,t in enumerate(freqTuple):
@@ -154,10 +157,10 @@ class DROIDAnalysis:
 			for i in range(index):
 				print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 	
-		else:
-			print "Format frequency: "
-			#for t in test:
-			#	print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
+		#else:
+		#	print "Format frequency: "
+		#	for t in test:
+		#		print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 
 
 
@@ -165,20 +168,29 @@ class DROIDAnalysis:
 
 
 	def paretoListings(self):
+		# 80% of the effects come from 20% of the causes		
+		
 		# duplication in this function can potentially be removed through
 		# effective use of classes...
-	
+			
 		puidTotal = self.identifiedfilecount
 		puidPareto = int(puidTotal * 0.80)
 	
-		extTotal = self.countExtensions(self.cursor)
+		print puidTotal
+
+		extTotal = self.distinctextensioncount
 		extPareto = int(extTotal * 0.80)
 
-		self.listTopTwenty(self.identifiedPUIDFrequency(self.cursor), puidPareto, puidTotal, "identified PUIDS")
-		self.listTopTwenty(self.allExtensionsFrequency(self.cursor), puidPareto, extTotal, "format extensions")
+		puidquery = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
+		extquery = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
 
+		self.listTopTwenty(self.__aternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
+		self.listTopTwenty(self.__aternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
 
-
+	def __aternativeFrequencyQuery__(self, query):
+		self.cursor.execute(query)
+		result = self.cursor.fetchall()
+		return result
 
 	def calculateIdentifiedPercent(self):
 		allcount = self.filecount
@@ -262,6 +274,7 @@ class DROIDAnalysis:
 		self.countContainerObjects()
 		self.countFilesInContainerObjects()
 		self.countFoldersQuery()
+		self.countIdentifiedQuery()
 		self.countTotalUnidentifiedQuery()
 		self.countZeroID()
 		self.countExtensionIDOnly()
@@ -271,25 +284,25 @@ class DROIDAnalysis:
 
 		print
 		print "Binary matched PUIDs in collection:"
-		self.listUniqueBinaryMatchedPUIDS()
+		#self.listUniqueBinaryMatchedPUIDS()
 
 		print
 		print "Frequency of all binary matched PUIDs:"
-		self.identifiedBinaryMatchedPUIDFrequency()
+		#self.identifiedBinaryMatchedPUIDFrequency()
 
 		print
 		print "Extension only identification in collection:"
-		self.listExtensionOnlyIdentificationPUIDS()
+		#self.listExtensionOnlyIdentificationPUIDS()
 
 		print
 		print "Unique extensions identified in collection:"
-		self.listAllUniqueExtensions()
+		#self.listAllUniqueExtensions()
 
 		print
 		print "Frequency of all extensions:"
-		self.allExtensionsFrequency()
+		#self.allExtensionsFrequency()
 
-		#self.paretoListings(self.cursor)
+		self.paretoListings()
 		#self.countUniqueDirs(self.cursor)
 
 	def openDROIDDB(self, dbfilename):
