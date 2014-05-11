@@ -8,248 +8,268 @@ import re
 import droid2sqlite
 from urlparse import urlparse
 
-def countFilesQuery(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Files in collection: " + str(count)
-	return count
+class DROIDAnalysis:
 
-# Container objects known by DROID...
-def countContainerObjects(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Container objects in collection: " + str(count)
-	
-	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='Container'"
-	cursor.execute(countfiles)
-	test = cursor.fetchall()
-	for t in test:
-		print t[0]
-	
-	return count
-	
-def countFilesInContainerObjects(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Files inside container objects: " + str(count)
-	return count
+	filecount = 0
+	containercount = 0
+	filesincontainercount = 0	
+	foldercount = 0
+	uniquedircount = 0
+	identifiedfilecount = 0
+	unidentifiedcount = 0
+	zeroidcount = 0
+	extensionIDOnlyCount = 0
+	distinctextensioncount = 0
+	distinctextpuidcount = 0
+	distinctbinpuidcount = 0
 
-def countFoldersQuery(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()
-	print "Number of Folders in collection: " + str(count[0])
-	return count
+	def __countQuery__(self, cursor, query):
+		cursor.execute(query)
+		count = cursor.fetchone()[0]
+		print "XXXX: " + str(count)
+		return count
+	
+	def countFilesQuery(self, cursor):
+		self.filecount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
-def countUniquePaths(cursor):
-	countfiles = "SELECT COUNT(DISTINCT DIR_NAME) FROM droid"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of unique paths in collection: " + str(count)
+	# Container objects known by DROID...
+	def countContainerObjects(self, cursor):
+		self.containercount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'")
+	
+	def countFilesInContainerObjects(self, cursor):
+		self.filesincontainercount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')")
 
-def countIdentifiedQuery(cursor):
-	allcount = countFilesQuery(cursor)
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Identified Files in collectionxx: " + str(count)
-	
-	if allcount > 0:
-		percentage = (count/allcount)*100
-		print "Percentage of the collection identified: " + '%.1f' % round(percentage, 1) + "%"
-	else:
-		print "Zero files" 
-	return count
+	def countUniqueDirs(self, cursor):
+		self.uniquedirs = self.__countQuery__(cursor, 
+			"SELECT COUNT(DISTINCT DIR_NAME) FROM droid")
 
-def countTotalUnidentifiedQuery(cursor):
-	allcount = countFilesQuery(cursor)
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='no value' OR METHOD='Extension')"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Unidentified Files in collection (ext only and zero ID method): " + str(count)
-	
-	if allcount > 0:
-		percentage = (count/allcount)*100
-		print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
-	else:
-		print "Zero files" 
-	return count
-	
-def countZeroIDMethod(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Unidentified files (zero ID method): " + str(count)
-	return count
+	def countIdentifiedQuery(self, cursor):
+		self.identifiedfilecount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'")
 
-def countExtensionIDOnly(cursor):
-	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of Extension only identifications: " + str(count)
-	return count
+	def countFoldersQuery(self, cursor):
+		self.foldercount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
 
-# PUIDS for files identified by DROID using binary matching techniques
-def countSignaturePUIDS(cursor):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of unique 'signature' PUIDs: " + str(count)
-	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
-	cursor.execute(countfiles)
-	test = cursor.fetchall()
-	for t in test:
-		print t[0]
-	
-	return count
-	
-def countExtensionPUIDS(cursor):
-	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of unique 'extension' PUIDs: " + str(count)
-	
-	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	cursor.execute(countfiles)
-	test = cursor.fetchall()
-	for t in test:
-		print t[0]
-	
-	return count
+	def countTotalUnidentifiedQuery(self, cursor):
+		self.unidentifiedfilecount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='no value' OR METHOD='Extension')")	
 
-def countExtensions(cursor):
-	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	cursor.execute(countfiles)
-	count = cursor.fetchone()[0]
-	print "Number of unique extensions: " + str(count)
-	
-	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	cursor.execute(countfiles)
-	test = cursor.fetchall()
-	for t in test:
-		print t[0]
+	def countZeroID(self, cursor):
+		self.zeroidcount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
 
-	return count
-
-def identifiedPUIDFrequency(cursor):
-	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-	cursor.execute(test)
-	test = cursor.fetchall()
-	return test
-
-def allExtensionsFrequency(cursor):
-	test = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
-	cursor.execute(test)
-	test = cursor.fetchall()
-	return test
-
-def listTopTwenty(freqTuple, matchTotal, total, text):
-	x = 0
-	index = "null"
-	for i,t in enumerate(freqTuple):
-		if t[1] <= matchTotal:
-			x = x + t[1]
-			if x >= matchTotal:
-				index = i
-				break
+	def countExtensionIDOnly(self, cursor):
+		self.extensionIDOnlyCount = self.__countQuery__(cursor, 
+			"SELECT COUNT(NAME) FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")
 	
-	if index is not "null":
-		print 
-		print "Top 20% (out of " + str(total) + " ) " + text + ": "
-		for i in range(index):
-			print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
-	
-	else:
-		print "Format frequency: "
-		for t in test:
-			print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
-
-def paretoListings(cursor):
-	# duplication in this function can potentially be removed through
-	# effective use of classes...
-	
-	puidTotal = countIdentifiedQuery(cursor)
-	puidPareto = int(puidTotal * 0.80)
-	
-	extTotal = countExtensions(cursor)
-	extPareto = int(extTotal * 0.80)
-
-	listTopTwenty(identifiedPUIDFrequency(cursor), puidPareto, puidTotal, "identified PUIDS")
-	listTopTwenty(allExtensionsFrequency(cursor), puidPareto, extTotal, "format extensions")
-	
-def is_ascii(s):
-    return all(ord(c) < 128 for c in s)
-
-def detect_invalid_characters(s):
-	#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-	
-	#Strings for unit tests
-	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
-	
-	# First test, all ASCII characters?
-	for s in test_strings:
-		if not is_ascii(s):
-			print "We have some characters outside of ASCII range: " + s
-	
-	#regex strings...
-	
-	#CON|PRN|AUX|NUL
-	msdn_bad_names_one = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"		# badname + extension
+	# PUIDS for files identified by DROID using binary matching techniques
+	def countSignaturePUIDS(self, cursor):
+		self.distinctbinpuidcount = self.__countQuery__(cursor, 
+			"SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')")
 		
-	#COM1-COM9 | LPT1-LPT9
-	msdn_bad_names_two = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"	# badname + extension
+	def countExtensionPUIDS(self, cursor):
+		self.distinctextpuidcount = self.__countQuery__(cursor, 
+			"SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
+
+	def countExtensions(self, cursor):
+		self.distinctextensioncount = self.__countQuery__(cursor, 
+			"SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'")
+
+
+
+
+	def identifiedPUIDFrequency(self, cursor):
+		#self.zeroidcount = self.__countQuery__(cursor, "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'")
+		test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
+		cursor.execute(test)
+		test = cursor.fetchall()
+		return test
+
+	def allExtensionsFrequency(self, cursor):
+		#self.zeroidcount = self.__countQuery__(cursor, "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'")		
+		test = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
+		cursor.execute(test)
+		test = cursor.fetchall()
+		return test
+
+
+
+
+	def listUniqueMatchedPUIDS(self, cursor):
+		countfiles = "SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
+		cursor.execute(countfiles)
+		test = cursor.fetchall()
+		for t in test:
+			print t[0]
+
+	def listAllUniqueExtensions(self, cursor):	
+		countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='Container'"
+		cursor.execute(countfiles)
+		test = cursor.fetchall()
+		for t in test:
+			print t[0]
+
+	def listExtensionOnlyIdentification(self, cursor):	
+		countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
+		cursor.execute(countfiles)
+		test = cursor.fetchall()
+		for t in test:
+			print t[0]
+
+
+
+
+
+
+
+
+	def listTopTwenty(self, freqTuple, matchTotal, total, text):
+		x = 0
+		index = "null"
+		for i,t in enumerate(freqTuple):
+			if t[1] <= matchTotal:
+				x = x + t[1]
+				if x >= matchTotal:
+					index = i
+					break
 	
-	#<, >, :, ", /, \, ?, *, |, \x00-\x1f
-	non_recommended_chars = '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)'
-
-	#[]
-	square_brackets = '(\[|\])'
-
-	bad_names_one_regex = re.compile(msdn_bad_names_one, re.IGNORECASE)
-	bad_names_two_regex = re.compile(msdn_bad_names_two, re.IGNORECASE)	
-	bad_characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
-	square_bracket_regex = re.compile(square_brackets, re.IGNORECASE)	
+		if index is not "null":
+			print 
+			print "Top 20% (out of " + str(total) + " ) " + text + ": "
+			for i in range(index):
+				print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 	
-	for s in test_strings:	
-		bad_tuples_one = re.findall(bad_names_one_regex, s)
-		bad_tuples_two = re.findall(bad_names_two_regex, s)
-		bad_char_tuples = re.findall(bad_characters_regex, s)
-		bracket_tuples = re.findall(square_bracket_regex, s)	
+		else:
+			print "Format frequency: "
+			#for t in test:
+			#	print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 
-		if bad_char_tuples:
-			print "got some bad characters: " + s
-		if bad_tuples_one or bad_tuples_two:
-			print "Got some bad filenames: " + s
-		if bracket_tuples:
-			print "Got some square brackets: " + s
 
-def queryDB(cursor):
-	#countFilesQuery(cursor)
-	#countContainerObjects(cursor)
-	#countFilesInContainerObjects(cursor)
-	#countFoldersQuery(cursor)
-	#countTotalUnidentifiedQuery(cursor)
-	#countZeroIDMethod(cursor)
-	#countExtensionIDOnly(cursor)
-	#countSignaturePUIDS(cursor)
-	#countExtensionPUIDS(cursor)
-	#countExtensions(cursor)
-	#paretoListings(cursor)
-	countUniquePaths(cursor)
 
-def openDROIDDB(dbfilename):
-	conn = sqlite3.connect(dbfilename)
-	cursor = conn.cursor()
-	queryDB(cursor)		# primary db query functions
-	#detect_invalid_characters("s")		# need to pass strings to this... 
-	conn.close()
+
+
+
+	def paretoListings(self, cursor):
+		# duplication in this function can potentially be removed through
+		# effective use of classes...
+	
+		puidTotal = self.identifiedfilecount
+		puidPareto = int(puidTotal * 0.80)
+	
+		extTotal = self.countExtensions(cursor)
+		extPareto = int(extTotal * 0.80)
+
+		self.listTopTwenty(self.identifiedPUIDFrequency(cursor), puidPareto, puidTotal, "identified PUIDS")
+		self.listTopTwenty(self.allExtensionsFrequency(cursor), puidPareto, extTotal, "format extensions")
+
+
+
+
+	def calculateIdentifiedPercent(self):
+		allcount = self.filecount
+		count = self.identifiedfilecount
+		#if allcount > 0:
+		#	percentage = (count/allcount)*100
+		#	print "Percentage of the collection identified: " + '%.1f' % round(percentage, 1) + "%"
+		#else:
+		#	print "Zero files" 
+		return count
+
+	def calculateUnidentifiedPercent(self):
+		allcount = self.filecount
+		#if allcount > 0:
+		#	percentage = (count/allcount)*100
+		#	print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
+		#else:
+		#	print "Zero files" 
+		return count
+
+
+
+	
+	def is_ascii(self, s):
+		 return all(ord(c) < 128 for c in s)
+
+	def detect_invalid_characters(self, s):
+		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+	
+		#Strings for unit tests
+		test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
+	
+		# First test, all ASCII characters?
+		for s in test_strings:
+			if not is_ascii(s):
+				print "We have some characters outside of ASCII range: " + s
+	
+		#regex strings...
+	
+		#CON|PRN|AUX|NUL
+		msdn_bad_names_one = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"		# badname + extension
+		
+		#COM1-COM9 | LPT1-LPT9
+		msdn_bad_names_two = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"	# badname + extension
+	
+		#<, >, :, ", /, \, ?, *, |, \x00-\x1f
+		non_recommended_chars = '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)'
+
+		#[]
+		square_brackets = '(\[|\])'
+
+		bad_names_one_regex = re.compile(msdn_bad_names_one, re.IGNORECASE)
+		bad_names_two_regex = re.compile(msdn_bad_names_two, re.IGNORECASE)	
+		bad_characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
+		square_bracket_regex = re.compile(square_brackets, re.IGNORECASE)	
+	
+		for s in test_strings:	
+			bad_tuples_one = re.findall(bad_names_one_regex, s)
+			bad_tuples_two = re.findall(bad_names_two_regex, s)
+			bad_char_tuples = re.findall(bad_characters_regex, s)
+			bracket_tuples = re.findall(square_bracket_regex, s)	
+
+			if bad_char_tuples:
+				print "got some bad characters: " + s
+			if bad_tuples_one or bad_tuples_two:
+				print "Got some bad filenames: " + s
+			if bracket_tuples:
+				print "Got some square brackets: " + s
+
+	def checkDodgyCharacters(self, cursor):
+		countDirs = "SELECT DISTINCT DIR_NAME FROM droid"
+		cursor.execute(countDirs)
+		dirlist = cursor.fetchall()
+		for d in dirlist:
+			print d[0]
+
+	
+
+	def queryDB(self, cursor):
+		self.countFilesQuery(cursor)
+		self.countContainerObjects(cursor)
+		self.countFilesInContainerObjects(cursor)
+		self.countFoldersQuery(cursor)
+		self.countTotalUnidentifiedQuery(cursor)
+		self.countZeroID(cursor)
+		self.countExtensionIDOnly(cursor)
+		self.countSignaturePUIDS(cursor)
+		self.countExtensionPUIDS(cursor)
+		self.countExtensions(cursor)
+		#self.paretoListings(cursor)
+		#self.countUniqueDirs(cursor)
+
+	def openDROIDDB(self, dbfilename):
+		conn = sqlite3.connect(dbfilename)
+		cursor = conn.cursor()
+		self.queryDB(cursor)		# primary db query functions
+		#self.detect_invalid_characters("s")		# need to pass strings to this... 
+		conn.close()
 
 def handleDROIDDB(dbfilename):
-	openDROIDDB(dbfilename)
+	analysis = DROIDAnalysis()	
+	analysis.openDROIDDB(dbfilename)
 
 def handleDROIDCSV(droidcsv):
 	droid2sqlite.handleDROIDCSV(droidcsv)
