@@ -134,8 +134,13 @@ class DROIDAnalysis:
 
 
 	def listDuplicates(self):
-		"dupes"
+		#URI, URI_SCHEME
 
+		duplicatequery = "SELECT MD5_HASH, FILE_PATH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+		result = self.__aternativeFrequencyQuery__(duplicatequery)
+		for r in result:
+			if r[2] > 1:
+				print r
 
 
 	def listTopTwenty(self, freqTuple, matchTotal, total, text):
@@ -302,11 +307,11 @@ class DROIDAnalysis:
 		print "Frequency of all extensions:"
 		#self.allExtensionsFrequency()
 
-		self.paretoListings()
+		#self.paretoListings()
 
 
-		self.calculateUnidentifiedPercent()
-		self.calculateIdentifiedPercent()
+		#self.calculateUnidentifiedPercent()
+		#self.calculateIdentifiedPercent()
 		
 		self.listDuplicates()
 
