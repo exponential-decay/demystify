@@ -67,14 +67,14 @@ class DROIDAnalysis:
 	def countIdentifiedQuery(self):
 		self.identifiedfilecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'")
-	
-	def countFoldersQuery(self):
-		self.foldercount = self.__countQuery__( 
-			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
 
 	def countTotalUnidentifiedQuery(self):
 		self.unidentifiedfilecount = self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='no value' OR METHOD='Extension')")	
+	
+	def countFoldersQuery(self):
+		self.foldercount = self.__countQuery__( 
+			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
 
 	def countZeroID(self):
 		self.zeroidcount = self.__countQuery__( 
@@ -133,8 +133,8 @@ class DROIDAnalysis:
 
 
 
-
-
+	def listDuplicates(self):
+		"dupes"
 
 
 
@@ -165,7 +165,10 @@ class DROIDAnalysis:
 
 
 
-
+	def __aternativeFrequencyQuery__(self, query):
+		self.cursor.execute(query)
+		result = self.cursor.fetchall()
+		return result
 
 	def paretoListings(self):
 		# 80% of the effects come from 20% of the causes		
@@ -187,29 +190,25 @@ class DROIDAnalysis:
 		self.listTopTwenty(self.__aternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
 		self.listTopTwenty(self.__aternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
 
-	def __aternativeFrequencyQuery__(self, query):
-		self.cursor.execute(query)
-		result = self.cursor.fetchall()
-		return result
 
 	def calculateIdentifiedPercent(self):
 		allcount = self.filecount
 		count = self.identifiedfilecount
-		#if allcount > 0:
-		#	percentage = (count/allcount)*100
-		#	print "Percentage of the collection identified: " + '%.1f' % round(percentage, 1) + "%"
-		#else:
-		#	print "Zero files" 
-		return count
+		if allcount > 0:
+			percentage = (count/allcount)*100
+			print "Percentage of the collection identified: " + '%.1f' % round(percentage, 1) + "%"
+		else:
+			print "Zero files" 
 
 	def calculateUnidentifiedPercent(self):
 		allcount = self.filecount
-		#if allcount > 0:
-		#	percentage = (count/allcount)*100
-		#	print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
-		#else:
-		#	print "Zero files" 
-		return count
+		count = self.unidentifiedfilecount		
+		if allcount > 0:
+			percentage = (count/allcount)*100
+			print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
+		else:
+			print "Zero files" 
+		
 
 
 
@@ -281,6 +280,7 @@ class DROIDAnalysis:
 		self.countSignaturePUIDS()
 		self.countExtensionPUIDS()
 		self.countExtensions()
+		self.countUniqueDirs()
 
 		print
 		print "Binary matched PUIDs in collection:"
@@ -303,7 +303,12 @@ class DROIDAnalysis:
 		#self.allExtensionsFrequency()
 
 		self.paretoListings()
-		#self.countUniqueDirs(self.cursor)
+
+
+		self.calculateUnidentifiedPercent()
+		self.calculateIdentifiedPercent()
+		
+		self.listDuplicates()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
