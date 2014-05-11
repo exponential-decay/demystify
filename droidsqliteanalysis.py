@@ -8,47 +8,53 @@ import re
 import droid2sqlite
 from urlparse import urlparse
 
-def countFilesQuery(c):
+def countFilesQuery(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Files in collection: " + str(count)
 	return count
 
 # Container objects known by DROID...
-def countContainerObjects(c):
+def countContainerObjects(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Container objects in collection: " + str(count)
 	
 	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='Container'"
-	c.execute(countfiles)
-	test = c.fetchall()
+	cursor.execute(countfiles)
+	test = cursor.fetchall()
 	for t in test:
 		print t[0]
 	
 	return count
 	
-def countFilesInContainerObjects(c):
+def countFilesInContainerObjects(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Files inside container objects: " + str(count)
 	return count
 
-def countFoldersQuery(c):
+def countFoldersQuery(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'"
-	c.execute(countfiles)
-	count = c.fetchone()
+	cursor.execute(countfiles)
+	count = cursor.fetchone()
 	print "Number of Folders in collection: " + str(count[0])
 	return count
 
-def countIdentifiedQuery(c):
-	allcount = countFilesQuery(c)
+def countUniquePaths(cursor):
+	countfiles = "SELECT COUNT(DISTINCT DIR_NAME) FROM droid"
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
+	print "Number of unique paths in collection: " + str(count)
+
+def countIdentifiedQuery(cursor):
+	allcount = countFilesQuery(cursor)
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Identified Files in collectionxx: " + str(count)
 	
 	if allcount > 0:
@@ -58,11 +64,11 @@ def countIdentifiedQuery(c):
 		print "Zero files" 
 	return count
 
-def countTotalUnidentifiedQuery(c):
-	allcount = countFilesQuery(c)
+def countTotalUnidentifiedQuery(cursor):
+	allcount = countFilesQuery(cursor)
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND (METHOD='no value' OR METHOD='Extension')"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Unidentified Files in collection (ext only and zero ID method): " + str(count)
 	
 	if allcount > 0:
@@ -72,73 +78,73 @@ def countTotalUnidentifiedQuery(c):
 		print "Zero files" 
 	return count
 	
-def countZeroIDMethod(c):
+def countZeroIDMethod(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='no value'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Unidentified files (zero ID method): " + str(count)
 	return count
 
-def countExtensionIDOnly(c):
+def countExtensionIDOnly(cursor):
 	countfiles = "SELECT COUNT(NAME) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of Extension only identifications: " + str(count)
 	return count
 
 # PUIDS for files identified by DROID using binary matching techniques
-def countSignaturePUIDS(c):
+def countSignaturePUIDS(cursor):
 	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of unique 'signature' PUIDs: " + str(count)
 	
 	countfiles = "SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')"
-	c.execute(countfiles)
-	test = c.fetchall()
+	cursor.execute(countfiles)
+	test = cursor.fetchall()
 	for t in test:
 		print t[0]
 	
 	return count
 	
-def countExtensionPUIDS(c):
+def countExtensionPUIDS(cursor):
 	countfiles = "SELECT COUNT(DISTINCT PUID) FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of unique 'extension' PUIDs: " + str(count)
 	
 	countfiles = "SELECT DISTINCT PUID FROM droid WHERE TYPE='File' OR TYPE='Container' AND METHOD='Extension'"
-	c.execute(countfiles)
-	test = c.fetchall()
+	cursor.execute(countfiles)
+	test = cursor.fetchall()
 	for t in test:
 		print t[0]
 	
 	return count
 
-def countExtensions(c):
+def countExtensions(cursor):
 	countfiles = "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	c.execute(countfiles)
-	count = c.fetchone()[0]
+	cursor.execute(countfiles)
+	count = cursor.fetchone()[0]
 	print "Number of unique extensions: " + str(count)
 	
 	countfiles = "SELECT DISTINCT EXT FROM droid WHERE TYPE='File' OR TYPE='Container'"
-	c.execute(countfiles)
-	test = c.fetchall()
+	cursor.execute(countfiles)
+	test = cursor.fetchall()
 	for t in test:
 		print t[0]
 
 	return count
 
-def identifiedPUIDFrequency(c):
+def identifiedPUIDFrequency(cursor):
 	test = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-	c.execute(test)
-	test = c.fetchall()
+	cursor.execute(test)
+	test = cursor.fetchall()
 	return test
 
-def allExtensionsFrequency(c):
+def allExtensionsFrequency(cursor):
 	test = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
-	c.execute(test)
-	test = c.fetchall()
+	cursor.execute(test)
+	test = cursor.fetchall()
 	return test
 
 def listTopTwenty(freqTuple, matchTotal, total, text):
@@ -162,18 +168,18 @@ def listTopTwenty(freqTuple, matchTotal, total, text):
 		for t in test:
 			print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
 
-def paretoListings(c):
+def paretoListings(cursor):
 	# duplication in this function can potentially be removed through
 	# effective use of classes...
 	
-	puidTotal = countIdentifiedQuery(c)
+	puidTotal = countIdentifiedQuery(cursor)
 	puidPareto = int(puidTotal * 0.80)
 	
-	extTotal = countExtensions(c)
+	extTotal = countExtensions(cursor)
 	extPareto = int(extTotal * 0.80)
 
-	listTopTwenty(identifiedPUIDFrequency(c), puidPareto, puidTotal, "identified PUIDS")
-	listTopTwenty(allExtensionsFrequency(c), puidPareto, extTotal, "format extensions")
+	listTopTwenty(identifiedPUIDFrequency(cursor), puidPareto, puidTotal, "identified PUIDS")
+	listTopTwenty(allExtensionsFrequency(cursor), puidPareto, extTotal, "format extensions")
 	
 def is_ascii(s):
     return all(ord(c) < 128 for c in s)
@@ -222,23 +228,24 @@ def detect_invalid_characters(s):
 			print "Got some square brackets: " + s
 
 def queryDB(cursor):
-	countFilesQuery(cursor)
-	countContainerObjects(cursor)
-	countFilesInContainerObjects(cursor)
-	countFoldersQuery(cursor)
-	countTotalUnidentifiedQuery(cursor)
-	countZeroIDMethod(cursor)
-	countExtensionIDOnly(cursor)
-	countSignaturePUIDS(cursor)
-	countExtensionPUIDS(cursor)
-	countExtensions(cursor)
-	paretoListings(cursor)
+	#countFilesQuery(cursor)
+	#countContainerObjects(cursor)
+	#countFilesInContainerObjects(cursor)
+	#countFoldersQuery(cursor)
+	#countTotalUnidentifiedQuery(cursor)
+	#countZeroIDMethod(cursor)
+	#countExtensionIDOnly(cursor)
+	#countSignaturePUIDS(cursor)
+	#countExtensionPUIDS(cursor)
+	#countExtensions(cursor)
+	#paretoListings(cursor)
+	countUniquePaths(cursor)
 
 def openDROIDDB(dbfilename):
 	conn = sqlite3.connect(dbfilename)
 	cursor = conn.cursor()
-	# queryDB(cursor)		# primary db query functions
-	detect_invalid_characters("s")		# need to pass strings to this... 
+	queryDB(cursor)		# primary db query functions
+	#detect_invalid_characters("s")		# need to pass strings to this... 
 	conn.close()
 
 def handleDROIDDB(dbfilename):
