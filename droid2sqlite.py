@@ -21,6 +21,7 @@ class DROIDLoader:
 
 	#DROID SPECIFIC COLUMN INDEXES
 	URI_COL = 2
+	PATH_COL = 3
 
 	def getTimestamp(self):
 		ts = time.time()
@@ -54,6 +55,9 @@ class DROIDLoader:
 		for header in csvcolumnheaders:
 			if header == "URI":
 				columns = columns + header + ", " + "URI_SCHEME, "
+				self.csvcolumncount+=1
+			elif header == "FILE_PATH":
+				columns = columns + header + ", " + "DIR_NAME, "
 				self.csvcolumncount+=1
 			else:
 				columns = columns + header + ", "
@@ -142,10 +146,15 @@ class DROIDLoader:
 								url = item
 								rowstr = rowstr + ",'" + urlparse(url).scheme + "'"
 	
-							if i < self.csvcolumncount-2:
-								rowstr = rowstr + ","
+							if i == self.PATH_COL:
+								dir = item
+								rowstr = rowstr + ",'" + os.path.dirname(item) + "'"						
+
+							if i < self.csvcolumncount-3:		# careless
+								rowstr = rowstr + ","		
 
 						cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
+
 
 			self.createDBID(cursor) 
 
