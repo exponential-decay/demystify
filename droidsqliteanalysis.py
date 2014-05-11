@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import division
 import argparse
 import sys
@@ -176,20 +175,6 @@ def paretoListings(c):
 	listTopTwenty(identifiedPUIDFrequency(c), puidPareto, puidTotal, "identified PUIDS")
 	listTopTwenty(allExtensionsFrequency(c), puidPareto, extTotal, "format extensions")
 	
-
-def queryDB(c):
-	countFilesQuery(c)
-	countContainerObjects(c)
-	countFilesInContainerObjects(c)
-	countFoldersQuery(c)
-	countTotalUnidentifiedQuery(c)
-	countZeroIDMethod(c)
-	countExtensionIDOnly(c)
-	countSignaturePUIDS(c)
-	countExtensionPUIDS(c)
-	countExtensions(c)
-	paretoListings(c)
-
 def is_ascii(s):
     return all(ord(c) < 128 for c in s)
 
@@ -229,11 +214,31 @@ def detect_invalid_characters(s):
 		if nonnum_tuples or num_tuples:
 			print "Got some bad filenames: " + s
 
-def droidDBSetup(droidcsv):
-	droid2sqlite.handleDROIDCSV(droidcsv)
+def queryDB(cursor):
+	countFilesQuery(cursor)
+	countContainerObjects(cursor)
+	countFilesInContainerObjects(cursor)
+	countFoldersQuery(cursor)
+	countTotalUnidentifiedQuery(cursor)
+	countZeroIDMethod(cursor)
+	countExtensionIDOnly(cursor)
+	countSignaturePUIDS(cursor)
+	countExtensionPUIDS(cursor)
+	countExtensions(cursor)
+	paretoListings(cursor)
+
+def openDROIDDB(dbfilename):
+	conn = sqlite3.connect(dbfilename)
+	cursor = conn.cursor()
+	# queryDB(cursor)		# primary db query functions
+	# detect_invalid_characters("s")		# need to pass strings to this... 
+	conn.close()
+
+def handleDROIDDB(dbfilename):
+	openDROIDDB(dbfilename)
 
 def handleDROIDCSV(droidcsv):
-	droidDBSetup(droidcsv)
+	droid2sqlite.handleDROIDCSV(droidcsv)
 
 def main():
 
@@ -253,7 +258,9 @@ def main():
 	args = parser.parse_args()
 	
 	if args.csv:
-		handleDROIDCSV(args.csv)			
+		handleDROIDCSV(args.csv)	
+	if args.db:
+		handleDROIDDB(args.db)		
 	else:
 		sys.exit(1)
 
