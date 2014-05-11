@@ -182,7 +182,7 @@ def detect_invalid_characters(s):
 	#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 	
 	#Strings for unit tests
-	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']
+	test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
 	
 	# First test, all ASCII characters?
 	for s in test_strings:
@@ -192,27 +192,34 @@ def detect_invalid_characters(s):
 	#regex strings...
 	
 	#CON|PRN|AUX|NUL
-	msdn_three_files = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"
+	msdn_bad_names_one = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"		# badname + extension
 		
 	#COM1-COM9 | LPT1-LPT9
-	msdn_no_files = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"
+	msdn_bad_names_two = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"	# badname + extension
 	
 	#<, >, :, ", /, \, ?, *, |, \x00-\x1f
 	non_recommended_chars = '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)'
+
+	#[]
+	square_brackets = '(\[|\])'
+
+	bad_names_one_regex = re.compile(msdn_bad_names_one, re.IGNORECASE)
+	bad_names_two_regex = re.compile(msdn_bad_names_two, re.IGNORECASE)	
+	bad_characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
+	square_bracket_regex = re.compile(square_brackets, re.IGNORECASE)	
 	
-	characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
-	non_num_filename_regex = re.compile(msdn_three_files, re.IGNORECASE)
-	num_filename_regex = re.compile(msdn_no_files, re.IGNORECASE)
-		
 	for s in test_strings:	
-		char_tuples = re.findall(characters_regex, s)
-		nonnum_tuples = re.findall(non_num_filename_regex, s)
-		num_tuples = re.findall(num_filename_regex, s)
-	
-		if char_tuples:
+		bad_tuples_one = re.findall(bad_names_one_regex, s)
+		bad_tuples_two = re.findall(bad_names_two_regex, s)
+		bad_char_tuples = re.findall(bad_characters_regex, s)
+		bracket_tuples = re.findall(square_bracket_regex, s)	
+
+		if bad_char_tuples:
 			print "got some bad characters: " + s
-		if nonnum_tuples or num_tuples:
+		if bad_tuples_one or bad_tuples_two:
 			print "Got some bad filenames: " + s
+		if bracket_tuples:
+			print "Got some square brackets: " + s
 
 def queryDB(cursor):
 	countFilesQuery(cursor)
@@ -231,7 +238,7 @@ def openDROIDDB(dbfilename):
 	conn = sqlite3.connect(dbfilename)
 	cursor = conn.cursor()
 	# queryDB(cursor)		# primary db query functions
-	# detect_invalid_characters("s")		# need to pass strings to this... 
+	detect_invalid_characters("s")		# need to pass strings to this... 
 	conn.close()
 
 def handleDROIDDB(dbfilename):
