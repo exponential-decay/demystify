@@ -136,11 +136,14 @@ class DROIDAnalysis:
 	def listDuplicates(self):
 		#URI, URI_SCHEME
 
-		duplicatequery = "SELECT MD5_HASH, FILE_PATH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
-			if r[2] > 1:
-				print r
+			if r[1] > 1:
+				print r[0]
+				print r[1]
+				
+		#TODO: select files with a matching hash
 
 
 	def listTopTwenty(self, freqTuple, matchTotal, total, text):
