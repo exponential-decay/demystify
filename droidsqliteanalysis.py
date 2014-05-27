@@ -317,6 +317,8 @@ class DROIDAnalysis:
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
+		conn.text_factory = str		#encoded as ascii, not unicode / return ascii
+		
 		self.cursor = conn.cursor()
 		self.queryDB()		# primary db query functions
 		#self.detect_invalid_characters("s")		# need to pass strings to this... 
