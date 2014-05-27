@@ -137,7 +137,7 @@ class DROIDAnalysis:
 		#URI, URI_SCHEME
 
 		duplicatequery = "SELECT MD5_HASH, FILE_PATH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
-		result = self.__aternativeFrequencyQuery__(duplicatequery)
+		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
 			if r[2] > 1:
 				print r
@@ -170,7 +170,7 @@ class DROIDAnalysis:
 
 
 
-	def __aternativeFrequencyQuery__(self, query):
+	def __alternativeFrequencyQuery__(self, query):
 		self.cursor.execute(query)
 		result = self.cursor.fetchall()
 		return result
@@ -192,8 +192,8 @@ class DROIDAnalysis:
 		puidquery = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
 		extquery = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
 
-		self.listTopTwenty(self.__aternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
-		self.listTopTwenty(self.__aternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
+		self.listTopTwenty(self.__alternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
+		self.listTopTwenty(self.__alternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
 
 
 	def calculateIdentifiedPercent(self):
@@ -313,6 +313,8 @@ class DROIDAnalysis:
 		#self.calculateUnidentifiedPercent()
 		#self.calculateIdentifiedPercent()
 		
+		print 
+		print "Listing duplicates: "
 		self.listDuplicates()
 
 	def openDROIDDB(self, dbfilename):
