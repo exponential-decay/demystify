@@ -122,7 +122,7 @@ class DROIDLoader:
 		self.getContentHash(droidcsv)
 		self.getTimestamp()
 		
-		#self.checkDBExists(dbfilename)
+		self.checkDBExists(dbfilename)
 
 		conn = sqlite3.connect(dbfilename)
 		cursor = conn.cursor()
@@ -153,7 +153,6 @@ class DROIDLoader:
 						if i < self.csvcolumncount-3:		# careless
 							rowstr = rowstr + ','		
 
-					print rowstr
 					cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
 
 
