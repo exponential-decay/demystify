@@ -31,7 +31,7 @@ class DROIDLoader:
 	def getContentHash(self, droidcsv):
 		#http://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python
 
-	 	csvhash = hashlib.md5()
+		csvhash = hashlib.md5()
 		f = open(droidcsv)		
 		while True:
 			data = f.read(8192)
@@ -122,49 +122,50 @@ class DROIDLoader:
 		self.getContentHash(droidcsv)
 		self.getTimestamp()
 		
-		if self.checkDBExists(dbfilename):
+		#self.checkDBExists(dbfilename)
 
-			conn = sqlite3.connect(dbfilename)
-			cursor = conn.cursor()
-			self.dropDROIDTable(cursor)	# may place elsewhere, e.g. when looking for dupes
+		conn = sqlite3.connect(dbfilename)
+		cursor = conn.cursor()
+		self.dropDROIDTable(cursor)	# may place elsewhere, e.g. when looking for dupes
 
-			with open(droidcsv, 'rb') as csvfile:
-				droidreader = csv.reader(csvfile)
-				for row in droidreader:
-					if droidreader.line_num == 1:		# not zero-based index
-						tablequery = self.createDROIDTable(cursor, row)
-					else:
-						rowstr = ""	
-						for i,item in enumerate(row[0:self.csvcolumncount-1]):
-									
-							if item == "":
-								rowstr = rowstr + "'no value'"
-							else:
-								rowstr = rowstr + "'" + item + "'"
-				
-							if i == self.URI_COL:
-								url = item
-								rowstr = rowstr + ",'" + urlparse(url).scheme + "'"
-	
-							if i == self.PATH_COL:
-								dir = item
-								rowstr = rowstr + ",'" + os.path.dirname(item) + "'"						
+		with open(droidcsv, 'rb') as csvfile:
+			droidreader = csv.reader(csvfile)
+			for row in droidreader:
+				if droidreader.line_num == 1:		# not zero-based index
+					tablequery = self.createDROIDTable(cursor, row)
+				else:
+					rowstr = ""	
+					for i,item in enumerate(row[0:self.csvcolumncount-1]):
+								
+						if item == "":
+							rowstr = rowstr + '"no value"'
+						else:
+							rowstr = rowstr + '"' + item + '"'
+			
+						if i == self.URI_COL:
+							url = item
+							rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
 
-							if i < self.csvcolumncount-3:		# careless
-								rowstr = rowstr + ","		
+						if i == self.PATH_COL:
+							dir = item
+							rowstr = rowstr + ',"' + os.path.dirname(item) + '"'		
 
-						cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
+						if i < self.csvcolumncount-3:		# careless
+							rowstr = rowstr + ','		
+
+					print rowstr
+					cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
 
 
-			self.createDBID(cursor) 
+		self.createDBID(cursor) 
 
-			# Save (commit) the changes
-			conn.commit()
+		# Save (commit) the changes
+		conn.commit()
 
-			# We can also close the connection if we are done with it.
-			# Just be sure any changes have been committed or they will be lost.
-			conn.close()
-			print
+		# We can also close the connection if we are done with it.
+		# Just be sure any changes have been committed or they will be lost.
+		conn.close()
+		print
 
 def handleDROIDCSV(droidcsv):
 	loader = DROIDLoader()
