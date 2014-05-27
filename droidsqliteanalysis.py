@@ -325,9 +325,11 @@ class DROIDAnalysis:
 def handleDROIDDB(dbfilename):
 	analysis = DROIDAnalysis()	
 	analysis.openDROIDDB(dbfilename)
+	#TODO: Incorrect filetypes provided, e.g. providing CSV not DB
 
 def handleDROIDCSV(droidcsv):
 	droid2sqlite.handleDROIDCSV(droidcsv)
+	#TODO: Handle CSV through to analysis option
 
 def main():
 
