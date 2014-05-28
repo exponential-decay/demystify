@@ -313,7 +313,7 @@ class DROIDAnalysis:
 		self.countUniqueDirs()
 
 		print
-		print "Binary matched PUIDs in collection:"
+		print "Signature identified PUIDs in collection:"
 		#self.listUniqueBinaryMatchedPUIDS()
 
 		print
@@ -340,7 +340,7 @@ class DROIDAnalysis:
 		
 		print 
 		print "Listing duplicates: "
-		self.listDuplicates()
+		#self.listDuplicates()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
