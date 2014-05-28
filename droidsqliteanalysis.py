@@ -5,8 +5,8 @@ import argparse
 import sys
 import sqlite3
 import csv
-import re
 import droid2sqlite
+import MsoftFnameAnalysis
 from urlparse import urlparse
 
 class DROIDAnalysis:
@@ -195,9 +195,10 @@ class DROIDAnalysis:
 		countDirs = "SELECT DISTINCT NAME FROM droid"
 		self.cursor.execute(countDirs)
 		dirlist = self.cursor.fetchall()
+		charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
 		for d in dirlist:
 			dirstring = d[0]
-			self.detect_invalid_characters(dirstring)
+			charcheck.completeFnameAnalysis(dirstring)
 		return
 	
 	# stats output... 
@@ -218,80 +219,7 @@ class DROIDAnalysis:
 			print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
 		else:
 			print "Zero files" 
-		
-	def detect_invalid_characters_test(self):
-		#Strings for unit tests
-		test_strings = ['COM4', 'COM4.txt', '.com4', 'abcCOM4text', 'abc.com4.txt.abc', 'con', 'CON', 'consumer', 'space ', 'preiod.', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
-	
-		# First test, all ASCII characters?
-		for s in test_strings:
-			self.detect_invalid_characters(s)
-	
-	def is_ascii(self, s):
-		#Nicer method: all(ord(c) < 128 for c in s)
-		nonascii = False
-		char = ''
-		for c in s:
-			if ord(c) > 128:
-				nonascii = True
-				char = c
-				break
-		return nonascii, char
-					
-
-	def detect_invalid_characters(self, s):
-		#todo: consider benefit of separating into function definitions
-		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-		
-		#non-ascii characters
-		nonascii = self.is_ascii(s)
-		if nonascii[0] == True:
-			print "Characters in filename outside of ASCII range: " + hex(ord(nonascii[1]))
-			print
-		
-		#non-recommended characters
-		charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
-		for c in charlist:
-			if c in s:
-				print "File: " + s + " contains, non-recommended character: " + c
-				print
-				break
-		
-		#non-printable characters
-		for c in range(0x1f):
-			if chr(c) in s:
-				print "File: " + s + " contains, non-printable character: " + hex(c)
-				print
-				break
-
-		#reserved names
-		badnames = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', \
-							'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', \
-								'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', \
-									'LPT6', 'LPT7', 'LPT8', 'LPT9']
-				
-		for c in badnames:
-			if c.lower() in s[0:len(c)].lower():
-				problem = True
-				try:
-					if s[len(c)] == '.':					#zero-based index
-						problem = True
-					else:
-						problem = False
-				except IndexError:
-					problem = True
-				if problem == True:
-					print "File: " + s + " contains, reserved name: " + c
-					print
-
-		#space or period at end of a name
-		if s.endswith(' '):
-			print "File: " + s + " has a space as its last character."
-			print
-		elif s.endswith('.'):
-			print "File: " + s + " has a period as its last character."
-			print 
-
+						
 	def queryDB(self):
 		self.countFilesQuery()
 		self.countContainerObjects()
@@ -340,9 +268,9 @@ class DROIDAnalysis:
 		print "Listing duplicates: "
 		#self.listDuplicates()
 
-		self.filesWithDodgyCharacters()
-		#self.detect_invalid_characters_test()
-		
+		print
+		print "Identifying troublesome filenames: "
+		#self.filesWithDodgyCharacters()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
