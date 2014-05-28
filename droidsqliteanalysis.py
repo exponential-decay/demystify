@@ -240,9 +240,8 @@ class DROIDAnalysis:
 					
 
 	def detect_invalid_characters(self, s):
-		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-		
 		#todo: consider benefit of separating into function definitions
+		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 		
 		#non-ascii characters
 		nonascii = self.is_ascii(s)
