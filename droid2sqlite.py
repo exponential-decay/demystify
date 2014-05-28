@@ -164,11 +164,12 @@ class DROIDLoader:
 		# We can also close the connection if we are done with it.
 		# Just be sure any changes have been committed or they will be lost.
 		conn.close()
-		print
+		return dbfilename
 
 def handleDROIDCSV(droidcsv):
 	loader = DROIDLoader()
-	loader.droidDBSetup(droidcsv)
+	dbfilename = loader.droidDBSetup(droidcsv)
+	return dbfilename
 
 def main():
 

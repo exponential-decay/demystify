@@ -286,9 +286,10 @@ def handleDROIDDB(dbfilename):
 	analysis.openDROIDDB(dbfilename)
 	#TODO: Incorrect filetypes provided, e.g. providing CSV not DB
 
-def handleDROIDCSV(droidcsv):
-	droid2sqlite.handleDROIDCSV(droidcsv)
-	#TODO: Handle CSV through to analysis option
+def handleDROIDCSV(droidcsv, analyse=False):
+	dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
+	if analyse == True:
+		handleDROIDDB(dbfilename)
 
 def main():
 
@@ -297,6 +298,7 @@ def main():
 	#	Handle command line arguments for the script
 	parser = argparse.ArgumentParser(description='Analyse DROID results stored in a SQLite DB')
 	parser.add_argument('--csv', help='Optional: Single DROID CSV to read.', default=False)
+	parser.add_argument('--csva', help='Optional: DROID CSV to read, and then analyse.', default=False)
 	parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
 
 	if len(sys.argv)==1:
@@ -308,9 +310,12 @@ def main():
 	args = parser.parse_args()
 	
 	if args.csv:
-		handleDROIDCSV(args.csv)	
+		handleDROIDCSV(args.csv)
+	if args.csva:
+		handleDROIDCSV(args.csva, True)
 	if args.db:
-		handleDROIDDB(args.db)		
+		handleDROIDDB(args.db)
+	
 	else:
 		sys.exit(1)
 
