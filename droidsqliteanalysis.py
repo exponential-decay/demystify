@@ -34,7 +34,7 @@ class DROIDAnalysis:
 		print "XXXX: " + str(count)
 		return count
 
-	def __listQuery__(self, query):
+	def __listQuery__(self, query, separator):
 		self.cursor.execute(query)
 		result = self.cursor.fetchall()
 		row = ""
@@ -43,24 +43,15 @@ class DROIDAnalysis:
 				item = ""
 				for t in r:
 					item = item + str(t) + ", "
-				row = row + item[:-2] + " | "
+				row = row + item[:-2] + separator
 			else:
 				row = row + str(r[0]) + ", " 
 		print row[:-2]
 
-	def __newlineListQuery__(self, query):
+	def __alternativeFrequencyQuery__(self, query):
 		self.cursor.execute(query)
 		result = self.cursor.fetchall()
-		row = ""
-		for r in result:
-			if len(r) > 1:
-				item = ""
-				for t in r:
-					item = item + str(t) + ", "
-				row = row + item[:-2] + "\n"
-			else:
-				row = row + str(r[0]) + ", " 
-		print row[:-2]
+		return result
 
 	def countFilesQuery(self):
 		self.filecount = self.__countQuery__( 
@@ -122,11 +113,11 @@ class DROIDAnalysis:
 	# Frequency list queries
 	def identifiedBinaryMatchedPUIDFrequency(self):
 		self.__listQuery__( 
-			"SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC")
+			"SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
 
 	def allExtensionsFrequency(self):
 		self.__listQuery__(
-			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
+			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC", " | ")
 
 
 
@@ -135,22 +126,20 @@ class DROIDAnalysis:
 	# List queries
 	def listUniqueBinaryMatchedPUIDS(self):
 		self.__listQuery__(
-			"SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')")
+			"SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')", " | ")
 
 	def listAllUniqueExtensions(self):	
 		self.__listQuery__(
-			"SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')")
+			"SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')", " | ")
 
 	def listExtensionOnlyIdentificationPUIDS(self):	
 		self.__listQuery__(		
-			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
+			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
 
 
 
 
 	def listDuplicates(self):
-		#URI, URI_SCHEME
-
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
@@ -159,14 +148,7 @@ class DROIDAnalysis:
 				
 				print
 				print "Duplicate hash: " + duplicatemd5
-				self.__newlineListQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'")
-				print
-				
-				
-				#print r[1]
-				
-		#TODO: select files with a matching hash
-
+				self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 
 	def listTopTwenty(self, freqTuple, matchTotal, total, text):
 
@@ -191,14 +173,6 @@ class DROIDAnalysis:
 		#	print "Format frequency: "
 		#	for t in test:
 		#		print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
-
-
-
-
-	def __alternativeFrequencyQuery__(self, query):
-		self.cursor.execute(query)
-		result = self.cursor.fetchall()
-		return result
 
 	def paretoListings(self):
 		# 80% of the effects come from 20% of the causes		
@@ -330,17 +304,21 @@ class DROIDAnalysis:
 
 		print
 		print "Frequency of all extensions:"
-		#self.allExtensionsFrequency()
+		self.allExtensionsFrequency()
 
 		#self.paretoListings()
 
-
+		print
+		print "Total items in collection unidentified:"
 		#self.calculateUnidentifiedPercent()
+		
+		print
+		print "Total items in collection identified:"
 		#self.calculateIdentifiedPercent()
 		
 		print 
 		print "Listing duplicates: "
-		#self.listDuplicates()
+		self.listDuplicates()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
@@ -362,7 +340,7 @@ def handleDROIDCSV(droidcsv):
 
 def main():
 
-	#	Usage: 	--csv [jp2file]
+	#	Usage: 	--csv [droid report]
 
 	#	Handle command line arguments for the script
 	parser = argparse.ArgumentParser(description='Analyse DROID results stored in a SQLite DB')
