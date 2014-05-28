@@ -31,7 +31,7 @@ class DROIDAnalysis:
 	def __countQuery__(self, query):
 		self.cursor.execute(query)
 		count = self.cursor.fetchone()[0]
-		print "XXXX: " + str(count)
+		print "XXX: " + str(count)
 		return count
 
 	def __listQuery__(self, query, separator):
@@ -45,7 +45,7 @@ class DROIDAnalysis:
 					item = item + str(t) + ", "
 				row = row + item[:-2] + separator
 			else:
-				row = row + str(r[0]) + ", " 
+				row = row + str(r[0]) + separator 
 		print row[:-2]
 
 	def __alternativeFrequencyQuery__(self, query):
@@ -72,7 +72,7 @@ class DROIDAnalysis:
 
 	def countIdentifiedQuery(self):
 		self.identifiedfilecount = self.__countQuery__( 
-			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Signature'")
+			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' or METHOD='Container')")
 
 	def countTotalUnidentifiedQuery(self):
 		self.unidentifiedfilecount = self.__countQuery__( 
@@ -115,6 +115,10 @@ class DROIDAnalysis:
 		self.__listQuery__( 
 			"SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
 
+	def extensionOnlyIdentificationFrequency(self):
+		self.__listQuery__( 
+			"SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Extension') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
+
 	def allExtensionsFrequency(self):
 		self.__listQuery__(
 			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC", " | ")
@@ -136,61 +140,67 @@ class DROIDAnalysis:
 		self.__listQuery__(		
 			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
 
+	def listNoIdentificationFiles(self):
+		self.__listQuery__(	
+			"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')", "\n")
+
 	def listDuplicates(self):
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
 			if r[1] > 1:
 				duplicatemd5 = r[0]
-				
 				print
 				print "Duplicate hash: " + duplicatemd5
 				self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 
-	def listTopTwenty(self, freqTuple, matchTotal, total, text):
 
-		print matchTotal
+
+
+
+
+	def paretoListingPUIDS(self):
+		# Hypothesis: 80% of the effects come from 20% of the causes		
+
+		eightyPercentTotalPUIDs = int(self.identifiedfilecount * 0.80)		# 80 percent figure
+		countIdentifiedPuids = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
+		self.listTopTwenty(self.__alternativeFrequencyQuery__(countIdentifiedPuids), eightyPercentTotalPUIDs, self.identifiedfilecount, "Identified formats", "identified formats")
+		
+	def paretoListingExts(self):
+		# Hypothesis: 80% of the effects come from 20% of the causes		
+
+		eightyPercentTotalExts = int(self.filecount * 0.80)		# 80 percent figure
+		countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
+		self.listTopTwenty(self.__alternativeFrequencyQuery__(countExtensions), eightyPercentTotalExts, self.filecount, "Extensions for formats", "total files")
+
+	def listTopTwenty(self, frequencyQueryResult, eightyPercentTotal, total, introtext, endtext):
 
 		x = 0
 		index = "null"
-		for i,t in enumerate(freqTuple):
-			if t[1] <= matchTotal:
-				x = x + t[1]
-				if x >= matchTotal:
+		
+		for i,t in enumerate(frequencyQueryResult):
+			count = t[1]
+			if count <= eightyPercentTotal:
+				x = x + count
+				if x >= eightyPercentTotal:
 					index = i
 					break
 	
 		if index is not "null":
 			print 
-			print "Top 20% (out of " + str(total) + " ) " + text + ": "
+			print introtext + " contributing to 20% of collection out of " + str(total) + " " + endtext
 			for i in range(index):
-				print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
+				label = frequencyQueryResult[i][0]
+				count = frequencyQueryResult[i][1]
+				print label + "       COUNT: " + str(count)
 	
-		#else:
-		#	print "Format frequency: "
-		#	for t in test:
-		#		print freqTuple[i][0] + "       COUNT: " + str(freqTuple[i][1])
+		else:
+			print "Format frequency: "
+			print freqTuple[0][0] + "       COUNT: " + str(freqTuple[0][1])
 
-	def paretoListings(self):
-		# 80% of the effects come from 20% of the causes		
-		
-		# duplication in this function can potentially be removed through
-		# effective use of classes...
-			
-		puidTotal = self.identifiedfilecount
-		puidPareto = int(puidTotal * 0.80)
-	
-		print puidTotal
 
-		extTotal = self.distinctextensioncount
-		extPareto = int(extTotal * 0.80)
 
-		puidquery = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-		extquery = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
 
-		self.listTopTwenty(self.__alternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
-		self.listTopTwenty(self.__alternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
-	
 	def filesWithDodgyCharacters(self):
 		countDirs = "SELECT DISTINCT NAME FROM droid"
 		self.cursor.execute(countDirs)
@@ -200,7 +210,7 @@ class DROIDAnalysis:
 			dirstring = d[0]
 			charcheck.completeFnameAnalysis(dirstring)
 		return
-	
+
 	# stats output... 
 	def calculateIdentifiedPercent(self):
 		allcount = self.filecount
@@ -214,6 +224,11 @@ class DROIDAnalysis:
 	def calculateUnidentifiedPercent(self):
 		allcount = self.filecount
 		count = self.unidentifiedfilecount		
+		
+		print allcount
+		print count
+		
+		
 		if allcount > 0:
 			percentage = (count/allcount)*100
 			print "Percentage of the collection unidentified: " + '%.1f' % round(percentage, 1) + "%"
@@ -239,22 +254,34 @@ class DROIDAnalysis:
 		#self.listUniqueBinaryMatchedPUIDS()
 
 		print
-		print "Frequency of all binary matched PUIDs:"
+		print "Frequency of signature identified PUIDs:"
 		#self.identifiedBinaryMatchedPUIDFrequency()
 
 		print
 		print "Extension only identification in collection:"
 		#self.listExtensionOnlyIdentificationPUIDS()
 
+		print 
+		print "Frequency of extension only identification in collection: "
+		#self.extensionOnlyIdentificationFrequency()
+
 		print
-		print "Unique extensions identified in collection:"
+		print "Unique extensions identified across collection:"
 		#self.listAllUniqueExtensions()
 
 		print
 		print "Frequency of all extensions:"
 		#self.allExtensionsFrequency()
 
-		#self.paretoListings()
+		print
+		print "List of files with no identification: "
+		#self.listNoIdentificationFiles()
+
+		print
+		print "pareto: "
+		#self.paretoListingPUIDS()
+		print
+		#self.paretoListingExts()
 
 		print
 		print "Total items in collection unidentified:"
