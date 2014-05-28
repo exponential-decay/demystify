@@ -232,7 +232,6 @@ class DROIDAnalysis:
 	
 		# First test, all ASCII characters?
 		for s in test_strings:
-			print s
 			self.detect_invalid_characters(s)
 	
 	def is_ascii(self, s):
@@ -240,9 +239,13 @@ class DROIDAnalysis:
 
 	def detect_invalid_characters(self, s):
 		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+
+		#non-ascii characters
+		if not self.is_ascii(s):
+			print "Characters in filename outside of ASCII range: " + s
 		
 		#non-recommended characters
-		charlist = ['<','>',':','"','/','\\','?','*','|']
+		charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
 		for c in charlist:
 			if c in s:
 				print "File: " + s + " contains: " + c
@@ -254,43 +257,24 @@ class DROIDAnalysis:
 				print "File: " + s + " contains: " + hex(c)
 				break
 
-
-	def detect_invalid_characters_regex(self, s):
-		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-	
-		if not self.is_ascii(s):
-			print "We have some characters outside of ASCII range: " + s
-	
-		#regex strings...
-	
-		#CON|PRN|AUX|NUL
-		msdn_bad_names_one = "(^)(con|prn|aux|nul)($|.|.[0-9a-zA-Z]{1,5}$)"		# badname + extension
-		
-		#COM1-COM9 | LPT1-LPT9
-		msdn_bad_names_two = "((^)(COM|LPT)(.*[1-9]))($|(.[0-9a-zA-Z]{0,5}))"	# badname + extension
-	
-		#<, >, :, ", /, \, ?, *, |, \x00-\x1f
-		non_recommended_chars = '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)'
-
-		#[]
-		square_brackets = '(\[|\])'
-
-		bad_names_one_regex = re.compile(msdn_bad_names_one, re.IGNORECASE)
-		bad_names_two_regex = re.compile(msdn_bad_names_two, re.IGNORECASE)	
-		bad_characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
-		square_bracket_regex = re.compile(square_brackets, re.IGNORECASE)	
-	
-		bad_tuples_one = re.findall(bad_names_one_regex, s)
-		bad_tuples_two = re.findall(bad_names_two_regex, s)
-		bad_char_tuples = re.findall(bad_characters_regex, s)
-		bracket_tuples = re.findall(square_bracket_regex, s)	
-
-		if bad_char_tuples:
-			print "got some bad characters: " + s
-		if bad_tuples_one or bad_tuples_two:
-			print "Got some bad filenames: " + s
-		if bracket_tuples:
-			print "Got some square brackets: " + s
+		#space or period at end of a name
+		badnames = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', \
+							'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', \
+								'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', \
+									'LPT6', 'LPT7', 'LPT8', 'LPT9']
+				
+		for c in badnames:
+			if c.lower() in s[0:len(c)].lower():
+				problem = True
+				try:
+					if s[len(c)] == '.':					#zero-based index
+						problem = True
+					else:
+						problem = False
+				except IndexError:
+					problem = True
+				if problem == True:
+					print "File: " + s + " contains, reserved name: " + c
 
 
 
@@ -345,9 +329,9 @@ class DROIDAnalysis:
 		#self.listDuplicates()
 
 
-		#self.foldersWithDodgyCharacters()	
-		#self.filesWithDodgyCharacters()
-		self.detect_invalid_characters_test()
+		self.foldersWithDodgyCharacters()	
+		self.filesWithDodgyCharacters()
+		
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
