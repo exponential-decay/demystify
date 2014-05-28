@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import division
 import argparse
 import sys
@@ -43,6 +44,20 @@ class DROIDAnalysis:
 				for t in r:
 					item = item + str(t) + ", "
 				row = row + item[:-2] + " | "
+			else:
+				row = row + str(r[0]) + ", " 
+		print row[:-2]
+
+	def __newlineListQuery__(self, query):
+		self.cursor.execute(query)
+		result = self.cursor.fetchall()
+		row = ""
+		for r in result:
+			if len(r) > 1:
+				item = ""
+				for t in r:
+					item = item + str(t) + ", "
+				row = row + item[:-2] + "\n"
 			else:
 				row = row + str(r[0]) + ", " 
 		print row[:-2]
@@ -140,8 +155,15 @@ class DROIDAnalysis:
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
 			if r[1] > 1:
-				print r[0]
-				print r[1]
+				duplicatemd5 = r[0]
+				
+				print
+				print "Duplicate hash: " + duplicatemd5
+				self.__newlineListQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'")
+				print
+				
+				
+				#print r[1]
 				
 		#TODO: select files with a matching hash
 
