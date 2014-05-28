@@ -136,9 +136,6 @@ class DROIDAnalysis:
 		self.__listQuery__(		
 			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
 
-
-
-
 	def listDuplicates(self):
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -195,6 +192,20 @@ class DROIDAnalysis:
 		self.listTopTwenty(self.__alternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
 
 
+	def foldersWithDodgyCharacters(self):
+		countDirs = "SELECT DISTINCT NAME FROM droid"
+		self.cursor.execute(countDirs)
+		dirlist = self.cursor.fetchall()
+		for d in dirlist:
+			dirstring = d[0]
+			self.detect_invalid_characters(dirstring)
+		return 
+	
+	def filesWithDodgyCharacters(self):
+
+		return
+	
+	# stats output... 
 	def calculateIdentifiedPercent(self):
 		allcount = self.filecount
 		count = self.identifiedfilecount
@@ -215,21 +226,40 @@ class DROIDAnalysis:
 		
 
 
-
+	def detect_invalid_characters_test(self):
+		#Strings for unit tests
+		test_strings = ['COM4', 'COM4.txt', '.com4', 'abcCOM4text', 'abc.com4.txt.abc', 'con', 'CON', 'consumer', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
+	
+		# First test, all ASCII characters?
+		for s in test_strings:
+			print s
+			self.detect_invalid_characters(s)
 	
 	def is_ascii(self, s):
 		 return all(ord(c) < 128 for c in s)
 
 	def detect_invalid_characters(self, s):
 		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+		
+		#non-recommended characters
+		charlist = ['<','>',':','"','/','\\','?','*','|']
+		for c in charlist:
+			if c in s:
+				print "File: " + s + " contains: " + c
+				break
+		
+		#non-printable characters
+		for c in range(0x1f):
+			if chr(c) in s:
+				print "File: " + s + " contains: " + hex(c)
+				break
+
+
+	def detect_invalid_characters_regex(self, s):
+		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 	
-		#Strings for unit tests
-		test_strings = ['COM4', 'COM4.txt', '.com4', 'abccom4text', 'abc.com4.txt.abc', 'con', 'CON', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
-	
-		# First test, all ASCII characters?
-		for s in test_strings:
-			if not is_ascii(s):
-				print "We have some characters outside of ASCII range: " + s
+		if not self.is_ascii(s):
+			print "We have some characters outside of ASCII range: " + s
 	
 		#regex strings...
 	
@@ -250,25 +280,19 @@ class DROIDAnalysis:
 		bad_characters_regex = re.compile(non_recommended_chars, re.IGNORECASE)
 		square_bracket_regex = re.compile(square_brackets, re.IGNORECASE)	
 	
-		for s in test_strings:	
-			bad_tuples_one = re.findall(bad_names_one_regex, s)
-			bad_tuples_two = re.findall(bad_names_two_regex, s)
-			bad_char_tuples = re.findall(bad_characters_regex, s)
-			bracket_tuples = re.findall(square_bracket_regex, s)	
+		bad_tuples_one = re.findall(bad_names_one_regex, s)
+		bad_tuples_two = re.findall(bad_names_two_regex, s)
+		bad_char_tuples = re.findall(bad_characters_regex, s)
+		bracket_tuples = re.findall(square_bracket_regex, s)	
 
-			if bad_char_tuples:
-				print "got some bad characters: " + s
-			if bad_tuples_one or bad_tuples_two:
-				print "Got some bad filenames: " + s
-			if bracket_tuples:
-				print "Got some square brackets: " + s
+		if bad_char_tuples:
+			print "got some bad characters: " + s
+		if bad_tuples_one or bad_tuples_two:
+			print "Got some bad filenames: " + s
+		if bracket_tuples:
+			print "Got some square brackets: " + s
 
-	def checkDodgyCharacters(self):
-		countDirs = "SELECT DISTINCT DIR_NAME FROM droid"
-		self.cursor.execute(countDirs)
-		dirlist = self.cursor.fetchall()
-		for d in dirlist:
-			print d[0]
+
 
 	
 
@@ -304,7 +328,7 @@ class DROIDAnalysis:
 
 		print
 		print "Frequency of all extensions:"
-		self.allExtensionsFrequency()
+		#self.allExtensionsFrequency()
 
 		#self.paretoListings()
 
@@ -318,7 +342,12 @@ class DROIDAnalysis:
 		
 		print 
 		print "Listing duplicates: "
-		self.listDuplicates()
+		#self.listDuplicates()
+
+
+		#self.foldersWithDodgyCharacters()	
+		#self.filesWithDodgyCharacters()
+		self.detect_invalid_characters_test()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
