@@ -190,19 +190,14 @@ class DROIDAnalysis:
 
 		self.listTopTwenty(self.__alternativeFrequencyQuery__(puidquery), puidPareto, puidTotal, "binary identified PUIDS")
 		self.listTopTwenty(self.__alternativeFrequencyQuery__(extquery), extPareto, extTotal, "format extensions")
-
-
-	def foldersWithDodgyCharacters(self):
+	
+	def filesWithDodgyCharacters(self):
 		countDirs = "SELECT DISTINCT NAME FROM droid"
 		self.cursor.execute(countDirs)
 		dirlist = self.cursor.fetchall()
 		for d in dirlist:
 			dirstring = d[0]
 			self.detect_invalid_characters(dirstring)
-		return 
-	
-	def filesWithDodgyCharacters(self):
-
 		return
 	
 	# stats output... 
@@ -224,40 +219,53 @@ class DROIDAnalysis:
 		else:
 			print "Zero files" 
 		
-
-
 	def detect_invalid_characters_test(self):
 		#Strings for unit tests
-		test_strings = ['COM4', 'COM4.txt', '.com4', 'abcCOM4text', 'abc.com4.txt.abc', 'con', 'CON', 'consumer', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
+		test_strings = ['COM4', 'COM4.txt', '.com4', 'abcCOM4text', 'abc.com4.txt.abc', 'con', 'CON', 'consumer', 'space ', 'preiod.', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
 	
 		# First test, all ASCII characters?
 		for s in test_strings:
 			self.detect_invalid_characters(s)
 	
 	def is_ascii(self, s):
-		 return all(ord(c) < 128 for c in s)
+		#Nicer method: all(ord(c) < 128 for c in s)
+		nonascii = False
+		char = ''
+		for c in s:
+			if ord(c) > 128:
+				nonascii = True
+				char = c
+				break
+		return nonascii, char
+					
 
 	def detect_invalid_characters(self, s):
 		#http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
-
+		
+		#todo: consider benefit of separating into function definitions
+		
 		#non-ascii characters
-		if not self.is_ascii(s):
-			print "Characters in filename outside of ASCII range: " + s
+		nonascii = self.is_ascii(s)
+		if nonascii[0] == True:
+			print "Characters in filename outside of ASCII range: " + hex(ord(nonascii[1]))
+			print
 		
 		#non-recommended characters
 		charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
 		for c in charlist:
 			if c in s:
-				print "File: " + s + " contains: " + c
+				print "File: " + s + " contains, non-recommended character: " + c
+				print
 				break
 		
 		#non-printable characters
 		for c in range(0x1f):
 			if chr(c) in s:
-				print "File: " + s + " contains: " + hex(c)
+				print "File: " + s + " contains, non-printable character: " + hex(c)
+				print
 				break
 
-		#space or period at end of a name
+		#reserved names
 		badnames = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', \
 							'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', \
 								'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', \
@@ -275,10 +283,15 @@ class DROIDAnalysis:
 					problem = True
 				if problem == True:
 					print "File: " + s + " contains, reserved name: " + c
+					print
 
-
-
-	
+		#space or period at end of a name
+		if s.endswith(' '):
+			print "File: " + s + " has a space as its last character."
+			print
+		elif s.endswith('.'):
+			print "File: " + s + " has a period as its last character."
+			print 
 
 	def queryDB(self):
 		self.countFilesQuery()
@@ -328,9 +341,8 @@ class DROIDAnalysis:
 		print "Listing duplicates: "
 		#self.listDuplicates()
 
-
-		self.foldersWithDodgyCharacters()	
 		self.filesWithDodgyCharacters()
+		#self.detect_invalid_characters_test()
 		
 
 	def openDROIDDB(self, dbfilename):
