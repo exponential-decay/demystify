@@ -3,6 +3,8 @@
 
 class MsoftFnameAnalysis:
 
+	report = ''
+
 	def completeFnameAnalysis(self, s):
 		self.detectNonAsciiCharacters(s)
 		self.detectNonRecommendedCharacters(s)
@@ -64,8 +66,8 @@ class MsoftFnameAnalysis:
 			self.reportIssue(s, "has a period as its last character.")
 	
 	def reportIssue(self, s, msg, value=''):
-		print "File: " + s + " " + msg + " " + value
-		print
+		self.report = "File: " + s + " " + msg + " " + value
+		print self.report
 	
 	def __detect_invalid_characters_test__(self):
 		#Strings for unit tests
