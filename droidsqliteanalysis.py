@@ -69,7 +69,15 @@ class DROIDAnalysis:
 		print
 		print "List of files with no identification: "
 		print self.filesWithNoIDList
-	
+
+		print
+		print "Top signature and container identified PUIDs: "
+		print self.topPUIDList
+		
+		print
+		print "Top extensions across collection: "		
+		print self.topExtensionList 	
+
 		print 
 		print "Duplicate listing: "
 		for d in self.duplicateListing:
@@ -194,6 +202,37 @@ class DROIDAnalysis:
 		return duplicatelist
 
 	###
+	# Pareto listings
+	###
+	def topPUIDS(self, number):
+		# Hypothesis: 80% of the effects come from 20% of the causes		
+
+		eightyPercentTotalPUIDs = int(self.identifiedfilecount * 0.80)		# 80 percent figure
+		countIdentifiedPuids = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
+		return self.listTopItems(self.__alternativeFrequencyQuery__(countIdentifiedPuids), number)
+		
+	def topExts(self, number):
+		# Hypothesis: 80% of the effects come from 20% of the causes		
+
+		eightyPercentTotalExts = int(self.filecount * 0.80)		# 80 percent figure
+		countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
+		return self.listTopItems(self.__alternativeFrequencyQuery__(countExtensions), number)
+
+	def listTopItems(self, frequencyQueryResult, number):
+		toptwentystr = ''
+		
+		try:
+			for i in range(number):
+				label = frequencyQueryResult[i][0]
+				count = frequencyQueryResult[i][1]
+				toptwentystr = toptwentystr + label + "       count: " + str(count) + "\n"
+		except IndexError:
+			# No more values we can list so return string as is...
+			toptwentystr = toptwentystr
+			
+		return toptwentystr
+
+	###
 	# Additional functions on DB
 	###
 	def filesWithDodgyCharacters(self):
@@ -245,7 +284,9 @@ class DROIDAnalysis:
 		self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
 		self.frequencyOfAllExtensions = self.allExtensionsFrequency()
 		self.filesWithNoIDList = self.listNoIdentificationFiles()
-		self.duplicateListing = self.listDuplicates()	
+		self.duplicateListing = self.listDuplicates()
+		self.topPUIDList = self.topPUIDS(5)
+		self.topExtensionList = self.topExts(5)		
 		self.printResults()
 		
 		#TODO: handle this correctly
