@@ -62,18 +62,8 @@ class DROIDAnalysis:
 		print "Total extension ID only count: " + str(self.extensionIDOnlyCount)
 		print "Total signature IDd PUID count: " + str(self.distinctSignaturePuidcount)
 		print "Total distinct extensions across collection: " + str(self.distinctextensioncount)
-		print "Total zero id count: " + str(self.zeroidcount)
 		print "Percentage of collection identified: " + str(self.identifiedPercentage)
 		print "Percentage of collection unidentified: " + str(self.unidentifiedPercentage)
-		print
-		print
-		print
-		print "No. of zero byte objects in collection: " + str(self.zerobytecount)
-		print "Lost of zero byte objects: " + str(self.zerobytelist)
-		print
-		print
-		print
-
 
 		print
 		print "Signature identified PUIDs in collection:"
@@ -100,7 +90,11 @@ class DROIDAnalysis:
 		print self.frequencyOfAllExtensions 
 
 		print
-		print "List of files with no identification: "
+		print "Zero byte objects in collection: " + str(self.zerobytecount)
+		print self.zerobytelist
+
+		print
+		print "Files with no identification: " + str(self.zeroidcount)
 		print self.filesWithNoIDList
 
 		print
@@ -193,7 +187,7 @@ class DROIDAnalysis:
 			
 	def countZeroByteObjects(self):
 		return self.__countQuery__( 
-			"SELECT COUNT(SIZE) FROM droid WHERE TYPE='File' AND SIZE='0'")
+			"SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
 		return
 
 	###
@@ -234,6 +228,10 @@ class DROIDAnalysis:
 		return self.__listQuery__(	
 			"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')", "\n")
 
+	def listZeroByteObjects(self):
+		return self.__listQuery__(	
+			"SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'", "\n")
+
 	def listDuplicates(self):
 		duplicatestr = ''
 		duplicatelist = []
@@ -246,9 +244,6 @@ class DROIDAnalysis:
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
 		return duplicatelist
-
-	def listZeroByteObjects(self):
-		return
 
 	###
 	# Pareto listings
