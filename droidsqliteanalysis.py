@@ -46,6 +46,11 @@ class DROIDAnalysis:
 	
 	duplicateListing = []
 	
+	containertypeslist = 0
+	
+	zerobytecount = 0
+	zerobytelist = 0
+	
 	def printResults(self):
 		print "Total files: " + str(self.filecount)
 		print "Total container objects: " + str(self.containercount)
@@ -60,6 +65,15 @@ class DROIDAnalysis:
 		print "Total zero id count: " + str(self.zeroidcount)
 		print "Percentage of collection identified: " + str(self.identifiedPercentage)
 		print "Percentage of collection unidentified: " + str(self.unidentifiedPercentage)
+		print
+		print
+		print
+		print "No. of zero byte objects in collection: " + str(self.zerobytecount)
+		print "Lost of zero byte objects: " + str(self.zerobytelist)
+		print
+		print
+		print
+
 
 		print
 		print "Signature identified PUIDs in collection:"
@@ -176,6 +190,11 @@ class DROIDAnalysis:
 	def countDistinctExtensions(self):
 		return self.__countQuery__( 
 			"SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'")
+			
+	def countZeroByteObjects(self):
+		return self.__countQuery__( 
+			"SELECT COUNT(SIZE) FROM droid WHERE TYPE='File' AND SIZE='0'")
+		return
 
 	###
 	# Frequency list queries
@@ -227,6 +246,9 @@ class DROIDAnalysis:
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
 		return duplicatelist
+
+	def listZeroByteObjects(self):
+		return
 
 	###
 	# Pareto listings
@@ -293,7 +315,6 @@ class DROIDAnalysis:
 	def queryDB(self):
 		self.filecount = self.countFilesQuery()
 		self.containercount = self.countContainerObjects()
-		self.containertypeslist = self.listContainerTypes()
 		self.filesincontainercount = self.countFilesInContainerObjects()
 		self.directoryCount = self.countFoldersQuery()
 		self.uniqueDirectoryNames = self.countUniqueDirectoryNames()
@@ -315,6 +336,11 @@ class DROIDAnalysis:
 		self.duplicateListing = self.listDuplicates()
 		self.topPUIDList = self.topPUIDS(5)
 		self.topExtensionList = self.topExts(5)		
+		self.containertypeslist = self.listContainerTypes()
+		
+		self.zerobytecount = self.countZeroByteObjects()
+		self.zerobytelist = self.listZeroByteObjects()
+		
 		self.printResults()
 		
 		#TODO: handle this correctly
