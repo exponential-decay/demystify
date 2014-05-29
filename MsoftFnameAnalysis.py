@@ -23,19 +23,19 @@ class MsoftFnameAnalysis:
 				char = c
 				break
 		if nonascii == True:
-			self.reportIssue(s, "contains, characters outside of ASCII range:", hex(ord(char)))
+			self.reportIssue(s, "contains, characters outside of ASCII range:", hex(ord(char)) + " '" + c + "'")
 
 	def detectNonRecommendedCharacters(self, s):
 		charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
 		for c in charlist:
 			if c in s:
-				self.reportIssue(s, "contains, non-recommended character:", hex(ord(c)))
+				self.reportIssue(s, "contains, non-recommended character:", hex(ord(c)) + " '" + c + "'")
 				break
 
 	def detectNonPrintableCharacters(self, s):
 		for c in range(0x1f):
 			if chr(c) in s:
-				self.reportIssue(s, "contains, non-printable character:", hex(c))
+				self.reportIssue(s, "contains, non-printable character:", hex(c) + " '" + c + "'")
 				break
 
 	def detectMsoftReservedNames(self, s):

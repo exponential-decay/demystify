@@ -111,7 +111,7 @@ class DROIDAnalysis:
 
 		print 
 		print "Duplicate listing: "
-		for d in self.duplicateListing:
+		for d in self.duplicateListing:	#TODO: consider count next to MD5 val
 			print d
 			print
 			
