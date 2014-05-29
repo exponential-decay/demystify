@@ -278,7 +278,7 @@ class DROIDAnalysis:
 		return toptwentystr
 
 	###
-	# Stats output... #TODO: Merge and document these two functions better
+	# Stats output...
 	###
 	def calculatePercent(self, total, subset):
 		if total > 0:
