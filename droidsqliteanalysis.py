@@ -247,7 +247,7 @@ class DROIDAnalysis:
 		return duplicatelist
 
 	###
-	# Pareto listings
+	# Top n listings...
 	###
 	def topPUIDS(self, number):
 		# Hypothesis: 80% of the effects come from 20% of the causes		
