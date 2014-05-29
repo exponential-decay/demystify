@@ -276,7 +276,7 @@ class DROIDAnalysis:
 		return self.__listQuery__(	
 			"SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'", "\n")
 
-	def listDuplicates(self):
+	def listDuplicateFilesFromMD5(self):
 		duplicatestr = ''
 		duplicatelist = []
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
@@ -378,7 +378,7 @@ class DROIDAnalysis:
 		self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
 		self.frequencyOfAllExtensions = self.allExtensionsFrequency()
 		self.filesWithNoIDList = self.listNoIdentificationFiles()
-		self.duplicateListing = self.listDuplicates()
+		self.duplicateListing = self.listDuplicateFilesFromMD5()
 		self.topPUIDList = self.topPUIDS(5)
 		self.topExtensionList = self.topExts(5)		
 		self.containertypeslist = self.listContainerTypes()
