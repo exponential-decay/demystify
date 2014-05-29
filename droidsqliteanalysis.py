@@ -238,9 +238,10 @@ class DROIDAnalysis:
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
 		for r in result:
-			if r[1] > 1:
+			count = r[1]
+			if count > 1:
 				duplicatemd5 = r[0]
-				duplicatestr = "Duplicate hash: " + duplicatemd5 + '\n'
+				duplicatestr = "Duplicate hash: " + duplicatemd5 + "    Count: " + str(count) + '\n'
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
 		return duplicatelist
