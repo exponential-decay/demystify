@@ -40,6 +40,8 @@ class DROIDAnalysis:
 	uniqueExtensionsInCollectionList = 0
 	frequencyOfAllExtensions = 0
 	
+	idmethodFrequency = 0
+	
 	mimetypeFrequency = 0
 	
 	filesWithNoIDList = 0
@@ -79,6 +81,10 @@ class DROIDAnalysis:
 		print
 		print "Extension only identification in collection:"
 		print self.extensionOnlyIDList
+
+		print 
+		print "ID Method Frequency: "
+		print self.idmethodFrequency
 
 		print 
 		print "Frequency of extension only identification in collection: "
@@ -222,6 +228,11 @@ class DROIDAnalysis:
 		return self.__listQuery__(
 			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC", " | ")
 
+	def idmethodFrequencyCount(self):
+		return self.__listQuery__(
+			"SELECT METHOD, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY METHOD ORDER BY TOTAL DESC", "\n")	
+	
+
 	def mimetypeFrequencyCount(self):
 		return self.__listQuery__(
 			"SELECT MIME_TYPE, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MIME_TYPE ORDER BY TOTAL DESC", " | ")
@@ -336,6 +347,8 @@ class DROIDAnalysis:
 		self.extensionIDOnlyCount = self.countExtensionIDOnly()
 		self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
 		self.distinctextensioncount = self.countDistinctExtensions()
+		
+		self.idmethodFrequency = self.idmethodFrequencyCount()
 		self.mimetypeFrequency = self.mimetypeFrequencyCount()
 		
 		self.zeroidcount = self.countZeroID()
