@@ -25,6 +25,7 @@ class DROIDAnalysis:
 	distinctSignaturePuidcount = 0
 	extensionIDOnlyCount = 0
 	distinctextensioncount = 0
+	extmismatchCount = 0
 	zeroidcount = 0
 	
 	unidentifiedPercentage = 0
@@ -65,6 +66,7 @@ class DROIDAnalysis:
 		print "Total identified files (signature and container): " + str(self.identifiedfilecount)
 		print "Total unidentified files (extension and blank): " + str(self.unidentifiedfilecount)
 		print "Total extension ID only count: " + str(self.extensionIDOnlyCount)
+		print "Total extension mismatches: " + str(self.extmismatchCount)
 		print "Total signature IDd PUID count: " + str(self.distinctSignaturePuidcount)
 		print "Total distinct extensions across collection: " + str(self.distinctextensioncount)
 		print "Percentage of collection identified: " + str(self.identifiedPercentage)
@@ -207,7 +209,11 @@ class DROIDAnalysis:
 	def countDistinctExtensions(self):
 		return self.__countQuery__( 
 			"SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'")
-			
+	
+	def countExtensionMismatches(self):
+		return self.__countQuery__( 
+			"SELECT COUNT(EXTENSION_MISMATCH) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")	
+
 	def countZeroByteObjects(self):
 		return self.__countQuery__( 
 			"SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
@@ -347,6 +353,7 @@ class DROIDAnalysis:
 		self.extensionIDOnlyCount = self.countExtensionIDOnly()
 		self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
 		self.distinctextensioncount = self.countDistinctExtensions()
+		self.extmismatchCount = self.countExtensionMismatches()
 		
 		self.idmethodFrequency = self.idmethodFrequencyCount()
 		self.mimetypeFrequency = self.mimetypeFrequencyCount()
