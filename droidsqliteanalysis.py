@@ -210,7 +210,7 @@ class DROIDAnalysis:
 	###
 	def listUniqueBinaryMatchedPUIDS(self):
 		return self.__listQuery__(
-			"SELECT DISTINCT PUID FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')", " | ")
+			"SELECT DISTINCT PUID, FORMAT_NAME, FORMAT_VERSION FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')", "\n")
 
 	def listAllUniqueExtensions(self):	
 		return self.__listQuery__(
