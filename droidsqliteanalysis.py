@@ -132,7 +132,7 @@ class DROIDAnalysis:
 				row = row + item[:-2] + separator
 			else:
 				row = row + str(r[0]) + separator 
-		return row[:-2]
+		return row[:-1]
 
 	def __alternativeFrequencyQuery__(self, query):
 		self.cursor.execute(query)
