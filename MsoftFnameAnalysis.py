@@ -6,12 +6,14 @@ class MsoftFnameAnalysis:
 	report = ''
 
 	def completeFnameAnalysis(self, s):
+		self.report = ''
 		self.detectNonAsciiCharacters(s)
 		self.detectNonRecommendedCharacters(s)
 		self.detectNonPrintableCharacters(s)
 		self.detectMsoftReservedNames(s)
 		self.detectSpaceAtEndOfName(s)
 		self.detectPeriodAtEndOfName(s)
+		return self.report
 
 	def detectNonAsciiCharacters(self, s):
 		#Nicer method: all(ord(c) < 128 for c in s)
@@ -66,8 +68,7 @@ class MsoftFnameAnalysis:
 			self.reportIssue(s, "has a period as its last character.")
 	
 	def reportIssue(self, s, msg, value=''):
-		self.report = "File: " + s + " " + msg + " " + value
-		print self.report
+		self.report = "File: " + s + " " + msg + " " + value + "\n"
 	
 	def __detect_invalid_characters_test__(self):
 		#Strings for unit tests

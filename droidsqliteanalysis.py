@@ -115,6 +115,10 @@ class DROIDAnalysis:
 			print d
 			print
 			
+		print
+		print "Identifying troublesome filenames: "
+		print self.badFilenames
+			
 	def __countQuery__(self, query):
 		self.cursor.execute(query)
 		count = self.cursor.fetchone()[0]
@@ -294,11 +298,12 @@ class DROIDAnalysis:
 		fnamelist = self.cursor.fetchall()
 		charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
 		
+		fnamereport = ''
 		#Pass filename to fname analysis
 		for d in fnamelist:
 			fnamestring = d[0]
-			charcheck.completeFnameAnalysis(fnamestring)
-		return
+			fnamereport = fnamereport + charcheck.completeFnameAnalysis(fnamestring)
+		return fnamereport
 						
 	def queryDB(self):
 		self.filecount = self.countFilesQuery()
@@ -331,13 +336,10 @@ class DROIDAnalysis:
 		
 		self.zerobytecount = self.countZeroByteObjects()
 		self.zerobytelist = self.listZeroByteObjects()
-		
-		self.printResults()
-		
-		#TODO: handle this correctly
-		print
-		print "Identifying troublesome filenames: "
+
 		self.badFilenames = self.filesWithDodgyCharacters()
+
+		self.printResults()
 
 	def openDROIDDB(self, dbfilename):
 		conn = sqlite3.connect(dbfilename)
