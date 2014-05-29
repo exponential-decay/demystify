@@ -40,6 +40,8 @@ class DROIDAnalysis:
 	uniqueExtensionsInCollectionList = 0
 	frequencyOfAllExtensions = 0
 	
+	mimetypeFrequency = 0
+	
 	filesWithNoIDList = 0
 	topPUIDList = 0
 	topExtensionList = 0
@@ -89,6 +91,10 @@ class DROIDAnalysis:
 		print
 		print "Frequency of all extensions:"
 		print self.frequencyOfAllExtensions 
+
+		print
+		print "MIMEType (Internet Media Type) Frequency: "
+		print self.mimetypeFrequency
 
 		print
 		print "Zero byte objects in collection: " + str(self.zerobytecount)
@@ -210,6 +216,10 @@ class DROIDAnalysis:
 		return self.__listQuery__(
 			"SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC", " | ")
 
+	def mimetypeFrequencyCount(self):
+		return self.__listQuery__(
+			"SELECT MIME_TYPE, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MIME_TYPE ORDER BY TOTAL DESC", " | ")
+
 	###
 	# List queries
 	###
@@ -320,6 +330,8 @@ class DROIDAnalysis:
 		self.extensionIDOnlyCount = self.countExtensionIDOnly()
 		self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
 		self.distinctextensioncount = self.countDistinctExtensions()
+		self.mimetypeFrequency = self.mimetypeFrequencyCount()
+		
 		self.zeroidcount = self.countZeroID()
 
 		#NOTE: Must be calculated after we have total, and subset values
