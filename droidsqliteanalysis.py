@@ -75,11 +75,6 @@ class DROIDAnalysis:
 		for d in self.duplicateListing:
 			print d
 			print
-
-		print "Pareto statistics: "
-		print self.PUIDParetoList
-		print
-		print self.extensionParetoList
 			
 	def __countQuery__(self, query):
 		self.cursor.execute(query)
@@ -199,49 +194,6 @@ class DROIDAnalysis:
 		return duplicatelist
 
 	###
-	# Pareto listings
-	###
-	def paretoListingPUIDS(self):
-		# Hypothesis: 80% of the effects come from 20% of the causes		
-
-		eightyPercentTotalPUIDs = int(self.identifiedfilecount * 0.80)		# 80 percent figure
-		countIdentifiedPuids = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-		return self.listTopTwenty(self.__alternativeFrequencyQuery__(countIdentifiedPuids), eightyPercentTotalPUIDs, self.identifiedfilecount, "Identified formats", "identified formats")
-		
-	def paretoListingExts(self):
-		# Hypothesis: 80% of the effects come from 20% of the causes		
-
-		eightyPercentTotalExts = int(self.filecount * 0.80)		# 80 percent figure
-		countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
-		return self.listTopTwenty(self.__alternativeFrequencyQuery__(countExtensions), eightyPercentTotalExts, self.filecount, "Extensions for formats", "total files")
-
-	def listTopTwenty(self, frequencyQueryResult, eightyPercentTotal, total, introtext, endtext):
-		toptwentystr = ''
-		x = 0
-		index = "null"
-		
-		for i,t in enumerate(frequencyQueryResult):
-			count = t[1]
-			if count <= eightyPercentTotal:
-				x = x + count
-				if x >= eightyPercentTotal:
-					index = i
-					break
-	
-		if index is not "null": 
-			toptwentystr = introtext + " contributing to 20% of collection out of " + str(total) + " " + endtext + "\n"
-			for i in range(index):
-				label = frequencyQueryResult[i][0]
-				count = frequencyQueryResult[i][1]
-				toptwentystr = toptwentystr + label + "       count: " + str(count)
-	
-		else:
-			toptwentystr = "Format frequency: " + "\n"
-			toptwentystr = toptwentystr + freqTuple[0][0] + "       count: " + str(freqTuple[0][1])
-		
-		return toptwentystr
-
-	###
 	# Additional functions on DB
 	###
 	def filesWithDodgyCharacters(self):
@@ -293,9 +245,7 @@ class DROIDAnalysis:
 		self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
 		self.frequencyOfAllExtensions = self.allExtensionsFrequency()
 		self.filesWithNoIDList = self.listNoIdentificationFiles()
-		self.duplicateListing = self.listDuplicates()
-		self.PUIDParetoList = self.paretoListingPUIDS()
-		self.extensionParetoList = self.paretoListingExts()		
+		self.duplicateListing = self.listDuplicates()	
 		self.printResults()
 		
 		#TODO: handle this correctly
