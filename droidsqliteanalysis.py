@@ -44,6 +44,7 @@ class DROIDAnalysis:
 	topPUIDList = 0
 	topExtensionList = 0
 	
+	totalduplicates = 0
 	duplicateListing = []
 	
 	containertypeslist = 0
@@ -110,7 +111,7 @@ class DROIDAnalysis:
 		print self.containertypeslist
 
 		print 
-		print "Duplicate listing: "
+		print "Duplicates (Total: " + str(self.totalduplicates) + "):"
 		for d in self.duplicateListing:	#TODO: consider count next to MD5 val
 			print d
 			print
@@ -241,13 +242,16 @@ class DROIDAnalysis:
 		duplicatelist = []
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
+		totalduplicates = 0
 		for r in result:
 			count = r[1]
 			if count > 1:
+				totalduplicates = totalduplicates + count
 				duplicatemd5 = r[0]
 				duplicatestr = "Duplicate hash: " + duplicatemd5 + "    Count: " + str(count) + '\n'
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
+		self.totalduplicates = totalduplicates
 		return duplicatelist
 
 	###
