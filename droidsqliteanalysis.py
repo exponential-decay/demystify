@@ -291,11 +291,13 @@ class DROIDAnalysis:
 	def filesWithDodgyCharacters(self):
 		countDirs = "SELECT DISTINCT NAME FROM droid"
 		self.cursor.execute(countDirs)
-		dirlist = self.cursor.fetchall()
+		fnamelist = self.cursor.fetchall()
 		charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
-		for d in dirlist:
-			dirstring = d[0]
-			charcheck.completeFnameAnalysis(dirstring)
+		
+		#Pass filename to fname analysis
+		for d in fnamelist:
+			fnamestring = d[0]
+			charcheck.completeFnameAnalysis(fnamestring)
 		return
 						
 	def queryDB(self):
