@@ -278,6 +278,14 @@ class DROIDAnalysis:
 		return toptwentystr
 
 	###
+	# Stats output... #TODO: Merge and document these two functions better
+	###
+	def calculatePercent(self, total, subset):
+		if total > 0:
+			percentage = (subset/total)*100
+			return '%.1f' % round(percentage, 1)
+
+	###
 	# Additional functions on DB
 	###
 	def filesWithDodgyCharacters(self):
@@ -289,24 +297,6 @@ class DROIDAnalysis:
 			dirstring = d[0]
 			charcheck.completeFnameAnalysis(dirstring)
 		return
-
-	###
-	# Stats output... #TODO: Merge and document these two functions better
-	###
-	def calculateIdentifiedPercent(self):
-		allcount = self.filecount
-		count = self.identifiedfilecount
-		if allcount > 0:
-			percentage = (count/allcount)*100
-			return '%.1f' % round(percentage, 1)
-
-	def calculateUnidentifiedPercent(self):
-		allcount = self.filecount
-		count = self.unidentifiedfilecount		
-
-		if allcount > 0:
-			percentage = (count/allcount)*100
-			return '%.1f' % round(percentage, 1)
 						
 	def queryDB(self):
 		self.filecount = self.countFilesQuery()
@@ -320,8 +310,11 @@ class DROIDAnalysis:
 		self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
 		self.distinctextensioncount = self.countDistinctExtensions()
 		self.zeroidcount = self.countZeroID()
-		self.unidentifiedPercentage = self.calculateUnidentifiedPercent()
-		self.identifiedPercentage = self.calculateIdentifiedPercent()
+
+		#NOTE: Must be calculated after we have total, and subset values
+		self.identifiedPercentage = self.calculatePercent(self.filecount, self.identifiedfilecount)		
+		self.unidentifiedPercentage = self.calculatePercent(self.filecount, self.unidentifiedfilecount)
+
 		self.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
 		self.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
 		self.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
