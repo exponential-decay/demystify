@@ -27,6 +27,25 @@ class DROIDAnalysis:
 	distinctextensioncount = 0
 	zeroidcount = 0
 	
+	unidentifiedPercentage = 0
+	identifiedPercentage = 0
+	
+	sigIDPUIDList = 0
+	sigIDPUIDFrequency = 0
+	
+	extensionOnlyIDList = 0
+	extensionOnlyIDFrequency = 0
+	
+	#TODO: Turn lists into lists? Formatting at end..?
+	uniqueExtensionsInCollectionList = 0
+	frequencyOfAllExtensions = 0
+	
+	filesWithNoIDList = 0
+	topPUIDList = 0
+	topExtensionList = 0
+	
+	duplicateListing = []
+	
 	def printResults(self):
 		print "Total files: " + str(self.filecount)
 		print "Total container objects: " + str(self.containercount)
@@ -78,6 +97,10 @@ class DROIDAnalysis:
 		print "Top extensions across collection: "		
 		print self.topExtensionList 	
 
+		print
+		print "Container types in collection: "
+		print self.containertypeslist
+
 		print 
 		print "Duplicate listing: "
 		for d in self.duplicateListing:
@@ -119,7 +142,7 @@ class DROIDAnalysis:
 	
 	def countFilesInContainerObjects(self):
 		return self.__countQuery__( 
-			"SELECT COUNT(NAME) FROM droid WHERE URI_SCHEME!='file' AND (TYPE='File' OR TYPE='Container')")
+			"SELECT COUNT(NAME) FROM droid WHERE (URI_SCHEME!='file') AND (TYPE='File' OR TYPE='Container')")
 
 	def countFoldersQuery(self):
 		return self.__countQuery__( 
@@ -183,6 +206,10 @@ class DROIDAnalysis:
 	def listExtensionOnlyIdentificationPUIDS(self):	
 		return self.__listQuery__(		
 			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
+
+	def listContainerTypes(self):
+		return self.__listQuery__(
+			"SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')", " | ")
 
 	def listNoIdentificationFiles(self):
 		return self.__listQuery__(	
@@ -266,6 +293,7 @@ class DROIDAnalysis:
 	def queryDB(self):
 		self.filecount = self.countFilesQuery()
 		self.containercount = self.countContainerObjects()
+		self.containertypeslist = self.listContainerTypes()
 		self.filesincontainercount = self.countFilesInContainerObjects()
 		self.directoryCount = self.countFoldersQuery()
 		self.uniqueDirectoryNames = self.countUniqueDirectoryNames()
