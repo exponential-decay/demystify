@@ -19,6 +19,7 @@ class DROIDAnalysis:
 	containercount = 0
 	filesincontainercount = 0	
 	directoryCount = 0
+	uniqueFileNames = 0
 	uniqueDirectoryNames = 0
 	identifiedfilecount = 0
 	unidentifiedfilecount = 0
@@ -62,6 +63,7 @@ class DROIDAnalysis:
 		print "Total container objects: " + str(self.containercount)
 		print "Total files in containers: " + str(self.filesincontainercount) 
 		print "Total directories: " + str(self.directoryCount)
+		print "Total unique filenames: " + str(self.uniqueFileNames)
 		print "Total unique directory names: " + str(self.uniqueDirectoryNames)
 		print "Total identified files (signature and container): " + str(self.identifiedfilecount)
 		print "Total unidentified files (extension and blank): " + str(self.unidentifiedfilecount)
@@ -180,6 +182,10 @@ class DROIDAnalysis:
 	def countFoldersQuery(self):
 		return self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
+
+	def countUniqueFileNames(self):
+		return self.__countQuery__( 
+			"SELECT COUNT(DISTINCT NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
 	def countUniqueDirectoryNames(self):
 		return (self.__countQuery__( 
@@ -347,6 +353,7 @@ class DROIDAnalysis:
 		self.containercount = self.countContainerObjects()
 		self.filesincontainercount = self.countFilesInContainerObjects()
 		self.directoryCount = self.countFoldersQuery()
+		self.uniqueFileNames = self.countUniqueFileNames()
 		self.uniqueDirectoryNames = self.countUniqueDirectoryNames()
 		self.identifiedfilecount = self.countIdentifiedQuery()
 		self.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
