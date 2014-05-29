@@ -69,7 +69,7 @@ class DROIDAnalysis:
 		print "Percentage of collection unidentified: " + str(self.unidentifiedPercentage)
 
 		print
-		print "Signature identified PUIDs in collection:"
+		print "Signature identified PUIDs in collection (signature and container):"
 		print self.sigIDPUIDList
 
 		print
@@ -85,7 +85,7 @@ class DROIDAnalysis:
 		print self.extensionOnlyIDFrequency
 
 		print
-		print "Unique extensions identified across collection:"
+		print "Unique extensions identified across all objects (ID & non-ID):"
 		print self.uniqueExtensionsInCollectionList
 
 		print
@@ -142,8 +142,14 @@ class DROIDAnalysis:
 					item = item + str(t) + ", "
 				row = row + item[:-2] + separator
 			else:
-				row = row + str(r[0]) + separator 
-		return row[:-1]
+				row = row + str(r[0]) + separator
+		try:
+			if row[len(row)-2] == "|":
+				return row[:-2]
+			else:
+				return row[:-1]
+		except IndexError:
+			return row[:-1]
 
 	def __alternativeFrequencyQuery__(self, query):
 		self.cursor.execute(query)
