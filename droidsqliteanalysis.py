@@ -66,7 +66,7 @@ class DROIDAnalysis:
 		print "Total identified files (signature and container): " + str(self.identifiedfilecount)
 		print "Total unidentified files (extension and blank): " + str(self.unidentifiedfilecount)
 		print "Total extension ID only count: " + str(self.extensionIDOnlyCount)
-		print "Total extension mismatches: " + str(self.extmismatchCount)
+		print "Total extension mismatches: " + str(self.extmismatchCount)		#TODO: List, but could be long
 		print "Total signature IDd PUID count: " + str(self.distinctSignaturePuidcount)
 		print "Total distinct extensions across collection: " + str(self.distinctextensioncount)
 		print "Percentage of collection identified: " + str(self.identifiedPercentage)
@@ -182,8 +182,8 @@ class DROIDAnalysis:
 			"SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
 
 	def countUniqueDirectoryNames(self):
-		return self.__countQuery__( 
-			"SELECT COUNT(DISTINCT DIR_NAME) FROM droid")
+		return (self.__countQuery__( 
+			"SELECT COUNT(DISTINCT DIR_NAME) FROM droid") - 1)	#Will always be minus one accounts for base-dirs
 
 	def countIdentifiedQuery(self):
 		return self.__countQuery__( 
