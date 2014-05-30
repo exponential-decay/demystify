@@ -41,6 +41,7 @@ class DROIDAnalysis:
 	
 	#TODO: Turn lists into lists? Formatting at end..?
 	uniqueExtensionsInCollectionList = 0
+	multipleIDList = 0
 	frequencyOfAllExtensions = 0
 	
 	idmethodFrequency = 0
@@ -101,6 +102,10 @@ class DROIDAnalysis:
 		print
 		print "Unique extensions identified across all objects (ID & non-ID):"
 		print self.uniqueExtensionsInCollectionList
+
+		print
+		print "List of files with multiple identifications: "
+		print self.multipleIDList 
 
 		print
 		print "Frequency of all extensions:"
@@ -209,7 +214,7 @@ class DROIDAnalysis:
 
 	def countMultipleIdentifications(self):
 		return self.__countQuery__( 
-			"SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1')")
+			"SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0')")
 
 	def countTotalUnidentifiedQuery(self):
 		return self.__countQuery__( 
@@ -279,6 +284,11 @@ class DROIDAnalysis:
 	def listExtensionOnlyIdentificationPUIDS(self):	
 		return self.__listQuery__(		
 			"SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
+
+	def listMultipleIdentifications(self):
+		return self.__listQuery__(		
+			"SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0')", "\n")
+		return
 
 	def listContainerTypes(self):
 		return self.__listQuery__(
@@ -413,6 +423,9 @@ class DROIDAnalysis:
 		self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
 		self.frequencyOfAllExtensions = self.allExtensionsFrequency()
 		self.filesWithNoIDList = self.listNoIdentificationFiles()
+		
+		self.multipleIDList = self.listMultipleIdentifications()
+		
 		self.duplicatefnamelisting = self.listDuplicateFilenames()
 		self.duplicatemd5listing = self.listDuplicateFilesFromMD5()
 		self.topPUIDList = self.topPUIDS(5)
