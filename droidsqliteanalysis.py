@@ -22,6 +22,7 @@ class DROIDAnalysis:
 	uniqueFileNames = 0
 	uniqueDirectoryNames = 0
 	identifiedfilecount = 0
+	multipleidentificationcount = 0 
 	unidentifiedfilecount = 0
 	distinctSignaturePuidcount = 0
 	extensionIDOnlyCount = 0
@@ -68,6 +69,7 @@ class DROIDAnalysis:
 		print "Total directories: " + str(self.directoryCount)
 		print "Total unique directory names: " + str(self.uniqueDirectoryNames)
 		print "Total identified files (signature and container): " + str(self.identifiedfilecount)
+		print "Total multiple identifications (signature and container): " + str(self.multipleidentificationcount)
 		print "Total unidentified files (extension and blank): " + str(self.unidentifiedfilecount)
 		print "Total extension ID only count: " + str(self.extensionIDOnlyCount)
 		print "Total extension mismatches: " + str(self.extmismatchCount)		#TODO: List, but could be long
@@ -204,6 +206,10 @@ class DROIDAnalysis:
 	def countIdentifiedQuery(self):
 		return self.__countQuery__( 
 			"SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' or METHOD='Container')")
+
+	def countMultipleIdentifications(self):
+		return self.__countQuery__( 
+			"SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1')")
 
 	def countTotalUnidentifiedQuery(self):
 		return self.__countQuery__( 
@@ -384,6 +390,7 @@ class DROIDAnalysis:
 		self.uniqueFileNames = self.countUniqueFileNames()
 		self.uniqueDirectoryNames = self.countUniqueDirectoryNames()
 		self.identifiedfilecount = self.countIdentifiedQuery()
+		self.multipleidentificationcount = self.countMultipleIdentifications()
 		self.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
 		self.extensionIDOnlyCount = self.countExtensionIDOnly()
 		self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
