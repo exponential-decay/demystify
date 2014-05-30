@@ -50,8 +50,11 @@ class DROIDAnalysis:
 	topPUIDList = 0
 	topExtensionList = 0
 	
-	totalduplicates = 0
-	duplicateListing = []
+	totalmd5duplicates = 0
+	duplicatemd5listing = []
+
+	totaluniquefilenames = 0
+	duplicatefnamelisting = [] 
 	
 	containertypeslist = 0
 	
@@ -63,7 +66,6 @@ class DROIDAnalysis:
 		print "Total container objects: " + str(self.containercount)
 		print "Total files in containers: " + str(self.filesincontainercount) 
 		print "Total directories: " + str(self.directoryCount)
-		print "Total unique filenames: " + str(self.uniqueFileNames)
 		print "Total unique directory names: " + str(self.uniqueDirectoryNames)
 		print "Total identified files (signature and container): " + str(self.identifiedfilecount)
 		print "Total unidentified files (extension and blank): " + str(self.unidentifiedfilecount)
@@ -127,10 +129,18 @@ class DROIDAnalysis:
 		print self.containertypeslist
 
 		print 
-		print "Duplicates (Total: " + str(self.totalduplicates) + "):"
-		for d in self.duplicateListing:	#TODO: consider count next to MD5 val
+		print "Files with duplicate content (Total: " + str(self.totalmd5duplicates) + "):"
+		for d in self.duplicatemd5listing:	#TODO: consider count next to MD5 val
 			print d
 			print
+			
+		print
+		print "Files with duplicate filenames (Total: " + str(self.filecount - self.uniqueFileNames) + ")"
+		print "Listing disabled as potentially too many..."
+		print "Total unique values: " + str(self.totaluniquefilenames)
+		#for d in	self.duplicatefnamelisting:	#TODO: Can potentially be too many
+		#	print d
+		#	print
 			
 		print
 		print "Identifying troublesome filenames: "
@@ -276,21 +286,39 @@ class DROIDAnalysis:
 		return self.__listQuery__(	
 			"SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'", "\n")
 
-	def listDuplicateFilesFromMD5(self):
+	def listDuplicateFilenames(self):
+		duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
+		result = self.__alternativeFrequencyQuery__(duplicatequery)
+		
 		duplicatestr = ''
 		duplicatelist = []
+		totaluniquefilenames = 0
+		for r in result:
+			count = r[1]
+			if count > 1:
+				totaluniquefilenames = totaluniquefilenames + 1
+				duplicatename = r[0]
+				duplicatestr = duplicatestr + "Duplicate hash: " + duplicatename + "    Count: " + str(count) + '\n'
+				duplicatelist.append(duplicatestr)
+		self.totaluniquefilenames = totaluniquefilenames
+		return duplicatelist
+
+	def listDuplicateFilesFromMD5(self):		
 		duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
 		result = self.__alternativeFrequencyQuery__(duplicatequery)
+		
+		duplicatestr = ''
+		duplicatelist = []
 		totalduplicates = 0
 		for r in result:
 			count = r[1]
 			if count > 1:
 				totalduplicates = totalduplicates + count
 				duplicatemd5 = r[0]
-				duplicatestr = "Duplicate hash: " + duplicatemd5 + "    Count: " + str(count) + '\n'
+				duplicatestr = "Duplicate filename: " + duplicatemd5 + "    Count: " + str(count) + '\n'
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
-		self.totalduplicates = totalduplicates
+		self.totalmd5duplicates = totalduplicates
 		return duplicatelist
 
 	###
@@ -378,7 +406,8 @@ class DROIDAnalysis:
 		self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
 		self.frequencyOfAllExtensions = self.allExtensionsFrequency()
 		self.filesWithNoIDList = self.listNoIdentificationFiles()
-		self.duplicateListing = self.listDuplicateFilesFromMD5()
+		self.duplicatefnamelisting = self.listDuplicateFilenames()
+		self.duplicatemd5listing = self.listDuplicateFilesFromMD5()
 		self.topPUIDList = self.topPUIDS(5)
 		self.topExtensionList = self.topExts(5)		
 		self.containertypeslist = self.listContainerTypes()
