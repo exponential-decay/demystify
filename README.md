@@ -54,13 +54,13 @@ http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 
 ### TODO
 
-* Everything is stored in the DB as a string, understan potential for typing
+* Everything is stored in the DB as a string, understand potential for typing
 * Return more discrete values, ints, lists, etc. over formatted strings.
 * Unit tests!
 
 ### License
 
-Copyright (c) 2012 Ross Spencer
+Copyright (c) 2014 Ross Spencer
 
 This software is provided 'as-is', without any express or implied warranty. In 
 no event will the authors be held liable for any damages arising from the use of 
