@@ -1,0 +1,487 @@
+Total files: 500
+Total container objects: 14
+Total files in containers: 176
+Total directories: 85
+Total unique directory names: 75
+Total identified files (signature and container): 420
+Total multiple identifications (signature and container): 1
+Total unidentified files (extension and blank): 80
+Total extension ID only count: 17
+Total extension mismatches: 32
+Total signature IDd PUID count: 54
+Total distinct extensions across collection: 64
+Total files with duplicate content (MD5 value): 155
+Total files with duplicate filenames: 117
+Percentage of collection identified: 84.0
+Percentage of collection unidentified: 16.0
+
+Signature identified PUIDs in collection (signature and container):
+fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3
+fmt/50, Rich Text Format, 1.5-1.6
+fmt/101, Extensible Markup Language, 1.0
+x-fmt/263, ZIP Format, no value
+fmt/518, Broad Band eBook, LRF
+fmt/196, Adobe InDesign Document, CS
+fmt/396, PocketMobi (Palm Resource) File, no value
+fmt/41, Raw JPEG Stream, no value
+fmt/483, ePub format, no value
+fmt/96, Hypertext Markup Language, no value
+fmt/485, Rocket Book eBook format, no value
+fmt/102, Extensible Hypertext Markup Language, 1.0
+fmt/482, Apple iBook format, no value
+fmt/43, JPEG File Interchange Format, 1.01
+fmt/12, Portable Network Graphics, 1.1
+fmt/11, Portable Network Graphics, 1.0
+fmt/610, ARJ File Format, no value
+fmt/353, Tagged Image File Format, no value
+fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4
+fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7
+fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2
+fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5
+fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6
+fmt/354, Acrobat PDF/A - Portable Document Format, 1b
+x-fmt/392, JP2 (JPEG 2000 part 1), no value
+fmt/151, JPX (JPEG 2000 part 2), no value
+fmt/337, MJ2 (Motion JPEG 2000), no value
+fmt/463, JPM (JPEG 2000 part 6), no value
+fmt/44, JPEG File Interchange Format, 1.02
+x-fmt/266, GZIP Format, no value
+x-fmt/265, Tape Archive Format, no value
+fmt/291, OpenDocument Text, 1.2
+x-fmt/238, Microsoft Access Database, 95
+x-fmt/239, Microsoft Access Database, 97
+x-fmt/240, Microsoft Access Database, 2000
+fmt/38, Microsoft Word for Windows Document, 2.0
+fmt/61, Microsoft Excel 97 Workbook (xls), 8
+fmt/95, Acrobat PDF/A - Portable Document Format, 1a
+x-fmt/88, Microsoft Powerpoint Presentation, 4.0
+fmt/126, Microsoft Powerpoint Presentation, 97-2002
+x-fmt/114, Lotus 1-2-3 Worksheet, 2.0
+x-fmt/115, Lotus 1-2-3 Worksheet, 3.0
+x-fmt/121, Quattro Pro Spreadsheet, 1-4
+x-fmt/122, Quattro Pro Spreadsheet, 5
+x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0
+fmt/40, Microsoft Word Document, 97-2003
+fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1
+fmt/609, Microsoft Word (Generic), 6.0-2003
+x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2
+fmt/355, Rich Text Format, 1.9
+fmt/412, Microsoft Word for Windows, 2007 onwards
+fmt/583, Vector Markup Language, no value"fmt/96
+fmt/524, Microsoft Office Theme, no value
+x-fmt/384, Quicktime, no value
+
+Frequency of signature identified PUIDs:
+fmt/43, 113 | x-fmt/384, 61 | fmt/18, 33 | fmt/17, 25 | fmt/101, 19 | fmt/276, 15 | x-fmt/392, 14 | fmt/353, 12 | x-fmt/263, 12 | fmt/16, 11 | fmt/291, 9 | fmt/19, 7 | fmt/41, 7 | fmt/396, 6 | fmt/40, 6 | fmt/102, 4 | fmt/11, 4 | fmt/20, 4 | x-fmt/114, 4 | fmt/12, 3 | fmt/354, 3 | fmt/482, 3 | fmt/483, 3 | fmt/61, 3 | fmt/95, 3 | x-fmt/122, 3 | fmt/126, 2 | fmt/485, 2 | fmt/518, 2 | fmt/96, 2 | x-fmt/88, 2 | fmt/15, 1 | fmt/151, 1 | fmt/196, 1 | fmt/337, 1 | fmt/355, 1 | fmt/38, 1 | fmt/412, 1 | fmt/44, 1 | fmt/463, 1 | fmt/50, 1 | fmt/524, 1 | fmt/583, 1 | fmt/609, 1 | fmt/610, 1 | x-fmt/115, 1 | x-fmt/121, 1 | x-fmt/238, 1 | x-fmt/239, 1 | x-fmt/240, 1 | x-fmt/265, 1 | x-fmt/266, 1 | x-fmt/387, 1 | x-fmt/44, 1 
+
+Extension only identification in collection:
+x-fmt/111, Plain Text File | x-fmt/224, Cascading Style Sheet | fmt/207, Obsidium Project File | x-fmt/100, AutoCAD Script 
+
+ID Method Frequency: 
+Signature, 391
+no value, 63
+Container, 29
+Extension, 17
+
+Frequency of extension only identification in collection: 
+x-fmt/224, 8 | x-fmt/111, 6 | x-fmt/100, 2 | fmt/207, 1 
+
+Unique extensions identified across all objects (ID & non-ID):
+pdf | rtf | fb2 | lit | htmlz | lrf | indd | azw3 | mobi | jpg | epub | opf | snb | pdb | html | pmlz | rb | txt | css | pml | txtz | zip | ibooks | iba | no value | png | jpeg | md | arj | ) | tiff | } | plist | xml | j2c | jp2 | jpf | mj2 | jpm | cdd | mmp | nmind | opml | odt | mdb | tif | doc | xls | xhtml | ppt | wk1 | wk3 | wq1 | wq2 | wpd | map | stg | scr | sta | pages | docx | mht | htm | mov 
+
+List of files with multiple identifications: 
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/variations/variations/text/html/4.0/lorem-ipsum.htm
+
+Frequency of all extensions:
+jpeg, 108 | pdf, 102 | mov, 61 | no value, 36 | jpg, 13 | jp2, 12 | tiff, 10 | odt, 9 | xml, 9 | css, 8 | doc, 8 | png, 7 | html, 6 | txt, 6 | map, 5 | opf, 5 | plist, 4 | ppt, 4 | rtf, 4 | wk1, 4 | epub, 3 | iba, 3 | ibooks, 3 | jpf, 3 | mdb, 3 | tif, 3 | wq2, 3 | xls, 3 | azw3, 2 | fb2, 2 | htmlz, 2 | lit, 2 | lrf, 2 | md, 2 | mobi, 2 | nmind, 2 | pdb, 2 | pml, 2 | pmlz, 2 | rb, 2 | scr, 2 | snb, 2 | sta, 2 | stg, 2 | txtz, 2 | zip, 2 | }, 2 | ), 1 | arj, 1 | cdd, 1 | docx, 1 | htm, 1 | indd, 1 | j2c, 1 | jpm, 1 | mht, 1 | mj2, 1 | mmp, 1 | opml, 1 | pages, 1 | wk3, 1 | wpd, 1 | wq1, 1 | xhtml, 1 
+
+MIMEType (Internet Media Type) Frequency: 
+image/jpeg, 121 | application/pdf, 102 | no value, 87 | video/quicktime, 61 | application/xml, text/xml, 19 | image/jp2, 14 | image/tiff, 13 | application/zip, 12 | application/vnd.oasis.opendocument.text, 9 | application/msword, 8 | text/css, 8 | image/png, 7 | text/plain, 6 | application/vnd.lotus-1-2-3, application/x-123, 4 | application/vnd.ms-powerpoint, 4 | application/xhtml+xml, 4 | application/epub+zip, 3 | application/vnd.ms-excel, 3 | application/x-ibooks+zip, 3 | application/rtf, text/rtf, 2 | text/html, 2 | application/lotus123, application/vnd.lotus-1-2-3, 1 | application/vnd.ms-officetheme, 1 | application/vnd.openxmlformats-officedocument.wordprocessingml.document, 1 | application/vnd.wordperfect, 1 | application/x-gzip, 1 | application/x-tar, 1 | image/jpm, 1 | video/mj2, 1 
+
+Zero byte objects in collection: 29
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/!
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/#
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/$
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/%
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/'
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/(
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/()
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/(.)
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/)
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/-
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/;
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/=
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/[
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/[]
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/@
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/]
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/^
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/_
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/`
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{.}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{ (2).}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/~
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+Ã©-Ãº
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+Ã©-Â¼
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/empty/null
+
+Files with no identification: 63
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.lit
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.snb
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.rtf
+no value
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.lit
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.rtf
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.snb
+no value
+no value
+no value
+no value
+no value
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/iBooks Author 2.0 (327)/lorem-ipsum-plus-image-updated.iba.md
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/!
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/#
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/$
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/%
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/'
+no value
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/(
+no value
+no value
+no value
+no value
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/()
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/(.)
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/)
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/-
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/;
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/=
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/[
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/[]
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/@
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/]
+no value
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/^
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/_
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/`
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{.}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{ (2).}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/~
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/{}
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+Ã©-Ãº
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters/+Ã©-Â¼
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/empty/null
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/jp2k-formats/balloon.j2c
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/knowledge-management/concept-draw/To Do.cdd
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/knowledge-management/mind-manager/copac-uknuc.mmp
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/knowledge-management/nova-mind/Curation outline 3.opml.md
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/pcraster/AREA2.MAP
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/pcraster/BODEM.MAP
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/pcraster/LAITRUNC.MAP
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/pcraster/HOOGTE2.MAP
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/pcraster/LAND.MAP
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/statistica/BOXLAAG.STG
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/statistica/KSBASE.STA
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/statistica/PEYNEVL2.STA
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/statistica/RESID30.STG
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/variations/variations/multipart/related/lorem-ipsum.mht
+/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/variations/variations/text/html/4.0/lorem-ipsum_files/filelist.xml
+
+Top signature and container identified PUIDs: 
+fmt/43       count: 113
+x-fmt/384       count: 61
+fmt/18       count: 33
+fmt/17       count: 25
+fmt/101       count: 19
+
+
+Top extensions across collection: 
+jpeg       count: 108
+pdf       count: 102
+mov       count: 61
+no value       count: 36
+jpg       count: 13
+
+
+Container types in collection: 
+zip | tar 
+
+Files with duplicate content (Total: 155):
+Duplicate filename: d41d8cd98f00b204e9800998ecf8427e    Count: 29
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, !
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, #
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, $
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, %
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, '
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, (
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, ()
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, (.)
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, )
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, +
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, -
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, ;
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, =
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, [
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, []
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, @
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, ]
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, ^
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, _
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, `
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, {
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, {.}
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, { (2).}
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, }
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, ~
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, {}
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, +Ã©-Ãº
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/a-bad-name/characters, +Ã©-Â¼
+d41d8cd98f00b204e9800998ecf8427e, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/filesys-trials/empty, null
+
+Duplicate filename: d8c9ed1a5c98b3f19adab4218867a3cf    Count: 8
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-6.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-8.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-8.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-6.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-50.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-6.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-8.jpeg
+d8c9ed1a5c98b3f19adab4218867a3cf, , KFPageThumbnail-50.jpeg
+
+Duplicate filename: c2414ee71a1afc7aba11210b1516bf56    Count: 6
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-3.jpeg
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-2.jpeg
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-3.jpeg
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-2.jpeg
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-2.jpeg
+c2414ee71a1afc7aba11210b1516bf56, , KFPageThumbnail-3.jpeg
+
+Duplicate filename: cee9c6defad6ab0c4b25b8159c45bbaf    Count: 4
+cee9c6defad6ab0c4b25b8159c45bbaf, , KFPageThumbnail-164.jpeg
+cee9c6defad6ab0c4b25b8159c45bbaf, , KFPageThumbnail-171.jpeg
+cee9c6defad6ab0c4b25b8159c45bbaf, , KFPageThumbnail-164.jpeg
+cee9c6defad6ab0c4b25b8159c45bbaf, , KFPageThumbnail-171.jpeg
+
+Duplicate filename: 059f0c81f0883c23ba4232307f3f569e    Count: 3
+059f0c81f0883c23ba4232307f3f569e, , color-profile
+059f0c81f0883c23ba4232307f3f569e, , color-profile
+059f0c81f0883c23ba4232307f3f569e, , color-profile
+
+Duplicate filename: 072dde81794326cac99018b8552aef4c    Count: 3
+072dde81794326cac99018b8552aef4c, , KFPageThumbnail.jpeg
+072dde81794326cac99018b8552aef4c, , KFPageThumbnail.jpeg
+072dde81794326cac99018b8552aef4c, , KFPageThumbnail.jpeg
+
+Duplicate filename: 1f787520cdef25b7653b5069249d6168    Count: 3
+1f787520cdef25b7653b5069249d6168, , 87974949a-1.jpg
+1f787520cdef25b7653b5069249d6168, , 87974949a-1.jpg
+1f787520cdef25b7653b5069249d6168, , 87974949a-1.jpg
+
+Duplicate filename: 337fac16ad10ddca1706716895012189    Count: 3
+337fac16ad10ddca1706716895012189, , KFPageThumbnail-9.jpeg
+337fac16ad10ddca1706716895012189, , KFPageThumbnail-9.jpeg
+337fac16ad10ddca1706716895012189, , KFPageThumbnail-9.jpeg
+
+Duplicate filename: 747f0e054b7ef7e4fce5382e8cc796ad    Count: 3
+747f0e054b7ef7e4fce5382e8cc796ad, , whitetexture.jpg
+747f0e054b7ef7e4fce5382e8cc796ad, , whitetexture.jpg
+747f0e054b7ef7e4fce5382e8cc796ad, , whitetexture.jpg
+
+Duplicate filename: 85c4dd6a9685567355f17534642364cf    Count: 3
+85c4dd6a9685567355f17534642364cf, , color-profile-1
+85c4dd6a9685567355f17534642364cf, , color-profile-1
+85c4dd6a9685567355f17534642364cf, , color-profile-1
+
+Duplicate filename: 90045c8af885e3174d57ccec6476bf52    Count: 3
+90045c8af885e3174d57ccec6476bf52, , KFPageThumbnail-228.jpeg
+90045c8af885e3174d57ccec6476bf52, , KFPageThumbnail-228.jpeg
+90045c8af885e3174d57ccec6476bf52, , KFPageThumbnail-228.jpeg
+
+Duplicate filename: 93b46ad5a0c77f14680a5c7119936021    Count: 3
+93b46ad5a0c77f14680a5c7119936021, , index.txt
+93b46ad5a0c77f14680a5c7119936021, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.9.0, lorem-ipsum.txt
+93b46ad5a0c77f14680a5c7119936021, , index.txt
+
+Duplicate filename: a8caa0e56fa0c743efafaf01052dfe8e    Count: 3
+a8caa0e56fa0c743efafaf01052dfe8e, , KFPageThumbnail-20.tiff
+a8caa0e56fa0c743efafaf01052dfe8e, , KFPageThumbnail-20.tiff
+a8caa0e56fa0c743efafaf01052dfe8e, , KFPageThumbnail-20.tiff
+
+Duplicate filename: cab864635c111537fb68b8fb4139df18    Count: 3
+cab864635c111537fb68b8fb4139df18, , KFPageThumbnail-3.tiff
+cab864635c111537fb68b8fb4139df18, , KFPageThumbnail-3.tiff
+cab864635c111537fb68b8fb4139df18, , KFPageThumbnail-3.tiff
+
+Duplicate filename: d517fa358793d2565a5e4a838fb5b3cf    Count: 3
+d517fa358793d2565a5e4a838fb5b3cf, , KFPageThumbnail-227.jpeg
+d517fa358793d2565a5e4a838fb5b3cf, , KFPageThumbnail-227.jpeg
+d517fa358793d2565a5e4a838fb5b3cf, , KFPageThumbnail-227.jpeg
+
+Duplicate filename: f55e4c623d8f62beb4375db93bb24750    Count: 3
+f55e4c623d8f62beb4375db93bb24750, , Thumbnail-36.tiff
+f55e4c623d8f62beb4375db93bb24750, , Thumbnail-36.tiff
+f55e4c623d8f62beb4375db93bb24750, , Thumbnail-36.tiff
+
+Duplicate filename: 087a9a284be6019eec6542e84d0121ee    Count: 2
+087a9a284be6019eec6542e84d0121ee, , KFPageThumbnail-167.jpeg
+087a9a284be6019eec6542e84d0121ee, , KFPageThumbnail-167.jpeg
+
+Duplicate filename: 0952656dd36871b719e7c238f8fde1a9    Count: 2
+0952656dd36871b719e7c238f8fde1a9, , KFPageThumbnail-40.jpeg
+0952656dd36871b719e7c238f8fde1a9, , KFPageThumbnail-40.jpeg
+
+Duplicate filename: 0c37b176edcc23abc3af4041ba358357    Count: 2
+0c37b176edcc23abc3af4041ba358357, , KFPageThumbnail-27.jpeg
+0c37b176edcc23abc3af4041ba358357, , KFPageThumbnail-27.jpeg
+
+Duplicate filename: 137be0aa5b5113a83460595a644743c2    Count: 2
+137be0aa5b5113a83460595a644743c2, , KFPageThumbnail-48.jpeg
+137be0aa5b5113a83460595a644743c2, , KFPageThumbnail-48.jpeg
+
+Duplicate filename: 165755894a51fd92605904feff1ee3e7    Count: 2
+165755894a51fd92605904feff1ee3e7, , KFPageThumbnail-14.jpeg
+165755894a51fd92605904feff1ee3e7, , KFPageThumbnail-14.jpeg
+
+Duplicate filename: 19bd370343c7aa0b8e963962a5c98b26    Count: 2
+19bd370343c7aa0b8e963962a5c98b26, , KFPreviewThumbnail-1.jpeg
+19bd370343c7aa0b8e963962a5c98b26, , KFPreviewThumbnail-1.jpeg
+
+Duplicate filename: 21bb72ff7883c95c0b1d0c70387f9c83    Count: 2
+21bb72ff7883c95c0b1d0c70387f9c83, , KFPageThumbnail-11.jpeg
+21bb72ff7883c95c0b1d0c70387f9c83, , KFPageThumbnail-11.jpeg
+
+Duplicate filename: 30692cb35f8d3f5e4dc38c28c94b217f    Count: 2
+30692cb35f8d3f5e4dc38c28c94b217f, , KFPageThumbnail-280.jpeg
+30692cb35f8d3f5e4dc38c28c94b217f, , KFPageThumbnail-280.jpeg
+
+Duplicate filename: 39045bb2a47bb2dee85dcaf7b38f5112    Count: 2
+39045bb2a47bb2dee85dcaf7b38f5112, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57, Lorem Ipsum - Andrew Jackson.txt
+39045bb2a47bb2dee85dcaf7b38f5112, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/variations, lorem-ipsum.txt
+
+Duplicate filename: 39a20c472a6e001df5b6fe707494df3e    Count: 2
+39a20c472a6e001df5b6fe707494df3e, , tile_paper_blue-1.jpg
+39a20c472a6e001df5b6fe707494df3e, , tile_paper_blue-1.jpg
+
+Duplicate filename: 405136499bc144069e31f2db9e82ba8b    Count: 2
+405136499bc144069e31f2db9e82ba8b, , KFPageThumbnail-10.jpeg
+405136499bc144069e31f2db9e82ba8b, , KFPageThumbnail-10.jpeg
+
+Duplicate filename: 495a1b90c36e8f9903ca0d19fd77e3a7    Count: 2
+495a1b90c36e8f9903ca0d19fd77e3a7, , KFPageThumbnail-284.jpeg
+495a1b90c36e8f9903ca0d19fd77e3a7, , KFPageThumbnail-284.jpeg
+
+Duplicate filename: 4c9d16fc8f0a801e109c07ae7842aadc    Count: 2
+4c9d16fc8f0a801e109c07ae7842aadc, , KFPageThumbnail-203.jpeg
+4c9d16fc8f0a801e109c07ae7842aadc, , KFPageThumbnail-203.jpeg
+
+Duplicate filename: 4d181cc4cde2ecee29a4904000c96376    Count: 2
+4d181cc4cde2ecee29a4904000c96376, , style.css
+4d181cc4cde2ecee29a4904000c96376, , style.css
+
+Duplicate filename: 50b080f9396e0b1fb1e91e450ec609cf    Count: 2
+50b080f9396e0b1fb1e91e450ec609cf, , KFPreviewThumbnail.jpeg
+50b080f9396e0b1fb1e91e450ec609cf, , KFPreviewThumbnail.jpeg
+
+Duplicate filename: 64765635e6543e0790ceffc8f14769da    Count: 2
+64765635e6543e0790ceffc8f14769da, , KFPageThumbnail-288.jpeg
+64765635e6543e0790ceffc8f14769da, , KFPageThumbnail-288.jpeg
+
+Duplicate filename: 67106c6013854b5faeb33d55442f8d5d    Count: 2
+67106c6013854b5faeb33d55442f8d5d, , KFPageThumbnail-46.jpeg
+67106c6013854b5faeb33d55442f8d5d, , KFPageThumbnail-46.jpeg
+
+Duplicate filename: 694cf657e5bf53b73b90586727b4924f    Count: 2
+694cf657e5bf53b73b90586727b4924f, , KFPageThumbnail-188.jpeg
+694cf657e5bf53b73b90586727b4924f, , KFPageThumbnail-188.jpeg
+
+Duplicate filename: 6d1beda276a9f43dd34bb7053ae81e18    Count: 2
+6d1beda276a9f43dd34bb7053ae81e18, , KFPageThumbnail-12.jpeg
+6d1beda276a9f43dd34bb7053ae81e18, , KFPageThumbnail-12.jpeg
+
+Duplicate filename: 8097039e471c70796ddf08aa33c6ffd7    Count: 2
+8097039e471c70796ddf08aa33c6ffd7, , KFPageThumbnail-164.jpeg
+8097039e471c70796ddf08aa33c6ffd7, , KFPageThumbnail-171.jpeg
+
+Duplicate filename: 89e53043b1a306dde6bf7af62dfd9251    Count: 2
+89e53043b1a306dde6bf7af62dfd9251, , KFPageThumbnail-26.jpeg
+89e53043b1a306dde6bf7af62dfd9251, , KFPageThumbnail-26.jpeg
+
+Duplicate filename: 8f2c5efd7224ca052f83e7fdce02af92    Count: 2
+8f2c5efd7224ca052f83e7fdce02af92, , KFPreviewThumbnail-2.jpeg
+8f2c5efd7224ca052f83e7fdce02af92, , KFPreviewThumbnail-2.jpeg
+
+Duplicate filename: 952c7e1dfeb8642d78018f3e23c64b61    Count: 2
+952c7e1dfeb8642d78018f3e23c64b61, , calibreHtmlOutBasicCss.css
+952c7e1dfeb8642d78018f3e23c64b61, , calibreHtmlOutBasicCss.css
+
+Duplicate filename: 959fc3b059dd881257e15276d1fe2558    Count: 2
+959fc3b059dd881257e15276d1fe2558, , KFPageThumbnail-205.jpeg
+959fc3b059dd881257e15276d1fe2558, , KFPageThumbnail-205.jpeg
+
+Duplicate filename: 9a83eea1f2f7a2e8ffdae1b56b794a72    Count: 2
+9a83eea1f2f7a2e8ffdae1b56b794a72, , diagram.png
+9a83eea1f2f7a2e8ffdae1b56b794a72, , diagram.png
+
+Duplicate filename: a63cfd283b7b37af513bfe69bebb4f8a    Count: 2
+a63cfd283b7b37af513bfe69bebb4f8a, , KFPageThumbnail-30.jpeg
+a63cfd283b7b37af513bfe69bebb4f8a, , KFPageThumbnail-30.jpeg
+
+Duplicate filename: aa6d06fc360c0c4d66aa5593ec0240b6    Count: 2
+aa6d06fc360c0c4d66aa5593ec0240b6, , buildVersionHistory.plist
+aa6d06fc360c0c4d66aa5593ec0240b6, , buildVersionHistory.plist
+
+Duplicate filename: b20be0601f86d0437e91c199642d52f2    Count: 2
+b20be0601f86d0437e91c199642d52f2, , KFPageThumbnail-233.jpeg
+b20be0601f86d0437e91c199642d52f2, , KFPageThumbnail-233.jpeg
+
+Duplicate filename: b311f2b7912dc757ce3139462c70cf54    Count: 2
+b311f2b7912dc757ce3139462c70cf54, , KFPageThumbnail-48.jpeg
+b311f2b7912dc757ce3139462c70cf54, , KFPageThumbnail-280.jpeg
+
+Duplicate filename: c114c62d51ef27a1ec1992f89b04b1fc    Count: 2
+c114c62d51ef27a1ec1992f89b04b1fc, , KFPageThumbnail-160.jpeg
+c114c62d51ef27a1ec1992f89b04b1fc, , KFPageThumbnail-160.jpeg
+
+Duplicate filename: c7fd3070560ca6583ca1587c3094f626    Count: 2
+c7fd3070560ca6583ca1587c3094f626, , KFPageThumbnail-282.jpeg
+c7fd3070560ca6583ca1587c3094f626, , KFPageThumbnail-282.jpeg
+
+Duplicate filename: dee9fdb35a0295761b13e87b78bf32e0    Count: 2
+dee9fdb35a0295761b13e87b78bf32e0, , index.html
+dee9fdb35a0295761b13e87b78bf32e0, , index.html
+
+Duplicate filename: e2e918578d2a25fc6a6f377e4082d634    Count: 2
+e2e918578d2a25fc6a6f377e4082d634, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/jp2k-formats, balloon.jp2
+e2e918578d2a25fc6a6f377e4082d634, /mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/jp2k-test/byteCorruption, balloon_intact.jp2
+
+Duplicate filename: ea2e12f44e50d8ea0d8e68eabb59b729    Count: 2
+ea2e12f44e50d8ea0d8e68eabb59b729, , stylesheet.css
+ea2e12f44e50d8ea0d8e68eabb59b729, , stylesheet.css
+
+Duplicate filename: ef017c4b39b712ca775000811c4e76ab    Count: 2
+ef017c4b39b712ca775000811c4e76ab, , page_styles.css
+ef017c4b39b712ca775000811c4e76ab, , page_styles.css
+
+Duplicate filename: f4bc73c2cf65da5ae338d72e6aa3f721    Count: 2
+f4bc73c2cf65da5ae338d72e6aa3f721, , KFPageThumbnail-278.jpeg
+f4bc73c2cf65da5ae338d72e6aa3f721, , KFPageThumbnail-278.jpeg
+
+
+Files with duplicate filenames (Total: 117)
+Listing disabled as potentially too many...
+Total unique values: 63
+
+Identifying troublesome filenames: 
+File: [ contains, non-recommended character: 0x5b '['
+File: [] contains, non-recommended character: 0x5d ']'
+File: ] contains, non-recommended character: 0x5d ']'
+File: +Ã©-Ãº contains, characters outside of ASCII range: 0xc3 'Ã'
+File: +Ã©-Â¼ contains, characters outside of ASCII range: 0xc3 'Ã'
+
