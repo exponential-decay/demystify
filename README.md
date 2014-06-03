@@ -8,6 +8,8 @@ and query the SQLite database, outputting results in a readable form useful for
 analysis by researchers and archivists within digital preservation departments
 in memory institutions. 
 
+See: http://www.openplanetsfoundation.org/blogs/2014-06-03-analysis-engine-droid-csv-export
+
 There are three components to the tool:
 
 #### droid2sqlite.py
