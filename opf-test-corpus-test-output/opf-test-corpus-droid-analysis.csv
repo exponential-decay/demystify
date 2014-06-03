@@ -1,6 +1,6 @@
 ID,PARENT_ID,URI,FILE_PATH,NAME,METHOD,STATUS,SIZE,TYPE,EXT,LAST_MODIFIED,EXTENSION_MISMATCH,MD5_HASH,FORMAT_COUNT,PUID,MIME_TYPE,FORMAT_NAME,FORMAT_VERSION,,,
 1,,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus,opf-format-corpus,,Done,,Folder,,2014-06-03T18:05:35,FALSE,,,,,,,,,
-2,1,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing,desktop-publishing,,Done,,Folder,,2014-06-03T18:05:17,FALSE,,,,,,,,,
+2,1,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing,desktop-publishing,,Done,,Folder,,2014-06-03T18:05:17,FALSE,,,,,,,,, 
 3,2,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing/InDesign/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/desktop-publishing/InDesign,InDesign,,Done,,Folder,,2014-06-03T18:05:18,FALSE,,,,,,,,,
 4,1,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks,ebooks,,Done,,Folder,,2014-06-03T18:05:19,FALSE,,,,,,,,,
 6,4,file:/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57/,/mnt/gdap/collection-analysis/opf-test-corpus/opf-format-corpus/ebooks/calibre-0.8.57,calibre-0.8.57,,Done,,Folder,,2014-06-03T18:05:18,FALSE,,,,,,,,,
