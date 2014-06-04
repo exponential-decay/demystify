@@ -1,4 +1,4 @@
-#opf-test-corpus-output
+#opf-test-corpus-test-output
 
 This folder contains files relating to running this analysis on a re-factored version of the opf-test-corpus, 
 hosted here: https://github.com/ross-spencer/opf-format-corpus
