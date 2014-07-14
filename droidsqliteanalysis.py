@@ -11,7 +11,7 @@ from urlparse import urlparse
 
 class DROIDAnalysis:
 
-	# DB self.cursor
+	## DB self.cursor
 	cursor = None
 
 	# Counts
