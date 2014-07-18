@@ -333,7 +333,7 @@ class DROIDAnalysis:
 			if count > 1:
 				totalduplicates = totalduplicates + count
 				duplicatemd5 = r[0]
-				duplicatestr = "Duplicate filename: " + duplicatemd5 + "    Count: " + str(count) + '\n'
+				duplicatestr = "Duplicate checksum: " + duplicatemd5 + "    Count: " + str(count) + '\n'
 				duplicatestr = duplicatestr + self.__listQuery__("SELECT MD5_HASH, DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "'", "\n")
 				duplicatelist.append(duplicatestr)
 		self.totalmd5duplicates = totalduplicates
