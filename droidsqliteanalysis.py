@@ -76,6 +76,7 @@ class DROIDAnalysis:
 		print "Total extension mismatches: " + str(self.extmismatchCount)		#TODO: List, but could be long
 		print "Total signature IDd PUID count: " + str(self.distinctSignaturePuidcount)
 		print "Total distinct extensions across collection: " + str(self.distinctextensioncount)
+		print "Total zero-byte files in collection: " + str(self.zerobytecount)
 		print "Total files with duplicate content (MD5 value): " + str(self.totalmd5duplicates)
 		print "Total files with duplicate filenames: " + str(self.filecount - self.uniqueFileNames)
 		print "Percentage of collection identified: " + str(self.identifiedPercentage)
