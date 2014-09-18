@@ -9,7 +9,7 @@ class RegexFnameAnalysis:
       
    #detect multiple contiguous spaces in filenames
    def detectMultipleSpaces(self, fname):
+      doublespaces = False
       if self.multiplespaceregex.search(fname) is not None:
-         return True
-      else:
-         return False
+         doublespaces = True
+      return doublespaces
