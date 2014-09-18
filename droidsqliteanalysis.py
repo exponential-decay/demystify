@@ -395,32 +395,35 @@ class DROIDAnalysis:
    ###
    # Additional functions on DB
    ###
-   def msoftfnameanalysis(self):
+   
+   def __generatefilenamelist__(self):
+      #multi-use variable: get filenames from DB
       countDirs = "SELECT DISTINCT NAME FROM droid"
       self.cursor.execute(countDirs)
-      fnamelist = self.cursor.fetchall()
-      charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
+      self.fnamelist = self.cursor.fetchall()
       
+   def msoftfnameanalysis(self):
+      charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
       fnamereport = ''
       #Pass filename to fname analysis
-      for d in fnamelist:
+      for d in self.fnamelist:
          fnamestring = d[0]
          fnamereport = fnamereport + charcheck.completeFnameAnalysis(fnamestring)
       return fnamereport
                   
    def fileswithspaces(self):
       multiplespacelist = []
-      countDirs = "SELECT DISTINCT NAME FROM droid"
-      self.cursor.execute(countDirs)
-      fnamelist = self.cursor.fetchall()
       charcheck = RegexFnameAnalysis.RegexFnameAnalysis()
-      for d in fnamelist:
+      for d in self.fnamelist:
          fnamestring = d[0]
          if charcheck.detectMultipleSpaces(fnamestring) == True:
             multiplespacelist.append(fnamestring)
       return multiplespacelist
          
    def queryDB(self):
+      #preliminary functions to generate data from DB
+      self.__generatefilenamelist__()
+   
       self.filecount = self.countFilesQuery()
       self.containercount = self.countContainerObjects()
       self.filesincontainercount = self.countFilesInContainerObjects()
@@ -474,7 +477,7 @@ class DROIDAnalysis:
       
       self.cursor = conn.cursor()
       self.queryDB()		# primary db query functions
-      #self.detect_invalid_characters("s")		# need to pass strings to this... 
+      
       conn.close()
 
 def handleDROIDDB(dbfilename):
