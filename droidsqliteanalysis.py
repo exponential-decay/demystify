@@ -7,6 +7,7 @@ import sqlite3
 import csv
 import droid2sqlite
 import MsoftFnameAnalysis
+import RegexFnameAnalysis
 from urlparse import urlparse
 
 class DROIDAnalysis:
@@ -85,6 +86,7 @@ class DROIDAnalysis:
       print "Total zero-byte files in collection: " + str(self.zerobytecount)
       print "Total files with duplicate content (MD5 value): " + str(self.totalmd5duplicates)
       print "Total files with duplicate filenames: " + str(self.filecount - self.uniqueFileNames)
+      print "Total files with multiple contiguous space characters: " + str(len(self.multiplespacelist))
       print "Percentage of collection identified: " + str(self.identifiedPercentage)
       print "Percentage of collection unidentified: " + str(self.unidentifiedPercentage)
 
@@ -161,7 +163,12 @@ class DROIDAnalysis:
       print
       print "Identifying troublesome filenames: "
       print self.badFilenames
-         
+      
+      print
+      print "Files with multiple contiguous spaces (Total: " + str(len(self.multiplespacelist)) + ")" 
+      for f in self.multiplespacelist:
+         print f
+      
    def __countQuery__(self, query):
       self.cursor.execute(query)
       count = self.cursor.fetchone()[0]
@@ -388,7 +395,7 @@ class DROIDAnalysis:
    ###
    # Additional functions on DB
    ###
-   def filesWithDodgyCharacters(self):
+   def msoftfnameanalysis(self):
       countDirs = "SELECT DISTINCT NAME FROM droid"
       self.cursor.execute(countDirs)
       fnamelist = self.cursor.fetchall()
@@ -401,6 +408,18 @@ class DROIDAnalysis:
          fnamereport = fnamereport + charcheck.completeFnameAnalysis(fnamestring)
       return fnamereport
                   
+   def fileswithspaces(self):
+      multiplespacelist = []
+      countDirs = "SELECT DISTINCT NAME FROM droid"
+      self.cursor.execute(countDirs)
+      fnamelist = self.cursor.fetchall()
+      charcheck = RegexFnameAnalysis.RegexFnameAnalysis()
+      for d in fnamelist:
+         fnamestring = d[0]
+         if charcheck.detectMultipleSpaces(fnamestring) == True:
+            multiplespacelist.append(fnamestring)
+      return multiplespacelist
+         
    def queryDB(self):
       self.filecount = self.countFilesQuery()
       self.containercount = self.countContainerObjects()
@@ -444,7 +463,8 @@ class DROIDAnalysis:
       self.zerobytecount = self.countZeroByteObjects()
       self.zerobytelist = self.listZeroByteObjects()
 
-      self.badFilenames = self.filesWithDodgyCharacters()
+      self.badFilenames = self.msoftfnameanalysis()
+      self.multiplespacelist = self.fileswithspaces()
 
       self.printResults()
 
