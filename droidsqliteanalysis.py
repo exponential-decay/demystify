@@ -13,7 +13,7 @@ from urlparse import urlparse
 class DROIDAnalysis:
 
    def __version__(self):
-      self.__version__ = '0.0.0'
+      self.__version__ = '0.0.2'
       return self.__version__
 
    ## DB self.cursor
@@ -167,7 +167,10 @@ class DROIDAnalysis:
       print
       print "Files with multiple contiguous spaces (Total: " + str(len(self.multiplespacelist)) + ")" 
       for f in self.multiplespacelist:
-         print f
+         print "original:   " + f[1] 
+         print "spaces (%): " + f[1].replace(' ', '%')
+         print "location:   " + "".join(f)
+         print
       
    def __countQuery__(self, query):
       self.cursor.execute(query)
@@ -398,9 +401,14 @@ class DROIDAnalysis:
    
    def __generatefilenamelist__(self):
       #multi-use variable: get filenames from DB
-      countDirs = "SELECT DISTINCT NAME FROM droid"
+      countDirs = "SELECT NAME FROM droid"
       self.cursor.execute(countDirs)
       self.fnamelist = self.cursor.fetchall()
+      
+   def __generatefilenamelistwithdirs__(self):
+      countDirs = "SELECT DIR_NAME, NAME FROM droid"
+      self.cursor.execute(countDirs)
+      self.fdirlist = self.cursor.fetchall()
       
    def msoftfnameanalysis(self):
       charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
@@ -414,15 +422,25 @@ class DROIDAnalysis:
    def fileswithspaces(self):
       multiplespacelist = []
       charcheck = RegexFnameAnalysis.RegexFnameAnalysis()
-      for d in self.fnamelist:
-         fnamestring = d[0]
-         if charcheck.detectMultipleSpaces(fnamestring) == True:
-            multiplespacelist.append(fnamestring)
+      
+      #for fdir in self.fdirlist:
+      #print "".join(fdir)
+      
+      
+      for d in self.fdirlist:
+         if len(d) != 2:
+            sys.stderr.write("File name, directory list pair is irregular (!=2). Exiting...\n")
+            sys.exit(1)
+         else:
+            fnamestring = d[1]
+            if charcheck.detectMultipleSpaces(fnamestring) == True:
+               multiplespacelist.append(d)
       return multiplespacelist
          
    def queryDB(self):
       #preliminary functions to generate data from DB
       self.__generatefilenamelist__()
+      self.__generatefilenamelistwithdirs__()
    
       self.filecount = self.countFilesQuery()
       self.containercount = self.countContainerObjects()
