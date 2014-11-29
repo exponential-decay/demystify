@@ -13,7 +13,7 @@ from urlparse import urlparse
 class DROIDAnalysis:
 
    def __version__(self):
-      self.__version__ = '0.0.2'
+      self.__version__ = '0.0.3'
       return self.__version__
 
    ## DB self.cursor

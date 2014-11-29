@@ -54,6 +54,9 @@ Will naturally be slower to output results.
 Class to handle analysis of non-recommended filenames from Microsoft:
 http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx 
 
+Code contains copy of library from Cooper Hewitt to enable writing of plain text
+descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
+
 ### TODO
 
 * Everything is stored in the DB as a string, understand potential for typing
