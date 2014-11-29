@@ -3,9 +3,6 @@
 
 import sys
 sys.path.append(r'cooperhewitt/unicode/')
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
 import names
 
 class MsoftFnameAnalysis:
@@ -29,7 +26,7 @@ class MsoftFnameAnalysis:
    def unicodename(self, c):
       ref = names.lookup()
       name = ref.name(c)
-      return "%s %s" % (name, c)
+      return "%s: %s" % (name, c)
 
    def detectNonAsciiCharacters(self, s):
       print type(s)
