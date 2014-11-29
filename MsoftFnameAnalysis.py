@@ -96,3 +96,18 @@ class MsoftFnameAnalysis:
       # First test, all ASCII characters?
       for s in test_strings:
          self.detect_invalid_characters(s)
+
+def main():
+   
+   import sys
+
+   input = sys.argv[1:]
+   input = " ".join(input)
+
+   input = input.decode('utf-8')
+
+   analysis = MsoftFnameAnalysis().completeFnameAnalysis(input, True)
+   sys.stdout.write(analysis)
+
+if __name__ == "__main__":
+   main()
