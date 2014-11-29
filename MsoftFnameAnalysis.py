@@ -29,7 +29,7 @@ class MsoftFnameAnalysis:
    def unicodename(self, c):
       ref = names.lookup()
       name = ref.name(c)
-      return "%s %s" % (name, c.decode('utf8'))
+      return "%s %s" % (name, c)
 
    def detectNonAsciiCharacters(self, s):
       print type(s)
@@ -55,7 +55,7 @@ class MsoftFnameAnalysis:
    def detectNonPrintableCharacters(self, s):
       for c in range(0x1f):
          if chr(c) in s:
-            self.reportIssue(s, "contains, non-printable character:", hex(c) + " '" + c + "'")
+            self.reportIssue(s, "contains, non-printable character:", hex(c) + ", " + self.unicodename(c))
             break
 
    def detectMsoftReservedNames(self, s):
@@ -75,7 +75,7 @@ class MsoftFnameAnalysis:
             except IndexError:
                problem = True
             if problem == True:
-               self.reportIssue(s, "contains, reserved name:", c)
+               self.reportIssue(s, "contains, reserved name: ", c)
 
    def detectSpaceAtEndOfName(self, s):
       if s.endswith(' '):
