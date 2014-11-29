@@ -162,7 +162,7 @@ class DROIDAnalysis:
          
       print
       print "Identifying troublesome filenames: "
-      print self.badFilenames
+      sys.stdout.write(self.badFilenames)
       
       print
       print "Files with multiple contiguous spaces (Total: " + str(len(self.multiplespacelist)) + ")" 
