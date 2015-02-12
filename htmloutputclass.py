@@ -239,7 +239,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<h2>" + "Files with duplicate filenames (Total: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + ")" + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
-      self.printFormattedText("<details><summary>Duplicate Filename Listing: <b>" + str(self.analysisresults.totaluniquefilenames) + "</b></summary>")
+      self.printFormattedText("<details><summary>Duplicate Filename Listing: <b>" + str(len(self.analysisresults.duplicatefnamelisting)) + "</b></summary>")
       self.__htmlnewline__() 
       for d in	self.analysisresults.duplicatefnamelisting:	#TODO: Can potentially be too many
       	self.printFormattedText(d.replace(',', ' &mdash; '))

@@ -11,66 +11,21 @@ import textoutputclass
 import droidsqliteanalysis
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
+import DroidAnalysisResultsClass
 from urlparse import urlparse
 from lxml import etree, html
 
 class DROIDAnalysis:
 
+   def __init__(self):
+      self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
+
    def __version__(self):
-      self.__version__ = '0.0.x' #0.0.4
-      return self.__version__
+      self.analysisresults.__version__ = '0.0.x' #0.0.4
+      return self.analysisresults.__version__
 
    ## DB self.cursor
    cursor = None
-
-   # Counts
-   filecount = 0
-   containercount = 0
-   filesincontainercount = 0	
-   directoryCount = 0
-   uniqueFileNames = 0
-   uniqueDirectoryNames = 0
-   identifiedfilecount = 0
-   multipleidentificationcount = 0 
-   unidentifiedfilecount = 0
-   distinctSignaturePuidcount = 0
-   extensionIDOnlyCount = 0
-   distinctextensioncount = 0
-   extmismatchCount = 0
-   zeroidcount = 0
-   
-   unidentifiedPercentage = 0
-   identifiedPercentage = 0
-   
-   sigIDPUIDList = 0
-   sigIDPUIDFrequency = 0
-   
-   extensionOnlyIDList = 0
-   extensionOnlyIDFrequency = 0
-   
-   #TODO: Turn lists into lists? Formatting at end..?
-   uniqueExtensionsInCollectionList = 0
-   multipleIDList = 0
-   frequencyOfAllExtensions = 0
-   
-   idmethodFrequency = 0
-   
-   mimetypeFrequency = 0
-   
-   filesWithNoIDList = 0
-   topPUIDList = 0
-   topExtensionList = 0
-   
-   totalmd5duplicates = 0
-   duplicatemd5listing = []
-
-   totaluniquefilenames = 0
-   duplicatefnamelisting = [] 
-   
-   containertypeslist = 0
-   
-   zerobytecount = 0
-   zerobytelist = 0
    
    def __countQuery__(self, query):
       self.cursor.execute(query)
@@ -267,13 +222,8 @@ class DROIDAnalysis:
             duplicatestr = duplicatestr + "Count: " + str(count) + " , " + "Name: " + duplicatename + '\n'
             duplicatelist.append(duplicatestr)
             duplicatestr = ''
-      self.totaluniquefilenames = totaluniquefilenames
+      self.analysisresults.totaluniquefilenames = totaluniquefilenames
       return duplicatelist
-
-
-
-
-
 
    def listDuplicateFilesFromMD5(self):		
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
@@ -291,7 +241,7 @@ class DROIDAnalysis:
             duplicatestr = duplicatestr + "Duplicate checksum: " + duplicatemd5 + '\n\n'
             duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
             duplicatelist.append(duplicatestr)
-      self.totalmd5duplicates = totalduplicates
+      self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
 
 
@@ -308,14 +258,14 @@ class DROIDAnalysis:
    def topPUIDS(self, number):
       # Hypothesis: 80% of the effects come from 20% of the causes		
 
-      eightyPercentTotalPUIDs = int(self.identifiedfilecount * 0.80)		# 80 percent figure
+      eightyPercentTotalPUIDs = int(self.analysisresults.identifiedfilecount * 0.80)		# 80 percent figure
       countIdentifiedPuids = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
       return self.listTopItems(self.__alternativeFrequencyQuery__(countIdentifiedPuids), number)
       
    def topExts(self, number):
       # Hypothesis: 80% of the effects come from 20% of the causes		
 
-      eightyPercentTotalExts = int(self.filecount * 0.80)		# 80 percent figure
+      eightyPercentTotalExts = int(self.analysisresults.filecount * 0.80)		# 80 percent figure
       countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
       return self.listTopItems(self.__alternativeFrequencyQuery__(countExtensions), number)
 
@@ -386,60 +336,60 @@ class DROIDAnalysis:
       self.__generatefilenamelist__()
       self.__generatefilenamelistwithdirs__()
    
-      self.filecount = self.countFilesQuery()
-      self.containercount = self.countContainerObjects()
-      self.filesincontainercount = self.countFilesInContainerObjects()
-      self.directoryCount = self.countFoldersQuery()
-      self.uniqueFileNames = self.countUniqueFileNames()
-      self.uniqueDirectoryNames = self.countUniqueDirectoryNames()
-      self.identifiedfilecount = self.countIdentifiedQuery()
-      self.multipleidentificationcount = self.countMultipleIdentifications()
-      self.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
-      self.extensionIDOnlyCount = self.countExtensionIDOnly()
-      self.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
-      self.distinctextensioncount = self.countDistinctExtensions()
-      self.extmismatchCount = self.countExtensionMismatches()
+      self.analysisresults.filecount = self.countFilesQuery()
+      self.analysisresults.containercount = self.countContainerObjects()
+      self.analysisresults.filesincontainercount = self.countFilesInContainerObjects()
+      self.analysisresults.directoryCount = self.countFoldersQuery()
+      self.analysisresults.uniqueFileNames = self.countUniqueFileNames()
+      self.analysisresults.uniqueDirectoryNames = self.countUniqueDirectoryNames()
+      self.analysisresults.identifiedfilecount = self.countIdentifiedQuery()
+      self.analysisresults.multipleidentificationcount = self.countMultipleIdentifications()
+      self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
+      self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
+      self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
+      self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
+      self.analysisresults.extmismatchCount = self.countExtensionMismatches()
       
-      self.idmethodFrequency = self.idmethodFrequencyCount()
-      self.mimetypeFrequency = self.mimetypeFrequencyCount()
+      self.analysisresults.idmethodFrequency = self.idmethodFrequencyCount()
+      self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
       
-      self.zeroidcount = self.countZeroID()
+      self.analysisresults.zeroidcount = self.countZeroID()
 
       #NOTE: Must be calculated after we have total, and subset values
-      self.identifiedPercentage = self.calculatePercent(self.filecount, self.identifiedfilecount)		
-      self.unidentifiedPercentage = self.calculatePercent(self.filecount, self.unidentifiedfilecount)
+      self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
+      self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
-      self.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
-      self.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
-      self.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
-      self.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
-      self.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
-      self.frequencyOfAllExtensions = self.allExtensionsFrequency()
-      self.filesWithNoIDList = self.listNoIdentificationFiles()
+      self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
+      self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
+      self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
+      self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
+      self.analysisresults.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
+      self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
+      self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
       
-      self.multipleIDList = self.listMultipleIdentifications()
+      self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
-      self.duplicatefnamelisting = self.listDuplicateFilenames()
-      self.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.topPUIDList = self.topPUIDS(5)
-      self.topExtensionList = self.topExts(5)		
-      self.containertypeslist = self.listContainerTypes()
+      self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
+      self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
+      self.analysisresults.topPUIDList = self.topPUIDS(5)
+      self.analysisresults.topExtensionList = self.topExts(5)		
+      self.analysisresults.containertypeslist = self.listContainerTypes()
       
-      self.zerobytecount = self.countZeroByteObjects()
-      self.zerobytelist = self.listZeroByteObjects()
+      self.analysisresults.zerobytecount = self.countZeroByteObjects()
+      self.analysisresults.zerobytelist = self.listZeroByteObjects()
 
-      self.badFilenames = self.msoftfnameanalysis()
-      self.multiplespacelist = self.fileswithspaces()
+      self.analysisresults.badFilenames = self.msoftfnameanalysis()
+      self.analysisresults.multiplespacelist = self.fileswithspaces()
 
-      self.printText()
-      #self.printHTML()
+      #self.printText()
+      self.printHTML()
       
    def printText(self):
-      textout = textoutputclass.DROIDAnalysisTextOutput(self)
+      textout = textoutputclass.DROIDAnalysisTextOutput(self.analysisresults)
       textout.printTextResults()
       
    def printHTML(self):
-      htmlout = htmloutputclass.DROIDAnalysisHTMLOutput(self)
+      htmlout = htmloutputclass.DROIDAnalysisHTMLOutput(self.analysisresults)
       sys.stdout.write(htmlout.printHTMLResults())
       
    def openDROIDDB(self, dbfilename):

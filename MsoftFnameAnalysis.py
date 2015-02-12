@@ -64,10 +64,10 @@ class MsoftFnameAnalysis:
 
    def detectMsoftReservedNames(self, s):
       badnames = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', \
-							'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', \
-								'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', \
-									'LPT6', 'LPT7', 'LPT8', 'LPT9']
-				
+                     'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', \
+                        'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', \
+                           'LPT6', 'LPT7', 'LPT8', 'LPT9']
+            
       for c in badnames:
          if c.lower() in s[0:len(c)].lower():
             problem = True
@@ -84,15 +84,15 @@ class MsoftFnameAnalysis:
    def detectSpaceAtEndOfName(self, s):
       if s.endswith(' '):
          self.reportIssue(s, "has a space as its last character.")
-			
+         
    def detectPeriodAtEndOfName(self, s):		
       if s.endswith('.'):
          self.reportIssue(s, "has a period as its last character.")
-		
+      
    def __detect_invalid_characters_test__(self):
       #Strings for unit tests
       test_strings = ['COM4', 'COM4.txt', '.com4', 'abcCOM4text', 'abc.com4.txt.abc', 'con', 'CON', 'consumer', 'space ', 'preiod.', 'ף', 'י', 'צ', 'ףיצ', 'file[bracket]one.txt', 'file[two.txt', 'filethree].txt', '-=_|\"', '(<|>|:|"|/|\\|\?|\*|\||\x00-\x1f)']	
-	
+   
       # First test, all ASCII characters?
       for s in test_strings:
          self.detect_invalid_characters(s)
