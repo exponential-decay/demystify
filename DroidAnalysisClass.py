@@ -431,11 +431,12 @@ class DROIDAnalysis:
       self.badFilenames = self.msoftfnameanalysis()
       self.multiplespacelist = self.fileswithspaces()
 
-      #self.printText()
-      self.printHTML()
+      self.printText()
+      #self.printHTML()
       
    def printText(self):
-      textout = textoutputclass.DROIDAnalysisTextOutput()
+      textout = textoutputclass.DROIDAnalysisTextOutput(self)
+      textout.printTextResults()
       
    def printHTML(self):
       htmlout = htmloutputclass.DROIDAnalysisHTMLOutput(self)
