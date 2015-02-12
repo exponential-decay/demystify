@@ -439,13 +439,8 @@ class DROIDAnalysis:
       
    def printHTML(self):
       htmlout = htmloutputclass.DROIDAnalysisHTMLOutput(self)
-      print htmlout.printHTMLResults()
+      sys.stdout.write(htmlout.printHTMLResults())
       
-      #sys.stdout.write(self.htmloutput)
-      ##document_root = html.fromstring(self.htmloutput)
-      #print document_root
-      #print(etree.tostring(document_root, encoding='utf-8', pretty_print=True))
-
    def openDROIDDB(self, dbfilename):
       conn = sqlite3.connect(dbfilename)
       conn.text_factory = str		#encoded as ascii, not unicode / return ascii
