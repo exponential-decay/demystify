@@ -25,6 +25,7 @@ def main():
    parser.add_argument('--csv', help='Optional: Single DROID CSV to read.', default=False)
    parser.add_argument('--csva', help='Optional: DROID CSV to read, and then analyse.', default=False)
    parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
+   parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
 
    if len(sys.argv)==1:
       parser.print_help()
