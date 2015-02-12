@@ -4,17 +4,28 @@ from __future__ import division
 import argparse
 import sys
 import droid2sqlite
+import htmloutputclass
+import textoutputclass
 import DroidAnalysisClass
 
-def handleDROIDDB(dbfilename):
-   analysis = DroidAnalysisClass.DROIDAnalysis()	
-   analysis.openDROIDDB(dbfilename)
-   #TODO: Incorrect filetypes provided, e.g. providing CSV not DB
+def handleOutput(analysisresults, htmlout=False):
+   if htmlout is False:
+      htmloutput = htmloutputclass.DROIDAnalysisHTMLOutput(analysisresults)
+      sys.stdout.write(htmloutput.printHTMLResults())   
+   else:
+      textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
+      textout.printTextResults() # Text class still uses print statements... 
 
-def handleDROIDCSV(droidcsv, analyse=False):
+def handleDROIDDB(dbfilename, htmlout=False):
+   analysis = DroidAnalysisClass.DROIDAnalysis()	
+   analysisresults = analysis.openDROIDDB(dbfilename)
+   return analysisresults
+
+def handleDROIDCSV(droidcsv, analyse=False, htmlout=False):
    dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
    if analyse == True:
-      handleDROIDDB(dbfilename)
+      analysisresults = handleDROIDDB(dbfilename)
+      handleOutput(analysisresults, htmlout)
 
 def main():
 
@@ -38,9 +49,9 @@ def main():
    if args.csv:
       handleDROIDCSV(args.csv)
    if args.csva:
-      handleDROIDCSV(args.csva, True)
+      handleDROIDCSV(args.csva, True, args.htm)
    if args.db:
-      handleDROIDDB(args.db)
+      handleDROIDDB(args.db, args.htm)
    
    else:
       sys.exit(1)

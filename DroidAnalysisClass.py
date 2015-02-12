@@ -6,8 +6,6 @@ import sys
 import sqlite3
 import csv
 import droid2sqlite
-import htmloutputclass
-import textoutputclass
 import droidsqliteanalysis
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
@@ -381,22 +379,15 @@ class DROIDAnalysis:
       self.analysisresults.badFilenames = self.msoftfnameanalysis()
       self.analysisresults.multiplespacelist = self.fileswithspaces()
 
-      #self.printText()
-      self.printHTML()
-      
-   def printText(self):
-      textout = textoutputclass.DROIDAnalysisTextOutput(self.analysisresults)
-      textout.printTextResults()
-      
-   def printHTML(self):
-      htmlout = htmloutputclass.DROIDAnalysisHTMLOutput(self.analysisresults)
-      sys.stdout.write(htmlout.printHTMLResults())
+      return self.analysisresults
       
    def openDROIDDB(self, dbfilename):
       conn = sqlite3.connect(dbfilename)
       conn.text_factory = str		#encoded as ascii, not unicode / return ascii
       
       self.cursor = conn.cursor()
-      self.queryDB()		# primary db query functions
+      analysisresults = self.queryDB()		# primary db query functions
       
       conn.close()
+
+      return self.analysisresults
