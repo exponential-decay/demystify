@@ -27,6 +27,13 @@ class DROIDAnalysisHTMLOutput:
       for x in range(no):
          self.printFormattedText("</br>")
    
+   #Trial function we're not using yet... Prettty Print
+   def prettyprinthtml():
+      #document_root = html.fromstring(self.htmloutput)
+      #print document_root
+      #print(etree.tostring(document_root, encoding='utf-8', pretty_print=True))
+      return None
+   
    def printHTMLResults(self):
       self.generateHTML()
       return self.htmloutput
