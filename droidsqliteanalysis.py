@@ -14,7 +14,7 @@ def handleOutput(analysisresults, htmlout=False):
       sys.stdout.write(htmloutput.printHTMLResults())   
    else:
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
-      textout.printTextResults() # Text class still uses print statements... 
+      textoutput.printTextResults() # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, htmlout=False):
    analysis = DroidAnalysisClass.DROIDAnalysis()	
@@ -36,7 +36,7 @@ def main():
    parser.add_argument('--csv', help='Optional: Single DROID CSV to read.', default=False)
    parser.add_argument('--csva', help='Optional: DROID CSV to read, and then analyse.', default=False)
    parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
-   parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
+   parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_false")
 
    if len(sys.argv)==1:
       parser.print_help()
