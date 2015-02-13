@@ -6,6 +6,9 @@ class DROIDAnalysisResults:
    #version
    version = 0
 
+   #filename
+   filename = ''
+
    # Counts
    filecount = 0
    containercount = 0

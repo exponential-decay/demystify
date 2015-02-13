@@ -50,7 +50,9 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>")
    
       self.printFormattedText("<h1>DROID Analysis</h1>")
-      self.printFormattedText("<b>" + "Analysis version: " + self.analysisresults.__version__() + "</b>")
+      self.printFormattedText("<b>" + "Analysis version: </b>" + self.analysisresults.__version__())
+      self.__htmlnewline__() 
+      self.printFormattedText("<b>" + "Analysis file: </b>" + self.analysisresults.filename)
       self.__htmlnewline__(2) 
 
       self.printFormattedText("<h2>Sumary Statistics</h2>")
