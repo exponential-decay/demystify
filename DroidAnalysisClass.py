@@ -205,6 +205,14 @@ class DROIDAnalysis:
       return self.__listQuery__(	
          "SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'", "\n")
 
+   def listExtensionIDOnly(self):
+      return self.__listQuery__( 
+         "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')","\n")
+    
+   def listExtensionMismatches(self):
+      return self.__listQuery__( 
+         "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')", "\n")   
+
    def listDuplicateFilenames(self):
       duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -241,6 +249,40 @@ class DROIDAnalysis:
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
+
+   def listAltDuplicateFilenames(self):
+      duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
+      result = self.__alternativeFrequencyQuery__(duplicatequery)
+      
+      duplicatestr = ''
+      duplicatelist = []
+      totaluniquefilenames = 0
+      for r in result:
+         count = r[1]
+         if count > 1:
+            totaluniquefilenames = totaluniquefilenames + 1
+            duplicatename = r[0]
+            duplicatestr =  self.__listQuery__('SELECT FILE_PATH FROM droid WHERE NAME="' + duplicatename + '" ORDER BY FILE_PATH DESC', "\n")
+            duplicatelist.append(duplicatestr)
+      self.analysisresults.totaluniquefilenames = totaluniquefilenames
+      return duplicatelist
+
+   def listAltDuplicateFilesFromMD5(self):
+      duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+      result = self.__alternativeFrequencyQuery__(duplicatequery)
+      
+      duplicatestr = ''
+      duplicatelist = []
+      totalduplicates = 0
+      for r in result:
+         count = r[1]
+         if count > 1:
+            totalduplicates = totalduplicates + count
+            duplicatemd5 = r[0]
+            duplicatestr =  self.__listQuery__("SELECT FILE_PATH FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY FILE_PATH DESC", "\n")
+            duplicatelist.append(duplicatestr)
+      self.analysisresults.totalmd5duplicates = totalduplicates
+      return duplicatelist    
 
 
 
@@ -360,15 +402,19 @@ class DROIDAnalysis:
       self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
       self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
       self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
+      self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
       self.analysisresults.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
       self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
       self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
+      self.analysisresults.extmismatchList = self.listExtensionMismatches()
       
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
+      self.analysisresults.duplicatefnamealtlisting = self.listAltDuplicateFilenames()
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5altlisting = self.listAltDuplicateFilesFromMD5()
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()

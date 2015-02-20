@@ -22,8 +22,11 @@ class DROIDAnalysisResults:
    distinctSignaturePuidcount = 0
    extensionIDOnlyCount = 0
    distinctextensioncount = 0
-   extmismatchCount = 0
    zeroidcount = 0
+
+   extmismatchCount = 0
+   extmismatchList = 0
+   
    
    unidentifiedPercentage = 0
    identifiedPercentage = 0
@@ -33,6 +36,7 @@ class DROIDAnalysisResults:
    
    extensionOnlyIDList = 0
    extensionOnlyIDFrequency = 0
+   extensionOnlyIDfnameList = 0 
    
    #TODO: Turn lists into lists? Formatting at end..?
    uniqueExtensionsInCollectionList = 0
@@ -49,9 +53,11 @@ class DROIDAnalysisResults:
    
    totalmd5duplicates = 0
    duplicatemd5listing = []
+   duplicatemd5altlisting = []
 
    totaluniquefilenames = 0
    duplicatefnamelisting = [] 
+   duplicatefnamealtlisting = []
    
    containertypeslist = 0
    
