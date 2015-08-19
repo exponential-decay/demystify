@@ -20,6 +20,8 @@ class rogueoutputclass:
       self.outputlist(self.analysisresults.zerobytelist)
       self.outputlist(self.analysisresults.duplicatemd5pathlisting)
       self.outputlist(self.analysisresults.duplicatefnamepathlisting)
+
+      #Output of these paths is a little more obscure
       for f in self.analysisresults.multiplespacelist:
          sys.stdout.write("\\".join(f) + "\n")
 
