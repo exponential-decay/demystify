@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import division
+import time
 import argparse
 import sys
 import droid2sqlite
@@ -21,14 +22,8 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
       textoutput.printTextResults() # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, htmlout=False, rogues=False):
-   import time
-   start_time = time.time()
-   
    analysis = DroidAnalysisClass.DROIDAnalysis()	
    analysisresults = analysis.openDROIDDB(dbfilename)
-   
-   print("--- %s seconds ---" % (time.time() - start_time))
-   
    return analysisresults
 
 def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):
@@ -38,6 +33,8 @@ def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):
       handleOutput(analysisresults, htmlout, rogues)
 
 def main():
+
+   start_time = time.time()
 
    #	Usage: 	--csv [droid report]
 
@@ -63,6 +60,8 @@ def main():
       handleDROIDCSV(args.csva, True, args.htm, args.rogues)
    if args.db:
       handleDROIDDB(args.db, args.htm, args.rogues)
+   
+      sys.stderr.write("--- %s seconds ---" % (time.time() - start_time))
    
    else:
       sys.exit(1)
