@@ -61,10 +61,10 @@ def main():
    if args.db:
       handleDROIDDB(args.db, args.htm, args.rogues)
    
-      sys.stderr.write("--- %s seconds ---" % (time.time() - start_time))
-   
    else:
       sys.exit(1)
+
+   sys.stderr.write("--- %s seconds ---" % (time.time() - start_time))
 
 if __name__ == "__main__":
    main()

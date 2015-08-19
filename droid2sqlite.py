@@ -164,6 +164,7 @@ class DROIDLoader:
 
       conn.execute("CREATE INDEX HASH ON droid(MD5_HASH)");
       conn.execute("CREATE INDEX NAME ON droid(NAME)");
+      conn.execute("CREATE INDEX PUID ON droid(PUID)");
 
       # Save (commit) the changes
       conn.commit()
