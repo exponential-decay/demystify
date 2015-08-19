@@ -250,7 +250,7 @@ class DROIDAnalysis:
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
 
-   def listAltDuplicateFilenames(self):
+   def listAllDuplicateFilenames(self):
       duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -267,7 +267,7 @@ class DROIDAnalysis:
       self.analysisresults.totaluniquefilenames = totaluniquefilenames
       return duplicatelist
 
-   def listAltDuplicateFilesFromMD5(self):
+   def listAllDuplicateFilesFromMD5(self):
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -412,9 +412,9 @@ class DROIDAnalysis:
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
-      self.analysisresults.duplicatefnamealtlisting = self.listAltDuplicateFilenames()
+      self.analysisresults.duplicatefnamealtlisting = self.listAllDuplicateFilenames()
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.analysisresults.duplicatemd5altlisting = self.listAltDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5altlisting = self.listAllDuplicateFilesFromMD5()
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()
