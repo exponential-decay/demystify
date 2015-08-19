@@ -412,9 +412,9 @@ class DROIDAnalysis:
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
-      self.analysisresults.duplicatefnamealtlisting = self.listAllDuplicateFilenames()
+      self.analysisresults.duplicatefnamepathlisting = self.listAllDuplicateFilenames()
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.analysisresults.duplicatemd5altlisting = self.listAllDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5pathlisting = self.listAllDuplicateFilesFromMD5()
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()
