@@ -18,7 +18,6 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
    else:
-      print analysisresults.version
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
       textoutput.printTextResults() # Text class still uses print statements... 
 
@@ -65,7 +64,8 @@ def main():
       handleDROIDCSV(args.csva, True, args.htm, args.rogues)
       outputtime(start_time)
    if args.db:
-      handleDROIDDB(args.db, args.htm, args.rogues)
+      analysisresults = handleDROIDDB(args.db, args.htm, args.rogues)
+      handleOutput(analysisresults, args.htm, args.rogues)
       outputtime(start_time)
    
    else:

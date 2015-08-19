@@ -30,6 +30,14 @@ class DROIDAnalysis:
       count = self.cursor.fetchone()[0]
       return count
 
+   def __listQuery1__(self, query):
+      self.cursor.execute(query)
+      result = self.cursor.fetchall()
+      resultlist = []
+      for r in result:
+         resultlist.append(r[0])
+      return resultlist
+
    def __listQuery__(self, query, separator):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
@@ -257,13 +265,13 @@ class DROIDAnalysis:
       duplicatestr = ''
       duplicatelist = []
       totaluniquefilenames = 0
+      duplicatenames = []
       for r in result:
          count = r[1]
          if count > 1:
             totaluniquefilenames = totaluniquefilenames + 1
             duplicatename = r[0]
-            duplicatestr =  self.__listQuery__('SELECT FILE_PATH FROM droid WHERE NAME="' + duplicatename + '" ORDER BY FILE_PATH DESC', "\n")
-            duplicatelist.append(duplicatestr)
+            duplicatelist = duplicatelist + self.__listQuery1__('SELECT FILE_PATH FROM droid WHERE NAME="' + duplicatename + '" ORDER BY FILE_PATH DESC')
       self.analysisresults.totaluniquefilenames = totaluniquefilenames
       return duplicatelist
 

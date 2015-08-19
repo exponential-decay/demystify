@@ -8,15 +8,16 @@ class rogueoutputclass:
 
    def printTextResults(self):
 
-      print self.analysisresults.multipleIDList
+      '''print self.analysisresults.multipleIDList
       print self.analysisresults.filesWithNoIDList
       print self.analysisresults.extensionOnlyIDfnameList
       print self.analysisresults.extmismatchList 
-      print self.analysisresults.zerobytelist
-      for x in self.analysisresults.duplicatemd5pathlisting:
-        print x
+      print self.analysisresults.zerobytelist'''
+      #for x in self.analysisresults.duplicatemd5pathlisting:
+      #  print x
       for d in self.analysisresults.duplicatefnamepathlisting:
-         print d
-      for f in self.analysisresults.multiplespacelist:
-         print "\\".join(f)
+         if d != "no value":
+            sys.stdout.write(d + "\n")
+      #for f in self.analysisresults.multiplespacelist:
+      #   print "\\".join(f)
 
