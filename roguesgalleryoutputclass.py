@@ -13,9 +13,9 @@ class rogueoutputclass:
       print self.analysisresults.extensionOnlyIDfnameList
       print self.analysisresults.extmismatchList 
       print self.analysisresults.zerobytelist
-      for x in self.analysisresults.duplicatemd5altlisting:
+      for x in self.analysisresults.duplicatemd5pathlisting:
         print x
-      for d in self.analysisresults.duplicatefnamealtlisting:
+      for d in self.analysisresults.duplicatefnamepathlisting:
          print d
       for f in self.analysisresults.multiplespacelist:
          print "\\".join(f)

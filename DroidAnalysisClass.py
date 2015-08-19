@@ -410,10 +410,13 @@ class DROIDAnalysis:
       
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
+      #Filename Duplicate Listings
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
       self.analysisresults.duplicatefnamepathlisting = self.listPathsOfDuplicateFilenames()
+      
+      #Checksum Duplicate Listings
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.analysisresults.duplicatemd5altlisting = self.listPathsOfDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5pathlisting = self.listPathsOfDuplicateFilesFromMD5()
       
       
       
