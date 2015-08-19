@@ -18,13 +18,14 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
    else:
+      print analysisresults.version
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
       textoutput.printTextResults() # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, htmlout=False, rogues=False):
    analysis = DroidAnalysisClass.DROIDAnalysis()	
    analysisresults = analysis.openDROIDDB(dbfilename)
-   handleOutput(analysisresults, htmlout, rogues)
+   return analysisresults
 
 def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):
    dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
