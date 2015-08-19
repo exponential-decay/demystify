@@ -6,18 +6,20 @@ class rogueoutputclass:
    def __init__(self, analysisresults):
       self.analysisresults = analysisresults
 
+   def outputlist(self, pathlist):
+      for x in pathlist:
+         if x != "no value":
+            sys.stdout.write(x + "\n")
+
    def printTextResults(self):
 
-      '''print self.analysisresults.multipleIDList
-      print self.analysisresults.filesWithNoIDList
-      print self.analysisresults.extensionOnlyIDfnameList
-      print self.analysisresults.extmismatchList 
-      print self.analysisresults.zerobytelist'''
-      #for x in self.analysisresults.duplicatemd5pathlisting:
-      #  print x
-      for d in self.analysisresults.duplicatefnamepathlisting:
-         if d != "no value":
-            sys.stdout.write(d + "\n")
-      #for f in self.analysisresults.multiplespacelist:
-      #   print "\\".join(f)
+      self.outputlist(self.analysisresults.multipleIDList)
+      self.outputlist(self.analysisresults.filesWithNoIDList)
+      self.outputlist(self.analysisresults.extensionOnlyIDfnameList)
+      self.outputlist(self.analysisresults.extmismatchList) 
+      self.outputlist(self.analysisresults.zerobytelist)
+      self.outputlist(self.analysisresults.duplicatemd5pathlisting)
+      self.outputlist(self.analysisresults.duplicatefnamepathlisting)
+      for f in self.analysisresults.multiplespacelist:
+         sys.stdout.write("\\".join(f) + "\n")
 
