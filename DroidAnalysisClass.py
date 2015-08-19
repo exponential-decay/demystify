@@ -229,6 +229,9 @@ class DROIDAnalysis:
             duplicatelist.append(duplicatestr)
             duplicatestr = ''
       self.analysisresults.totaluniquefilenames = totaluniquefilenames
+      
+      #print duplicatelist
+      
       return duplicatelist
 
    def listDuplicateFilesFromMD5(self):		
@@ -248,12 +251,16 @@ class DROIDAnalysis:
             duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
+      
+      
+      
       return duplicatelist
 
-   def listAllDuplicateFilenames(self):
-      duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
-      result = self.__alternativeFrequencyQuery__(duplicatequery)
+   def listPathsOfDuplicateFilenames(self):   
+      #TODO, understand GROUP BY NAME in query below... 
+      duplicatequery = "SELECT NAME, COUNT(NAME), FILE_PATH AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY FILE_PATH DESC"
       
+      result = self.__alternativeFrequencyQuery__(duplicatequery)
       duplicatestr = ''
       duplicatelist = []
       totaluniquefilenames = 0
@@ -261,10 +268,10 @@ class DROIDAnalysis:
          count = r[1]
          if count > 1:
             totaluniquefilenames = totaluniquefilenames + 1
-            duplicatename = r[0]
-            duplicatestr =  self.__listQuery__('SELECT FILE_PATH FROM droid WHERE NAME="' + duplicatename + '" ORDER BY FILE_PATH DESC', "\n")
-            duplicatelist.append(duplicatestr)
+            duplicatename = r[2]
+            duplicatelist.append(duplicatename)
       self.analysisresults.totaluniquefilenames = totaluniquefilenames
+            
       return duplicatelist
 
    def listAllDuplicateFilesFromMD5(self):
@@ -283,14 +290,6 @@ class DROIDAnalysis:
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist    
-
-
-
-
-
-
-
-
 
    ###
    # Top n listings...
@@ -412,9 +411,12 @@ class DROIDAnalysis:
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
-      self.analysisresults.duplicatefnamealtlisting = self.listAllDuplicateFilenames()
-      self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.analysisresults.duplicatemd5altlisting = self.listAllDuplicateFilesFromMD5()
+      self.analysisresults.duplicatefnamepathlisting = self.listPathsOfDuplicateFilenames()
+      #self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
+      #self.analysisresults.duplicatemd5altlisting = self.listAllDuplicateFilesFromMD5()
+      
+      
+      
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()
