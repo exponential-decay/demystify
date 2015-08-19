@@ -32,9 +32,10 @@ def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):
       analysisresults = handleDROIDDB(dbfilename)
       handleOutput(analysisresults, htmlout, rogues)
 
-def main():
+def outputtime(start_time):
+   sys.stderr.write("--- %s seconds ---" % (time.time() - start_time) + "\n")
 
-   start_time = time.time()
+def main():
 
    #	Usage: 	--csv [droid report]
 
@@ -46,6 +47,8 @@ def main():
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
 
+   start_time = time.time()
+
    if len(sys.argv)==1:
       parser.print_help()
       sys.exit(1)
@@ -56,15 +59,17 @@ def main():
    
    if args.csv:
       handleDROIDCSV(args.csv)
+      outputtime(start_time)
    if args.csva:
       handleDROIDCSV(args.csva, True, args.htm, args.rogues)
+      outputtime(start_time)
    if args.db:
       handleDROIDDB(args.db, args.htm, args.rogues)
+      outputtime(start_time)
    
    else:
       sys.exit(1)
 
-   sys.stderr.write("--- %s seconds ---" % (time.time() - start_time))
-
-if __name__ == "__main__":
+if __name__ == "__main__":      
    main()
+
