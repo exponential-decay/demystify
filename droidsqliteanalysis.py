@@ -24,7 +24,7 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
 def handleDROIDDB(dbfilename, htmlout=False, rogues=False):
    analysis = DroidAnalysisClass.DROIDAnalysis()	
    analysisresults = analysis.openDROIDDB(dbfilename)
-   return analysisresults
+   handleOutput(analysisresults, htmlout, rogues)
 
 def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):
    dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
