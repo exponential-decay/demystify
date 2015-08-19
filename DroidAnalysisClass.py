@@ -251,9 +251,6 @@ class DROIDAnalysis:
             duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
-      
-      
-      
       return duplicatelist
 
    def listPathsOfDuplicateFilenames(self):   
@@ -274,7 +271,8 @@ class DROIDAnalysis:
             
       return duplicatelist
 
-   def listAllDuplicateFilesFromMD5(self):
+
+   def listPathsOfDuplicateFilesFromMD5(self):
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -290,6 +288,8 @@ class DROIDAnalysis:
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist    
+
+
 
    ###
    # Top n listings...
@@ -412,8 +412,8 @@ class DROIDAnalysis:
       
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
       self.analysisresults.duplicatefnamepathlisting = self.listPathsOfDuplicateFilenames()
-      #self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      #self.analysisresults.duplicatemd5altlisting = self.listAllDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
+      self.analysisresults.duplicatemd5altlisting = self.listPathsOfDuplicateFilesFromMD5()
       
       
       
