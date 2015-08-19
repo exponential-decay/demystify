@@ -160,6 +160,12 @@ class DROIDLoader:
       self.createDBID(cursor) 
 
       # Save (commit) the changes
+      #conn.commit()
+
+      conn.execute("CREATE INDEX HASH ON droid(MD5_HASH)");
+      conn.execute("CREATE INDEX NAME ON droid(NAME)");
+
+      # Save (commit) the changes
       conn.commit()
 
       # We can also close the connection if we are done with it.
