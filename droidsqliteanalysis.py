@@ -21,8 +21,14 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
       textoutput.printTextResults() # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, htmlout=False, rogues=False):
+   import time
+   start_time = time.time()
+   
    analysis = DroidAnalysisClass.DROIDAnalysis()	
    analysisresults = analysis.openDROIDDB(dbfilename)
+   
+   print("--- %s seconds ---" % (time.time() - start_time))
+   
    return analysisresults
 
 def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False):

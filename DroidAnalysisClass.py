@@ -272,7 +272,7 @@ class DROIDAnalysis:
       return duplicatelist
 
 
-   def listPathsOfDuplicateFilesFromMD5(self):
+   def _listPathsOfDuplicateFilesFromMD5(self):
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -287,6 +287,26 @@ class DROIDAnalysis:
             duplicatestr =  self.__listQuery__("SELECT FILE_PATH FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY FILE_PATH DESC", "\n")
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
+      return duplicatelist    
+
+   def listPathsOfDuplicateFilesFromMD5(self):
+      duplicatequery = "SELECT MD5_HASH, COUNT(MD5_HASH) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+      result = self.__alternativeFrequencyQuery__(duplicatequery)
+      
+      duplicatestr = ''
+      duplicatelist = []
+      totalduplicates = 0
+      for r in result:
+         count = r[1]
+         if count > 1:
+            totalduplicates = totalduplicates + count
+            duplicatemd5 = r[0]
+            duplicatestr =  self.__listQuery__("SELECT FILE_PATH FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY FILE_PATH DESC", "\n")
+            duplicatelist.append(duplicatestr)
+      self.analysisresults.totalmd5duplicates = totalduplicates
+      
+      test = ['X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2008\\071205 - DRAFT - Resale Royalties introduced.doc\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\071205 - DRAFT - Resale Royalties introduced.doc', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\071018 - Music awards\\NZOA_CMJ FULL PAGE AD_OCT07.pdf\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\071018 - Music awards\\NZ ON AIR CMJ INVA5B.pdf', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2002\\Film industry taskforce 8May02.DOC\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2002\\Arts PR 2002\\Anderton film industry taskforce 8May02.doc', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Helen Clark Arts PR 2005\\PM launches Te Ara Feb 2005.doc\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Arts PR 2005\\PM launches Te Ara Feb 2005.doc', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Helen Clark Arts PR 2005\\PM cultural statistics June 2005.doc\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Arts PR 2005\\PM cultural statistics June 2005.doc', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\Biofuels sales.13feb2007.pdf\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\02-13 Biofuels FINAL.pdf', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Helen Clark Arts PR 2005\\PM cultural portal December 2005.doc\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2005\\Arts PR 2005\\PM cultural portal December 2005.doc', 'X:\\distilled\\Ruth Dyson - E3\\E3\\Speeches\\1 Senior Citizens\\Grey power speech updated standard 08.doc\nX:\\distilled\\Ruth Dyson - E3\\E3\\Speeches\\1 Senior Citizens\\2008\\June\\Grey power speech notes June 08.doc', 'X:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\Arts PR 2007\\NZ Music month MP quiz results.doc\nX:\\distilled\\Judith Tizard - E2\\E2\\Press releases & Advisories\\2007\\070510 - NZ Music month MP quiz results.doc']
+      
       return duplicatelist    
 
 
