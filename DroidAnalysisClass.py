@@ -15,12 +15,32 @@ from lxml import etree, html
 
 class DROIDAnalysis:
 
-   def __init__(self):
+   def __init__(self, config=False):
+      self.config = self.__readconfig__(config)
+         
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
    def __version__(self):
       self.analysisresults.__version__ = '0.0.x' #0.0.4
       return self.analysisresults.__version__
+
+   def __readconfig__(self, config):
+      configout = False
+      
+      self.blacklistpuids = False
+      self.blacklistzeros = False
+      
+      self.roguesduplicatechecksuns = True
+      self.roguesduplicatenames = True
+      
+      if config != False:
+         if config.has_section('rogues'):
+            if config.has_option('rogues', 'duplicatechecksums'):
+               self.roguesduplicatechecksuns = config.get('rogues', 'duplicatechecksums').lower()
+            if config.has_option('rogues', 'duplicatenames'):
+               self.roguesduplicatenames = config.get('rogues', 'duplicatenames').lower()
+      
+      return configout
 
    ## DB self.cursor
    cursor = None
