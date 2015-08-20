@@ -23,7 +23,6 @@ class DROIDAnalysisTextOutput:
       print "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount)
       print "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount)
       print "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates)
-      print "Total files with duplicate filenames: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames)
       print "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist))
       print "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage)
       print "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage)
@@ -89,15 +88,7 @@ class DROIDAnalysisTextOutput:
       for d in self.analysisresults.duplicatemd5listing:	#TODO: consider count next to MD5 val
          print d
          print
-         
-      print
-      print "Files with duplicate filenames (Total: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + ")"
-      print "Listing disabled as potentially too many..."
-      print "Total unique values: " + str(self.analysisresults.totaluniquefilenames)
-      #for d in	self.analysisresults.duplicatefnamelisting:	#TODO: Can potentially be too many
-      #	print d
-      #	print
-         
+                  
       print
       print "Identifying troublesome filenames: "
       for badnames in self.analysisresults.badFilenames:

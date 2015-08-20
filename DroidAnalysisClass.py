@@ -37,8 +37,6 @@ class DROIDAnalysis:
          if config.has_section('rogues'):
             if config.has_option('rogues', 'duplicatechecksums'):
                self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
-            if config.has_option('rogues', 'duplicatenames'):
-               self.roguesduplicatenames = config.get('rogues', 'duplicatenames').lower()
       
       return configout
 
@@ -241,24 +239,6 @@ class DROIDAnalysis:
       return self.__listQuery1__( 
          "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")   
 
-   def listDuplicateFilenames(self):
-      duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
-      result = self.__alternativeFrequencyQuery__(duplicatequery)
-      
-      duplicatestr = ''
-      duplicatelist = []
-      totaluniquefilenames = 0
-      for r in result:
-         count = r[1]
-         if count > 1:
-            totaluniquefilenames = totaluniquefilenames + 1
-            duplicatename = r[0]
-            duplicatestr = duplicatestr + "Count: " + str(count) + " , " + "Name: " + duplicatename + '\n'
-            duplicatelist.append(duplicatestr)
-            duplicatestr = ''
-      self.analysisresults.totaluniquefilenames = totaluniquefilenames
-      return duplicatelist
-
    def listDuplicateFilesFromMD5(self):		
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -278,23 +258,6 @@ class DROIDAnalysis:
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
 
-   def listDuplicateFnameFilepaths(self):
-      duplicatequery = "SELECT NAME, COUNT(NAME) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY NAME ORDER BY TOTAL DESC"
-      result = self.__alternativeFrequencyQuery__(duplicatequery)
-      
-      duplicatestr = ''
-      duplicatelist = []
-      totaluniquefilenames = 0
-      duplicatenames = []
-      for r in result:
-         count = r[1]
-         if count > 1:
-            totaluniquefilenames = totaluniquefilenames + 1
-            duplicatename = r[0]
-            duplicatelist = duplicatelist + self.__listQuery1__('SELECT FILE_PATH FROM droid WHERE NAME="' + duplicatename + '" ORDER BY FILE_PATH DESC')
-      self.analysisresults.totaluniquefilenames = totaluniquefilenames
-      return duplicatelist
-
    def listDuplicateMD5Filepaths(self):
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -310,14 +273,6 @@ class DROIDAnalysis:
             duplicatelist = duplicatelist + duplicatestr
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist    
-
-
-
-
-
-
-
-
 
    ###
    # Top n listings...
@@ -440,7 +395,6 @@ class DROIDAnalysis:
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       #expensive duplicate checking [default: ON]
-      self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
 
       self.analysisresults.topPUIDList = self.topPUIDS(5)
@@ -454,12 +408,8 @@ class DROIDAnalysis:
       self.analysisresults.multiplespacelist = self.fileswithspaces()
 
       #rogues
-      self.analysisresults.duplicatefnamepathlisting = False
       self.analysisresults.duplicatemd5pathlisting = False
-      
-      if self.roguesduplicatenames == "true":
-         self.analysisresults.duplicatefnamepathlisting = self.listDuplicateFnameFilepaths()
-         
+               
       if self.roguesduplicatechecksums == "true":
          self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
 

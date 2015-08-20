@@ -78,11 +78,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<li>" + "Total signature IDd PUID count: " + str(self.analysisresults.distinctSignaturePuidcount) + "</li>")
       self.printFormattedText("<li>" + "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount) + "</li>")
       self.printFormattedText("<li>" + "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount) + "</li>")
-      self.printFormattedText("<li>" + "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates) + "</li>")
-      
-      #Remove duplicate filename reporting
-      #self.printFormattedText("<li>" + "Total files with duplicate filenames: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + "</li>")
-      
+      self.printFormattedText("<li>" + "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates) + "</li>")  
       self.printFormattedText("<li>" + "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist)) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage) + "</li>")
@@ -245,21 +241,6 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText(d.replace('\n', '</br>').replace(',','</br>').replace('Context:','<b>Context:</b>').replace('Filename:','<b>Filename:</b>'))
          self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
-
-
-      #Duplicate Filenames - TODO - consider if we need
-      '''self.printFormattedText("<h2>" + "Files with duplicate filenames (Total: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + ")" + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
-      self.__htmlnewline__() 
-      self.printFormattedText("<details><summary>Duplicate Filename Listing: <b>" + str(len(self.analysisresults.duplicatefnamelisting)) + "</b></summary>")
-      self.__htmlnewline__() 
-      for d in	self.analysisresults.duplicatefnamelisting:	#TODO: Can potentially be too many
-      	self.printFormattedText(d.replace(',', ' &mdash; '))
-      	self.__htmlnewline__(2) 
-      self.printFormattedText("</details>")
-      self.__htmlnewline__(2) 
-      self.printFormattedText("<hr/>")'''
-
 
       #Troublesome Filenames
       self.printFormattedText("<h2>" + "Identifying troublesome filenames: " + "</h2>")
