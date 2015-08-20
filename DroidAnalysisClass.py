@@ -30,13 +30,13 @@ class DROIDAnalysis:
       self.blacklistpuids = False
       self.blacklistzeros = False
       
-      self.roguesduplicatechecksuns = True
+      self.roguesduplicatechecksums = True
       self.roguesduplicatenames = True
       
       if config != False:
          if config.has_section('rogues'):
             if config.has_option('rogues', 'duplicatechecksums'):
-               self.roguesduplicatechecksuns = config.get('rogues', 'duplicatechecksums').lower()
+               self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
             if config.has_option('rogues', 'duplicatenames'):
                self.roguesduplicatenames = config.get('rogues', 'duplicatenames').lower()
       
@@ -438,10 +438,10 @@ class DROIDAnalysis:
       
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
+      #expensive duplicate checking [default: ON]
       self.analysisresults.duplicatefnamelisting = self.listDuplicateFilenames()
-      self.analysisresults.duplicatefnamepathlisting = self.listDuplicateFnameFilepaths()
       self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
-      self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
+
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()
@@ -451,6 +451,13 @@ class DROIDAnalysis:
 
       self.analysisresults.badFilenames = self.msoftfnameanalysis()
       self.analysisresults.multiplespacelist = self.fileswithspaces()
+
+      #rogues
+      if self.roguesduplicatenames == "true":
+         self.analysisresults.duplicatefnamepathlisting = self.listDuplicateFnameFilepaths()
+         
+      if self.roguesduplicatechecksums == "true":
+         self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
 
       return self.analysisresults
       
