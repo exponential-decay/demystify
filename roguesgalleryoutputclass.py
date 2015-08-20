@@ -7,9 +7,10 @@ class rogueoutputclass:
       self.analysisresults = analysisresults
 
    def outputlist(self, pathlist):
-      for x in pathlist:
-         if x != "no value":
-            sys.stdout.write(x + "\n")
+      if pathlist != False:
+         for x in pathlist:
+            if x != "no value":
+               sys.stdout.write(x + "\n")
 
    def printTextResults(self):
 

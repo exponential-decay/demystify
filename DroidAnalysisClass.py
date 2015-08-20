@@ -453,6 +453,9 @@ class DROIDAnalysis:
       self.analysisresults.multiplespacelist = self.fileswithspaces()
 
       #rogues
+      self.analysisresults.duplicatefnamepathlisting = False
+      self.analysisresults.duplicatemd5pathlisting = False
+      
       if self.roguesduplicatenames == "true":
          self.analysisresults.duplicatefnamepathlisting = self.listDuplicateFnameFilepaths()
          

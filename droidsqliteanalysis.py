@@ -26,7 +26,7 @@ def handleOutput(analysisresults, htmlout=False, rogues=False):
       sys.stdout.write(htmloutput.printHTMLResults())   
    elif rogues is True:
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
-      #rogueoutput.printTextResults()
+      rogueoutput.printTextResults()
    else:
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
       textoutput.printTextResults() # Text class still uses print statements... 
