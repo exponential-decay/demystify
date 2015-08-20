@@ -1,3 +1,4 @@
+import sys
 import DroidAnalysisClass
 
 class DROIDAnalysisHTMLOutput:
@@ -16,7 +17,13 @@ class DROIDAnalysisHTMLOutput:
 
    def printFormattedText(self, text):
       #sys.stdout.write(text)
-      self.htmloutput = self.htmloutput + text
+      
+      if type(text) is list:
+         for t in text:
+            self.htmloutput = self.htmloutput + t + "</br>"
+      else:
+         self.htmloutput = self.htmloutput + text
+         
       self.__printnewline__()
    
    def __printnewline__(self):
@@ -72,7 +79,10 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<li>" + "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount) + "</li>")
       self.printFormattedText("<li>" + "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount) + "</li>")
       self.printFormattedText("<li>" + "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates) + "</li>")
-      self.printFormattedText("<li>" + "Total files with duplicate filenames: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + "</li>")
+      
+      #Remove duplicate filename reporting
+      #self.printFormattedText("<li>" + "Total files with duplicate filenames: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + "</li>")
+      
       self.printFormattedText("<li>" + "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist)) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage) + "</li>")
@@ -154,7 +164,7 @@ class DROIDAnalysisHTMLOutput:
 
       #Files with multiple identifications
       self.printFormattedText("<h2>" + "List of files with multiple identifications: " + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
+      self.printFormattedText("<details><summary>Description of the term multiple identifications.</summary><br/>" + "Files with size greater than zero and have two or more DROID PUID values associated." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.multipleIDList)
       self.__htmlnewline__() 
@@ -237,8 +247,8 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
 
-      #Duplicate Filenames
-      self.printFormattedText("<h2>" + "Files with duplicate filenames (Total: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + ")" + "</h2>")
+      #Duplicate Filenames - TODO - consider if we need
+      '''self.printFormattedText("<h2>" + "Files with duplicate filenames (Total: " + str(self.analysisresults.filecount - self.analysisresults.uniqueFileNames) + ")" + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText("<details><summary>Duplicate Filename Listing: <b>" + str(len(self.analysisresults.duplicatefnamelisting)) + "</b></summary>")
@@ -248,7 +258,7 @@ class DROIDAnalysisHTMLOutput:
       	self.__htmlnewline__(2) 
       self.printFormattedText("</details>")
       self.__htmlnewline__(2) 
-      self.printFormattedText("<hr/>")
+      self.printFormattedText("<hr/>")'''
 
 
       #Troublesome Filenames
@@ -262,8 +272,8 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
       
       
-      #Contiguous Spaces
-      self.printFormattedText("<h2>" + "Files with multiple contiguous spaces (Total: " + str(len(self.analysisresults.multiplespacelist)) + ")" + "</h2>")
+      #Contiguous Spaces - TODO - consider if we need
+      '''self.printFormattedText("<h2>" + "Files with multiple contiguous spaces (Total: " + str(len(self.analysisresults.multiplespacelist)) + ")" + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       for f in self.analysisresults.multiplespacelist:
@@ -272,10 +282,9 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText("<b>Spaces Shown (&#9644;) :</b> " + f[1].replace(' ', ' &#9644; '))
          self.__htmlnewline__(1) 
          self.printFormattedText("<b>Location:</b>   " + "".join(f))
-         self.__htmlnewline__(2) 
+         self.__htmlnewline__(2)'''
+      
       
       self.__htmlnewline__(2) 
-
-
       self.printFormattedText("</body>")
       

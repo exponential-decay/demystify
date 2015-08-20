@@ -145,7 +145,7 @@ class DROIDAnalysis:
 
    def countMultipleIdentifications(self):
       return self.__countQuery__( 
-         "SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0')")
+         "SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
 
    def countTotalUnidentifiedQuery(self):
       return self.__countQuery__( 
@@ -218,7 +218,7 @@ class DROIDAnalysis:
 
    def listMultipleIdentifications(self):
       return self.__listQuery1__(		
-         "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0')")
+         "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
       return
 
    def listContainerTypes(self):
@@ -410,6 +410,7 @@ class DROIDAnalysis:
       self.analysisresults.uniqueFileNames = self.countUniqueFileNames()
       self.analysisresults.uniqueDirectoryNames = self.countUniqueDirectoryNames()
       self.analysisresults.identifiedfilecount = self.countIdentifiedQuery()
+      
       self.analysisresults.multipleidentificationcount = self.countMultipleIdentifications()
       self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
       self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
