@@ -94,11 +94,3 @@ class DROIDAnalysisTextOutput:
       for badnames in self.analysisresults.badFilenames:
          # Already UTF-8 on way into here...
          sys.stdout.write(badnames)
-      
-      print
-      print "Files with multiple contiguous spaces (Total: " + str(len(self.analysisresults.multiplespacelist)) + ")" 
-      for f in self.analysisresults.multiplespacelist:
-         print "original:   " + f[1] 
-         print "spaces (%): " + f[1].replace(' ', '%')
-         print "location:   " + "".join(f)
-         print

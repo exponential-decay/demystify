@@ -338,21 +338,7 @@ class DROIDAnalysis:
          if checkedname != '':
             fnamereport.append(checkedname)
       return fnamereport
-                  
-   def fileswithspaces(self):
-      multiplespacelist = []
-      charcheck = RegexFnameAnalysis.RegexFnameAnalysis()
-      
-      for d in self.fdirlist:
-         if len(d) != 2:
-            sys.stderr.write("File name, directory list pair is irregular (!=2). Exiting...\n")
-            sys.exit(1)
-         else:
-            fnamestring = d[1]
-            if charcheck.detectMultipleSpaces(fnamestring) == True:
-               multiplespacelist.append(d)
-      return multiplespacelist
-         
+                           
    def queryDB(self):
       #preliminary functions to generate data from DB
       self.__generatefilenamelist__()
@@ -405,7 +391,6 @@ class DROIDAnalysis:
       self.analysisresults.zerobytelist = self.listZeroByteObjects()
 
       self.analysisresults.badFilenames = self.msoftfnameanalysis()
-      self.analysisresults.multiplespacelist = self.fileswithspaces()
 
       #rogues
       self.analysisresults.duplicatemd5pathlisting = False

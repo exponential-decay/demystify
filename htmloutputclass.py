@@ -252,20 +252,6 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
       
-      
-      #Contiguous Spaces - TODO - consider if we need
-      '''self.printFormattedText("<h2>" + "Files with multiple contiguous spaces (Total: " + str(len(self.analysisresults.multiplespacelist)) + ")" + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
-      self.__htmlnewline__() 
-      for f in self.analysisresults.multiplespacelist:
-         self.printFormattedText("<b>Original Name:</b>   " + f[1])
-         self.__htmlnewline__(1) 
-         self.printFormattedText("<b>Spaces Shown (&#9644;) :</b> " + f[1].replace(' ', ' &#9644; '))
-         self.__htmlnewline__(1) 
-         self.printFormattedText("<b>Location:</b>   " + "".join(f))
-         self.__htmlnewline__(2)'''
-      
-      
       self.__htmlnewline__(2) 
       self.printFormattedText("</body>")
       
