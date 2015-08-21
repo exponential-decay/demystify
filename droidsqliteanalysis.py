@@ -20,18 +20,21 @@ def handleConfig():
       config.read(configfname)
    return config
 
-def handleOutput(analysisresults, htmlout=False, rogues=False):
+def handleOutput(analysisresults, htmlout=False, rogues=False, heros=False):
    if htmlout is True:
       htmloutput = htmloutputclass.DROIDAnalysisHTMLOutput(analysisresults)
       sys.stdout.write(htmloutput.printHTMLResults())   
    elif rogues is True:
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
+   elif heros is True:
+      rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heros)
+      rogueoutput.printTextResults()      
    else:
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
       textoutput.printTextResults() # Text class still uses print statements... 
 
-def handleDROIDDB(dbfilename, htmlout=False, rogues=False, config=False):
+def handleDROIDDB(dbfilename, htmlout=False, config=False):
    analysis = DroidAnalysisClass.DROIDAnalysis(config)	
    analysisresults = analysis.openDROIDDB(dbfilename)
    return analysisresults
@@ -56,6 +59,7 @@ def main():
    parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
+   parser.add_argument("--heros", "--hero", help="Output 'Heros Gallery' listing.", action="store_true")
 
    start_time = time.time()
 
@@ -73,11 +77,11 @@ def main():
       handleDROIDCSV(args.csv)
       outputtime(start_time)
    if args.csva:
-      handleDROIDCSV(args.csva, True, args.htm, args.rogues, config)
+      handleDROIDCSV(args.csva, True, args.htm, args.rogues, args.heros, config)
       outputtime(start_time)
    if args.db:
-      analysisresults = handleDROIDDB(args.db, args.htm, args.rogues, config)
-      handleOutput(analysisresults, args.htm, args.rogues)
+      analysisresults = handleDROIDDB(args.db, args.htm, config)
+      handleOutput(analysisresults, args.htm, args.rogues, args.heros)
       outputtime(start_time)
    
    else:

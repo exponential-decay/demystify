@@ -3,7 +3,7 @@ import DroidAnalysisClass
 
 class rogueoutputclass:
 
-   def __init__(self, analysisresults):
+   def __init__(self, analysisresults, heros=False):
       self.analysisresults = analysisresults
 
    def outputlist(self, pathlist):
