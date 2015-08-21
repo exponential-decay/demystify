@@ -3,7 +3,7 @@ import DroidAnalysisClass
 
 class rogueoutputclass:
 
-   herolist = []
+   roguelist = []
 
    def __init__(self, analysisresults, heros=False):
       self.analysisresults = analysisresults
@@ -15,13 +15,8 @@ class rogueoutputclass:
             sys.stdout.write(x + "\n")
             
    def rogueorhero(self, pathlist):
-      if self.heros == False:
-         if pathlist != False:
-            self.outputlist(pathlist)
-      else:
-         #heros list to become direct opposite of rogues list
-         if pathlist != False:
-            self.herolist = self.herolist + pathlist
+      if pathlist != False:
+         self.roguelist = self.roguelist + pathlist
 
    def printTextResults(self):
 
@@ -33,4 +28,7 @@ class rogueoutputclass:
       self.rogueorhero(self.analysisresults.duplicatemd5pathlisting)
       
       if self.heros is True:
-         self.outputlist(self.herolist)
+         heros = list(set(self.analysisresults.allfilepaths) - set(self.roguelist))
+         self.outputlist(heros)
+      else:
+         self.outputlist(set(self.roguelist))

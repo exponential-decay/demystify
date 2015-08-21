@@ -327,7 +327,15 @@ class DROIDAnalysis:
       countDirs = "SELECT DIR_NAME, NAME FROM droid"
       self.cursor.execute(countDirs)
       self.fdirlist = self.cursor.fetchall()
-      
+
+   def __generatefilepathlistnodirs__(self):
+      pathlist = []
+      allfilepaths = "SELECT FILE_PATH FROM DROID WHERE TYPE != 'Folder' and FILE_PATH != 'no value'"     
+      self.cursor.execute(allfilepaths)
+      for x in self.cursor.fetchall():
+         pathlist.append(x[0])
+      return pathlist
+     
    def msoftfnameanalysis(self):
       charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
       fnamereport = []
@@ -391,6 +399,8 @@ class DROIDAnalysis:
       self.analysisresults.zerobytelist = self.listZeroByteObjects()
 
       self.analysisresults.badFilenames = self.msoftfnameanalysis()
+
+      self.analysisresults.allfilepaths = self.__generatefilepathlistnodirs__()
 
       #rogues
       self.analysisresults.duplicatemd5pathlisting = False
