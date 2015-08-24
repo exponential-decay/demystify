@@ -5,9 +5,9 @@ class rogueoutputclass:
 
    roguelist = []
 
-   def __init__(self, analysisresults, heros=False):
+   def __init__(self, analysisresults, heroes=False):
       self.analysisresults = analysisresults
-      self.heros = heros
+      self.heroes = heroes
 
    def outputlist(self, pathlist):
       for x in pathlist:
@@ -27,7 +27,7 @@ class rogueoutputclass:
       self.rogueorhero(self.analysisresults.zerobytelist)
       self.rogueorhero(self.analysisresults.duplicatemd5pathlisting)
       
-      if self.heros is True:
+      if self.heroes is True:
          heros = list(set(self.analysisresults.allfilepaths) - set(self.roguelist))
          self.outputlist(heros)
       else:

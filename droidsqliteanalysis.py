@@ -20,15 +20,15 @@ def handleConfig():
       config.read(configfname)
    return config
 
-def handleOutput(analysisresults, htmlout=False, rogues=False, heros=False):
+def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
    if htmlout is True:
       htmloutput = htmloutputclass.DROIDAnalysisHTMLOutput(analysisresults)
       sys.stdout.write(htmloutput.printHTMLResults())   
    elif rogues is True:
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
-   elif heros is True:
-      rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heros)
+   elif heroes is True:
+      rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heroes)
       rogueoutput.printTextResults()      
    else:
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
@@ -39,11 +39,11 @@ def handleDROIDDB(dbfilename, htmlout=False, config=False):
    analysisresults = analysis.openDROIDDB(dbfilename)
    return analysisresults
 
-def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, config=False):
+def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, heroes=False, config=False):
    dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
    if analyse == True:
       analysisresults = handleDROIDDB(dbfilename, config)
-      handleOutput(analysisresults, htmlout, rogues)
+      handleOutput(analysisresults, htmlout, rogues, heroes)
 
 def outputtime(start_time):
    sys.stderr.write("--- %s seconds ---" % (time.time() - start_time) + "\n")
@@ -59,7 +59,7 @@ def main():
    parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
-   parser.add_argument("--heros", "--hero", help="Output 'Heros Gallery' listing.", action="store_true")
+   parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
 
    start_time = time.time()
 
@@ -77,11 +77,11 @@ def main():
       handleDROIDCSV(args.csv)
       outputtime(start_time)
    if args.csva:
-      handleDROIDCSV(args.csva, True, args.htm, args.rogues, args.heros, config)
+      handleDROIDCSV(args.csva, True, args.htm, args.rogues, args.heroes, config)
       outputtime(start_time)
    if args.db:
       analysisresults = handleDROIDDB(args.db, args.htm, config)
-      handleOutput(analysisresults, args.htm, args.rogues, args.heros)
+      handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
    
    else:
