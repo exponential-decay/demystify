@@ -10,15 +10,14 @@ class ExportDB:
 
       cursor = connection.cursor()
       
-      cursor.execute('PRAGMA table_info(droid)')
-      
+      cursor.execute('PRAGMA table_info(droid)')   #get table structure, column2 our headers
       header = ''
       for row in cursor.fetchall():
          header = header + '"' + row[1].encode('utf-8') + '",'
       header = header.strip(',') + "\n"
       sys.stdout.write(header)
       
-      cursor.execute('select * from droid')
+      cursor.execute('select * from droid')  #get content of DB
       for row in cursor.fetchall():
             str = ''
             for x in range(len(row)):
