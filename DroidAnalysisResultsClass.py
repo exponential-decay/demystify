@@ -10,6 +10,7 @@ class DROIDAnalysisResults:
    filename = ''
 
    # Counts
+   collectionsize = 0
    filecount = 0
    containercount = 0
    filesincontainercount = 0	

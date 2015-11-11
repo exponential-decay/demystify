@@ -86,6 +86,18 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
+      #return the size of the collection
+      self.printFormattedText("<h2>" + "Size of the collection:" + "</h2>")
+      self.printFormattedText("<details><summary>Size of the collection on disk.</summary><br/>" + "Some important additional information." + "</details>")
+      self.__htmlnewline__() 
+      
+      #easier to reference from a var
+      size = self.analysisresults.collectionsize
+      
+      self.printFormattedText(str(size) + " bytes | " + str(size/(1000000)) + " megabytes (SI/IED) | " + str(size/(1048576)) + " megabytes (Base2).") #1000^2//1024^2
+      self.__htmlnewline__(2) 
+      self.printFormattedText("<hr/>")
+
       #Signature identified PUIDs in collection (signature and container)
       self.printFormattedText("<h2>" + "Identified Formats in the Collection:" + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")

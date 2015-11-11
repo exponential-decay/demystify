@@ -116,6 +116,10 @@ class DROIDAnalysis:
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
+   def getCollectionSizeQuery(self):
+      return self.__countQuery__(
+         "SELECT SUM(SIZE) FROM DROID WHERE SIZE != 'no value'")
+
    # Container objects known by DROID...
    def countContainerObjects(self):
       return self.__countQuery__(
@@ -351,7 +355,8 @@ class DROIDAnalysis:
       #preliminary functions to generate data from DB
       self.__generatefilenamelist__()
       self.__generatefilenamelistwithdirs__()
-   
+      
+      self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()
       self.analysisresults.containercount = self.countContainerObjects()
       self.analysisresults.filesincontainercount = self.countFilesInContainerObjects()
