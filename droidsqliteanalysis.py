@@ -11,6 +11,7 @@ import htmloutputclass
 import textoutputclass
 import roguesgalleryoutputclass
 import DroidAnalysisClass
+import ExportDBClass
 
 def handleConfig():
    config = False
@@ -60,6 +61,7 @@ def main():
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
    parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
+   parser.add_argument("--export", "--exp", help="Export SQLITE DB as CSV.", default=False)
 
    start_time = time.time()
 
@@ -83,6 +85,9 @@ def main():
       analysisresults = handleDROIDDB(args.db, args.htm, config)
       handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
+   if args.export:
+      ex = ExportDBClass.ExportDB()
+      ex.exportDB(args.export)
    
    else:
       sys.exit(1)
