@@ -11,9 +11,9 @@ class rogueoutputclass:
 
    def outputlist(self, pathlist):
       for x in pathlist:
-         if x != "no value":
+         if x != "no value":              #todo: no values in duplicates, why?
             sys.stdout.write(x + "\n")
-            
+
    def rogueorhero(self, pathlist):
       if pathlist != False:
          self.roguelist = self.roguelist + pathlist
@@ -26,7 +26,8 @@ class rogueoutputclass:
       self.rogueorhero(self.analysisresults.extmismatchList) 
       self.rogueorhero(self.analysisresults.zerobytelist)
       self.rogueorhero(self.analysisresults.duplicatemd5pathlisting)
-      
+      self.rogueorhero(self.analysisresults.roguepuidlisting)      
+
       if self.heroes is True:
          heros = list(set(self.analysisresults.allfilepaths) - set(self.roguelist))
          self.outputlist(heros)

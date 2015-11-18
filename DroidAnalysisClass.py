@@ -40,7 +40,7 @@ class DROIDAnalysis:
             if config.has_option('rogues', 'duplicatechecksums'):
                self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
             if config.has_option('rogues', 'roguepuids'):
-               self.roguesduplicatechecksums = config.get('rogues', 'roguepuids').split(',')  
+               self.roguepuids = config.get('rogues', 'roguepuids').split(',')  
 
       return configout
 
@@ -266,6 +266,20 @@ class DROIDAnalysis:
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
 
+   def listRoguePUIDs(self, puidlist):
+      searchlist = []
+      for puid in puidlist:
+         puidquery = "SELECT COUNT(*) AS total FROM droid WHERE (PUID='" + puid + "')"
+         result = self.__countQuery__(puidquery)      
+         if result > 0:
+            searchlist.append(puid)
+
+      roguepuidpathlist = []
+      for p in searchlist:
+         roguepuidpathlist = roguepuidpathlist + self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE PUID='" + p + "' ORDER BY FILE_PATH DESC")
+
+      return roguepuidpathlist
+
    def listDuplicateMD5Filepaths(self):
       duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -418,6 +432,10 @@ class DROIDAnalysis:
          self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
       else:
          sys.stderr.write("Rogue gallery: Will not output paths for duplicate checksums." + "\n")
+
+      if self.roguepuids != False:
+         sys.stderr.write("Rogue gallery: Will output rogue PUIDs in rogue listing." + "\n")
+         self.analysisresults.roguepuidlisting = self.listRoguePUIDs(self.roguepuids)
 
       return self.analysisresults
       
