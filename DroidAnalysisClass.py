@@ -412,6 +412,8 @@ class DROIDAnalysis:
                
       if self.roguesduplicatechecksums == "true":
          self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
+      else:
+         sys.stderr.write("Rogue gallery: Will not output paths for duplicate checksums." + "\n")
 
       return self.analysisresults
       
