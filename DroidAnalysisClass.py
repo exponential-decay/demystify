@@ -30,14 +30,18 @@ class DROIDAnalysis:
       self.blacklistpuids = False
       self.blacklistzeros = False
       
+      #self.roguesduplicatenames = True // to implement
+
       self.roguesduplicatechecksums = True
-      self.roguesduplicatenames = True
+      self.roguepuids = False
       
       if config != False:
          if config.has_section('rogues'):
             if config.has_option('rogues', 'duplicatechecksums'):
                self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
-      
+            if config.has_option('rogues', 'roguepuids'):
+               self.roguesduplicatechecksums = config.get('rogues', 'roguepuids').split(',')  
+
       return configout
 
    ## DB self.cursor

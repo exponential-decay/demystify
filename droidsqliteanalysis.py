@@ -13,8 +13,8 @@ import roguesgalleryoutputclass
 import DroidAnalysisClass
 import ExportDBClass
 
-def handleConfig():
-   config = False
+def handleConfig(blacklist):
+   config = blacklist
    configfname = "blacklist.cfg"
    if os.path.isfile(configfname):
       config = ConfigParser.ConfigParser()
@@ -35,7 +35,7 @@ def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
       textoutput.printTextResults() # Text class still uses print statements... 
 
-def handleDROIDDB(dbfilename, htmlout=False, config=False):
+def handleDROIDDB(dbfilename, config=False):
    analysis = DroidAnalysisClass.DROIDAnalysis(config)	
    analysisresults = analysis.openDROIDDB(dbfilename)
    return analysisresults
@@ -61,6 +61,7 @@ def main():
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
    parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
+   parser.add_argument("--blacklist", "--bl", help="Use configured blacklist.", action="store_true")
    parser.add_argument("--export", "--exp", help="Export SQLITE DB as CSV.", default=False)
 
    start_time = time.time()
@@ -73,7 +74,7 @@ def main():
    global args
    args = parser.parse_args()
    
-   config = handleConfig()
+   config = handleConfig(args.blacklist)
    
    if args.csv:
       handleDROIDCSV(args.csv)
