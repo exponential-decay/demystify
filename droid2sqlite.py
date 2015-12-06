@@ -42,6 +42,7 @@ class DROIDLoader:
       f.close()
       self.contenthash = csvhash.hexdigest()
 
+   //Database metadata table, data about the content of the table...
    def createDBMD(self, cursor):
       self.dropDBMDTable(cursor)
       cursor.execute("CREATE TABLE dbmd (CONTENT_MD5, TIMESTAMP, HASH_TYPE)")
