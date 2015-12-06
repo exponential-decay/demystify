@@ -25,7 +25,7 @@ class rogueoutputclass:
       self.rogueorhero(self.analysisresults.extensionOnlyIDfnameList)
       self.rogueorhero(self.analysisresults.extmismatchList) 
       self.rogueorhero(self.analysisresults.zerobytelist)
-      self.rogueorhero(self.analysisresults.duplicatemd5pathlisting)
+      self.rogueorhero(self.analysisresults.duplicateHASHpathlisting)
       self.rogueorhero(self.analysisresults.roguepuidlisting)      
 
       if self.heroes is True:

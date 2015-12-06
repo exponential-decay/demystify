@@ -22,7 +22,7 @@ class DROIDAnalysisTextOutput:
       print "Total signature IDd PUID count: " + str(self.analysisresults.distinctSignaturePuidcount)
       print "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount)
       print "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount)
-      print "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates)
+      print "Total files with duplicate content (HASH value): " + str(self.analysisresults.totalHASHduplicates)
       print "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist))
       print "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage)
       print "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage)
@@ -84,8 +84,8 @@ class DROIDAnalysisTextOutput:
       print self.analysisresults.containertypeslist
 
       print 
-      print "Files with duplicate content (Total: " + str(self.analysisresults.totalmd5duplicates) + "):"
-      for d in self.analysisresults.duplicatemd5listing:	#TODO: consider count next to MD5 val
+      print "Files with duplicate content (Total: " + str(self.analysisresults.totalHASHduplicates) + "):"
+      for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
          print d
          print
                   
