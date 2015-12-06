@@ -18,6 +18,7 @@ class DROIDLoader:
    sqliteversion = sqlite3.sqlite_version
    contenthash = 0
    timestamp = 0
+   hashtype = 0
 
    #DROID SPECIFIC COLUMN INDEXES
    URI_COL = 2
@@ -42,11 +43,11 @@ class DROIDLoader:
       f.close()
       self.contenthash = csvhash.hexdigest()
 
-   //Database metadata table, data about the content of the table...
+   #Database metadata table, data about the content of the table...
    def createDBMD(self, cursor):
       self.dropDBMDTable(cursor)
       cursor.execute("CREATE TABLE dbmd (CONTENT_MD5, TIMESTAMP, HASH_TYPE)")
-      cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.contenthash) + "', '" + str(self.timestamp) + "', + 'TEST')")
+      cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.contenthash) + "', '" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
 
    def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table
@@ -156,7 +157,6 @@ class DROIDLoader:
                      rowstr = rowstr + ','		
 
                cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
-
 
       self.createDBMD(cursor) 
 
