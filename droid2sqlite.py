@@ -61,7 +61,11 @@ class DROIDLoader:
          elif header == "FILE_PATH":
             columns = columns + header + ", " + "DIR_NAME, "
             self.csvcolumncount+=1
+         elif "_HASH" in header:    #regex alternative: ^([[:alnum:]]*)(_HASH)$
+            self.hashtype = header.split('_', 1)[0]
+            columns = columns + "HASH" + ", "
          else:
+            #sys.stderr.write(header + "\n")
             columns = columns + header + ", "
 
       cursor.execute("CREATE TABLE droid (" + columns[:-2] + ")")
@@ -163,7 +167,7 @@ class DROIDLoader:
       # Save (commit) the changes
       #conn.commit()
 
-      conn.execute("CREATE INDEX HASH ON droid(MD5_HASH)");
+      conn.execute("CREATE INDEX HASH ON droid(HASH)");
       conn.execute("CREATE INDEX NAME ON droid(NAME)");
       conn.execute("CREATE INDEX PUID ON droid(PUID)");
 
