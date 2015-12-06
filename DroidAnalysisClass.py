@@ -247,7 +247,7 @@ class DROIDAnalysis:
       return self.__listQuery1__( 
          "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")   
 
-   def listDuplicateFilesFromMD5(self):		
+   def listDuplicateFilesFromHASH(self):		
       duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -258,12 +258,12 @@ class DROIDAnalysis:
          count = r[1]
          if count > 1:
             totalduplicates = totalduplicates + count
-            duplicatemd5 = r[0]
+            duplicateHASH = r[0]
             duplicatestr = "Count: " + str(count) + '\n'
-            duplicatestr = duplicatestr + "Duplicate checksum: " + duplicatemd5 + '\n\n'
-            duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
+            duplicatestr = duplicatestr + "Duplicate checksum: " + duplicateHASH + '\n\n'
+            duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE HASH='" + duplicateHASH + "' ORDER BY DIR_NAME", "\n\n")
             duplicatelist.append(duplicatestr)
-      self.analysisresults.totalmd5duplicates = totalduplicates
+      self.analysisresults.totalHASHduplicates = totalduplicates
       return duplicatelist
 
    def listRoguePUIDs(self, puidlist):
@@ -280,7 +280,7 @@ class DROIDAnalysis:
 
       return roguepuidpathlist
 
-   def listDuplicateMD5Filepaths(self):
+   def listDuplicateHASHFilepaths(self):
       duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
@@ -293,7 +293,7 @@ class DROIDAnalysis:
             totalduplicates = totalduplicates + count
             duplicatestr = self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE HASH='" + r[0] + "' ORDER BY FILE_PATH DESC")
             duplicatelist = duplicatelist + duplicatestr
-      self.analysisresults.totalmd5duplicates = totalduplicates
+      self.analysisresults.totalHASHduplicates = totalduplicates
       return duplicatelist    
 
    ###
@@ -412,7 +412,7 @@ class DROIDAnalysis:
       self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       #expensive duplicate checking [default: ON]
-      self.analysisresults.duplicatemd5listing = self.listDuplicateFilesFromMD5()
+      self.analysisresults.duplicateHASHlisting = self.listDuplicateFilesFromHASH()
 
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
@@ -426,10 +426,10 @@ class DROIDAnalysis:
       self.analysisresults.allfilepaths = self.__generatefilepathlistnodirs__()
 
       #rogues
-      self.analysisresults.duplicatemd5pathlisting = False
+      self.analysisresults.duplicateHASHpathlisting = False
                
       if self.roguesduplicatechecksums == "true":
-         self.analysisresults.duplicatemd5pathlisting = self.listDuplicateMD5Filepaths()
+         self.analysisresults.duplicateHASHpathlisting = self.listDuplicateHASHFilepaths()
       else:
          sys.stderr.write("Rogue gallery: Will not output paths for duplicate checksums." + "\n")
 
