@@ -42,10 +42,10 @@ class DROIDLoader:
       f.close()
       self.contenthash = csvhash.hexdigest()
 
-   def createDBID(self, cursor):
-      self.dropDBIDTable(cursor)
-      cursor.execute("CREATE TABLE dbid (CONTENT_MD5, TIMESTAMP)")
-      cursor.execute("INSERT INTO dbid VALUES ('" + str(self.contenthash) + "', '" + str(self.timestamp) + "')")
+   def createDBMD(self, cursor):
+      self.dropDBMDTable(cursor)
+      cursor.execute("CREATE TABLE dbmd (CONTENT_MD5, TIMESTAMP, HASH_TYPE)")
+      cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.contenthash) + "', '" + str(self.timestamp) + "', + 'TEST')")
 
    def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table
@@ -76,8 +76,8 @@ class DROIDLoader:
       self.dropTable(cursor, 'droid')
       return
 
-   def dropDBIDTable(self, cursor):
-      self.dropTable(cursor, 'dbid')
+   def dropDBMDTable(self, cursor):
+      self.dropTable(cursor, 'dbmd')
 
    def getDBFilename(self, droidcsv):
       return droidcsv.replace(".csv", "") + ".db"
@@ -102,11 +102,11 @@ class DROIDLoader:
          # File exists			
          conn = sqlite3.connect(dbfilename)
          cursor = conn.cursor()
-         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='dbid';")
+         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='dbmd';")
          if cursor.fetchone() is not None:
-            cursor.execute("SELECT CONTENT_MD5 FROM dbid")
+            cursor.execute("SELECT CONTENT_MD5 FROM dbmd")
             if cursor.fetchone()[0] == self.contenthash:
-               cursor.execute("SELECT TIMESTAMP FROM dbid")
+               cursor.execute("SELECT TIMESTAMP FROM dbmd")
                print
                print "Identical content hashes, generated: " + cursor.fetchone()[0]
                overwrite = self.userOverwriteOption(conn, "hashes identical.")
@@ -157,7 +157,7 @@ class DROIDLoader:
                cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
 
 
-      self.createDBID(cursor) 
+      self.createDBMD(cursor) 
 
       # Save (commit) the changes
       #conn.commit()
