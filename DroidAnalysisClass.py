@@ -248,7 +248,7 @@ class DROIDAnalysis:
          "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")   
 
    def listDuplicateFilesFromMD5(self):		
-      duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+      duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
       duplicatestr = ''
@@ -261,7 +261,7 @@ class DROIDAnalysis:
             duplicatemd5 = r[0]
             duplicatestr = "Count: " + str(count) + '\n'
             duplicatestr = duplicatestr + "Duplicate checksum: " + duplicatemd5 + '\n\n'
-            duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE MD5_HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
+            duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE HASH='" + duplicatemd5 + "' ORDER BY DIR_NAME", "\n\n")
             duplicatelist.append(duplicatestr)
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist
@@ -281,7 +281,7 @@ class DROIDAnalysis:
       return roguepuidpathlist
 
    def listDuplicateMD5Filepaths(self):
-      duplicatequery = "SELECT MD5_HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MD5_HASH ORDER BY TOTAL DESC"
+      duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
       duplicatestr = ''
@@ -291,7 +291,7 @@ class DROIDAnalysis:
          count = r[1]
          if count > 1:
             totalduplicates = totalduplicates + count
-            duplicatestr = self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE MD5_HASH='" + r[0] + "' ORDER BY FILE_PATH DESC")
+            duplicatestr = self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE HASH='" + r[0] + "' ORDER BY FILE_PATH DESC")
             duplicatelist = duplicatelist + duplicatestr
       self.analysisresults.totalmd5duplicates = totalduplicates
       return duplicatelist    
