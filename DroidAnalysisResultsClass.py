@@ -9,6 +9,9 @@ class DROIDAnalysisResults:
    #filename
    filename = ''
 
+   #hashused
+   hashused = 0
+
    # Counts
    collectionsize = 0
    filecount = 0

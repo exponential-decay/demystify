@@ -78,7 +78,10 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<li>" + "Total signature IDd PUID count: " + str(self.analysisresults.distinctSignaturePuidcount) + "</li>")
       self.printFormattedText("<li>" + "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount) + "</li>")
       self.printFormattedText("<li>" + "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount) + "</li>")
-      self.printFormattedText("<li>" + "Total files with duplicate content (MD5 value): " + str(self.analysisresults.totalmd5duplicates) + "</li>")  
+
+      if self.analysisresults.hashused > 0:
+         self.printFormattedText("<li>" + "Total files with duplicate content (HASH value): " + str(self.analysisresults.totalHASHduplicates) + "</li>")  
+
       self.printFormattedText("<li>" + "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist)) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage) + "</li>")
       self.printFormattedText("<li>" + "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage) + "</li>")
@@ -244,15 +247,15 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(3) 
       self.printFormattedText("<hr/>")
 
-
-      #Duplicate Content      
-      self.printFormattedText("<h2>" + "Files with duplicate content (Total: " + str(self.analysisresults.totalmd5duplicates) + "):" + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
-      self.__htmlnewline__() 
-      for d in self.analysisresults.duplicatemd5listing:	#TODO: consider count next to MD5 val
-         self.printFormattedText(d.replace('\n', '</br>').replace(',','</br>').replace('Context:','<b>Context:</b>').replace('Filename:','<b>Filename:</b>'))
-         self.__htmlnewline__(2) 
-      self.printFormattedText("<hr/>")
+      if self.analysisresults.hashused > 0:
+         #Duplicate Content      
+         self.printFormattedText("<h2>" + "Files with duplicate content (Total: " + str(self.analysisresults.totalHASHduplicates) + "):" + "</h2>")
+         self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
+         self.__htmlnewline__() 
+         for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
+            self.printFormattedText(d.replace('\n', '</br>').replace(',','</br>').replace('Context:','<b>Context:</b>').replace('Filename:','<b>Filename:</b>'))
+            self.__htmlnewline__(2) 
+         self.printFormattedText("<hr/>")
 
       #Troublesome Filenames
       self.printFormattedText("<h2>" + "Identifying troublesome filenames: " + "</h2>")

@@ -116,6 +116,10 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
 
+   def determineifHASHwasused(self):
+      return self.__countQuery__(
+         "select count(*) from DROID where HASH != 'no value' and  TYPE = 'File'")
+
    def countFilesQuery(self):
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
@@ -374,6 +378,10 @@ class DROIDAnalysis:
       self.__generatefilenamelist__()
       self.__generatefilenamelistwithdirs__()
       
+      self.analysisresults.hashused = self.determineifHASHwasused()
+      if self.analysisresults.hashused <= 0:
+         sys.stderr.write("No HASH algorithm used in DROID report. Unable to calculate duplicates." + "\n")
+
       self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()
       self.analysisresults.containercount = self.countContainerObjects()
