@@ -372,15 +372,27 @@ class DROIDAnalysis:
          if checkedname != '':
             fnamereport.append(checkedname)
       return fnamereport
-                           
+   
+   def __getHashAlgorithm__(self):
+      hashtype = 0
+      findhash = "SELECT HASH_TYPE from DBMD;"
+      self.cursor.execute(findhash)
+      result = self.cursor.fetchone()[0]
+      if result is not None:
+         hashtype = result
+      return hashtype 
+        
    def queryDB(self):
       #preliminary functions to generate data from DB
       self.__generatefilenamelist__()
       self.__generatefilenamelistwithdirs__()
       
+      self.hashtype = 0
       self.analysisresults.hashused = self.determineifHASHwasused()
       if self.analysisresults.hashused <= 0:
          sys.stderr.write("No HASH algorithm used in DROID report. Unable to calculate duplicates." + "\n")
+      else:
+         self.hashtype = self.__getHashAlgorithm__()  
 
       self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()
