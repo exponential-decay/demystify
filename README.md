@@ -49,6 +49,23 @@ Analyes a DROID sqlite database and outputs the results to stdout.
 Wraps both --csv and --db into a single command. Useful for a one-off report. 
 Will naturally be slower to output results. 
 
+#### Rogues Gallery
+
+The following flags provide Rogue or Hero output:
+
+* --rogues 
+
+Outputs a list of problematic files returned by DROID e.g. non-IDs, multiple IDs,
+extension mismatches, zero-byte objects and duplicate files. 
+
+* --heroes
+
+Outputs a list of files considered to be comparatively 'clean' in the context of 
+a DROID output, files will not be duplicates and will be positively identified using
+Signature or Container mechanisms by DROID's standards. 
+
+More information can be found here: http://openpreservation.org/blog/2015/08/25/hero-or-villain-a-tool-to-create-a-digital-preservation-rogues-gallery/
+
 #### MsoftFnameAnalysis.py
 
 Class to handle analysis of non-recommended filenames from Microsoft:
