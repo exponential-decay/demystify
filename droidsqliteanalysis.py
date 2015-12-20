@@ -33,7 +33,7 @@ def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
       rogueoutput.printTextResults()      
    else:
       textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
-      #textoutput.printTextResults() # Text class still uses print statements... 
+      textoutput.printTextResults() # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, config=False):
    analysis = DroidAnalysisClass.DROIDAnalysis(config)	
