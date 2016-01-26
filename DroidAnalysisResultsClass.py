@@ -31,13 +31,14 @@ class DROIDAnalysisResults:
    extmismatchCount = 0
    extmismatchList = 0
    
-   
    unidentifiedPercentage = 0
    identifiedPercentage = 0
    
    sigIDPUIDList = 0
    sigIDPUIDFrequency = 0
    
+   dateFrequency = 0
+
    extensionOnlyIDList = 0
    extensionOnlyIDFrequency = 0
    extensionOnlyIDfnameList = 0 

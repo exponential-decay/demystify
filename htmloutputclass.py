@@ -139,6 +139,29 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
+      #Date Ranges
+      self.printFormattedText("<h2>" + "Date range of items in the extract:" + "</h2>")
+      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
+      self.__htmlnewline__()
+      self.printFormattedText('<table>')
+      self.printFormattedText('<table><th style="text-align: left;">Year</a></th><th style="text-align: left;">Count</th>') 
+      for s in self.analysisresults.dateFrequency:
+         s = s.split(',')
+         self.printFormattedText('<tr><td style="width: 100px;">')
+
+         #self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + s[0] + '">' + s[0] + '</a>')
+         
+         self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + s[0] + '">' + s[0] + '</a>')
+         self.printFormattedText('</td><td>' + s[1].strip() + '</td>')
+ 
+         #Unused Meter Code...
+         self.printFormattedText('<td><meter style="width: 300px;" value="' + s[1].strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+        
+         self.printFormattedText('</tr>')
+        
+      self.printFormattedText('</table>')
+      self.__htmlnewline__() 
+      self.printFormattedText("<hr/>")
 
       #Extension Only ID
       self.printFormattedText("<h2>" + "Extension only identification in collection:" + "</h2>")

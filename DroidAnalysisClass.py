@@ -190,6 +190,9 @@ class DROIDAnalysis:
    ###
    # Frequency list queries
    ###
+   def dateRangeFrequency(self):
+      return self.__listPUIDSQuery__("SELECT YEAR, COUNT(YEAR) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY YEAR ORDER BY TOTAL DESC", " | ")
+
    def identifiedBinaryMatchedPUIDFrequency(self):
       return self.__listPUIDSQuery__( 
          "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
@@ -420,6 +423,7 @@ class DROIDAnalysis:
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
       self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
+      self.analysisresults.dateFrequency = self.dateRangeFrequency()
       self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
       self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
       self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
