@@ -95,8 +95,7 @@ class DROIDLoader:
          overwrite = True
          return overwrite
       else:
-         print "Program exiting..."
-         print
+         sys.stderr.write("Program exiting..." + "\n\n")
          conn.close()
          sys.exit(0)
 
@@ -113,11 +112,10 @@ class DROIDLoader:
             cursor.execute("SELECT CONTENT_MD5 FROM dbmd")
             if cursor.fetchone()[0] == self.contenthash:
                cursor.execute("SELECT TIMESTAMP FROM dbmd")
-               print
-               print "Identical content hashes, generated: " + cursor.fetchone()[0]
+               sys.stderr.write("Identical content hashes, generated: " + cursor.fetchone()[0] + "\n\n")
                overwrite = self.userOverwriteOption(conn, "hashes identical.")
          else:
-            print
+            sys.stderr.write("\n")
             overwrite = self.userOverwriteOption(conn, "hashes cannot be read.")
 
          return overwrite
