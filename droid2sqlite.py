@@ -21,8 +21,10 @@ class DROIDLoader:
    hashtype = 0
 
    #DROID SPECIFIC COLUMN INDEXES
+   #zer0-based index
    URI_COL = 2
    PATH_COL = 3
+   DATE_COL = 10
 
    def getTimestamp(self):
       ts = time.time()
@@ -66,6 +68,7 @@ class DROIDLoader:
             columns = columns + "HASH" + ", "
          elif header == "LAST_MODIFIED":
             columns = columns + header + " TIMESTAMP" + ","
+            columns = columns + "YEAR INTEGER" + ","
          else:
             #sys.stderr.write(header + "\n")
             columns = columns + header + ", "
@@ -143,12 +146,12 @@ class DROIDLoader:
             else:
                rowstr = ""	
                for i,item in enumerate(row[0:self.csvcolumncount-1]):
-                        
+
                   if item == "":
-                     rowstr = rowstr + '"no value"'
+                     rowstr = rowstr + ',"no value"'
                   else:
-                     rowstr = rowstr + '"' + item + '"'
-         
+                     rowstr = rowstr + ',"' + item + '"'
+                                 
                   if i == self.URI_COL:
                      url = item
                      rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
@@ -157,10 +160,15 @@ class DROIDLoader:
                      dir = item
                      rowstr = rowstr + ',"' + os.path.dirname(item) + '"'		
 
-                  if i < self.csvcolumncount-3:		# careless
-                     rowstr = rowstr + ','		
+                  if i == self.DATE_COL:
+                     if item is not '':
+                        datestring = item
+                        dt = datetime.datetime.strptime(datestring, '%Y-%m-%dT%H:%M:%S')
+                        rowstr = rowstr + ',"' + str(dt.year) + '"'
+                     else:
+                        rowstr = rowstr + ',"' + "no value" + '"'
 
-               cursor.execute("INSERT INTO droid VALUES (" + rowstr + ")")
+               cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")
 
       self.createDBMD(cursor) 
 
