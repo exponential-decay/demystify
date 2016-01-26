@@ -228,7 +228,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.zerobytelist)
-
+      self.printFormattedText("<hr/>")
 
       #Zero Identification
       self.printFormattedText("<h2>" + "Files with no identification: " + str(self.analysisresults.zeroidcount) + "</h2>")
