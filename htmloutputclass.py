@@ -151,7 +151,7 @@ class DROIDAnalysisHTMLOutput:
 
          #self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + s[0] + '">' + s[0] + '</a>')
          
-         self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + s[0] + '">' + s[0] + '</a>')
+         self.printFormattedText('<b>' + s[0] + '</b>')
          self.printFormattedText('</td><td>' + s[1].strip() + '</td>')
  
          #Unused Meter Code...
