@@ -25,7 +25,11 @@ class DROIDLoader:
    URI_COL = 2
    PATH_COL = 3
    DATE_COL = 10
-
+   
+   #better way to handle this? 
+   #avoid overflow for multiple-ids
+   LAST_COL = 18
+   
    def getTimestamp(self):
       ts = time.time()
       st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -147,26 +151,28 @@ class DROIDLoader:
                rowstr = ""	
                for i,item in enumerate(row[0:self.csvcolumncount-1]):
 
-                  if item == "":
-                     rowstr = rowstr + ',"no value"'
-                  else:
-                     rowstr = rowstr + ',"' + item + '"'
-                                 
-                  if i == self.URI_COL:
-                     url = item
-                     rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
-
-                  if i == self.PATH_COL:
-                     dir = item
-                     rowstr = rowstr + ',"' + os.path.dirname(item) + '"'		
-
-                  if i == self.DATE_COL:
-                     if item is not '':
-                        datestring = item
-                        dt = datetime.datetime.strptime(datestring, '%Y-%m-%dT%H:%M:%S')
-                        rowstr = rowstr + ',"' + str(dt.year) + '"'
+                  if i != self.LAST_COL:  #avoid overrun of columns when multi-id occurs
+                     
+                     if item == "":
+                        rowstr = rowstr + ',"no value"'
                      else:
-                        rowstr = rowstr + ',"' + "no value" + '"'
+                        rowstr = rowstr + ',"' + item + '"'
+                                    
+                     if i == self.URI_COL:
+                        url = item
+                        rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
+
+                     if i == self.PATH_COL:
+                        dir = item
+                        rowstr = rowstr + ',"' + os.path.dirname(item) + '"'		
+
+                     if i == self.DATE_COL:
+                        if item is not '':
+                           datestring = item
+                           dt = datetime.datetime.strptime(datestring, '%Y-%m-%dT%H:%M:%S')
+                           rowstr = rowstr + ',"' + str(dt.year) + '"'
+                        else:
+                           rowstr = rowstr + ',"' + "no value" + '"'
 
                cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")
 
