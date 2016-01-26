@@ -64,6 +64,8 @@ class DROIDLoader:
          elif "_HASH" in header:    #regex alternative: ^([[:alnum:]]*)(_HASH)$
             self.hashtype = header.split('_', 1)[0]
             columns = columns + "HASH" + ", "
+         elif header == "LAST_MODIFIED":
+            columns = columns + header + " TIMESTAMP" + ","
          else:
             #sys.stderr.write(header + "\n")
             columns = columns + header + ", "
