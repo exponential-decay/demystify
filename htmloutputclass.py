@@ -264,10 +264,8 @@ class DROIDAnalysisHTMLOutput:
       if len(self.analysisresults.containertypeslist) == 0:
          self.printFormattedText("There are no container types in the collection.")
       else:
-         for d in self.analysisresults.containertypeslist:
-            self.printFormattedText(d)
-            self.__htmlnewline__(2) 
-      self.__htmlnewline__(3) 
+         sys.stderr.write(str(self.analysisresults.containertypeslist))
+         self.printFormattedText(self.analysisresults.containertypeslist)
       self.printFormattedText("<hr/>")
 
       if self.analysisresults.hashused > 0:
