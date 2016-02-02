@@ -169,7 +169,8 @@ class DROIDLoader:
                      if i == self.DATE_COL:
                         if item is not '':
                            datestring = item
-                           dt = datetime.datetime.strptime(datestring, '%Y-%m-%dT%H:%M:%S')
+                           #split at '+' if timezone is there, we're only interested in year
+                           dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
                            rowstr = rowstr + ',"' + str(dt.year) + '"'
                         else:
                            rowstr = rowstr + ',"' + "no value" + '"'
