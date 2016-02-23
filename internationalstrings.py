@@ -7,6 +7,8 @@ class AnalysisStringsEN:
    REPORT_VERSION = "Analysis Version"
    REPORT_FILE = "Analysis File"
    
+   REPORT_MORE_INFORMATION = "Summary of the Statistic"
+   
    SUMMARY_TOTAL_FILES = "Total Files" 
    SUMMARY_ARCHIVE_FILES = "Total Archive Files" 
    SUMMARY_INSIDE_ARCHIVES = "Total Files Inside Archive Objects" 
