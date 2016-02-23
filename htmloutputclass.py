@@ -1,11 +1,13 @@
 import sys
 import DroidAnalysisClass
+from internationalstrings import AnalysisStringsEN as IN_EN
 
 class DROIDAnalysisHTMLOutput:
 
    htmloutput = ''
 
    def __init__(self, analysisresults):
+      self.STRINGS = IN_EN
       self.analysisresults = analysisresults
 
    def STDOUTprintFormattedText(self, text):
@@ -34,6 +36,9 @@ class DROIDAnalysisHTMLOutput:
       for x in range(no):
          self.printFormattedText("</br>")
    
+   def __make_str__(self, str):
+      return str + ": "
+   
    #Trial function we're not using yet... Prettty Print
    def prettyprinthtml():
       #document_root = html.fromstring(self.htmloutput)
@@ -50,47 +55,47 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<!DOCTYPE html>")
       self.printFormattedText("<html lang='en'>")
       self.printFormattedText("<head>")
-      self.printFormattedText("<title>DROID Sqlite Analysis Results</title>")
+      self.printFormattedText("<title>" + self.STRINGS.REPORT_TITLE + "</title>")
       self.printFormattedText("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>")
       self.printFormattedText("</head>")
    
       self.printFormattedText("<body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>")
    
-      self.printFormattedText("<h1>DROID Analysis</h1>")
-      self.printFormattedText("<b>" + "Analysis version: </b>" + self.analysisresults.__version__())
+      self.printFormattedText("<h1>" + self.STRINGS.REPORT_TITLE + "</h1>")
+      self.printFormattedText("<b>" + self.STRINGS.REPORT_VERSION + ": </b>" + self.analysisresults.__version__())
       self.__htmlnewline__() 
-      self.printFormattedText("<b>" + "Analysis file: </b>" + self.analysisresults.filename)
+      self.printFormattedText("<b>" + self.STRINGS.REPORT_FILE + ": </b>" + self.analysisresults.filename)
       self.__htmlnewline__(2) 
 
-      self.printFormattedText("<h2>Sumary Statistics</h2>")
+      self.printFormattedText("<h2>" + self.STRINGS.REPORT_SUMMARY + "</h2>")
    
       self.printFormattedText("<ul>")
-      self.printFormattedText("<li>" + "Total files: " + str(self.analysisresults.filecount) + "</li>")
-      self.printFormattedText("<li>" + "Total container objects: " + str(self.analysisresults.containercount) + "</li>")
-      self.printFormattedText("<li>" + "Total files in containers: " + str(self.analysisresults.filesincontainercount) + "</li>")
-      self.printFormattedText("<li>" + "Total directories: " + str(self.analysisresults.directoryCount) + "</li>")
-      self.printFormattedText("<li>" + "Total unique directory names: " + str(self.analysisresults.uniqueDirectoryNames) + "</li>")
-      self.printFormattedText("<li>" + "Total identified files (signature and container): " + str(self.analysisresults.identifiedfilecount) + "</li>")
-      self.printFormattedText("<li>" + "Total multiple identifications (signature and container): " + str(self.analysisresults.multipleidentificationcount) + "</li>")
-      self.printFormattedText("<li>" + "Total unidentified files (extension and blank): " + str(self.analysisresults.unidentifiedfilecount) + "</li>")
-      self.printFormattedText("<li>" + "Total extension ID only count: " + str(self.analysisresults.extensionIDOnlyCount) + "</li>")
-      self.printFormattedText("<li>" + "Total extension mismatches: " + str(self.analysisresults.extmismatchCount) + "</li>")		
-      self.printFormattedText("<li>" + "Total signature IDd PUID count: " + str(self.analysisresults.distinctSignaturePuidcount) + "</li>")
-      self.printFormattedText("<li>" + "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount) + "</li>")
-      self.printFormattedText("<li>" + "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_TOTAL_FILES) + str(self.analysisresults.filecount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ARCHIVE_FILES) + str(self.analysisresults.containercount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_INSIDE_ARCHIVES) + str(self.analysisresults.filesincontainercount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_DIRECTORIES) + str(self.analysisresults.directoryCount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIQUE_DIRNAMES) + str(self.analysisresults.uniqueDirectoryNames) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_IDENTIFIED_FILES) + str(self.analysisresults.identifiedfilecount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_MULTIPLE) + str(self.analysisresults.multipleidentificationcount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIDENTIFIED) + str(self.analysisresults.unidentifiedfilecount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_EXTENSION_ID) + str(self.analysisresults.extensionIDOnlyCount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_EXTENSION_MISMATCH) + str(self.analysisresults.extmismatchCount) + "</li>")		
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ID_PUID_COUNT) + str(self.analysisresults.distinctSignaturePuidcount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS) + str(self.analysisresults.distinctextensioncount) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ZERO_BYTE) + str(self.analysisresults.zerobytecount) + "</li>")
 
       if self.analysisresults.hashused > 0:
-         self.printFormattedText("<li>" + "Total files with duplicate content (HASH value): " + str(self.analysisresults.totalHASHduplicates) + "</li>")  
+         self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_IDENTICAL_FILES) + str(self.analysisresults.totalHASHduplicates) + "</li>")  
 
-      self.printFormattedText("<li>" + "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist)) + "</li>")
-      self.printFormattedText("<li>" + "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage) + "</li>")
-      self.printFormattedText("<li>" + "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_MULTIPLE_SPACES) + str(len(self.analysisresults.multiplespacelist)) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED) + str(self.analysisresults.identifiedPercentage) + "</li>")
+      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED) + str(self.analysisresults.unidentifiedPercentage) + "</li>")
       self.printFormattedText("</ul>")
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
       #return the size of the collection
-      self.printFormattedText("<h2>" + "Size of the collection:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_SIZE) + "</h2>")
       self.printFormattedText("<details><summary>Size of the collection on disk.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       
@@ -102,7 +107,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #Signature identified PUIDs in collection (signature and container)
-      self.printFormattedText("<h2>" + "Identified Formats in the Collection:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       
@@ -119,7 +124,7 @@ class DROIDAnalysisHTMLOutput:
 
 
       #Signature ID PUIDs
-      self.printFormattedText("<h2>" + "Frequency of signature identified PUIDs:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__()
       self.printFormattedText('<table>')
@@ -140,7 +145,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #Date Ranges
-      self.printFormattedText("<h2>" + "Date range of items in the extract:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__()
       self.printFormattedText('<table>')
@@ -164,7 +169,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #Extension Only ID
-      self.printFormattedText("<h2>" + "Extension only identification in collection:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.extensionOnlyIDList.replace('|', '</br>'))
@@ -172,7 +177,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #ID Method Frequency
-      self.printFormattedText("<h2>" + "ID Method Frequency: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.idmethodFrequency.replace('\n', '</br>'))
@@ -180,7 +185,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #Extension Only Identification
-      self.printFormattedText("<h2>" + "Frequency of extension only identification in collection: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.extensionOnlyIDFrequency)
@@ -188,7 +193,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #Unique Extensions Identified
-      self.printFormattedText("<h2>" + "Unique extensions identified across all objects (ID & non-ID):" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.uniqueExtensionsInCollectionList)
@@ -197,7 +202,7 @@ class DROIDAnalysisHTMLOutput:
 
 
       #Files with multiple identifications
-      self.printFormattedText("<h2>" + "List of files with multiple identifications: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
       self.printFormattedText("<details><summary>Description of the term multiple identifications.</summary><br/>" + "Files with size greater than zero and have two or more DROID PUID values associated." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.multipleIDList)
@@ -206,7 +211,7 @@ class DROIDAnalysisHTMLOutput:
 
 
       #Extension Frequency
-      self.printFormattedText("<h2>" + "Frequency of all extensions:" + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.frequencyOfAllExtensions)
@@ -215,7 +220,7 @@ class DROIDAnalysisHTMLOutput:
 
 
       #Mimetype Frequency
-      self.printFormattedText("<h2>" + "MIMEType (Internet Media Type) Frequency: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.mimetypeFrequency)
@@ -224,41 +229,22 @@ class DROIDAnalysisHTMLOutput:
 
 
       #Zero Byte Objects
-      self.printFormattedText("<h2>" + "Zero byte objects in collection: " + str(self.analysisresults.zerobytecount) + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.zerobytelist)
       self.printFormattedText("<hr/>")
 
       #Zero Identification
-      self.printFormattedText("<h2>" + "Files with no identification: " + str(self.analysisresults.zeroidcount) + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       self.printFormattedText(self.analysisresults.filesWithNoIDList)
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-
-      #Top signature and container IDs
-      self.printFormattedText("<h2>" + "Top signature and container identified PUIDs: " + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.topPUIDList)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
-
-      #Extensions in Collection
-      self.printFormattedText("<h2>" + "Top extensions across collection: " + "</h2>")
-      self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.topExtensionList)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
-
       #Container Types
-      self.printFormattedText("<h2>" + "Container types in collection: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       if len(self.analysisresults.containertypeslist) == 0:
@@ -270,7 +256,7 @@ class DROIDAnalysisHTMLOutput:
 
       if self.analysisresults.hashused > 0:
          #Duplicate Content      
-         self.printFormattedText("<h2>" + "Files with duplicate content (Total: " + str(self.analysisresults.totalHASHduplicates) + "):" + "</h2>")
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTICAL_CONTENT) + "(" + str(self.analysisresults.totalHASHduplicates) + ")" + "</h2>")
          self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
          self.__htmlnewline__() 
          for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
@@ -279,7 +265,7 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText("<hr/>")
 
       #Troublesome Filenames
-      self.printFormattedText("<h2>" + "Identifying troublesome filenames: " + "</h2>")
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
       self.printFormattedText("<details><summary>Identification Information.</summary><br/>" + "Some important additional information." + "</details>")
       self.__htmlnewline__() 
       for fnames in self.analysisresults.badFilenames:

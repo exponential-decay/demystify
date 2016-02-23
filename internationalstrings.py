@@ -2,8 +2,10 @@
  
 class AnalysisStringsEN:
  
-   REPORT_TITLE = "DROID Analysis"
+   REPORT_TITLE = "DROID Analysis Results"
    REPORT_SUMMARY = "Summary Statistics" 
+   REPORT_VERSION = "Analysis Version"
+   REPORT_FILE = "Analysis File"
    
    SUMMARY_TOTAL_FILES = "Total Files" 
    SUMMARY_ARCHIVE_FILES = "Total Archive Files" 
@@ -21,14 +23,15 @@ class AnalysisStringsEN:
    SUMMARY_IDENTICAL_FILES = "Total Files with Identical Content (Checksum Value)"
    SUMMARY_MULTIPLE_SPACES = "Total Files with Multiple Contiguous Space Characters"
    SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
-   SUMMARY_PERFENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
+   SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
    
+   HEADING_SIZE = "Size of the Collection on Disk"
    HEADING_IDENTIFIED = "Identified File Formats in Accession/Extract" 
    HEADING_FREQUENCY_PUIDS_IDENTIFIED = "Frequency of File Format Signature Identified PUIDs"
    HEADING_DATE_RANGE = "Date Range of Items in the Accession/Extract"
    HEADING_EXTENSION_ONLY = "Extension Only Identification in the Accession/Extract"
    HEADING_ID_METHOD = "Identification Method Frequency" 
-   HEADING_FREQUENCY_EXTENSION_ONLY = "Frequence of Extension Only Identification In Accession/Extract" 
+   HEADING_FREQUENCY_EXTENSION_ONLY = "Frequency of Extension Only Identification In Accession/Extract" 
    HEADING_UNIQUE_EXTENSIONS = "Unique Extensions Identified Across All Objects (ID and non-ID)"
    HEADING_LIST_MULTIPLE = "List of Files With Multiple Identifications" 
    HEADING_FREQUENCY_EXTENSIONS_ALL = "Frequency of All Extensions"
@@ -38,7 +41,8 @@ class AnalysisStringsEN:
    HEADING_ARCHIVE_FORMATS = "Archive Format Types in Accession/Extract"
    HEADING_IDENTICAL_CONTENT = "Files With Identical Content" 
    HEADING_TROUBLESOME_FILENAMES = "Identifying Troublesome Filenames" 
-   
+
+   SUMMARY_DESC_SIZE = "0000"
    SUMMARY_DESC_TOTAL_FILES = "AAAA" 
    SUMMARY_DESC_ARCHIVE_FILES = "BBBB" 
    SUMMARY_DESC_INSIDE_ARCHIVES = "CCCC" 
