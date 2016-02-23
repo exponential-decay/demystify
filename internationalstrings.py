@@ -44,7 +44,7 @@ class AnalysisStringsEN:
    HEADING_IDENTICAL_CONTENT = "Files With Identical Content" 
    HEADING_TROUBLESOME_FILENAMES = "Identifying Troublesome Filenames" 
 
-   SUMMARY_DESC_TOTAL_FILES = "AAAA" 
+   SUMMARY_DESC_TOTAL_FILES = "A description of the statistic TOTAL FILES" 
    SUMMARY_DESC_ARCHIVE_FILES = "BBBB" 
    SUMMARY_DESC_INSIDE_ARCHIVES = "CCCC" 
    SUMMARY_DESC_DIRECTORIES = "DDDD" 

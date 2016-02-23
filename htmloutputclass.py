@@ -71,9 +71,9 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2) 
 
       self.printFormattedText("<h2>" + self.STRINGS.REPORT_SUMMARY + "</h2>")
-   
+
       self.printFormattedText("<ul>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_TOTAL_FILES) + str(self.analysisresults.filecount) + "</li>")
+      self.printFormattedText("<li title='" + self.STRINGS.SUMMARY_DESC_TOTAL_FILES + "'>" + self.__make_str__(self.STRINGS.SUMMARY_TOTAL_FILES) + str(self.analysisresults.filecount) + "</li>")
       self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ARCHIVE_FILES) + str(self.analysisresults.containercount) + "</li>")
       self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_INSIDE_ARCHIVES) + str(self.analysisresults.filesincontainercount) + "</li>")
       self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_DIRECTORIES) + str(self.analysisresults.directoryCount) + "</li>")
