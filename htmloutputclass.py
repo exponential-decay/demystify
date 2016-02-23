@@ -42,6 +42,9 @@ class DROIDAnalysisHTMLOutput:
    def __make_summary__(self, str):
       return "<details><summary>" + self.STRINGS.REPORT_MORE_INFORMATION + "</summary></br>" + str + "</details>"
    
+   def __make_list_item__(self, title, content, value):
+      return "<li title='" + title + "'>" + self.__make_str__(content) + str(value) + "</li>"
+   
    #Trial function we're not using yet... Prettty Print
    def prettyprinthtml():
       #document_root = html.fromstring(self.htmloutput)
@@ -73,26 +76,26 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<h2>" + self.STRINGS.REPORT_SUMMARY + "</h2>")
 
       self.printFormattedText("<ul>")
-      self.printFormattedText("<li title='" + self.STRINGS.SUMMARY_DESC_TOTAL_FILES + "'>" + self.__make_str__(self.STRINGS.SUMMARY_TOTAL_FILES) + str(self.analysisresults.filecount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ARCHIVE_FILES) + str(self.analysisresults.containercount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_INSIDE_ARCHIVES) + str(self.analysisresults.filesincontainercount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_DIRECTORIES) + str(self.analysisresults.directoryCount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIQUE_DIRNAMES) + str(self.analysisresults.uniqueDirectoryNames) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_IDENTIFIED_FILES) + str(self.analysisresults.identifiedfilecount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_MULTIPLE) + str(self.analysisresults.multipleidentificationcount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIDENTIFIED) + str(self.analysisresults.unidentifiedfilecount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_EXTENSION_ID) + str(self.analysisresults.extensionIDOnlyCount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_EXTENSION_MISMATCH) + str(self.analysisresults.extmismatchCount) + "</li>")		
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ID_PUID_COUNT) + str(self.analysisresults.distinctSignaturePuidcount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS) + str(self.analysisresults.distinctextensioncount) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_ZERO_BYTE) + str(self.analysisresults.zerobytecount) + "</li>")
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_TOTAL_FILES, self.STRINGS.SUMMARY_TOTAL_FILES, self.analysisresults.filecount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ARCHIVE_FILES, self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysisresults.containercount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_INSIDE_ARCHIVES, self.STRINGS.SUMMARY_INSIDE_ARCHIVES, self.analysisresults.filesincontainercount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_DIRECTORIES, self.STRINGS.SUMMARY_DIRECTORIES, self.analysisresults.directoryCount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIQUE_DIRNAMES, self.STRINGS.SUMMARY_UNIQUE_DIRNAMES, self.analysisresults.uniqueDirectoryNames))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_IDENTIFIED_FILES, self.STRINGS.SUMMARY_IDENTIFIED_FILES, self.analysisresults.identifiedfilecount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_MULTIPLE, self.STRINGS.SUMMARY_MULTIPLE, self.analysisresults.multipleidentificationcount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIDENTIFIED, self.STRINGS.SUMMARY_UNIDENTIFIED, self.analysisresults.unidentifiedfilecount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_ID, self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_MISMATCH, self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ID_PUID_COUNT, self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIQUE_EXTENSIONS, self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS, self.analysisresults.distinctextensioncount))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ZERO_BYTE, self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount))
 
       if self.analysisresults.hashused > 0:
-         self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_IDENTICAL_FILES) + str(self.analysisresults.totalHASHduplicates) + "</li>")  
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_IDENTICAL_FILES, self.STRINGS.SUMMARY_IDENTICAL_FILES, self.analysisresults.totalHASHduplicates))
 
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_MULTIPLE_SPACES) + str(len(self.analysisresults.multiplespacelist)) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED) + str(self.analysisresults.identifiedPercentage) + "</li>")
-      self.printFormattedText("<li>" + self.__make_str__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED) + str(self.analysisresults.unidentifiedPercentage) + "</li>")
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_MULTIPLE_SPACES, self.STRINGS.SUMMARY_MULTIPLE_SPACES, len(self.analysisresults.multiplespacelist)))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
+      self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
       self.printFormattedText("</ul>")
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
