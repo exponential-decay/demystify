@@ -171,13 +171,14 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-      #Extension Only ID
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.extensionOnlyIDList.replace('|', '</br>'))
-      self.__htmlnewline__(2) 
-      self.printFormattedText("<hr/>")
+      if len(self.analysisresults.extensionOnlyIDList) > 0:
+         #Extension Only ID
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
+         self.__htmlnewline__() 
+         self.printFormattedText(self.analysisresults.extensionOnlyIDList.replace('|', '</br>'))
+         self.__htmlnewline__(2) 
+         self.printFormattedText("<hr/>")
 
       #ID Method Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
@@ -187,13 +188,14 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
-      #Extension Only Identification
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.extensionOnlyIDFrequency)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
+      if len(self.analysisresults.extensionOnlyIDList) > 0:
+         #Extension Only Identification
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
+         self.__htmlnewline__() 
+         self.printFormattedText(self.analysisresults.extensionOnlyIDFrequency)
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
 
       #Unique Extensions Identified
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
