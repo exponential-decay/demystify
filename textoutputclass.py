@@ -20,9 +20,11 @@ class DROIDAnalysisTextOutput:
       self.__printNewline__()
       self.printFormattedText(title + ":")
       
-   def printFormattedText(self, string):
-      self.textoutput = self.textoutput + string + "\n"
-      return ""
+   def printFormattedText(self, string, newline=True):
+      lnend = ''
+      if newline:
+         lnend = "\n"
+      self.textoutput = self.textoutput + string + lnend
       
    def printTextResults(self):
       self.generateTEXT()
@@ -113,12 +115,17 @@ class DROIDAnalysisTextOutput:
 
       if self.analysisresults.hashused > 0:
          self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
-         for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
-            print d
-            self.__printNewline__()
+         for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
+            self.printFormattedText("Checksum: " + str(dupes['checksum']))
+            self.printFormattedText("Count: " + str(dupes['count']))
+            self.printFormattedText("Example: " + str(dupes['examples'][0]) + "\n")
       
       if len(self.analysisresults.badFilenames) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
          for badnames in self.analysisresults.badFilenames:
             # Already UTF-8 on way into here...
-            sys.stdout.write(badnames)
+            self.printFormattedText(badnames, False)
+
+
+
+

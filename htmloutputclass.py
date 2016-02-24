@@ -259,8 +259,12 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTICAL_CONTENT) + "(" + str(self.analysisresults.totalHASHduplicates) + ")" + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT))
          self.__htmlnewline__() 
-         for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
-            self.printFormattedText(d.replace('\n', '</br>').replace(',','</br>').replace('Context:','<b>Context:</b>').replace('Filename:','<b>Filename:</b>'))
+         for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
+            self.printFormattedText("<b>" + dupes['checksum'] + "</b> Count: " + dupes['count'] + "<br/><br/>")
+            self.printFormattedText("<code>")
+            for ex in dupes['examples']:
+               self.printFormattedText(ex + "<br/>")
+            self.printFormattedText("</code>")
             self.__htmlnewline__(2) 
          self.printFormattedText("<hr/>")
 

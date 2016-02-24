@@ -95,21 +95,13 @@ class DROIDAnalysis:
       return row
 
 
-   def __listDuplicateQuery__(self, query, separator):
+   def __listDuplicateQuery__(self, query):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
-      row = ""
-      for r in result:
-         if len(r) == 2:
-            item = "Context: " + r[0] + "\n Filename: " + r[1] + '\n\n'
-            row = row + item
-      try:
-         if row[len(row)-2] == "|":
-            return row[:-2]
-         else:
-            return row[:-1]
-      except IndexError:
-         return row[:-1]
+      examples = []
+      for a in result:
+         examples.append(str(a[0]))
+      return examples
 
    def __alternativeFrequencyQuery__(self, query):
       self.cursor.execute(query)
@@ -258,18 +250,22 @@ class DROIDAnalysis:
       duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
       
-      duplicatestr = ''
+      duplicatestr = {}
       duplicatelist = []
       totalduplicates = 0
-      for r in result:
+
+      for r in result:     #result = (hash, count)
          count = r[1]
          if count > 1:
             totalduplicates = totalduplicates + count
             duplicateHASH = r[0]
-            duplicatestr = "Count: " + str(count) + '\n'
-            duplicatestr = duplicatestr + "Duplicate checksum: " + duplicateHASH + '\n\n'
-            duplicatestr = duplicatestr + self.__listDuplicateQuery__("SELECT DIR_NAME, NAME FROM droid WHERE HASH='" + duplicateHASH + "' ORDER BY DIR_NAME", "\n\n")
+            examples = self.__listDuplicateQuery__("SELECT FILE_PATH FROM droid WHERE HASH='" + duplicateHASH + "'ORDER BY DIR_NAME")          
+            duplicatestr['checksum'] = str(duplicateHASH)
+            duplicatestr['count'] = str(count)
+            duplicatestr['examples'] = examples
             duplicatelist.append(duplicatestr)
+            duplicatestr = {}
+
       self.analysisresults.totalHASHduplicates = totalduplicates
       return duplicatelist
 

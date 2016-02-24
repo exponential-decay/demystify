@@ -41,7 +41,7 @@ class AnalysisStringsEN:
    HEADING_LIST_ZERO_BYTES = "Zero-byte files in Accession/Extract" 
    HEADING_NO_ID = "Files With No Identification"
    HEADING_ARCHIVE_FORMATS = "Archive Format Types in Accession/Extract"
-   HEADING_IDENTICAL_CONTENT = "Files With Identical Content" 
+   HEADING_IDENTICAL_CONTENT = "Files With Identical Content (Checksum Value)" 
    HEADING_TROUBLESOME_FILENAMES = "Identifying Troublesome Filenames" 
 
    SUMMARY_DESC_TOTAL_FILES = "Number of digital files in the accession/extract." 
@@ -76,7 +76,7 @@ class AnalysisStringsEN:
    HEADING_DESC_LIST_ZERO_BYTES = "This is a list of files with no payload. Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size." 
    HEADING_DESC_NO_ID = "List of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e. there is no identification information in the DROID database)"
    HEADING_DESC_ARCHIVE_FORMATS = "Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after."
-   HEADING_DESC_IDENTICAL_CONTENT = "This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Context describes the file path of the object to help identify duplicate objects within the same directory. Filename is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received." 
+   HEADING_DESC_IDENTICAL_CONTENT = "This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received." 
    HEADING_DESC_TROUBLESOME_FILENAMES = "Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as Macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from Microsoft: https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396"    
 
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
