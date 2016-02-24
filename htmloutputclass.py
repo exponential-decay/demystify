@@ -204,15 +204,14 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-
-      #Files with multiple identifications
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.multipleIDList)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
+      if len(self.analysisresults.multipleIDList) > 0:
+         #Files with multiple identifications
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
+         self.__htmlnewline__() 
+         self.printFormattedText(self.analysisresults.multipleIDList)
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
 
       #Extension Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
@@ -222,7 +221,6 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-
       #Mimetype Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
@@ -231,32 +229,31 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-
-      #Zero Byte Objects
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.zerobytelist)
-      self.printFormattedText("<hr/>")
+      if len(self.analysisresults.zerobytelist):
+         #Zero Byte Objects
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
+         self.__htmlnewline__() 
+         self.printFormattedText(self.analysisresults.zerobytelist)
+         self.printFormattedText("<hr/>")
 
       #Zero Identification
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.filesWithNoIDList)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
+      if len(self.analysisresults.filesWithNoIDList) > 0:
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
+         self.__htmlnewline__() 
+         self.printFormattedText(self.analysisresults.filesWithNoIDList)
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
 
-      #Container Types
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
-      self.__htmlnewline__() 
-      if len(self.analysisresults.containertypeslist) == 0:
-         self.printFormattedText("There are no container types in the collection.")
-      else:
+      if len(self.analysisresults.containertypeslist) > 0:
+         #Container Types
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
+         self.__htmlnewline__() 
          sys.stderr.write(str(self.analysisresults.containertypeslist))
          self.printFormattedText(self.analysisresults.containertypeslist)
-      self.printFormattedText("<hr/>")
+         self.printFormattedText("<hr/>")
 
       if self.analysisresults.hashused > 0:
          #Duplicate Content      
@@ -268,15 +265,16 @@ class DROIDAnalysisHTMLOutput:
             self.__htmlnewline__(2) 
          self.printFormattedText("<hr/>")
 
-      #Troublesome Filenames
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
-      self.__htmlnewline__() 
-      for fnames in self.analysisresults.badFilenames:
-         self.printFormattedText(fnames)
-         self.__htmlnewline__(2) 
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
+      if len(self.analysisresults.badFilenames) > 0:
+         #Troublesome Filenames
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
+         self.__htmlnewline__() 
+         for fnames in self.analysisresults.badFilenames:
+            self.printFormattedText(fnames)
+            self.__htmlnewline__(2) 
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
       
       self.__htmlnewline__(2) 
       self.printFormattedText("</body>")
