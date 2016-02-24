@@ -108,7 +108,7 @@ class DROIDAnalysisHTMLOutput:
       #easier to reference from a var
       size = self.analysisresults.collectionsize
       
-      self.printFormattedText(str(size) + " bytes | " + str(size/(1000000)) + " megabytes (SI/IEC) | " + str(size/(1048576)) + " megabytes (Base2).") #1000^2//1024^2
+      self.printFormattedText(str(size) + " bytes | " + str(size/(1048576)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
