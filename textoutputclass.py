@@ -12,6 +12,13 @@ class DROIDAnalysisTextOutput:
 
    def __output_list__(self, title, value):
       return title + ": " + str(value)
+   
+   def __printNewline__(self):
+      self.printFormattedText("\n")
+      
+   def __output_list_title__(self, title):
+      self.__printNewline__()
+      self.printFormattedText(title + ":")
       
    def printFormattedText(self, string):
       self.textoutput = self.textoutput + string + "\n"
@@ -47,71 +54,56 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
-      print
-      print "Signature identified PUIDs in collection (signature and container):"
+      self.__output_list_title__("Signature identified PUIDs in collection (signature and container)")
       print self.analysisresults.sigIDPUIDList
 
-      print
-      print "Frequency of signature identified PUIDs:"
+      self.__output_list_title__("Frequency of signature identified PUIDs:")
       print self.analysisresults.sigIDPUIDFrequency
 
-      print
-      print "Extension only identification in collection:"
+      self.__output_list_title__("Extension only identification in collection:")
       print self.analysisresults.extensionOnlyIDList
 
-      print 
-      print "ID Method Frequency: "
+      self.__output_list_title__("ID Method Frequency: ")
       print self.analysisresults.idmethodFrequency
 
-      print 
-      print "Frequency of extension only identification in collection: "
+      self.__output_list_title__("Frequency of extension only identification in collection: ")
       print self.analysisresults.extensionOnlyIDFrequency
 
-      print
-      print "Unique extensions identified across all objects (ID & non-ID):"
+      self.__output_list_title__("Unique extensions identified across all objects (ID & non-ID):")
       print self.analysisresults.uniqueExtensionsInCollectionList
 
-      print
-      print "List of files with multiple identifications: "
+      self.__output_list_title__("List of files with multiple identifications: ")
       print self.analysisresults.multipleIDList 
 
-      print
-      print "Frequency of all extensions:"
+      self.__output_list_title__("Frequency of all extensions:")
       print self.analysisresults.frequencyOfAllExtensions 
 
-      print
-      print "MIMEType (Internet Media Type) Frequency: "
+      self.__output_list_title__("MIMEType (Internet Media Type) Frequency: ")
       print self.analysisresults.mimetypeFrequency
 
-      print
-      print "Zero byte objects in collection: " + str(self.analysisresults.zerobytecount)
+      self.__output_list__("Zero byte objects in collection", self.analysisresults.zerobytecount)
       print self.analysisresults.zerobytelist
 
-      print
-      print "Files with no identification: " + str(self.analysisresults.zeroidcount)
+      self.__output_list__("Files with no identification", self.analysisresults.zeroidcount)
       print self.analysisresults.filesWithNoIDList
-
-      print
-      print "Top signature and container identified PUIDs: "
+      
+      self.__output_list_title__("Top signature and container identified PUIDs: ")
       print self.analysisresults.topPUIDList
       
-      print
-      print "Top extensions across collection: "		
+      self.__output_list_title__("Top extensions across collection: ")
       print self.analysisresults.topExtensionList 	
 
-      print
-      print "Container types in collection: "
+      self.__output_list_title__("Container types in collection: ")
       print self.analysisresults.containertypeslist
 
       if self.analysisresults.hashused > 0:
-         print 
-         print "Files with duplicate content (Total: " + str(self.analysisresults.totalHASHduplicates) + "):"
+         self.__output_list__("Files with duplicate content", self.analysisresults.totalHASHduplicates)
          for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
             print d
-            print
-                  
-      print
-      print "Identifying troublesome filenames: "
-      for badnames in self.analysisresults.badFilenames:
-         # Already UTF-8 on way into here...
-         sys.stdout.write(badnames)
+            self.__printNewline__()
+      
+      if len(self.analysisresults.badFilenames) > 0:
+         self.__output_list_title__("Identifying troublesome filenames")
+         for badnames in self.analysisresults.badFilenames:
+            # Already UTF-8 on way into here...
+            sys.stdout.write(badnames)
