@@ -126,7 +126,6 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2)  
       self.printFormattedText("<hr/>")
 
-
       #Signature ID PUIDs
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))

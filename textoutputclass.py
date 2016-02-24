@@ -54,56 +54,61 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
-      self.__output_list_title__("Signature identified PUIDs in collection (signature and container)")
+
+      #return the size of the collection
+      size = self.analysisresults.collectionsize #easier to reference from a var
+      self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(size) + " bytes | " + str(size/(1048576)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
+
+      self.__output_list_title__(self.STRINGS.HEADING_IDENTIFIED)
       print self.analysisresults.sigIDPUIDList
 
-      self.__output_list_title__("Frequency of signature identified PUIDs:")
+      self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
       print self.analysisresults.sigIDPUIDFrequency
 
-      self.__output_list_title__("Extension only identification in collection:")
+      self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
       print self.analysisresults.extensionOnlyIDList
 
-      self.__output_list_title__("ID Method Frequency: ")
+      self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
       print self.analysisresults.idmethodFrequency
 
-      self.__output_list_title__("Frequency of extension only identification in collection: ")
+      self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY)
       print self.analysisresults.extensionOnlyIDFrequency
 
-      self.__output_list_title__("Unique extensions identified across all objects (ID & non-ID):")
+      self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
       print self.analysisresults.uniqueExtensionsInCollectionList
 
-      self.__output_list_title__("List of files with multiple identifications: ")
+      self.__output_list_title__(self.STRINGS.HEADING_LIST_MULTIPLE)
       print self.analysisresults.multipleIDList 
 
-      self.__output_list_title__("Frequency of all extensions:")
+      self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
       print self.analysisresults.frequencyOfAllExtensions 
 
-      self.__output_list_title__("MIMEType (Internet Media Type) Frequency: ")
+      self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
       print self.analysisresults.mimetypeFrequency
 
-      self.__output_list__("Zero byte objects in collection", self.analysisresults.zerobytecount)
+      self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount)
       print self.analysisresults.zerobytelist
 
-      self.__output_list__("Files with no identification", self.analysisresults.zeroidcount)
+      self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount)
       print self.analysisresults.filesWithNoIDList
       
-      self.__output_list_title__("Top signature and container identified PUIDs: ")
+      self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_PUIDS)
       print self.analysisresults.topPUIDList
       
-      self.__output_list_title__("Top extensions across collection: ")
+      self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_EXTENSIONS)
       print self.analysisresults.topExtensionList 	
 
-      self.__output_list_title__("Container types in collection: ")
+      self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
       print self.analysisresults.containertypeslist
 
       if self.analysisresults.hashused > 0:
-         self.__output_list__("Files with duplicate content", self.analysisresults.totalHASHduplicates)
+         self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
          for d in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
             print d
             self.__printNewline__()
       
       if len(self.analysisresults.badFilenames) > 0:
-         self.__output_list_title__("Identifying troublesome filenames")
+         self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
          for badnames in self.analysisresults.badFilenames:
             # Already UTF-8 on way into here...
             sys.stdout.write(badnames)
