@@ -42,7 +42,7 @@ class AnalysisStringsEN:
    HEADING_NO_ID = "Files With No Identification"
    HEADING_ARCHIVE_FORMATS = "Archive Format Types in Accession/Extract"
    HEADING_IDENTICAL_CONTENT = "Files With Identical Content (Checksum Value)" 
-   HEADING_TROUBLESOME_FILENAMES = "Identifying Troublesome Filenames" 
+   HEADING_TROUBLESOME_FILENAMES = "Identifying Non-ASCII and System File Names" 
 
    SUMMARY_DESC_TOTAL_FILES = "Number of digital files in the accession/extract." 
    SUMMARY_DESC_ARCHIVE_FILES = "The total number of archive files in the accession/extract overall. Archive files are objects that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after." 
