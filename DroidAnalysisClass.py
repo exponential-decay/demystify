@@ -60,25 +60,11 @@ class DROIDAnalysis:
          resultlist.append(r[0])
       return resultlist
 
-   def __listQuery__(self, query, separator):
+   def __listQuery__(self, query, separator=False):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
-      row = ""
-      for r in result:
-         if len(r) > 1:
-            item = ""
-            for t in r:
-               item = item + str(t) + ", "
-            row = row + item[:-2] + separator
-         else:
-            row = row + str(r[0]) + separator
-      try:
-         if row[len(row)-2] == "|":
-            return row[:-2]
-         else:
-            return row[:-1]
-      except IndexError:
-         return row[:-1]
+      sys.stderr.write(str(result) + "\n\n")
+      return ''
          
    def __listPUIDSQuery__(self, query, separator):
       self.cursor.execute(query)
