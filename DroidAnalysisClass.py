@@ -21,7 +21,7 @@ class DROIDAnalysis:
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
    def __version__(self):
-      self.analysisresults.__version__ = '0.0.x' #0.0.4
+      self.analysisresults.__version__ = '0.1.0' #need something reasonable here...
       return self.analysisresults.__version__
 
    def __readconfig__(self, config):
@@ -79,7 +79,6 @@ class DROIDAnalysis:
          else:
             row.append(str(r[0]))
       return row
-
 
    def __listDuplicateQuery__(self, query):
       self.cursor.execute(query)
