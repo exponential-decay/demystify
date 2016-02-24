@@ -18,7 +18,6 @@ class DROIDAnalysisHTMLOutput:
       sys.stdout.write("\n")
 
    def printFormattedText(self, text):
-      #sys.stdout.write(text)
       
       if type(text) is list:
          for t in text:
@@ -30,7 +29,6 @@ class DROIDAnalysisHTMLOutput:
    
    def __printnewline__(self):
       self.htmloutput = self.htmloutput + "\n"
-      #sys.stdout.write("\n")
    
    def __htmlnewline__(self, no=1):
       for x in range(no):

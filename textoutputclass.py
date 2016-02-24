@@ -1,34 +1,51 @@
 import sys
 import DroidAnalysisClass
+from internationalstrings import AnalysisStringsEN as IN_EN
 
 class DROIDAnalysisTextOutput:
 
+   textoutput = ''
+
    def __init__(self, analysisresults):
+      self.STRINGS = IN_EN
       self.analysisresults = analysisresults
+
+   def __output_list__(self, title, value):
+      return title + ": " + str(value)
+      
+   def printFormattedText(self, string):
+      self.textoutput = self.textoutput + string + "\n"
+      return ""
       
    def printTextResults(self):
-      print "Analysis version: " + self.analysisresults.__version__() + '\n'
+      self.generateTEXT()
+      return self.textoutput
    
-      print "Total files: " + str(self.analysisresults.filecount)
-      print "Total container objects: " + str(self.analysisresults.containercount)
-      print "Total files in containers: " + str(self.analysisresults.filesincontainercount) 
-      print "Total directories: " + str(self.analysisresults.directoryCount)
-      print "Total unique directory names: " + str(self.analysisresults.uniqueDirectoryNames)
-      print "Total identified files (signature and container): " + str(self.analysisresults.identifiedfilecount)
-      print "Total multiple identifications (signature and container): " + str(self.analysisresults.multipleidentificationcount)
-      print "Total unidentified files (extension and blank): " + str(self.analysisresults.unidentifiedfilecount)
-      print "Total extension ID only count: " + str(self.analysisresults.extensionIDOnlyCount)
-      print "Total extension mismatches: " + str(self.analysisresults.extmismatchCount)		#TODO: List, but could be long
-      print "Total signature IDd PUID count: " + str(self.analysisresults.distinctSignaturePuidcount)
-      print "Total distinct extensions across collection: " + str(self.analysisresults.distinctextensioncount)
-      print "Total zero-byte files in collection: " + str(self.analysisresults.zerobytecount)
+   def generateTEXT(self):
+      self.printFormattedText(self.STRINGS.REPORT_TITLE)
+      self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
+      self.printFormattedText(self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename)
+   
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_TOTAL_FILES, self.analysisresults.filecount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysisresults.containercount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_INSIDE_ARCHIVES, self.analysisresults.filesincontainercount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_DIRECTORIES, self.analysisresults.directoryCount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_UNIQUE_DIRNAMES, self.analysisresults.uniqueDirectoryNames))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_IDENTIFIED_FILES, self.analysisresults.identifiedfilecount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_MULTIPLE, self.analysisresults.multipleidentificationcount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_UNIDENTIFIED, self.analysisresults.unidentifiedfilecount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS, self.analysisresults.distinctextensioncount))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount))
 
       if self.analysisresults.hashused > 0:
-         print "Total files with duplicate content (HASH value): " + str(self.analysisresults.totalHASHduplicates)
+         self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_IDENTICAL_FILES, self.analysisresults.totalHASHduplicates))
 
-      print "Total files with multiple contiguous space characters: " + str(len(self.analysisresults.multiplespacelist))
-      print "Percentage of collection identified: " + str(self.analysisresults.identifiedPercentage)
-      print "Percentage of collection unidentified: " + str(self.analysisresults.unidentifiedPercentage)
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_MULTIPLE_SPACES, len(self.analysisresults.multiplespacelist)))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
+      self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
       print
       print "Signature identified PUIDs in collection (signature and container):"
