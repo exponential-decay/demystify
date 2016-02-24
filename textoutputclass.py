@@ -27,6 +27,14 @@ class DROIDAnalysisTextOutput:
    def printTextResults(self):
       self.generateTEXT()
       return self.textoutput
+      
+   def getDateList(self):
+      dates = ''
+      for s in self.analysisresults.dateFrequency:
+         s = s.split(',')
+         dates = dates + s[0] + " (" + s[1].strip() + ")" + ", " 
+      dates = dates.rstrip(", ")
+      return dates
    
    def generateTEXT(self):
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
@@ -67,7 +75,9 @@ class DROIDAnalysisTextOutput:
 
       self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
       print self.analysisresults.extensionOnlyIDList
-
+      
+      self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_DATE_RANGE, self.getDateList()))
+      
       self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
       print self.analysisresults.idmethodFrequency
 
