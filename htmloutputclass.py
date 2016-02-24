@@ -7,6 +7,7 @@ class DROIDAnalysisHTMLOutput:
    htmloutput = ''
 
    def __init__(self, analysisresults):
+      self.wiki = True
       self.STRINGS = IN_EN
       self.analysisresults = analysisresults
 
@@ -117,9 +118,8 @@ class DROIDAnalysisHTMLOutput:
       
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Format Name</th>')
-      for x in self.analysisresults.sigIDPUIDList:
-         x = x.split(',')
-         new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + x[0] + '">' + x[0] + '</a></td><td>' + "".join(x[1:]) + '</td></tr>'
+      for puid in self.analysisresults.sigIDPUIDList:
+         new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
          self.printFormattedText(new_x)
       self.printFormattedText('</table>')
 
@@ -132,14 +132,13 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__()
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Count</th>') 
-      for s in self.analysisresults.sigIDPUIDFrequency:
-         s = s.split(',')
+      for sig in self.analysisresults.sigIDPUIDFrequency:
          self.printFormattedText('<tr><td style="width: 100px;">')
-         self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + s[0] + '">' + s[0] + '</a>')
-         self.printFormattedText('</td><td>' + s[1].strip() + '</td>')
+         self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
+         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
  
          #Unused Meter Code...
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + s[1].strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
         
          self.printFormattedText('</tr>')
         
@@ -153,17 +152,18 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__()
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;">Year</a></th><th style="text-align: left;">Count</th>') 
-      for s in self.analysisresults.dateFrequency:
-         s = s.split(',')
+      for dates in self.analysisresults.dateFrequency:
          self.printFormattedText('<tr><td style="width: 100px;">')
-
-         #self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + s[0] + '">' + s[0] + '</a>')
-         
-         self.printFormattedText('<b>' + s[0] + '</b>')
-         self.printFormattedText('</td><td>' + s[1].strip() + '</td>')
+                 
+         if self.wiki is True:
+            self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + str(dates[0]) + '">' + str(dates[0]) + '</a>')
+         else:
+            self.printFormattedText('<b>' + str(dates[0]) + '</b>')
+            
+         self.printFormattedText('</td><td>' + str(dates[1]).strip() + '</td>')
  
          #Unused Meter Code...
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + s[1].strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(dates[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
         
          self.printFormattedText('</tr>')
         
