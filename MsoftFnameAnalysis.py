@@ -4,10 +4,14 @@
 import sys
 sys.path.append(r'cooperhewitt/unicode/')
 import names
+from internationalstrings import AnalysisStringsEN as IN_EN
 
 class MsoftFnameAnalysis:
 
    report = ''
+
+   def __init__(self):
+      self.STRINGS = IN_EN
 
    #Note: verbose default false because of potential no. characters in a collection
    def completeFnameAnalysis(self, s, verbose=False):
@@ -41,24 +45,23 @@ class MsoftFnameAnalysis:
          if ord(c) > 128:
             nonascii = True
             if nonascii == True:
-               self.reportIssue(s, "contains, characters outside of ASCII range:", hex(ord(c)) + ", " + self.unicodename(c))
+               self.reportIssue(s, self.STRINGS.FNAME_CHECK_ASCII + ":", hex(ord(c)) + ", " + self.unicodename(c))
                nonascii == False
             if self.verbose == False:
                break
-            
 
    def detectNonRecommendedCharacters(self, s):
       charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
       for c in s:
          if c in charlist:
-            self.reportIssue(s, "contains, non-recommended character:", hex(ord(c)) + ", " + self.unicodename(c))
+            self.reportIssue(s, self.STRINGS.FNAME_CHECK_NOT_RECOMMENDED + ":", hex(ord(c)) + ", " + self.unicodename(c))
             if self.verbose == False:
                break
 
    def detectNonPrintableCharacters(self, s):
       for c in range(0x1f):
          if chr(c) in s:
-            self.reportIssue(s, "contains, non-printable character:", hex(c) + ", " + self.unicodename(c))
+            self.reportIssue(s, self.STRINGS.FNAME_CHECK_NON_PRINT + ":", hex(c) + ", " + self.unicodename(c))
             if self.verbose == False:
                break
 
@@ -79,15 +82,15 @@ class MsoftFnameAnalysis:
             except IndexError:
                problem = True
             if problem == True:
-               self.reportIssue(s, "contains, reserved name: ", c)
+               self.reportIssue(s, self.STRINGS.FNAME_CHECK_RESERVED + ": ", c)
 
    def detectSpaceAtEndOfName(self, s):
       if s.endswith(' '):
-         self.reportIssue(s, "has a space as its last character.")
+         self.reportIssue(s, self.STRINGS.FNAME_CHECK_SPACE + ".")
          
    def detectPeriodAtEndOfName(self, s):		
       if s.endswith('.'):
-         self.reportIssue(s, "has a period as its last character.")
+         self.reportIssue(s, self.STRINGS.FNAME_CHECK_PERIOD + ".")
       
    def __detect_invalid_characters_test__(self):
       #Strings for unit tests

@@ -85,3 +85,10 @@ class AnalysisStringsEN:
    COLUMN_HEADER_VALUES_FORMAT = "Format Name"
    COLUMN_HEADER_VALUES_COUNT = "Count"
    COLUMN_HEADER_VALUES_YEAR = "Year"
+   
+   FNAME_CHECK_ASCII = "contains, characters outside of ASCII range"
+   FNAME_CHECK_PERIOD = "has a period ('.') as its last character"
+   FNAME_CHECK_NOT_RECOMMENDED = "contains, non-recommended character"
+   FNAME_CHECK_NON_PRINT = "contains, non-printable character"
+   FNAME_CHECK_RESERVED = "contains, reserved name"
+   FNAME_CHECK_SPACE = "has a SPACE as its last character"
