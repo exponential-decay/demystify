@@ -132,7 +132,7 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       
       self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Format Name</th>')
+      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th>')
       for puid in self.analysisresults.sigIDPUIDList:
          new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
          self.printFormattedText(new_x)
@@ -146,7 +146,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
       self.__htmlnewline__()
       self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Count</th>') 
+      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
       for sig in self.analysisresults.sigIDPUIDFrequency:
          self.printFormattedText('<tr><td style="width: 100px;">')
          self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
@@ -166,7 +166,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
       self.__htmlnewline__()
       self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;">Year</a></th><th style="text-align: left;">Count</th>') 
+      self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
       for dates in self.analysisresults.dateFrequency:
          self.printFormattedText('<tr><td style="width: 100px;">')
                  
@@ -191,7 +191,6 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ID_METHOD))
       self.__htmlnewline__() 
       for method in self.analysisresults.idmethodFrequency:
-         sys.stderr.write(str(method))
          self.printFormattedText(str(method[0]) + ", " + str(method[1]) + '</br>')
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
