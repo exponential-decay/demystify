@@ -19,10 +19,9 @@ class DROIDAnalysisHTMLOutput:
       sys.stdout.write("\n")
 
    def printFormattedText(self, text):
-      
       if type(text) is list:
          for t in text:
-            self.htmloutput = self.htmloutput + t + "</br>"
+            self.htmloutput = self.htmloutput + str(t) + "</br></br>"
       else:
          self.htmloutput = self.htmloutput + text
          
@@ -44,6 +43,22 @@ class DROIDAnalysisHTMLOutput:
    def __make_list_item__(self, title, content, value):
       return "<li title='" + title + "'>" + self.__make_str__(content) + str(value) + "</li>"
    
+   def __keyvalue_output__(self, list):
+      self.__htmlnewline__()
+      for item in list:
+         self.printFormattedText(str(item[0]) + ", " + str(item[1]) + '</br>')
+      self.__htmlnewline__() 
+      self.printFormattedText("<hr/>")
+
+   def __csv_output__(self, list):
+      self.__htmlnewline__()
+      out = ""
+      for item in list:
+         out = out + str(item[0]) + ", "
+      self.printFormattedText(out.strip(", "))
+      self.__htmlnewline__(2) 
+      self.printFormattedText("<hr/>")
+
    #Trial function we're not using yet... Prettty Print
    def prettyprinthtml():
       #document_root = html.fromstring(self.htmloutput)
@@ -171,90 +186,85 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
-      if len(self.analysisresults.extensionOnlyIDList) > 0:
-         #Extension Only ID
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
-         self.__htmlnewline__() 
-         self.printFormattedText(self.analysisresults.extensionOnlyIDList.replace('|', '</br>'))
-         self.__htmlnewline__(2) 
-         self.printFormattedText("<hr/>")
-
       #ID Method Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ID_METHOD))
       self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.idmethodFrequency.replace('\n', '</br>'))
-      self.__htmlnewline__(2) 
+      for method in self.analysisresults.idmethodFrequency:
+         sys.stderr.write(str(method))
+         self.printFormattedText(str(method[0]) + ", " + str(method[1]) + '</br>')
+      self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
 
+      if len(self.analysisresults.extensionOnlyIDList) > 0:
+         #Extension Only ID
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
+         self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
+         
       if len(self.analysisresults.extensionOnlyIDList) > 0:
          #Extension Only Identification
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
-         self.__htmlnewline__() 
-         self.printFormattedText(self.analysisresults.extensionOnlyIDFrequency)
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
+         self.__keyvalue_output__(self.analysisresults.extensionOnlyIDFrequency)
 
       #Unique Extensions Identified
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.uniqueExtensionsInCollectionList)
-      self.__htmlnewline__() 
+      self.__htmlnewline__()
+      extstr = ''
+      for ext in self.analysisresults.uniqueExtensionsInCollectionList:
+         extstr = extstr + ext[0] + ", "
+      self.printFormattedText(extstr.strip(", "))
+      self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
       if len(self.analysisresults.multipleIDList) > 0:
          #Files with multiple identifications
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
-         self.__htmlnewline__() 
+         self.__htmlnewline__()
+         self.printFormattedText("<code>")
          self.printFormattedText(self.analysisresults.multipleIDList)
+         self.printFormattedText("</code>")
          self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
 
       #Extension Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.frequencyOfAllExtensions)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
+      self.__keyvalue_output__(self.analysisresults.frequencyOfAllExtensions)
+      
       #Mimetype Frequency
       self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
-      self.__htmlnewline__() 
-      self.printFormattedText(self.analysisresults.mimetypeFrequency)
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
+      self.__keyvalue_output__(self.analysisresults.mimetypeFrequency)
 
       if len(self.analysisresults.zerobytelist):
          #Zero Byte Objects
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
          self.__htmlnewline__() 
+         self.printFormattedText("<code>")
          self.printFormattedText(self.analysisresults.zerobytelist)
+         self.printFormattedText("</code>")
          self.printFormattedText("<hr/>")
 
-      #Zero Identification
       if len(self.analysisresults.filesWithNoIDList) > 0:
+         #Zero Identification
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
          self.__htmlnewline__() 
+         self.printFormattedText("<code>")
          self.printFormattedText(self.analysisresults.filesWithNoIDList)
-         self.__htmlnewline__() 
+         self.printFormattedText("</code>")
          self.printFormattedText("<hr/>")
 
       if len(self.analysisresults.containertypeslist) > 0:
-         #Container Types
+         #archive file types
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
-         self.__htmlnewline__() 
-         sys.stderr.write(str(self.analysisresults.containertypeslist))
-         self.printFormattedText(self.analysisresults.containertypeslist)
-         self.printFormattedText("<hr/>")
+         self.__csv_output__(self.analysisresults.containertypeslist)
 
       if self.analysisresults.hashused > 0:
          #Duplicate Content      
@@ -277,7 +287,7 @@ class DROIDAnalysisHTMLOutput:
          self.__htmlnewline__() 
          for fnames in self.analysisresults.badFilenames:
             self.printFormattedText(fnames)
-            self.__htmlnewline__(2) 
+            self.__htmlnewline__() 
          self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
       
