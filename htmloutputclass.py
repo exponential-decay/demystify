@@ -134,7 +134,10 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th>')
       for puid in self.analysisresults.sigIDPUIDList:
-         new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
+         if puid[2] != 'no value':
+            new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
+         else:
+            new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
          self.printFormattedText(new_x)
       self.printFormattedText('</table>')
 
