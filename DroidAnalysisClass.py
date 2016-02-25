@@ -21,7 +21,7 @@ class DROIDAnalysis:
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
    def __version__(self):
-      self.analysisresults.__version__ = '0.1.0' #need something reasonable here...
+      self.analysisresults.__version__ = '0.2.0' #need something reasonable here...
       return self.analysisresults.__version__
 
    def __readconfig__(self, config):
@@ -63,22 +63,12 @@ class DROIDAnalysis:
    def __listQuery__(self, query, separator=False):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
-      sys.stderr.write(str(result) + "\n\n")
-      return ''
-         
-   def __listPUIDSQuery__(self, query, separator):
+      return result
+
+   def __listPUIDSQuery__(self, query, separator=False):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
-      row = []
-      for r in result:
-         if len(r) > 1:
-            item = ""
-            for t in r:
-               item = item + str(t) + ", "
-            row.append(item[:-2])
-         else:
-            row.append(str(r[0]))
-      return row
+      return result
 
    def __listDuplicateQuery__(self, query):
       self.cursor.execute(query)
@@ -168,7 +158,7 @@ class DROIDAnalysis:
    # Frequency list queries
    ###
    def dateRangeFrequency(self):
-      return self.__listPUIDSQuery__("SELECT YEAR, COUNT(YEAR) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY YEAR ORDER BY TOTAL DESC", " | ")
+      return self.__listPUIDSQuery__("SELECT YEAR, COUNT(YEAR) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY YEAR ORDER BY TOTAL DESC")
 
    def identifiedBinaryMatchedPUIDFrequency(self):
       return self.__listPUIDSQuery__( 
@@ -180,7 +170,7 @@ class DROIDAnalysis:
 
    def allExtensionsFrequency(self):
       return self.__listQuery__(
-         "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC", " | ")
+         "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
 
    def idmethodFrequencyCount(self):
       return self.__listQuery__(
@@ -189,7 +179,7 @@ class DROIDAnalysis:
 
    def mimetypeFrequencyCount(self):
       return self.__listQuery__(
-         "SELECT MIME_TYPE, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MIME_TYPE ORDER BY TOTAL DESC", " | ")
+         "SELECT MIME_TYPE, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MIME_TYPE ORDER BY TOTAL DESC")
 
    ###
    # List queries
@@ -200,11 +190,11 @@ class DROIDAnalysis:
 
    def listAllUniqueExtensions(self):	
       return self.__listQuery__(
-         "SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')", " | ")
+         "SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
    def listExtensionOnlyIdentificationPUIDS(self):	
       return self.__listQuery__(		
-         "SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'", " | ")
+         "SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
 
    def listMultipleIdentifications(self):
       return self.__listQuery1__(		
@@ -213,7 +203,7 @@ class DROIDAnalysis:
 
    def listContainerTypes(self):
       return self.__listQuery__(
-         "SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')", " | ")
+         "SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')")
 
    def listNoIdentificationFiles(self):
       return self.__listQuery1__(	
@@ -301,19 +291,9 @@ class DROIDAnalysis:
       countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
       return self.listTopItems(self.__alternativeFrequencyQuery__(countExtensions), number)
 
+   #TODO: Delete and refine functions above...
    def listTopItems(self, frequencyQueryResult, number):
-      toptwentystr = ''
-      
-      try:
-         for i in range(number):
-            label = frequencyQueryResult[i][0]
-            count = frequencyQueryResult[i][1]
-            toptwentystr = toptwentystr + label + "       count: " + str(count) + "\n"
-      except IndexError:
-         # No more values we can list so return string as is...
-         toptwentystr = toptwentystr
-         
-      return toptwentystr
+      return frequencyQueryResult[0:number]
 
    ###
    # Stats output...

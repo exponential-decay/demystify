@@ -13,6 +13,12 @@ class DROIDAnalysisTextOutput:
    def __output_list__(self, title, value):
       return title + ": " + str(value)
    
+   def __itemlist__(self, list):
+      output = ''
+      for item in list:
+         output = output + item + "\n"
+      return output.strip("\n")
+         
    def __printNewline__(self):
       self.printFormattedText("\n")
       
@@ -29,20 +35,23 @@ class DROIDAnalysisTextOutput:
    def printTextResults(self):
       self.generateTEXT()
       return self.textoutput
-      
+
+   def __frequencyoutput__(self, list):
+      val = ''
+      for item in list:
+         val = val + str(item[0]) + " (" + str(item[1]) + "), "
+      return val.strip(", ")
+   
    def getDateList(self):
-      dates = ''
-      for s in self.analysisresults.dateFrequency:
-         s = s.split(',')
-         dates = dates + s[0] + " (" + s[1].strip() + ")" + ", " 
-      dates = dates.rstrip(", ")
-      return dates
+      return self.__frequencyoutput__(self.analysisresults.dateFrequency)
    
    def generateTEXT(self):
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
       self.printFormattedText(self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename)
-   
+      
+      self.printFormattedText("")
+      
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_TOTAL_FILES, self.analysisresults.filecount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysisresults.containercount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_INSIDE_ARCHIVES, self.analysisresults.filesincontainercount))
@@ -70,53 +79,72 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(size) + " bytes | " + str(size/(1048576)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
 
       self.__output_list_title__(self.STRINGS.HEADING_IDENTIFIED)
-      self.printFormattedText(self.analysisresults.sigIDPUIDList)
+      for item in self.analysisresults.sigIDPUIDList:
+         output = ""
+         if item[2] != 'no value':
+            output = item[0] + ", " + item[1] + " " + item[2]
+         else:
+            output = item[0] + ", " + item[1]            
+         self.printFormattedText(output)
 
       self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
-      self.printFormattedText(self.analysisresults.sigIDPUIDFrequency)
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.sigIDPUIDFrequency))
 
       if len(self.analysisresults.extensionOnlyIDList) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
-         self.printFormattedText(self.analysisresults.extensionOnlyIDList)
+         for item in self.analysisresults.extensionOnlyIDList:
+            output = item[0] + ", " + item[1]
+            self.printFormattedText(output)
       
-      self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_DATE_RANGE, self.getDateList()))
+      self.__output_list_title__(self.STRINGS.HEADING_DATE_RANGE)
+      self.printFormattedText(self.getDateList())
       
       self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
-      self.printFormattedText(self.analysisresults.idmethodFrequency)
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.idmethodFrequency))
 
       if len(self.analysisresults.extensionOnlyIDList) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY)
-         self.printFormattedText(self.analysisresults.extensionOnlyIDFrequency)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.extensionOnlyIDFrequency))
 
       self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
-      self.printFormattedText(self.analysisresults.uniqueExtensionsInCollectionList)
+      output = ''
+      for item in self.analysisresults.uniqueExtensionsInCollectionList:
+         output = output + item[0] + ", " 
+      self.printFormattedText(output.strip(", "))
 
       if len(self.analysisresults.multipleIDList) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_LIST_MULTIPLE)
-         self.printFormattedText(self.analysisresults.multipleIDList) 
+         self.printFormattedText(self.__itemlist__(self.analysisresults.multipleIDList))
 
       self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
-      self.printFormattedText(self.analysisresults.frequencyOfAllExtensions) 
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.frequencyOfAllExtensions)) 
 
       self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
-      self.printFormattedText(self.analysisresults.mimetypeFrequency)
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency))
 
+      self.printFormattedText("\n")
       if self.analysisresults.zerobytecount > 0:
-         self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount)
-         self.printFormattedText(self.analysisresults.zerobytelist)
+         self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount))
+         self.printFormattedText(self.__itemlist__(self.analysisresults.zerobytelist))
 
-      self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount)
-      self.printFormattedText(self.analysisresults.filesWithNoIDList)
+      self.printFormattedText("\n")
+
+      if len(self.analysisresults.filesWithNoIDList) > 0:
+         self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount))
+         self.printFormattedText(self.__itemlist__(self.analysisresults.filesWithNoIDList))
       
       self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_PUIDS)
-      self.printFormattedText(self.analysisresults.topPUIDList)
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.topPUIDList))
       
       self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_EXTENSIONS)
-      self.printFormattedText(self.analysisresults.topExtensionList) 	
+      self.printFormattedText(self.__frequencyoutput__(self.analysisresults.topExtensionList))
 
       if len(self.analysisresults.containertypeslist) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
-         self.printFormattedText(self.analysisresults.containertypeslist)
+         output = ""
+         for archive in self.analysisresults.containertypeslist:
+            output = output + archive[0] + ", " 
+         self.printFormattedText(output.strip(", ") + "\n\n")
 
       if self.analysisresults.hashused > 0:
          if self.analysisresults.totalHASHduplicates > 0:
