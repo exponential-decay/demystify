@@ -45,6 +45,15 @@ class DROIDAnalysisTextOutput:
    def getDateList(self):
       return self.__frequencyoutput__(self.analysisresults.dateFrequency)
    
+   def __outputdupes__(self, list):
+      output = ''
+      for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
+         output = output + "Checksum: " + str(dupes['checksum']) + "\n"
+         output = output + "Count: " + str(dupes['count']) + "\n"
+         output = output + "Example: " + str(dupes['examples'][0]) + "\n\n"
+         
+      return output.strip("\n")
+      
    def generateTEXT(self):
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
@@ -149,11 +158,8 @@ class DROIDAnalysisTextOutput:
       if self.analysisresults.hashused > 0:
          if self.analysisresults.totalHASHduplicates > 0:
             self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
-            for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
-               self.printFormattedText("Checksum: " + str(dupes['checksum']))
-               self.printFormattedText("Count: " + str(dupes['count']))
-               self.printFormattedText("Example: " + str(dupes['examples'][0]) + "\n")
-      
+            self.printFormattedText(self.__outputdupes__(self.analysisresults.duplicateHASHlisting))
+                  
       if len(self.analysisresults.badFilenames) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
          for badnames in self.analysisresults.badFilenames:
