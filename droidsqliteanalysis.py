@@ -83,7 +83,7 @@ def main():
       handleDROIDCSV(args.csva, True, args.htm, args.rogues, args.heroes, config)
       outputtime(start_time)
    if args.db:
-      analysisresults = handleDROIDDB(args.db, args.htm, config)
+      analysisresults = handleDROIDDB(args.db, config)
       handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
    if args.export:
