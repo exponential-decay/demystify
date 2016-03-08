@@ -38,7 +38,7 @@ class DROIDAnalysisHTMLOutput:
       return str + ": "
       
    def __make_summary__(self, str):
-      return "<details><summary>" + self.STRINGS.REPORT_MORE_INFORMATION + "</summary></br>" + str + "</details>"
+      return "<details><summary>" + self.STRINGS.REPORT_MORE_INFORMATION + "</br></summary></br>" + str + "</br></details>"
    
    def __make_list_item__(self, title, content, value):
       return "<li title='" + title + "'>" + self.__make_str__(content) + str(value) + "</li>"
