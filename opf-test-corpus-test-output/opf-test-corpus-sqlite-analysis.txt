@@ -1,257 +1,221 @@
-Analysis version: 0.0.3
+DROID Analysis Results
+Analysis Version: 0.2.0
+Analysis File: opf-test-corpus-test-output\opf-test-corpus-droid-analysis
 
-Total files: 324
-Total container objects: 13
-Total files in containers: 0
-Total directories: 74
-Total unique directory names: 74
-Total identified files (signature and container): 268
-Total multiple identifications (signature and container): 0
-Total unidentified files (extension and blank): 56
-Total extension ID only count: 5
-Total extension mismatches: 23
-Total signature IDd PUID count: 51
-Total distinct extensions across collection: 58
-Total zero-byte files in collection: 29
-Total files with duplicate content (MD5 value): 33
-Total files with duplicate filenames: 8
-Total files with multiple contiguous space characters: 0
-Percentage of collection identified: 82.7
-Percentage of collection unidentified: 17.3
-
-Signature identified PUIDs in collection (signature and container):
-fmt/610, ARJ File Format, no value
-x-fmt/384, Quicktime, no value
-x-fmt/122, Quattro Pro Spreadsheet, 5
-x-fmt/115, Lotus 1-2-3 Worksheet, 3.0
-fmt/61, Microsoft Excel 97 Workbook (xls), 8
-x-fmt/114, Lotus 1-2-3 Worksheet, 2.0
-x-fmt/121, Quattro Pro Spreadsheet, 1-4
-fmt/291, OpenDocument Text, 1.2
-x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0
-fmt/483, ePub format, no value
-x-fmt/263, ZIP Format, no value
-fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3
-fmt/95, Acrobat PDF/A - Portable Document Format, 1a
-fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4
-fmt/355, Rich Text Format, 1.9
-fmt/412, Microsoft Word for Windows, 2007 onwards
-fmt/609, Microsoft Word (Generic), 6.0-2003
-fmt/40, Microsoft Word Document, 97-2003
-fmt/524, Microsoft Office Theme, no value
-fmt/583, Vector Markup Language, no value
-fmt/12, Portable Network Graphics, 1.1
-fmt/43, JPEG File Interchange Format, 1.01
-fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7
-fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5
-fmt/354, Acrobat PDF/A - Portable Document Format, 1b
-fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1
-fmt/11, Portable Network Graphics, 1.0
-fmt/101, Extensible Markup Language, 1.0
-x-fmt/266, GZIP Format, no value
-fmt/50, Rich Text Format, 1.5-1.6
-fmt/196, Adobe InDesign Document, CS
-fmt/41, Raw JPEG Stream, no value
-fmt/151, JPX (JPEG 2000 part 2), no value
-fmt/463, JPM (JPEG 2000 part 6), no value
-x-fmt/392, JP2 (JPEG 2000 part 1), no value
-fmt/337, MJ2 (Motion JPEG 2000), no value
-fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6
-x-fmt/240, Microsoft Access Database, 2000
-fmt/126, Microsoft Powerpoint Presentation, 97-2003
-x-fmt/88, Microsoft Powerpoint Presentation, 4.0
-x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2
-x-fmt/238, Microsoft Access Database, 95
-x-fmt/239, Microsoft Access Database, 97
-fmt/38, Microsoft Word for Windows Document, 2.0
-fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2
-fmt/482, Apple iBook format, no value
-fmt/518, Broad Band eBook, LRF
-fmt/396, PocketMobi (Palm Resource) File, no value
-fmt/485, Rocket Book eBook format, no value
-fmt/353, Tagged Image File Format, no value
-fmt/44, JPEG File Interchange Format, 1.02
-
-Frequency of signature identified PUIDs:
-x-fmt/384, 61 | fmt/18, 33 | fmt/17, 21 | fmt/276, 15 | x-fmt/392, 14 | x-fmt/263, 12 | fmt/16, 11 | fmt/291, 9 | fmt/101, 7 | fmt/19, 7 | fmt/396, 6 | fmt/40, 6 | fmt/11, 4 | fmt/20, 4 | x-fmt/114, 4 | fmt/354, 3 | fmt/482, 3 | fmt/483, 3 | fmt/61, 3 | fmt/95, 3 | x-fmt/122, 3 | fmt/126, 2 | fmt/353, 2 | fmt/43, 2 | fmt/485, 2 | fmt/518, 2 | x-fmt/88, 2 | fmt/12, 1 | fmt/15, 1 | fmt/151, 1 | fmt/196, 1 | fmt/337, 1 | fmt/355, 1 | fmt/38, 1 | fmt/41, 1 | fmt/412, 1 | fmt/44, 1 | fmt/463, 1 | fmt/50, 1 | fmt/524, 1 | fmt/583, 1 | fmt/609, 1 | fmt/610, 1 | x-fmt/115, 1 | x-fmt/121, 1 | x-fmt/238, 1 | x-fmt/239, 1 | x-fmt/240, 1 | x-fmt/266, 1 | x-fmt/387, 1 | x-fmt/44, 1 
-
-Extension only identification in collection:
-x-fmt/111, Plain Text File | x-fmt/100, AutoCAD Script 
-
-ID Method Frequency: 
-Signature, 239
-no value, 51
-Container, 29
-Extension, 5
-
-Frequency of extension only identification in collection: 
-x-fmt/111, 3 | x-fmt/100, 2 
-
-Unique extensions identified across all objects (ID & non-ID):
-arj | mov | wq2 | wk3 | xls | wk1 | wq1 | odt | wpd | txt | epub | pages | pdf | rtf | docx | doc | mht | xml | htm | png | jpg | map | mmp | cdd | md | opml | nmind | indd | jpf | j2c | jpm | jp2 | mj2 | xhtml | mdb | ppt | tif | scr | sta | stg | no value | } | ) | iba | ibooks | snb | lrf | htmlz | fb2 | lit | txtz | azw3 | zip | pmlz | pdb | mobi | rb | opf 
-
-List of files with multiple identifications: 
+Total Files: 324
+Total Archive Files: 13
+Total Files Inside Archive Files: 0
+Total Directories: 75
+Total Unique Directory Names: 74
+Total Identified Files (Based on Signature): 270
+Total Multiple Identifications (Baed on Signature): 0
+Total Unidentified Files: 54
+Total Extension ID Only Count: 5
+Total Extension Mismatches: 23
+Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 52
+Total Unique Extensions Across Accession/Extract: 58
+Total Zero-byte Files in Accession/Extract: 29
+Total Files with Identical Content (Checksum Value): 33
+Total Files with Multiple Contiguous Space Characters: 0
+Percentage of Accession/Extract Identified: 83.3
+Percentage of Accession/Extract Unidentified: 16.7
+Size of the accession/extract: 397568483 bytes | 379 MiB/MB (Megabytes)
 
 
-Frequency of all extensions:
-pdf, 98 | mov, 61 | no value, 26 | jp2, 12 | odt, 9 | doc, 8 | map, 5 | png, 5 | jpg, 4 | ppt, 4 | rtf, 4 | wk1, 4 | xml, 4 | epub, 3 | iba, 3 | ibooks, 3 | jpf, 3 | mdb, 3 | tif, 3 | txt, 3 | wq2, 3 | xls, 3 | azw3, 2 | fb2, 2 | htmlz, 2 | lit, 2 | lrf, 2 | md, 2 | mobi, 2 | pdb, 2 | pmlz, 2 | rb, 2 | scr, 2 | snb, 2 | sta, 2 | stg, 2 | txtz, 2 | zip, 2 | }, 2 | ), 1 | arj, 1 | cdd, 1 | docx, 1 | htm, 1 | indd, 1 | j2c, 1 | jpm, 1 | mht, 1 | mj2, 1 | mmp, 1 | nmind, 1 | opf, 1 | opml, 1 | pages, 1 | wk3, 1 | wpd, 1 | wq1, 1 | xhtml, 1 
-
-MIMEType (Internet Media Type) Frequency: 
-application/pdf, 98 | no value, 74 | video/quicktime, 61 | image/jp2, 14 | application/zip, 12 | application/vnd.oasis.opendocument.text, 9 | application/msword, 8 | application/xml, text/xml, 7 | image/png, 5 | application/vnd.lotus-1-2-3, application/x-123, 4 | application/vnd.ms-powerpoint, 4 | image/jpeg, 4 | application/epub+zip, 3 | application/vnd.ms-excel, 3 | application/x-ibooks+zip, 3 | image/tiff, 3 | text/plain, 3 | application/rtf, text/rtf, 2 | application/lotus123, application/vnd.lotus-1-2-3, 1 | application/vnd.ms-officetheme, 1 | application/vnd.openxmlformats-officedocument.wordprocessingml.document, 1 | application/vnd.wordperfect, 1 | application/x-gzip, 1 | image/jpm, 1 | video/mj2, 1 
-
-Zero byte objects in collection: 29
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/empty/null
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/]
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/[]
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{ (2).}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/Â¬
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/()
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/#
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/[
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/@
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/(.)
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/_
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/;
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{.}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/^
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/-
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/'
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/%
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/$
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/(
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/+
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/Â£
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/!
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/=
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/~
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/)
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/`
-
-Files with no identification: 51
-/home/goatslayer/git/opf-format-corpus/format-corpus/variations/variations/multipart/related/lorem-ipsum.mht
-/home/goatslayer/git/opf-format-corpus/format-corpus/variations/variations/text/html/4.0/lorem-ipsum_files/filelist.xml
-/home/goatslayer/git/opf-format-corpus/format-corpus/pcraster/AREA2.MAP
-/home/goatslayer/git/opf-format-corpus/format-corpus/pcraster/LAND.MAP
-/home/goatslayer/git/opf-format-corpus/format-corpus/pcraster/HOOGTE2.MAP
-/home/goatslayer/git/opf-format-corpus/format-corpus/pcraster/LAITRUNC.MAP
-/home/goatslayer/git/opf-format-corpus/format-corpus/pcraster/BODEM.MAP
-/home/goatslayer/git/opf-format-corpus/format-corpus/knowledge-management/mind-manager/copac-uknuc.mmp
-/home/goatslayer/git/opf-format-corpus/format-corpus/knowledge-management/concept-draw/To Do.cdd
-/home/goatslayer/git/opf-format-corpus/format-corpus/knowledge-management/nova-mind/Curation outline 3.opml.md
-/home/goatslayer/git/opf-format-corpus/format-corpus/jp2k-formats/balloon.j2c
-/home/goatslayer/git/opf-format-corpus/format-corpus/statistica/KSBASE.STA
-/home/goatslayer/git/opf-format-corpus/format-corpus/statistica/RESID30.STG
-/home/goatslayer/git/opf-format-corpus/format-corpus/statistica/PEYNEVL2.STA
-/home/goatslayer/git/opf-format-corpus/format-corpus/statistica/BOXLAAG.STG
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/empty/null
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/]
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/[]
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{ (2).}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/Â¬
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/()
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/#
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/[
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/@
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/(.)
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/_
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/;
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{.}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/^
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/-
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/'
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/{
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/%
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/$
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/}
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/(
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/+
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/Â£
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/!
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/=
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/~
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/)
-/home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters/`
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/iBooks Author 2.0 (327)/lorem-ipsum-plus-image-updated.iba.md
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.snb
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.lit
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.9.0/lorem-ipsum.rtf
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.snb
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.rtf
-/home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.lit
-
-Top signature and container identified PUIDs: 
-x-fmt/384       count: 61
-fmt/18       count: 33
-fmt/17       count: 21
-fmt/276       count: 15
-x-fmt/392       count: 14
+Identified File Formats in Accession/Extract:
+fmt/101, Extensible Markup Language 1.0
+fmt/11, Portable Network Graphics 1.0
+fmt/12, Portable Network Graphics 1.1
+fmt/126, Microsoft Powerpoint Presentation 97-2003
+fmt/15, Acrobat PDF 1.1 - Portable Document Format 1.1
+fmt/151, JPX (JPEG 2000 part 2)
+fmt/16, Acrobat PDF 1.2 - Portable Document Format 1.2
+fmt/17, Acrobat PDF 1.3 - Portable Document Format 1.3
+fmt/18, Acrobat PDF 1.4 - Portable Document Format 1.4
+fmt/19, Acrobat PDF 1.5 - Portable Document Format 1.5
+fmt/196, Adobe InDesign Document CS
+fmt/20, Acrobat PDF 1.6 - Portable Document Format 1.6
+fmt/276, Acrobat PDF 1.7 - Portable Document Format 1.7
+fmt/291, OpenDocument Text 1.2
+fmt/337, MJ2 (Motion JPEG 2000)
+fmt/353, Tagged Image File Format
+fmt/354, Acrobat PDF/A - Portable Document Format 1b
+fmt/355, Rich Text Format 1.9
+fmt/38, Microsoft Word for Windows Document 2.0
+fmt/396, PocketMobi (Palm Resource) File
+fmt/40, Microsoft Word Document 97-2003
+fmt/41, Raw JPEG Stream
+fmt/412, Microsoft Word for Windows 2007 onwards
+fmt/43, JPEG File Interchange Format 1.01
+fmt/44, JPEG File Interchange Format 1.02
+fmt/463, JPM (JPEG 2000 part 6)
+fmt/482, Apple iBook format
+fmt/483, ePub format
+fmt/485, Rocket Book eBook format
+fmt/50, Rich Text Format 1.5-1.6
+fmt/518, Broad Band eBook LRF
+fmt/524, Microsoft Office Theme
+fmt/583, Vector Markup Language
+fmt/609, Microsoft Word (Generic) 6.0-2003
+fmt/61, Microsoft Excel 97 Workbook (xls) 8
+fmt/610, ARJ File Format
+fmt/867, Microsoft Reader eBook
+fmt/95, Acrobat PDF/A - Portable Document Format 1a
+x-fmt/114, Lotus 1-2-3 Worksheet 2.0
+x-fmt/115, Lotus 1-2-3 Worksheet 3.0
+x-fmt/121, Quattro Pro Spreadsheet for DOS 1-4
+x-fmt/122, Quattro Pro Spreadsheet for DOS 5
+x-fmt/238, Microsoft Access Database 95
+x-fmt/239, Microsoft Access Database 97
+x-fmt/240, Microsoft Access Database 2000
+x-fmt/263, ZIP Format
+x-fmt/266, GZIP Format
+x-fmt/384, Quicktime
+x-fmt/387, Exchangeable Image File Format (Uncompressed) 2.2
+x-fmt/392, JP2 (JPEG 2000 part 1)
+x-fmt/44, WordPerfect for MS-DOS/Windows Document 6.0
+x-fmt/88, Microsoft Powerpoint Presentation 4.0
 
 
-Top extensions across collection: 
-pdf       count: 98
-mov       count: 61
-no value       count: 26
-jp2       count: 12
-odt       count: 9
+Frequency of File Format Signature Identified PUIDs:
+x-fmt/384 (61), fmt/18 (33), fmt/17 (21), fmt/276 (15), x-fmt/392 (14), x-fmt/263 (12), fmt/16 (11), fmt/291 (9), fmt/101 (7), fmt/19 (7), fmt/396 (6), fmt/40 (6), fmt/11 (4), fmt/20 (4), x-fmt/114 (4), fmt/354 (3), fmt/482 (3), fmt/483 (3), fmt/61 (3), fmt/95 (3), x-fmt/122 (3), fmt/126 (2), fmt/353 (2), fmt/43 (2), fmt/485 (2), fmt/518 (2), fmt/867 (2), x-fmt/88 (2), fmt/12 (1), fmt/15 (1), fmt/151 (1), fmt/196 (1), fmt/337 (1), fmt/355 (1), fmt/38 (1), fmt/41 (1), fmt/412 (1), fmt/44 (1), fmt/463 (1), fmt/50 (1), fmt/524 (1), fmt/583 (1), fmt/609 (1), fmt/610 (1), x-fmt/115 (1), x-fmt/121 (1), x-fmt/238 (1), x-fmt/239 (1), x-fmt/240 (1), x-fmt/266 (1), x-fmt/387 (1), x-fmt/44 (1)
 
 
-Container types in collection: 
+Extension Only Identification in the Accession/Extract:
+x-fmt/100, AutoCAD Script
+x-fmt/111, Plain Text File
 
 
-Files with duplicate content (Total: 33):
-Duplicate checksum: d41d8cd98f00b204e9800998ecf8427e    Count: 29
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/empty, null
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, ]
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, []
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, { (2).}
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, Â¬
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, ()
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, #
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, [
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, {}
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, @
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, (.)
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, _
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, ;
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, {.}
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, ^
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, -
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, '
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, {
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, %
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, $
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, }
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, (
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, +
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, Â£
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, !
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, =
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, ~
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, )
-d41d8cd98f00b204e9800998ecf8427e, /home/goatslayer/git/opf-format-corpus/format-corpus/filesys-trials/a-bad-name/characters, `
-
-Duplicate checksum: 39045bb2a47bb2dee85dcaf7b38f5112    Count: 2
-39045bb2a47bb2dee85dcaf7b38f5112, /home/goatslayer/git/opf-format-corpus/format-corpus/variations, lorem-ipsum.txt
-39045bb2a47bb2dee85dcaf7b38f5112, /home/goatslayer/git/opf-format-corpus/format-corpus/ebooks/calibre-0.8.57, Lorem Ipsum - Andrew Jackson.txt
-
-Duplicate checksum: e2e918578d2a25fc6a6f377e4082d634    Count: 2
-e2e918578d2a25fc6a6f377e4082d634, /home/goatslayer/git/opf-format-corpus/format-corpus/jp2k-formats, balloon.jp2
-e2e918578d2a25fc6a6f377e4082d634, /home/goatslayer/git/opf-format-corpus/format-corpus/jp2k-test/byteCorruption, balloon_intact.jp2
+Date Range of Items in the Accession/Extract:
+2014 (324)
 
 
-Files with duplicate filenames (Total: 8)
-Listing disabled as potentially too many...
-Total unique values: 5
+Identification Method Frequency:
+Signature (241), no value (49), Container (29), Extension (5)
 
-Identifying troublesome filenames: 
-File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
-File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
-File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+
+Frequency of Extension Only Identification In Accession/Extract:
+x-fmt/111 (3), x-fmt/100 (2)
+
+
+Unique Extensions Identified Across All Objects (ID and non-ID):
+), arj, azw3, cdd, doc, docx, epub, fb2, htm, htmlz, iba, ibooks, indd, j2c, jp2, jpf, jpg, jpm, lit, lrf, map, md, mdb, mht, mj2, mmp, mobi, mov, nmind, no value, odt, opf, opml, pages, pdb, pdf, pmlz, png, ppt, rb, rtf, scr, snb, sta, stg, tif, txt, txtz, wk1, wk3, wpd, wq1, wq2, xhtml, xls, xml, zip, }
+
+
+Frequency of All Extensions:
+pdf (98), mov (61), no value (26), jp2 (12), odt (9), doc (8), map (5), png (5), jpg (4), ppt (4), rtf (4), wk1 (4), xml (4), epub (3), iba (3), ibooks (3), jpf (3), mdb (3), tif (3), txt (3), wq2 (3), xls (3), azw3 (2), fb2 (2), htmlz (2), lit (2), lrf (2), md (2), mobi (2), pdb (2), pmlz (2), rb (2), scr (2), snb (2), sta (2), stg (2), txtz (2), zip (2), } (2), ) (1), arj (1), cdd (1), docx (1), htm (1), indd (1), j2c (1), jpm (1), mht (1), mj2 (1), mmp (1), nmind (1), opf (1), opml (1), pages (1), wk3 (1), wpd (1), wq1 (1), xhtml (1)
+
+
+MIME Type (Internet Media Type) Frequency:
+application/pdf (98), no value (73), video/quicktime (61), image/jp2 (14), application/zip (12), application/vnd.oasis.opendocument.text (9), application/msword (8), application/xml, text/xml (7), image/png (5), application/vnd.lotus-1-2-3, application/x-123 (4), application/vnd.ms-powerpoint (4), image/jpeg (4), application/epub+zip (3), application/vnd.ms-excel (3), application/x-ibooks+zip (3), image/tiff (3), text/plain (3), application/rtf, text/rtf (2), application/lotus123, application/vnd.lotus-1-2-3 (1), application/vnd.ms-officetheme (1), application/vnd.openxmlformats-officedocument.wordprocessingml.document (1), application/vnd.wordperfect (1), application/x-gzip (1), image/jpm (1), image/jpx (1), video/mj2 (1)
+
+
+Zero-byte files in Accession/Extract: 29
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬
+
+
+Files With No Identification: 49
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\variations\variations\text\html\4.0\lorem-ipsum_files\filelist.xml
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\variations\variations\multipart\related\lorem-ipsum.mht
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\BOXLAAG.STG
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\KSBASE.STA
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\PEYNEVL2.STA
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\RESID30.STG
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\AREA2.MAP
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\BODEM.MAP
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\HOOGTE2.MAP
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\LAITRUNC.MAP
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\LAND.MAP
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\nova-mind\Curation outline 3.opml.md
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\mind-manager\copac-uknuc.mmp
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\concept-draw\To Do.cdd
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-formats\balloon.j2c
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\iBooks Author 2.0 (327)\lorem-ipsum-plus-image-updated.iba.md
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.rtf
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.snb
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.rtf
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.snb
+
+
+Five Top PUIDs in Accession/Extract:
+x-fmt/384 (61), fmt/18 (33), fmt/17 (21), fmt/276 (15), x-fmt/392 (14)
+
+
+Five Top Extensions in Accession/Extract:
+pdf (98), mov (61), no value (26), jp2 (12), odt (9)
+Checksum: da39a3ee5e6b4b0d3255bfef95601890afd80709
+Count: 29
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
+
+Checksum: 3611abfafc52dfd56482101f7d26858a451a4f58
+Count: 2
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-formats\balloon.jp2
+
+Checksum: 9742c14948d5a41ae1bed96df11166f053488eed
+Count: 2
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.txt
+
+
+Identifying Non-ASCII and System File Names:
 File: [ contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
 File: Â£ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
-
-Files with multiple contiguous spaces (Total: 0)
+File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â

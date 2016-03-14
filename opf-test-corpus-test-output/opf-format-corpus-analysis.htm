@@ -1,101 +1,108 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-<title>DROID Sqlite Analysis Results</title>
+<title>DROID Analysis Results</title>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 </head>
 <body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>
-<h1>DROID Analysis</h1>
-<b>Analysis version: </b>0.0.x
+<h1>DROID Analysis Results</h1>
+<b>Analysis Version: </b>0.2.0
 </br>
-<b>Analysis file: </b>opf-format-corpus
+<b>Analysis File: </b>opf-test-corpus-test-output\opf-test-corpus-droid-analysis
 </br>
 </br>
-<h2>Sumary Statistics</h2>
+<h2>Summary Statistics</h2>
 <ul>
-<li>Total files: 324</li>
-<li>Total container objects: 13</li>
-<li>Total files in containers: 0</li>
-<li>Total directories: 74</li>
-<li>Total unique directory names: 74</li>
-<li>Total identified files (signature and container): 268</li>
-<li>Total multiple identifications (signature and container): 0</li>
-<li>Total unidentified files (extension and blank): 56</li>
-<li>Total extension ID only count: 5</li>
-<li>Total extension mismatches: 23</li>
-<li>Total signature IDd PUID count: 51</li>
-<li>Total distinct extensions across collection: 58</li>
-<li>Total zero-byte files in collection: 29</li>
-<li>Total files with duplicate content (MD5 value): 33</li>
-<li>Total files with duplicate filenames: 8</li>
-<li>Total files with multiple contiguous space characters: 0</li>
-<li>Percentage of collection identified: 82.7</li>
-<li>Percentage of collection unidentified: 17.3</li>
+<li title='Number of digital files in the accession/extract.'>Total Files: 324</li>
+<li title='The total number of archive files in the accession/extract overall. Archive files are objects that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after.'>Total Archive Files: 13</li>
+<li title='An aggregate total number of all files inside archive files.'>Total Files Inside Archive Files: 0</li>
+<li title='A directory is a folder in the accession/extract delineating a file system hierarchy. Total directories is the total number of directories in the accession/extract overall.'>Total Directories: 75</li>
+<li title='This is used to determine the number of duplicate directory (folder) names.'>Total Unique Directory Names: 74</li>
+<li title='The number of files that are identified based on a file format signature. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form.'>Total Identified Files (Based on Signature): 270</li>
+<li title='This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats.'>Total Multiple Identifications (Baed on Signature): 0</li>
+<li title='This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database).'>Total Unidentified Files: 54</li>
+<li title='Files that can only be identified by their extension (e.g. ".doc" might be a Microsoft Word file, ".mp3" might be an audio file) This is a sub-set of the "Total unidentified files".'>Total Extension ID Only Count: 5</li>
+<li title='This is the total number of cases where the extension used does not match with the file signature.'>Total Extension Mismatches: 23</li>
+<li title='The total discrete file format signature identifiers in the accession/extract are used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom.'>Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 52</li>
+<li title='The total number of unique file extensions identified in the accession/extract. The total unique extensions across the accession/extract are another statistic we can use to identify the diversity/complexity of the accession/extract.'>Total Unique Extensions Across Accession/Extract: 58</li>
+<li title='Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size.'>Total Zero-byte Files in Accession/Extract: 29</li>
+<li title='Total number of files across the accession/extract that are identical byte-for-byte.'>Total Files with Identical Content (Checksum Value): 33</li>
+<li title='Number of filenames that contain more than one space in a row, these filenames may cause some problems with some systems and may require pre-conditioning.'>Total Files with Multiple Contiguous Space Characters: 0</li>
+<li title='Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly.'>Percentage of Accession/Extract Identified: 83.3</li>
+<li title='Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract.'>Percentage of Accession/Extract Unidentified: 16.7</li>
 </ul>
 </br>
 <hr/>
-<h2>Identified Formats in the Collection:</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
+<h2>Size of the accession/extract: </h2>
+<details><summary>More Detail:</br></summary></br>The size of the accession/extract is represented using two values, bytes (a byte equals eight binary bits) from the DROID export and conversion from bytes into megabytes for understanding the size of larger accessions/extracts. We will use this statistic to understand how much storage is required for this accession/extract when ingested.</br></details>
+</br>
+397568483 bytes | 379 MiB/MB (Megabytes)
+</br>
+</br>
+<hr/>
+<h2>Identified File Formats in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A list of PUID values and format names to provide a clear picture of diversity/complexity of the accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom.</br></details>
 </br>
 <table>
 <table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Format Name</th>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/101">fmt/101</a></td><td> Extensible Markup Language 1.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/11">fmt/11</a></td><td> Portable Network Graphics 1.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/12">fmt/12</a></td><td> Portable Network Graphics 1.1</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/126">fmt/126</a></td><td> Microsoft Powerpoint Presentation 97-2003</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/15">fmt/15</a></td><td> Acrobat PDF 1.1 - Portable Document Format 1.1</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/151">fmt/151</a></td><td> JPX (JPEG 2000 part 2) no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/16">fmt/16</a></td><td> Acrobat PDF 1.2 - Portable Document Format 1.2</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/17">fmt/17</a></td><td> Acrobat PDF 1.3 - Portable Document Format 1.3</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/18">fmt/18</a></td><td> Acrobat PDF 1.4 - Portable Document Format 1.4</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/19">fmt/19</a></td><td> Acrobat PDF 1.5 - Portable Document Format 1.5</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/196">fmt/196</a></td><td> Adobe InDesign Document CS</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/20">fmt/20</a></td><td> Acrobat PDF 1.6 - Portable Document Format 1.6</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/276">fmt/276</a></td><td> Acrobat PDF 1.7 - Portable Document Format 1.7</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/291">fmt/291</a></td><td> OpenDocument Text 1.2</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/337">fmt/337</a></td><td> MJ2 (Motion JPEG 2000) no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/353">fmt/353</a></td><td> Tagged Image File Format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/354">fmt/354</a></td><td> Acrobat PDF/A - Portable Document Format 1b</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/355">fmt/355</a></td><td> Rich Text Format 1.9</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/38">fmt/38</a></td><td> Microsoft Word for Windows Document 2.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/396">fmt/396</a></td><td> PocketMobi (Palm Resource) File no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/40">fmt/40</a></td><td> Microsoft Word Document 97-2003</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/41">fmt/41</a></td><td> Raw JPEG Stream no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/412">fmt/412</a></td><td> Microsoft Word for Windows 2007 onwards</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/43">fmt/43</a></td><td> JPEG File Interchange Format 1.01</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/44">fmt/44</a></td><td> JPEG File Interchange Format 1.02</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/463">fmt/463</a></td><td> JPM (JPEG 2000 part 6) no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/482">fmt/482</a></td><td> Apple iBook format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/483">fmt/483</a></td><td> ePub format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/485">fmt/485</a></td><td> Rocket Book eBook format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/50">fmt/50</a></td><td> Rich Text Format 1.5-1.6</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/518">fmt/518</a></td><td> Broad Band eBook LRF</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/524">fmt/524</a></td><td> Microsoft Office Theme no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/583">fmt/583</a></td><td> Vector Markup Language no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/609">fmt/609</a></td><td> Microsoft Word (Generic) 6.0-2003</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/61">fmt/61</a></td><td> Microsoft Excel 97 Workbook (xls) 8</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/610">fmt/610</a></td><td> ARJ File Format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/95">fmt/95</a></td><td> Acrobat PDF/A - Portable Document Format 1a</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/114">x-fmt/114</a></td><td> Lotus 1-2-3 Worksheet 2.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/115">x-fmt/115</a></td><td> Lotus 1-2-3 Worksheet 3.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/121">x-fmt/121</a></td><td> Quattro Pro Spreadsheet 1-4</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/122">x-fmt/122</a></td><td> Quattro Pro Spreadsheet 5</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/238">x-fmt/238</a></td><td> Microsoft Access Database 95</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/239">x-fmt/239</a></td><td> Microsoft Access Database 97</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/240">x-fmt/240</a></td><td> Microsoft Access Database 2000</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/263">x-fmt/263</a></td><td> ZIP Format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/266">x-fmt/266</a></td><td> GZIP Format no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/384">x-fmt/384</a></td><td> Quicktime no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/387">x-fmt/387</a></td><td> Exchangeable Image File Format (Uncompressed) 2.2</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/392">x-fmt/392</a></td><td> JP2 (JPEG 2000 part 1) no value</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/44">x-fmt/44</a></td><td> WordPerfect for MS-DOS/Windows Document 6.0</td></tr>
-<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/88">x-fmt/88</a></td><td> Microsoft Powerpoint Presentation 4.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/101">fmt/101</a></td><td>Extensible Markup Language 1.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/11">fmt/11</a></td><td>Portable Network Graphics 1.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/12">fmt/12</a></td><td>Portable Network Graphics 1.1</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/126">fmt/126</a></td><td>Microsoft Powerpoint Presentation 97-2003</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/15">fmt/15</a></td><td>Acrobat PDF 1.1 - Portable Document Format 1.1</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/151">fmt/151</a></td><td>JPX (JPEG 2000 part 2)</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/16">fmt/16</a></td><td>Acrobat PDF 1.2 - Portable Document Format 1.2</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/17">fmt/17</a></td><td>Acrobat PDF 1.3 - Portable Document Format 1.3</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/18">fmt/18</a></td><td>Acrobat PDF 1.4 - Portable Document Format 1.4</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/19">fmt/19</a></td><td>Acrobat PDF 1.5 - Portable Document Format 1.5</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/196">fmt/196</a></td><td>Adobe InDesign Document CS</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/20">fmt/20</a></td><td>Acrobat PDF 1.6 - Portable Document Format 1.6</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/276">fmt/276</a></td><td>Acrobat PDF 1.7 - Portable Document Format 1.7</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/291">fmt/291</a></td><td>OpenDocument Text 1.2</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/337">fmt/337</a></td><td>MJ2 (Motion JPEG 2000)</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/353">fmt/353</a></td><td>Tagged Image File Format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/354">fmt/354</a></td><td>Acrobat PDF/A - Portable Document Format 1b</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/355">fmt/355</a></td><td>Rich Text Format 1.9</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/38">fmt/38</a></td><td>Microsoft Word for Windows Document 2.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/396">fmt/396</a></td><td>PocketMobi (Palm Resource) File</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/40">fmt/40</a></td><td>Microsoft Word Document 97-2003</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/41">fmt/41</a></td><td>Raw JPEG Stream</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/412">fmt/412</a></td><td>Microsoft Word for Windows 2007 onwards</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/43">fmt/43</a></td><td>JPEG File Interchange Format 1.01</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/44">fmt/44</a></td><td>JPEG File Interchange Format 1.02</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/463">fmt/463</a></td><td>JPM (JPEG 2000 part 6)</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/482">fmt/482</a></td><td>Apple iBook format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/483">fmt/483</a></td><td>ePub format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/485">fmt/485</a></td><td>Rocket Book eBook format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/50">fmt/50</a></td><td>Rich Text Format 1.5-1.6</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/518">fmt/518</a></td><td>Broad Band eBook LRF</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/524">fmt/524</a></td><td>Microsoft Office Theme</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/583">fmt/583</a></td><td>Vector Markup Language</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/609">fmt/609</a></td><td>Microsoft Word (Generic) 6.0-2003</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/61">fmt/61</a></td><td>Microsoft Excel 97 Workbook (xls) 8</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/610">fmt/610</a></td><td>ARJ File Format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/867">fmt/867</a></td><td>Microsoft Reader eBook</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/95">fmt/95</a></td><td>Acrobat PDF/A - Portable Document Format 1a</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/114">x-fmt/114</a></td><td>Lotus 1-2-3 Worksheet 2.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/115">x-fmt/115</a></td><td>Lotus 1-2-3 Worksheet 3.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/121">x-fmt/121</a></td><td>Quattro Pro Spreadsheet for DOS 1-4</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/122">x-fmt/122</a></td><td>Quattro Pro Spreadsheet for DOS 5</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/238">x-fmt/238</a></td><td>Microsoft Access Database 95</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/239">x-fmt/239</a></td><td>Microsoft Access Database 97</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/240">x-fmt/240</a></td><td>Microsoft Access Database 2000</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/263">x-fmt/263</a></td><td>ZIP Format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/266">x-fmt/266</a></td><td>GZIP Format</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/384">x-fmt/384</a></td><td>Quicktime</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/387">x-fmt/387</a></td><td>Exchangeable Image File Format (Uncompressed) 2.2</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/392">x-fmt/392</a></td><td>JP2 (JPEG 2000 part 1)</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/44">x-fmt/44</a></td><td>WordPerfect for MS-DOS/Windows Document 6.0</td></tr>
+<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/88">x-fmt/88</a></td><td>Microsoft Powerpoint Presentation 4.0</td></tr>
 </table>
 </br>
 </br>
 <hr/>
-<h2>Frequency of signature identified PUIDs:</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
+<h2>Frequency of File Format Signature Identified PUIDs: </h2>
+<details><summary>More Detail:</br></summary></br>Visualization is used to provide a clear description of the distribution of file formats across the accession/extract. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom. Count and visualization of how many times each format is represented in the accession/extract, in a descending list from most frequent to least.</br></details>
 </br>
 <table>
 <table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">Count</th>
@@ -230,6 +237,11 @@
 <td><meter style="width: 300px;" value="2" min="0" max="324">test</meter></td>
 </tr>
 <tr><td style="width: 100px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/867">fmt/867</a>
+</td><td>2</td>
+<td><meter style="width: 300px;" value="2" min="0" max="324">test</meter></td>
+</tr>
+<tr><td style="width: 100px;">
 <a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/88">x-fmt/88</a>
 </td><td>2</td>
 <td><meter style="width: 300px;" value="2" min="0" max="324">test</meter></td>
@@ -357,238 +369,229 @@
 </table>
 </br>
 <hr/>
-<h2>Extension only identification in collection:</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
+<h2>Date Range of Items in the Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>Count and visualization giving a clear illustration of the distribution of file modification dates across the accession/extract. The list is in descending order based on the number of files last modified on any given year. Too small or too recent a date range may indicate file transfer errors depending on the source of files.</br></details>
 </br>
-x-fmt/100, AutoCAD Script </br> x-fmt/111, Plain Text File 
+<table>
+<table><th style="text-align: left;">Year</a></th><th style="text-align: left;">Count</th>
+<tr><td style="width: 100px;">
+<a target="_blank" href="https://en.wikipedia.org/wiki/2014">2014</a>
+</td><td>324</td>
+<td><meter style="width: 300px;" value="324" min="0" max="324">test</meter></td>
+</tr>
+</table>
+</br>
+<hr/>
+<h2>Identification Method Frequency: </h2>
+<details><summary>More Detail:</br></summary></br>Lists in descending order the types of identification DROID used for each file, indicating the reliability of each identification, with Container/Signature being the more concrete forms of identification and extension being a less certain way to identify a format. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able to match specific elements of a file format's structure.</br></details>
+</br>
+Signature, 241</br>
+no value, 49</br>
+Container, 29</br>
+Extension, 5</br>
+</br>
+<hr/>
+<h2>Extension Only Identification in the Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A list of the PUID and format name of each format of one or more files where DROID has tried to offer suggestions as to potential file format by utilizing the file extension where a file has not been matched by file format signature.</br></details>
+</br>
+x-fmt/100, AutoCAD Script</br>
+x-fmt/111, Plain Text File</br>
+</br>
+<hr/>
+<h2>Frequency of Extension Only Identification In Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A count of the files associated with possible PUIDs where DROID has tried to offer suggestions as to potential file format by utilizing the file extension where a file format signature has not matched a file.</br></details>
+</br>
+x-fmt/111, 3</br>
+x-fmt/100, 2</br>
+</br>
+<hr/>
+<h2>Unique Extensions Identified Across All Objects (ID and non-ID): </h2>
+<details><summary>More Detail:</br></summary></br>Lists all the file extensions found in all the files in the accession/extract. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest.</br></details>
+</br>
+), arj, azw3, cdd, doc, docx, epub, fb2, htm, htmlz, iba, ibooks, indd, j2c, jp2, jpf, jpg, jpm, lit, lrf, map, md, mdb, mht, mj2, mmp, mobi, mov, nmind, no value, odt, opf, opml, pages, pdb, pdf, pmlz, png, ppt, rb, rtf, scr, snb, sta, stg, tif, txt, txtz, wk1, wk3, wpd, wq1, wq2, xhtml, xls, xml, zip, }
 </br>
 </br>
 <hr/>
-<h2>ID Method Frequency: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
+<h2>Frequency of All Extensions: </h2>
+<details><summary>More Detail:</br></summary></br>Lists the gamut of file extensions alongside how many times they appear in accession/extract in descending order. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest.</br></details>
 </br>
-Signature, 239</br>no value, 51</br>Container, 29</br>Extension, 5
+pdf, 98</br>
+mov, 61</br>
+no value, 26</br>
+jp2, 12</br>
+odt, 9</br>
+doc, 8</br>
+map, 5</br>
+png, 5</br>
+jpg, 4</br>
+ppt, 4</br>
+rtf, 4</br>
+wk1, 4</br>
+xml, 4</br>
+epub, 3</br>
+iba, 3</br>
+ibooks, 3</br>
+jpf, 3</br>
+mdb, 3</br>
+tif, 3</br>
+txt, 3</br>
+wq2, 3</br>
+xls, 3</br>
+azw3, 2</br>
+fb2, 2</br>
+htmlz, 2</br>
+lit, 2</br>
+lrf, 2</br>
+md, 2</br>
+mobi, 2</br>
+pdb, 2</br>
+pmlz, 2</br>
+rb, 2</br>
+scr, 2</br>
+snb, 2</br>
+sta, 2</br>
+stg, 2</br>
+txtz, 2</br>
+zip, 2</br>
+}, 2</br>
+), 1</br>
+arj, 1</br>
+cdd, 1</br>
+docx, 1</br>
+htm, 1</br>
+indd, 1</br>
+j2c, 1</br>
+jpm, 1</br>
+mht, 1</br>
+mj2, 1</br>
+mmp, 1</br>
+nmind, 1</br>
+opf, 1</br>
+opml, 1</br>
+pages, 1</br>
+wk3, 1</br>
+wpd, 1</br>
+wq1, 1</br>
+xhtml, 1</br>
+</br>
+<hr/>
+<h2>MIME Type (Internet Media Type) Frequency: </h2>
+<details><summary>More Detail:</br></summary></br>Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. A MIME Type is an identification used by internet browsers to determine how a browser will represent a file on the internet by displaying, playing or prompting the user to download the object.</br></details>
+</br>
+application/pdf, 98</br>
+no value, 73</br>
+video/quicktime, 61</br>
+image/jp2, 14</br>
+application/zip, 12</br>
+application/vnd.oasis.opendocument.text, 9</br>
+application/msword, 8</br>
+application/xml, text/xml, 7</br>
+image/png, 5</br>
+application/vnd.lotus-1-2-3, application/x-123, 4</br>
+application/vnd.ms-powerpoint, 4</br>
+image/jpeg, 4</br>
+application/epub+zip, 3</br>
+application/vnd.ms-excel, 3</br>
+application/x-ibooks+zip, 3</br>
+image/tiff, 3</br>
+text/plain, 3</br>
+application/rtf, text/rtf, 2</br>
+application/lotus123, application/vnd.lotus-1-2-3, 1</br>
+application/vnd.ms-officetheme, 1</br>
+application/vnd.openxmlformats-officedocument.wordprocessingml.document, 1</br>
+application/vnd.wordperfect, 1</br>
+application/x-gzip, 1</br>
+image/jpm, 1</br>
+image/jpx, 1</br>
+video/mj2, 1</br>
+</br>
+<hr/>
+<h2>Zero-byte files in Accession/Extract: 29</h2>
+<details><summary>More Detail:</br></summary></br>This is a list of files with no payload. Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size.</br></details>
+</br>
+<code>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬</br></br>
+</code>
+<hr/>
+<h2>Files With No Identification: 49</h2>
+<details><summary>More Detail:</br></summary></br>List of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e. there is no identification information in the DROID database)</br></details>
+</br>
+<code>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\variations\variations\text\html\4.0\lorem-ipsum_files\filelist.xml</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\variations\variations\multipart\related\lorem-ipsum.mht</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\BOXLAAG.STG</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\KSBASE.STA</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\PEYNEVL2.STA</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\statistica\RESID30.STG</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\AREA2.MAP</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\BODEM.MAP</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\HOOGTE2.MAP</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\LAITRUNC.MAP</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\pcraster\LAND.MAP</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\nova-mind\Curation outline 3.opml.md</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\mind-manager\copac-uknuc.mmp</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\knowledge-management\concept-draw\To Do.cdd</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-formats\balloon.j2c</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\iBooks Author 2.0 (327)\lorem-ipsum-plus-image-updated.iba.md</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.rtf</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.snb</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.rtf</br></br>\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.snb</br></br>
+</code>
+<hr/>
+<h2>Files With Identical Content (Checksum Value): (33)</h2>
+<details><summary>More Detail:</br></summary></br>This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received.</br></details>
+</br>
+<b>da39a3ee5e6b4b0d3255bfef95601890afd80709</b> Count: 29<br/><br/>
+<code>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null<br/>
+</code>
+</br>
+</br>
+<b>3611abfafc52dfd56482101f7d26858a451a4f58</b> Count: 2<br/><br/>
+<code>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-formats\balloon.jp2<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-test\byteCorruption\balloon_intact.jp2<br/>
+</code>
+</br>
+</br>
+<b>9742c14948d5a41ae1bed96df11166f053488eed</b> Count: 2<br/><br/>
+<code>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.txt<br/>
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\variations\lorem-ipsum.txt<br/>
+</code>
 </br>
 </br>
 <hr/>
-<h2>Frequency of extension only identification in collection: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-x-fmt/111, 3 | x-fmt/100, 2 
-</br>
-<hr/>
-<h2>Unique extensions identified across all objects (ID & non-ID):</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-) | arj | azw3 | cdd | doc | docx | epub | fb2 | htm | htmlz | iba | ibooks | indd | j2c | jp2 | jpf | jpg | jpm | lit | lrf | map | md | mdb | mht | mj2 | mmp | mobi | mov | nmind | no value | odt | opf | opml | pages | pdb | pdf | pmlz | png | ppt | rb | rtf | scr | snb | sta | stg | tif | txt | txtz | wk1 | wk3 | wpd | wq1 | wq2 | xhtml | xls | xml | zip | } 
-</br>
-<hr/>
-<h2>List of files with multiple identifications: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-
-</br>
-<hr/>
-<h2>Frequency of all extensions:</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-pdf, 98 | mov, 61 | no value, 26 | jp2, 12 | odt, 9 | doc, 8 | map, 5 | png, 5 | jpg, 4 | ppt, 4 | rtf, 4 | wk1, 4 | xml, 4 | epub, 3 | iba, 3 | ibooks, 3 | jpf, 3 | mdb, 3 | tif, 3 | txt, 3 | wq2, 3 | xls, 3 | azw3, 2 | fb2, 2 | htmlz, 2 | lit, 2 | lrf, 2 | md, 2 | mobi, 2 | pdb, 2 | pmlz, 2 | rb, 2 | scr, 2 | snb, 2 | sta, 2 | stg, 2 | txtz, 2 | zip, 2 | }, 2 | ), 1 | arj, 1 | cdd, 1 | docx, 1 | htm, 1 | indd, 1 | j2c, 1 | jpm, 1 | mht, 1 | mj2, 1 | mmp, 1 | nmind, 1 | opf, 1 | opml, 1 | pages, 1 | wk3, 1 | wpd, 1 | wq1, 1 | xhtml, 1 
-</br>
-<hr/>
-<h2>MIMEType (Internet Media Type) Frequency: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-application/pdf, 98 | no value, 74 | video/quicktime, 61 | image/jp2, 14 | application/zip, 12 | application/vnd.oasis.opendocument.text, 9 | application/msword, 8 | application/xml, text/xml, 7 | image/png, 5 | application/vnd.lotus-1-2-3, application/x-123, 4 | application/vnd.ms-powerpoint, 4 | image/jpeg, 4 | application/epub+zip, 3 | application/vnd.ms-excel, 3 | application/x-ibooks+zip, 3 | image/tiff, 3 | text/plain, 3 | application/rtf, text/rtf, 2 | application/lotus123, application/vnd.lotus-1-2-3, 1 | application/vnd.ms-officetheme, 1 | application/vnd.openxmlformats-officedocument.wordprocessingml.document, 1 | application/vnd.wordperfect, 1 | application/x-gzip, 1 | image/jpm, 1 | video/mj2, 1 
-</br>
-<hr/>
-<h2>Zero byte objects in collection: 29</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\empty\null
-<h2>Files with no identification: 51</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.lit
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.rtf
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.snb
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.lit
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.rtf
-C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.9.0\lorem-ipsum.snb
-C:\working\git\opf-format-corpus\format-corpus\ebooks\iBooks Author 2.0 (327)\lorem-ipsum-plus-image-updated.iba.md
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬
-C:\working\git\opf-format-corpus\format-corpus\filesys-trials\empty\null
-C:\working\git\opf-format-corpus\format-corpus\jp2k-formats\balloon.j2c
-C:\working\git\opf-format-corpus\format-corpus\knowledge-management\concept-draw\To Do.cdd
-C:\working\git\opf-format-corpus\format-corpus\knowledge-management\mind-manager\copac-uknuc.mmp
-C:\working\git\opf-format-corpus\format-corpus\knowledge-management\nova-mind\Curation outline 3.opml.md
-C:\working\git\opf-format-corpus\format-corpus\pcraster\AREA2.MAP
-C:\working\git\opf-format-corpus\format-corpus\pcraster\BODEM.MAP
-C:\working\git\opf-format-corpus\format-corpus\pcraster\HOOGTE2.MAP
-C:\working\git\opf-format-corpus\format-corpus\pcraster\LAITRUNC.MAP
-C:\working\git\opf-format-corpus\format-corpus\pcraster\LAND.MAP
-C:\working\git\opf-format-corpus\format-corpus\statistica\BOXLAAG.STG
-C:\working\git\opf-format-corpus\format-corpus\statistica\KSBASE.STA
-C:\working\git\opf-format-corpus\format-corpus\statistica\PEYNEVL2.STA
-C:\working\git\opf-format-corpus\format-corpus\statistica\RESID30.STG
-C:\working\git\opf-format-corpus\format-corpus\variations\variations\multipart\related\lorem-ipsum.mht
-C:\working\git\opf-format-corpus\format-corpus\variations\variations\text\html\4.0\lorem-ipsum_files\filelist.xml
-</br>
-<hr/>
-<h2>Top signature and container identified PUIDs: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-x-fmt/384       count: 61
-fmt/18       count: 33
-fmt/17       count: 21
-fmt/276       count: 15
-x-fmt/392       count: 14
-
-</br>
-<hr/>
-<h2>Top extensions across collection: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-pdf       count: 98
-mov       count: 61
-no value       count: 26
-jp2       count: 12
-odt       count: 9
-
-</br>
-<hr/>
-<h2>Container types in collection: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-There are no container types in the collection.
-</br>
-</br>
-</br>
-<hr/>
-<h2>Files with duplicate content (Total: 33):</h2>
-<details><summary>Definition of duplicate content.</summary><br/>Some important additional information.</details>
-</br>
-Count: 29</br>Duplicate checksum: d41d8cd98f00b204e9800998ecf8427e</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> !</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> #</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> $</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> %</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> '</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> (</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> ()</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> (.)</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> )</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> +</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> -</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> ;</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> =</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> @</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> [</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> []</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> ]</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> ^</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> _</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> `</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> { (2).}</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> {</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> {.}</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> {}</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> }</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> ~</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> Â£</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters</br> <b>Filename:</b> Â¬</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\filesys-trials\empty</br> <b>Filename:</b> null</br>
-</br>
-</br>
-Count: 2</br>Duplicate checksum: 39045bb2a47bb2dee85dcaf7b38f5112</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57</br> <b>Filename:</b> Lorem Ipsum - Andrew Jackson.txt</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\variations</br> <b>Filename:</b> lorem-ipsum.txt</br>
-</br>
-</br>
-Count: 2</br>Duplicate checksum: e2e918578d2a25fc6a6f377e4082d634</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\jp2k-formats</br> <b>Filename:</b> balloon.jp2</br></br><b>Context:</b> C:\working\git\opf-format-corpus\format-corpus\jp2k-test\byteCorruption</br> <b>Filename:</b> balloon_intact.jp2</br>
-</br>
-</br>
-<hr/>
-<h2>Files with duplicate filenames (Total: 8)</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
-<details><summary>Duplicate Filename Listing: <b>5</b></summary>
-</br>
-Count: 3  &mdash;  Name: lorem-ipsum.pdf
-
-</br>
-</br>
-Count: 3  &mdash;  Name: simple.odt
-
-</br>
-</br>
-Count: 3  &mdash;  Name: simple.pdf
-
-</br>
-</br>
-Count: 2  &mdash;  Name: lorem-ipsum.rtf
-
-</br>
-</br>
-Count: 2  &mdash;  Name: lorem-ipsum.txt
-
-</br>
-</br>
-</details>
-</br>
-</br>
-<hr/>
-<h2>Identifying troublesome filenames: </h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
+<h2>Identifying Non-ASCII and System File Names: </h2>
+<details><summary>More Detail:</br></summary></br>Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a></br></details>
 </br>
 File: [ contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
 
 </br>
-</br>
 File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
 
-</br>
 </br>
 File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
 
 </br>
-</br>
 File: Â£ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
 
-</br>
 </br>
 File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
 
 </br>
 </br>
-</br>
 <hr/>
-<h2>Files with multiple contiguous spaces (Total: 0)</h2>
-<details><summary>Identification Information.</summary><br/>Some important additional information.</details>
-</br>
 </br>
 </br>
 </body>
