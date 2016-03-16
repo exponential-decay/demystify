@@ -5,9 +5,10 @@ import hashlib
 import datetime
 import csv
 from urlparse import urlparse
-from GenerateBaselineDBClass import GenerateBaselineDB
 
 class DROIDLoader:
+
+   basedb = ''
 
    csvcolumncount = 0
    hashtype = 0
@@ -22,7 +23,10 @@ class DROIDLoader:
    #avoid overflow for multiple-ids
    LAST_COL = 18
    
-   def createDROIDTable(self, basedb, cursor, csvcolumnheaders):
+   def __init__(self, basedb):
+      self.basedb = basedb
+   
+   def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table
 
       self.csvcolumncount = len(csvcolumnheaders)
@@ -35,7 +39,7 @@ class DROIDLoader:
             columns = columns + header + ", " + "DIR_NAME, "
             self.csvcolumncount+=1
          elif "_HASH" in header:    #regex alternative: ^([[:alnum:]]*)(_HASH)$
-            basedb.sethashtype(header.split('_', 1)[0])
+            self.basedb.sethashtype(header.split('_', 1)[0])
             columns = columns + "HASH" + ", "
          elif header == "LAST_MODIFIED":
             columns = columns + header + " TIMESTAMP" + ","
@@ -47,16 +51,13 @@ class DROIDLoader:
       cursor.execute("CREATE TABLE droid (" + columns[:-2] + ")")
       return True
 
-   def droidDBSetup(self, droidcsv):
-
-      basedb = GenerateBaselineDB(droidcsv)
-      cursor = basedb.dbsetup()
+   def droidDBSetup(self, droidcsv, cursor):
 
       with open(droidcsv, 'rb') as csvfile:
          droidreader = csv.reader(csvfile)
          for row in droidreader:
             if droidreader.line_num == 1:		# not zero-based index
-               tablequery = self.createDROIDTable(basedb, cursor, row)
+               tablequery = self.createDROIDTable(cursor, row)
             else:
                rowstr = ""	
                for i,item in enumerate(row[0:self.csvcolumncount-1]):
@@ -86,5 +87,3 @@ class DROIDLoader:
                            rowstr = rowstr + ',"' + "no value" + '"'
 
                cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")
-
-      basedb.closedb(cursor)

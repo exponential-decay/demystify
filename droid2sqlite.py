@@ -4,11 +4,22 @@ from __future__ import division
 import argparse
 import sys
 from IdentifyExportClass import IdentifyExport
+from GenerateBaselineDBClass import GenerateBaselineDB
 from DROIDLoaderClass import DROIDLoader
 
-def handleDROIDCSV(droidcsv):
-   loader = DROIDLoader()
-   loader.droidDBSetup(droidcsv)
+def getcursor():
+   return basedb.dbsetup()    #returns cursor
+
+def dbclose(cursor):
+   basedb.closedb(cursor)
+
+def handleDROIDCSV(droidcsv): 
+   global basedb
+   basedb = GenerateBaselineDB(droidcsv)
+   cursor = getcursor()
+   loader = DROIDLoader(basedb)
+   loader.droidDBSetup(droidcsv, cursor)
+   dbclose(cursor)
 
 def main():
 
