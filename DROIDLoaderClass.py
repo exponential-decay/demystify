@@ -60,6 +60,7 @@ class DROIDLoader:
 
       with open(droidcsv, 'rb') as csvfile:
       
+         #we ignore the first three bytes (BOM) and read-on
          if self.BOM == True:
             csvfile.seek(self.BOMLEN)
       
