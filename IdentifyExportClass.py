@@ -10,6 +10,8 @@ class IdentifyExport:
             '"MD5_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME",' +
             '"FORMAT_VERSION"')
 
+   droid_utf8 = "\xEF\xBB\xBF" + droid    #UTF8 with BOM
+   
    def exportid(self, export):
 
       f = open(export, 'rb')
@@ -17,6 +19,8 @@ class IdentifyExport:
       f.close()
 
       if magic.strip() == self.droid:
+         return self.DROIDTYPE
+      if magic.strip() == self.droid_utf8:
          return self.DROIDTYPE
       else:
          return self.UNKTYPE
