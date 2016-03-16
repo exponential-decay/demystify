@@ -19,11 +19,11 @@ class DROIDLoader:
    PATH_COL = 3
    DATE_COL = 10
    
-   #better way to handle this? 
-   #avoid overflow for multiple-ids
+   #avoid overflow for multiple-ids (better way possible?)
    LAST_COL = 18
    
    def __init__(self, basedb):
+      #basedb here as we still add information to the metadata table midway
       self.basedb = basedb
    
    def createDROIDTable(self, cursor, csvcolumnheaders):
