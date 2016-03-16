@@ -10,6 +10,7 @@ import os
 import time
 import datetime
 from urlparse import urlparse
+from IdentifyExportClass import IdentifyExport
 
 class DROIDLoader:
 
@@ -205,7 +206,7 @@ def main():
 
    #	Handle command line arguments for the script
    parser = argparse.ArgumentParser(description='Place DROID profiles into a SQLite DB')
-   parser.add_argument('--csv', help='Optional: Single DROID CSV to read.')
+   parser.add_argument('--export', '--droid', '--sf', help='Optional: Single tool export to read.')
    
    if len(sys.argv)==1:
       parser.print_help()
@@ -215,8 +216,13 @@ def main():
    global args
    args = parser.parse_args()
    
-   if args.csv:
-      handleDROIDCSV(args.csv)			
+   if args.export:
+      id = IdentifyExport()
+      type = id.exportid(args.export)
+      if type == id.DROIDTYPE:
+         handleDROIDCSV(args.export)
+      elif type == id.UNKTYPE:
+         sys.stderr.write("Unknown export type." + "\n")		
    else:
       sys.exit(1)
 
