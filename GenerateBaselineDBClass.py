@@ -4,6 +4,8 @@ import sqlite3
 
 class GenerateBaselineDB:
 
+   FILEDATA_TABLE = ["ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+
    dbname = ''
    timestamp = ''
    cursos = ''
@@ -69,6 +71,3 @@ class GenerateBaselineDB:
    def createDBMD(self, cursor):
       cursor.execute("CREATE TABLE dbmd (TIMESTAMP, HASH_TYPE)")
       cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
-
-   '''def createnamespacetable(self, namespace):
-      self.cursor.execute('''

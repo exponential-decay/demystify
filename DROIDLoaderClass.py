@@ -10,6 +10,8 @@ class DROIDLoader:
 
    basedb = ''
 
+   DROID_FILEDATA_TABLE = ["ID","PARENT_ID","URI","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","HASH"]
+
    csvcolumncount = 0
    hashtype = 0
 
