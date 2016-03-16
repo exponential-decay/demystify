@@ -3,6 +3,7 @@ import sys
 class IdentifyExport:
 
    DROIDTYPE = "droid"
+   DROIDTYPEBOM = 'droid_BOM'
    UNKTYPE = "unknown"
 
    droid = ('"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS"' +
@@ -21,6 +22,6 @@ class IdentifyExport:
       if magic.strip() == self.droid:
          return self.DROIDTYPE
       if magic.strip() == self.droid_utf8:
-         return self.DROIDTYPE
+         return self.DROIDTYPEBOM
       else:
          return self.UNKTYPE

@@ -24,10 +24,10 @@ class DROIDLoader:
    #avoid overflow for multiple-ids (better way possible?)
    LAST_COL = 18
    
-   def __init__(self, basedb):
+   def __init__(self, basedb, BOM=False):
       #basedb here as we still add information to the metadata table midway
       self.basedb = basedb
-      #basedb.createnamespacetable("DROID")
+      self.BOM=BOM
    
    def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table
