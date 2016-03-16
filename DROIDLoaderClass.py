@@ -6,6 +6,7 @@ import time
 import datetime
 import csv
 from urlparse import urlparse
+from GenerateBaselineDBClass import GenerateBaselineDB
 
 class DROIDLoader:
 
@@ -25,25 +26,6 @@ class DROIDLoader:
    #better way to handle this? 
    #avoid overflow for multiple-ids
    LAST_COL = 18
-   
-   def getTimestamp(self):
-      ts = time.time()
-      st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-      self.timestamp = st
-
-   def getContentHash(self, droidcsv):
-      #http://stackoverflow.com/questions/1131220/get-md5-hash-of-big-files-in-python
-
-      csvhash = hashlib.md5()
-      f = open(droidcsv)		
-      while True:
-         data = f.read(8192)
-         if not data:
-            break
-         else:
-            csvhash.update(data)
-      f.close()
-      self.contenthash = csvhash.hexdigest()
 
    #Database metadata table, data about the content of the table...
    def createDBMD(self, cursor):
@@ -90,9 +72,6 @@ class DROIDLoader:
    def dropDBMDTable(self, cursor):
       self.dropTable(cursor, 'dbmd')
 
-   def getDBFilename(self, droidcsv):
-      return droidcsv.replace(".csv", "") + ".db"
-
    def userOverwriteOption(self, conn, msg):
       user_input = raw_input("DROID DB file exists, " + msg + " Overwrite (y/n): ")
       if user_input[0:1].lower()	== 'y':
@@ -127,9 +106,22 @@ class DROIDLoader:
 
    def droidDBSetup(self, droidcsv):
 
-      dbfilename = self.getDBFilename(droidcsv)
-      self.getContentHash(droidcsv)
-      self.getTimestamp()
+      basedb = GenerateBaselineDB()
+
+      dbfilename = basedb.getDBFilename(droidcsv)
+
+
+
+
+
+
+
+
+
+
+
+
+
       
       #Overwrite Disabled
       #self.checkDBExists(dbfilename)
