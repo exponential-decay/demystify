@@ -21,6 +21,8 @@ class DROIDLoader:
    PATH_COL = 3
    DATE_COL = 10
    
+   BOMLEN = len("\xEF\xBB\xBF")
+   
    #avoid overflow for multiple-ids (better way possible?)
    LAST_COL = 18
    
@@ -57,6 +59,10 @@ class DROIDLoader:
    def droidDBSetup(self, droidcsv, cursor):
 
       with open(droidcsv, 'rb') as csvfile:
+      
+         if self.BOM == True:
+            csvfile.seek(self.BOMLEN)
+      
          droidreader = csv.reader(csvfile)
          for row in droidreader:
             if droidreader.line_num == 1:		# not zero-based index
