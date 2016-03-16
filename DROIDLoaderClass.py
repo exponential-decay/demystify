@@ -25,6 +25,7 @@ class DROIDLoader:
    def __init__(self, basedb):
       #basedb here as we still add information to the metadata table midway
       self.basedb = basedb
+      #basedb.createnamespacetable("DROID")
    
    def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table

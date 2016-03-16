@@ -7,19 +7,12 @@ from IdentifyExportClass import IdentifyExport
 from GenerateBaselineDBClass import GenerateBaselineDB
 from DROIDLoaderClass import DROIDLoader
 
-def getcursor():
-   return basedb.dbsetup()    #returns cursor
-
-def dbclose(cursor):
-   basedb.closedb(cursor)
-
 def handleDROIDCSV(droidcsv): 
    global basedb
    basedb = GenerateBaselineDB(droidcsv)
-   cursor = getcursor()
    loader = DROIDLoader(basedb)
-   loader.droidDBSetup(droidcsv, cursor)
-   dbclose(cursor)
+   loader.droidDBSetup(droidcsv, basedb.getcursor())
+   basedb.closedb()
 
 def main():
 

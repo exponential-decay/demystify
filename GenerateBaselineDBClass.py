@@ -6,25 +6,30 @@ class GenerateBaselineDB:
 
    dbname = ''
    timestamp = ''
+   cursos = ''
 
    def __init__(self, export):
       self.dbname = self.getDBFilename(export)
+      self.dbsetup()
 
    def dbsetup(self):
       self.timestamp = self.gettimestamp()
 
       self.conn = sqlite3.connect(self.dbname)
-      cursor = self.conn.cursor()   
-      self.droptables(cursor)
-      return cursor
+      self.cursor = self.conn.cursor()   
+      self.droptables(self.cursor)
+      return self.cursor
+
+   def getcursor(self):
+      return self.cursor
 
    def droptables(self, cursor):
       self.dropDBMDTable(cursor)
       self.dropDROIDTable(cursor)
 
-   def closedb(self, cursor):
+   def closedb(self):
       #write MD
-      self.createDBMD(cursor)
+      self.createDBMD(self.cursor)
 
       # Save (commit) the changes
       self.conn.execute("CREATE INDEX HASH ON droid(HASH)");
@@ -66,3 +71,5 @@ class GenerateBaselineDB:
       cursor.execute("CREATE TABLE dbmd (TIMESTAMP, HASH_TYPE)")
       cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
 
+   '''def createnamespacetable(self, namespace):
+      self.cursor.execute('''
