@@ -8,8 +8,7 @@ from DROIDLoaderClass import DROIDLoader
 
 def handleDROIDCSV(droidcsv):
    loader = DROIDLoader()
-   dbfilename = loader.droidDBSetup(droidcsv)
-   return dbfilename
+   loader.droidDBSetup(droidcsv)
 
 def main():
 
