@@ -17,7 +17,6 @@ def handleDROIDCSV(droidcsv):
 def main():
 
    #	Usage: 	--csv [droid report]
-
    #	Handle command line arguments for the script
    parser = argparse.ArgumentParser(description='Place DROID profiles into a SQLite DB')
    parser.add_argument('--export', '--droid', '--sf', help='Optional: Single tool export to read.')

@@ -14,7 +14,6 @@ class GenerateBaselineDB:
 
    def dbsetup(self):
       self.timestamp = self.gettimestamp()
-
       self.conn = sqlite3.connect(self.dbname)
       self.cursor = self.conn.cursor()   
       self.droptables(self.cursor)
