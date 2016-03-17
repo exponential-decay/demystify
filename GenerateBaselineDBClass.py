@@ -18,6 +18,7 @@ class GenerateBaselineDB:
    dbname = ''
    timestamp = ''
    cursor = ''
+   hashtype = ''
 
    def __init__(self, export):
       self.dbname = self.getDBFilename(export)
