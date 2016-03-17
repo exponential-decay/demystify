@@ -12,6 +12,8 @@ class DROIDLoader:
 
    DROID_FILEDATA_TABLE = ["ID","PARENT_ID","URI","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","HASH"]
 
+   
+
    csvcolumncount = 0
    hashtype = 0
 
@@ -63,8 +65,24 @@ class DROIDLoader:
          #we ignore the first three bytes (BOM) and read-on
          if self.BOM == True:
             csvfile.seek(self.BOMLEN)
+            
+         droidreader = csv.reader(csvfile)
+         
+         #for row in DROID reader:
+         #   print row
+         
+
+   def _droidDBSetup(self, droidcsv, cursor):
+
+      with open(droidcsv, 'rb') as csvfile:
+      
+         #we ignore the first three bytes (BOM) and read-on
+         if self.BOM == True:
+            csvfile.seek(self.BOMLEN)
       
          droidreader = csv.reader(csvfile)
+         
+         
          for row in droidreader:
             if droidreader.line_num == 1:		# not zero-based index
                tablequery = self.createDROIDTable(cursor, row)

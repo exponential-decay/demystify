@@ -4,7 +4,7 @@ import sqlite3
 
 class GenerateBaselineDB:
 
-   IDTABLE = 'idata'
+   IDTABLE = 'id_data'
    METADATATABLE = 'dbmd'
    FILEDATATABLE = 'filedata'
    NAMESPACETABLE = 'namespacedata'
@@ -13,7 +13,7 @@ class GenerateBaselineDB:
    #FILE ID is a new ID for the purpose of this database
    #INPUT_FILE_ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
-   FILEDATA_TABLE = ["FILE_ID","INPUT_FILE_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   FILEDATA_TABLE = ["FILE_ID","INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    dbname = ''
    timestamp = ''
