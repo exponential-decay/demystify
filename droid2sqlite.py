@@ -7,10 +7,10 @@ from IdentifyExportClass import IdentifyExport
 from GenerateBaselineDBClass import GenerateBaselineDB
 from DROIDLoaderClass import DROIDLoader
 
-def handleDROIDCSV(droidcsv): 
+def handleDROIDCSV(droidcsv, BOM=False): 
    global basedb
    basedb = GenerateBaselineDB(droidcsv)
-   loader = DROIDLoader(basedb)
+   loader = DROIDLoader(basedb, BOM)
    loader.droidDBSetup(droidcsv, basedb.getcursor())
    #basedb.closedb()
 
@@ -35,7 +35,7 @@ def main():
       if type == id.DROIDTYPE:
          handleDROIDCSV(args.export)
       elif type == id.DROIDTYPEBOM:
-         handleDROIDCSV(args.export)
+         handleDROIDCSV(args.export, True)
       elif type == id.UNKTYPE:
          sys.stderr.write("Unknown export type." + "\n")		
    else:

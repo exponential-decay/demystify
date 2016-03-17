@@ -12,10 +12,11 @@ class DROIDLoader:
 
    basedb = ''
    hashtype = ''
+   BOM = False
       
-   def __init__(self, basedb):
-      #basedb here as we still add information to the metadata table midway
+   def __init__(self, basedb, BOM=False):
       self.basedb = basedb
+      self.BOM = BOM
    
    def createDROIDTable(self, cursor, csvcolumnheaders):
       # turn csv headers list into a csv string, write query, create table
@@ -46,13 +47,14 @@ class DROIDLoader:
 
       if droidcsv != False:
          droidcsvhandler = droidCSVHandler()
-         droidlist = droidcsvhandler.readDROIDCSV(droidcsv)
+         droidlist = droidcsvhandler.readDROIDCSV(droidcsv, self.BOM)
 
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
 
       for x in range(1):
-         print droidlist[1]
+         for y in droidlist[1]:
+            print y
       
 
       #print ToolMapping.FILE_MAP

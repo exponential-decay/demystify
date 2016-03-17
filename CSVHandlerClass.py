@@ -5,6 +5,12 @@ from urlparse import urlparse
 
 class genericCSVHandler():
 
+   BOM = False
+   BOMVAL = '\xEF\xBB\xBF'
+
+   def __init__(self, BOM=False):
+      self.BOM = BOM
+
    def __getCSVheaders__(self, csvcolumnheaders):
       header_list = []
       for header in csvcolumnheaders:      
@@ -19,6 +25,8 @@ class genericCSVHandler():
       if os.path.isfile(csvfname): 
          csvlist = []
          with open(csvfname, 'rb') as csvfile:
+            if self.BOM is True:
+               csvfile.seek(len(self.BOMVAL))
             csvreader = unicodecsv.reader(csvfile)
             for row in csvreader:
                if csvreader.line_num == 1:		# not zero-based index
@@ -36,8 +44,8 @@ class genericCSVHandler():
 class droidCSVHandler():
 
    #returns droidlist type
-   def readDROIDCSV(self, droidcsvfname):
-      csvhandler = genericCSVHandler()
+   def readDROIDCSV(self, droidcsvfname, BOM=False):
+      csvhandler = genericCSVHandler(BOM)
       self.csv = csvhandler.csvaslist(droidcsvfname)
       return self.csv
 
