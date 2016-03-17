@@ -9,7 +9,11 @@ class GenerateBaselineDB:
    FILEDATATABLE = 'filedata'
    NAMESPACETABLE = 'namespacedata'
    
-   FILEDATA_TABLE = ["ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   #How to create an ID in SQLITE: http://stackoverflow.com/a/9342301
+   #ROW ID is a new ID for the purpose of this database
+   #ANALYSIS ID is the ID from the input analysis
+   #PARENT ID is the ID of the parent of the file, will be a folder
+   FILEDATA_TABLE = ["ROW_ID integer primary key","ANALYSIS_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    dbname = ''
    timestamp = ''
@@ -88,9 +92,6 @@ class GenerateBaselineDB:
    def createfiledatatable(self):   
       table = 'CREATE TABLE ' + self.FILEDATATABLE + ' ('
       for column in self.FILEDATA_TABLE:
-         if column == 'URI':
-            table = table + "'" + str(column) + " UNIQUE" + "',"
-         else:
-            table = table + "'" + str(column) + "',"
+         table = table + str(column) + ","
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
