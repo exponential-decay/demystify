@@ -122,7 +122,10 @@ class GenerateBaselineDB:
    def createidtable(self):   
       table = 'CREATE TABLE ' + self.IDTABLE + ' ('
       for column in self.IDTABLE_TABLE:
-         table = self.createfield(table, column)
+         if column == 'ID_ID':
+            table = self.createfield(table, column, "integer primary key")            
+         else:
+            table = self.createfield(table, column)
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
       
