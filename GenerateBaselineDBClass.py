@@ -4,7 +4,7 @@ import sqlite3
 
 class GenerateBaselineDB:
 
-   IDTABLE = 'id_data'
+   IDTABLE = 'idtable'
    METADATATABLE = 'dbmd'
    FILEDATATABLE = 'filedata'
    NAMESPACETABLE = 'namespacedata'
@@ -14,6 +14,9 @@ class GenerateBaselineDB:
    #INPUT_FILE_ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
    FILEDATA_TABLE = ["FILE_ID","INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+
+   #TODO: FORMAT COUNT WILL LIKELY NEED TO BE MOVED TO NAMESPACEDATA BY CREATING A SECOND ID ROW
+   IDTABLE_TABLE = ['ID_ID','NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
 
    dbname = ''
    timestamp = ''
@@ -32,6 +35,7 @@ class GenerateBaselineDB:
       
       #create a table to hold information about the file only
       self.createfiledatatable()
+      self.createidtable()
       
       return self.cursor
 
@@ -65,8 +69,9 @@ class GenerateBaselineDB:
 
    def droptables(self, cursor):
       self.dropDBMDTable(cursor)
-      self.dropDROIDTable(cursor)
+      #self.dropDROIDTable(cursor)
       self.dropFILEDATATable(cursor)
+      self.dropIDTable(cursor)
 
    def dropTable(self, cursor, tablename):
       #check we have a table to drop
@@ -75,15 +80,18 @@ class GenerateBaselineDB:
       if cursor.fetchone() is not None:
          cursor.execute("DROP table " + tablename + "")	# DROP just in case
 
-   def dropDROIDTable(self, cursor):
+   '''def dropDROIDTable(self, cursor):
       self.dropTable(cursor, 'droid')
-      return
+      return'''
 
    def dropDBMDTable(self, cursor):
       self.dropTable(cursor, self.METADATATABLE)
       
    def dropFILEDATATable(self, cursor):
       self.dropTable(cursor, self.FILEDATATABLE)
+
+   def dropIDTable(self, cursor):
+      self.dropTable(cursor, self.IDTABLE)
 
    #Database metadata table
    def createDBMD(self, cursor):
@@ -111,3 +119,13 @@ class GenerateBaselineDB:
             
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
+      
+   def createidtable(self):   
+      table = 'CREATE TABLE ' + self.IDTABLE + ' ('
+      for column in self.IDTABLE_TABLE:
+         table = self.createfield(table, column)
+      table = table.rstrip(',') + ')'
+      self.cursor.execute(table)
+      
+   def cretedidreferencetable(self):
+      sys.stderr.write("yo")
