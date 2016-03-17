@@ -11,9 +11,9 @@ class GenerateBaselineDB:
    
    #How to create an ID in SQLITE: http://stackoverflow.com/a/9342301
    #FILE ID is a new ID for the purpose of this database
-   #ANALYSIS ID is the ID from the input analysis
+   #INPUT_FILE_ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
-   FILEDATA_TABLE = ["FILE_ID integer primary key","ANALYSIS_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED TIMESTAMP","YEAR INTEGER","HASH"]
+   FILEDATA_TABLE = ["FILE_ID","INPUT_FILE_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    dbname = ''
    timestamp = ''
@@ -89,10 +89,25 @@ class GenerateBaselineDB:
    def createDBMD(self, cursor):
       cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP, HASH_TYPE)")
       cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
+   
+   def createfield(self, table, column, type=False):
+      if type is not False:
+         table = table + str(column) + " " + type + ","
+      else:
+         table = table + str(column) + ","
+      return table
       
    def createfiledatatable(self):   
       table = 'CREATE TABLE ' + self.FILEDATATABLE + ' ('
       for column in self.FILEDATA_TABLE:
-         table = table + str(column) + ","
+         if column == 'LAST_MODIFIED':
+            table = self.createfield(table, column, "TIMESTAMP")
+         elif column == 'YEAR':
+            table = self.createfield(table, column, "INTEGER")
+         elif column == 'FILE_ID':
+            table = self.createfield(table, column, "integer primary key")
+         else:
+            table = self.createfield(table, column)
+            
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
