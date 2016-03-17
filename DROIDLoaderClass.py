@@ -5,6 +5,7 @@ import hashlib
 import datetime
 import csv
 from urlparse import urlparse
+from CSVHandlerClass import *
 
 class DROIDLoader:
 
@@ -14,7 +15,9 @@ class DROIDLoader:
    DROID_FILEDATA_TABLE = ["ID","PARENT_ID","URI","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","HASH"]
    DROID_IDENTIFICATION = ['METHOD','STATUS','EXTENSION_MISMATCH','FORMAT_COUNT','PUID','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION']
 
-   
+   FILEDATA_TABLE = ["FILE_ID","INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   IDTABLE_TABLE = ['ID_ID','NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
+
 
    csvcolumncount = 0
    hashtype = 0
@@ -62,13 +65,23 @@ class DROIDLoader:
 
    def droidDBSetup(self, droidcsv, cursor):
 
-      with open(droidcsv, 'rb') as csvfile:
+      if droidcsv != False:
+         droidcsvhandler = droidCSVHandler()
+         droidlist = droidcsvhandler.readDROIDCSV(droidcsv)
+
+         print droidlist
+
+
+      #with open(droidcsv, 'rb') as csvfile:
       
          #we ignore the first three bytes (BOM) and read-on
-         if self.BOM == True:
-            csvfile.seek(self.BOMLEN)
-            
-         droidreader = csv.reader(csvfile)
+         #if self.BOM == True:
+         #   csvfile.seek(self.BOMLEN)
+    
+         #droidreader = csv.reader(csvfile)
+         
+         #for x in droidreader:
+         #   print x
          
          #for row in DROID reader:
          #   print row
