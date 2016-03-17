@@ -13,7 +13,7 @@ class GenerateBaselineDB:
    #ROW ID is a new ID for the purpose of this database
    #ANALYSIS ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
-   FILEDATA_TABLE = ["ROW_ID integer primary key","ANALYSIS_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   FILEDATA_TABLE = ["ROW_ID integer primary key","ANALYSIS_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED TIMESTAMP","YEAR INTEGER","HASH"]
 
    dbname = ''
    timestamp = ''
