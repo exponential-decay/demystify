@@ -5,6 +5,7 @@ import hashlib
 import datetime
 import csv
 from urlparse import urlparse
+from ToolMappingClass import ToolMapping
 from CSVHandlerClass import *
 
 class DROIDLoader:
@@ -69,23 +70,7 @@ class DROIDLoader:
          droidcsvhandler = droidCSVHandler()
          droidlist = droidcsvhandler.readDROIDCSV(droidcsv)
 
-         print droidlist
-
-
-      #with open(droidcsv, 'rb') as csvfile:
       
-         #we ignore the first three bytes (BOM) and read-on
-         #if self.BOM == True:
-         #   csvfile.seek(self.BOMLEN)
-    
-         #droidreader = csv.reader(csvfile)
-         
-         #for x in droidreader:
-         #   print x
-         
-         #for row in DROID reader:
-         #   print row
-         
 
    def _droidDBSetup(self, droidcsv, cursor):
 
