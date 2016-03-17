@@ -8,6 +8,7 @@ class GenerateBaselineDB:
    METADATATABLE = 'dbmd'
    FILEDATATABLE = 'filedata'
    NAMESPACETABLE = 'namespacedata'
+   ID_JUNCTION = 'idresults'
    
    #How to create an ID in SQLITE: http://stackoverflow.com/a/9342301
    #FILE ID is a new ID for the purpose of this database
@@ -36,7 +37,7 @@ class GenerateBaselineDB:
       #create a table to hold information about the file only
       self.createfiledatatable()
       self.createidtable()
-      
+      self.createjunctiontable(self.ID_JUNCTION, "FILE_ID", "ID_ID")
       return self.cursor
 
    def getcursor(self):
@@ -69,9 +70,9 @@ class GenerateBaselineDB:
 
    def droptables(self, cursor):
       self.dropDBMDTable(cursor)
-      #self.dropDROIDTable(cursor)
       self.dropFILEDATATable(cursor)
       self.dropIDTable(cursor)
+      self.dropIDJunction(cursor)
 
    def dropTable(self, cursor, tablename):
       #check we have a table to drop
@@ -79,10 +80,6 @@ class GenerateBaselineDB:
       #can't drop something that doesn't exist
       if cursor.fetchone() is not None:
          cursor.execute("DROP table " + tablename + "")	# DROP just in case
-
-   '''def dropDROIDTable(self, cursor):
-      self.dropTable(cursor, 'droid')
-      return'''
 
    def dropDBMDTable(self, cursor):
       self.dropTable(cursor, self.METADATATABLE)
@@ -92,6 +89,9 @@ class GenerateBaselineDB:
 
    def dropIDTable(self, cursor):
       self.dropTable(cursor, self.IDTABLE)
+      
+   def dropIDJunction(self, cursor):
+      self.dropTable(cursor, self.ID_JUNCTION)
 
    #Database metadata table
    def createDBMD(self, cursor):
@@ -127,5 +127,10 @@ class GenerateBaselineDB:
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
       
-   def cretedidreferencetable(self):
-      sys.stderr.write("yo")
+   def createjunctiontable(self, name, pkey1, pkey2):      
+      table = 'CREATE TABLE ' + name + '('
+      table = table + pkey1 + " INTEGER, "
+      table = table + pkey2 + " INTEGER, "
+      table = table + "PRIMARY KEY (" + pkey1 + "," + pkey2 + ")"
+      table = table.rstrip(',') + ')'
+      self.cursor.execute(table)
