@@ -4,11 +4,16 @@ import sqlite3
 
 class GenerateBaselineDB:
 
+   IDTABLE = 'idata'
+   METADATATABLE = 'dbmd'
+   FILEDATATABLE = 'filedata'
+   NAMESPACETABLE = 'namespacedata'
+   
    FILEDATA_TABLE = ["ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    dbname = ''
    timestamp = ''
-   cursos = ''
+   cursor = ''
 
    def __init__(self, export):
       self.dbname = self.getDBFilename(export)
@@ -19,14 +24,14 @@ class GenerateBaselineDB:
       self.conn = sqlite3.connect(self.dbname)
       self.cursor = self.conn.cursor()   
       self.droptables(self.cursor)
+      
+      #create a table to hold information about the file only
+      self.createfiledatatable()
+      
       return self.cursor
 
    def getcursor(self):
       return self.cursor
-
-   def droptables(self, cursor):
-      self.dropDBMDTable(cursor)
-      self.dropDROIDTable(cursor)
 
    def closedb(self):
       #write MD
@@ -53,6 +58,11 @@ class GenerateBaselineDB:
    def gettimestamp(self):
       return time.strftime('%Y-%m-%dT%H:%M:%S')
 
+   def droptables(self, cursor):
+      self.dropDBMDTable(cursor)
+      self.dropDROIDTable(cursor)
+      self.dropFILEDATATable(cursor)
+
    def dropTable(self, cursor, tablename):
       #check we have a table to drop
       cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='" + tablename + "';")
@@ -65,9 +75,22 @@ class GenerateBaselineDB:
       return
 
    def dropDBMDTable(self, cursor):
-      self.dropTable(cursor, 'dbmd')
+      self.dropTable(cursor, self.METADATATABLE)
+      
+   def dropFILEDATATable(self, cursor):
+      self.dropTable(cursor, self.FILEDATATABLE)
 
    #Database metadata table
    def createDBMD(self, cursor):
-      cursor.execute("CREATE TABLE dbmd (TIMESTAMP, HASH_TYPE)")
+      cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP, HASH_TYPE)")
       cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
+      
+   def createfiledatatable(self):   
+      table = 'CREATE TABLE ' + self.FILEDATATABLE + ' ('
+      for column in self.FILEDATA_TABLE:
+         if column == 'URI':
+            table = table + "'" + str(column) + " UNIQUE" + "',"
+         else:
+            table = table + "'" + str(column) + "',"
+      table = table.rstrip(',') + ')'
+      self.cursor.execute(table)
