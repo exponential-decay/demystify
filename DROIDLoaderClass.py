@@ -11,29 +11,8 @@ from CSVHandlerClass import *
 class DROIDLoader:
 
    basedb = ''
-
-   #18 columns total...
-   DROID_FILEDATA_TABLE = ["ID","PARENT_ID","URI","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","HASH"]
-   DROID_IDENTIFICATION = ['METHOD','STATUS','EXTENSION_MISMATCH','FORMAT_COUNT','PUID','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION']
-
-   FILEDATA_TABLE = ["FILE_ID","INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
-   IDTABLE_TABLE = ['ID_ID','NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
-
-
-   csvcolumncount = 0
-   hashtype = 0
-
-   #DROID SPECIFIC COLUMN INDEXES
-   #zer0-based index
-   URI_COL = 2
-   PATH_COL = 3
-   DATE_COL = 10
-   
-   BOMLEN = len("\xEF\xBB\xBF")
-   
-   #avoid overflow for multiple-ids (better way possible?)
-   LAST_COL = 18
-   
+   hashtype = ''
+      
    def __init__(self, basedb, BOM=False):
       #basedb here as we still add information to the metadata table midway
       self.basedb = basedb
@@ -70,7 +49,11 @@ class DROIDLoader:
          droidcsvhandler = droidCSVHandler()
          droidlist = droidcsvhandler.readDROIDCSV(droidcsv)
 
+      for x in range(1):
+         print droidlist[1]
       
+
+      #print ToolMapping.FILE_MAP
 
    def _droidDBSetup(self, droidcsv, cursor):
 
