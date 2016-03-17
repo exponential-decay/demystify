@@ -115,8 +115,7 @@ class GenerateBaselineDB:
          elif column == 'FILE_ID':
             table = self.createfield(table, column, "integer primary key")
          else:
-            table = self.createfield(table, column)
-            
+            table = self.createfield(table, column)      
       table = table.rstrip(',') + ')'
       self.cursor.execute(table)
       
