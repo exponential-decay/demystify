@@ -1,5 +1,6 @@
 ﻿import unicodecsv
 import os.path
+import datetime
 from urlparse import urlparse
 
 class genericCSVHandler():
@@ -39,6 +40,21 @@ class droidCSVHandler():
       csvhandler = genericCSVHandler()
       self.csv = csvhandler.csvaslist(droidcsvfname)
       return self.csv
+
+   def addurischeme(self, droidlist):
+      for row in droidlist:
+         row['URI_SCHEME'] = self.getURIScheme(row['URI'])
+      return droidlist
+
+   def getYear(self, datestring):
+      dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
+      return int(dt.year)
+
+   def addYear(self, droidlist):
+      for row in droidlist:
+         if row['LAST_MODIFIED'] is not '':
+            row['YEAR'] = str(self.getYear(row['LAST_MODIFIED']))
+      return droidlist
 
    def removecontainercontents(self, droidlist):
       newlist = []   # naive remove causes loop to skip items
