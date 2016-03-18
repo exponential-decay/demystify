@@ -47,6 +47,10 @@ class DROIDLoader:
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE
       return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
 
+   def insertiddbstring(self, keys, values):
+      insert = "INSERT INTO " + self.basedb.IDTABLE
+      return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
+
    def droidDBSetup(self, droidcsv, cursor):
 
       if droidcsv != False:
@@ -55,18 +59,23 @@ class DROIDLoader:
 
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
-   
-      
-   
+
       for x in droidlist:
-         keystring = ''
-         valuestring = ''
+         filekeystring = ''
+         filevaluestring = ''
+         idkeystring = ''
+         idvaluestring = ''
          for key, value in x.items():
             if key in ToolMapping.FILE_MAP:
-               keystring = keystring + ToolMapping.FILE_MAP[key] + ", "
-               valuestring = valuestring + "'" + value + "', "
-          
-         cursor.execute(self.insertfiledbstring(keystring, valuestring))
+               filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
+               filevaluestring = filevaluestring + "'" + value + "', "
+            if key in ToolMapping.DROID_ID_MAP:
+               idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
+               idvaluestring = idvaluestring + "'" + value + "', "
+   
+         cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))
+         cursor.execute(self.insertiddbstring(idkeystring, idvaluestring))
+
 
 
    def _droidDBSetup(self, droidcsv, cursor):
