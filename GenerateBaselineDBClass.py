@@ -48,9 +48,9 @@ class GenerateBaselineDB:
       self.createDBMD(self.cursor)
 
       # Save (commit) the changes
-      self.conn.execute("CREATE INDEX HASH ON droid(HASH)");
+      '''self.conn.execute("CREATE INDEX HASH ON droid(HASH)");
       self.conn.execute("CREATE INDEX NAME ON droid(NAME)");
-      self.conn.execute("CREATE INDEX PUID ON droid(PUID)");
+      self.conn.execute("CREATE INDEX PUID ON droid(PUID)");'''
 
       # Save (commit) the changes
       self.conn.commit()
@@ -114,6 +114,8 @@ class GenerateBaselineDB:
             table = self.createfield(table, column, "INTEGER")
          elif column == 'FILE_ID':
             table = self.createfield(table, column, "integer primary key")
+         elif column == 'PARENT_ID' or column == 'INPUT_ID':
+            table = self.createfield(table, column, "integer")
          else:
             table = self.createfield(table, column)      
       table = table.rstrip(',') + ')'

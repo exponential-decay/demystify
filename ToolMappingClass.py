@@ -4,7 +4,7 @@
       "ID" : "INPUT_ID",
       "PARENT_ID" : "PARENT_ID",
       "URI" : "URI",
-      "URI" : "URI_SCHEME",
+      #"URI" : "URI_SCHEME",
       "URI_SCHEME" : "URI_SCHEME",
       "FILE_PATH" : "FILE_PATH",
       "NAME" : "NAME", 
