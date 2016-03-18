@@ -13,7 +13,7 @@ class DROIDLoader:
    basedb = ''
    hashtype = ''
    BOM = False
-      
+         
    def __init__(self, basedb, BOM=False):
       self.basedb = basedb
       self.BOM = BOM
@@ -43,6 +43,10 @@ class DROIDLoader:
       cursor.execute("CREATE TABLE droid (" + columns[:-2] + ")")
       return True
 
+   def insertfiledbstring(self, keys, values):
+      insert = "INSERT INTO " + self.basedb.FILEDATATABLE
+      return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
+
    def droidDBSetup(self, droidcsv, cursor):
 
       if droidcsv != False:
@@ -51,40 +55,41 @@ class DROIDLoader:
 
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
-
-      for x in range(1):
-         for y in droidlist[1]:
-            print y
+   
       
+   
+      for x in droidlist:
+         keystring = ''
+         valuestring = ''
+         for key, value in x.items():
+            if key in ToolMapping.FILE_MAP:
+               keystring = keystring + ToolMapping.FILE_MAP[key] + ", "
+               valuestring = valuestring + "'" + value + "', "
+          
+         cursor.execute(self.insertfiledbstring(keystring, valuestring))
 
-      #print ToolMapping.FILE_MAP
 
    def _droidDBSetup(self, droidcsv, cursor):
 
       with open(droidcsv, 'rb') as csvfile:
       
-         #we ignore the first three bytes (BOM) and read-on
-         if self.BOM == True:
-            csvfile.seek(self.BOMLEN)
-      
          droidreader = csv.reader(csvfile)
-         
-         
-         for row in droidreader:
-            if droidreader.line_num == 1:		# not zero-based index
-               tablequery = self.createDROIDTable(cursor, row)
-            else:
-               rowstr = ""	
-               for i,item in enumerate(row[0:self.csvcolumncount-1]):
 
-                  if i != self.LAST_COL:  #avoid overrun of columns when multi-id occurs
-                     
-                     if item == "":
-                        rowstr = rowstr + ',"no value"'
-                     else:
-                        rowstr = rowstr + ',"' + item + '"'
+         for row in droidreader:
+            #if droidreader.line_num == 1:		# not zero-based index
+            #   tablequery = self.createDROIDTable(cursor, row)
+            #else:
+            rowstr = ""	
+            for i,item in enumerate(row[0:18-1]):
+
+               if i != 18:  #avoid overrun of columns when multi-id occurs
+                  
+                  if item == "":
+                     rowstr = rowstr + ',"no value"'
+                  else:
+                     rowstr = rowstr + ',"' + item + '"'
                                     
-                     if i == self.URI_COL:
+                     '''if i == self.URI_COL:
                         url = item
                         rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
 
@@ -99,6 +104,7 @@ class DROIDLoader:
                            dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
                            rowstr = rowstr + ',"' + str(dt.year) + '"'
                         else:
-                           rowstr = rowstr + ',"' + "no value" + '"'
-
-               cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")
+                           rowstr = rowstr + ',"' + "no value" + '"'''
+               
+               #print rowstr
+               #cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")

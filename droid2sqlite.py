@@ -12,7 +12,7 @@ def handleDROIDCSV(droidcsv, BOM=False):
    basedb = GenerateBaselineDB(droidcsv)
    loader = DROIDLoader(basedb, BOM)
    loader.droidDBSetup(droidcsv, basedb.getcursor())
-   #basedb.closedb()
+   basedb.closedb()
 
 def main():
 
