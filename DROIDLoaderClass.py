@@ -38,6 +38,7 @@ class DROIDLoader:
 
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
+      droidlist = droidcsvhandler.adddirname(droidlist)
 
       for x in droidlist:
          filekeystring = ''

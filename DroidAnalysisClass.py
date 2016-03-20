@@ -10,6 +10,7 @@ import droidsqliteanalysis
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
 import DroidAnalysisResultsClass
+from AnalysisQueriesClass import AnalysisQueries
 from urlparse import urlparse
 from lxml import etree, html
 
@@ -307,9 +308,13 @@ class DROIDAnalysis:
    # Additional functions on DB
    ###
    
+   def __querydb__(self, query):
+      self.cursor.execute(query)
+      return self.cursor.fetchall()   
+   
    def __generatefilenamelist__(self):
       #multi-use variable: get filenames from DB
-      countDirs = "SELECT NAME FROM droid"
+      countDirs = "SELECT FILEDATA.NAME FROM FILEDATA"
       self.cursor.execute(countDirs)
       self.fnamelist = self.cursor.fetchall()
       
@@ -348,8 +353,9 @@ class DROIDAnalysis:
         
    def queryDB(self):
       #preliminary functions to generate data from DB
-      self.__generatefilenamelist__()
-      self.__generatefilenamelistwithdirs__()
+      self.fnamelist = self.__generatefilenamelist__()
+      
+      '''self.__generatefilenamelistwithdirs__()
       
       self.hashtype = 0
       self.analysisresults.hashused = self.determineifHASHwasused()
@@ -421,6 +427,8 @@ class DROIDAnalysis:
       if self.roguepuids != False:
          sys.stderr.write("Rogue gallery: Will output rogue PUIDs in rogue listing." + "\n")
          self.analysisresults.roguepuidlisting = self.listRoguePUIDs(self.roguepuids)
+
+      '''
 
       return self.analysisresults
       

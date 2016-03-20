@@ -49,6 +49,14 @@ class droidCSVHandler():
       self.csv = csvhandler.csvaslist(droidcsvfname)
       return self.csv
 
+   def getDirName(self, filepath):
+      return os.path.dirname(filepath)
+   
+   def adddirname(self, droidlist):
+      for row in droidlist:
+         row['DIR_NAME'] = self.getDirName(row['FILE_PATH'])
+      return droidlist   
+
    def addurischeme(self, droidlist):
       for row in droidlist:
          row['URI_SCHEME'] = self.getURIScheme(row['URI'])
