@@ -45,9 +45,7 @@ class DROIDLoader:
          idkeystring = ''
          idvaluestring = ''
          for key, value in x.items():
-         
-            #print key
-         
+                  
             if key in ToolMapping.FILE_MAP:
                filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + value + "', "
@@ -62,43 +60,3 @@ class DROIDLoader:
          id = (cursor.lastrowid)
 
          cursor.execute(self.file_id_junction_insert(file,id))
-
-   def _droidDBSetup(self, droidcsv, cursor):
-
-      with open(droidcsv, 'rb') as csvfile:
-      
-         droidreader = csv.reader(csvfile)
-
-         for row in droidreader:
-            #if droidreader.line_num == 1:		# not zero-based index
-            #   tablequery = self.createDROIDTable(cursor, row)
-            #else:
-            rowstr = ""	
-            for i,item in enumerate(row[0:18-1]):
-
-               if i != 18:  #avoid overrun of columns when multi-id occurs
-                  
-                  if item == "":
-                     rowstr = rowstr + ',"no value"'
-                  else:
-                     rowstr = rowstr + ',"' + item + '"'
-                                    
-                     '''if i == self.URI_COL:
-                        url = item
-                        rowstr = rowstr + ',"' + urlparse(url).scheme + '"'
-
-                     if i == self.PATH_COL:
-                        dir = item
-                        rowstr = rowstr + ',"' + os.path.dirname(item) + '"'		
-
-                     if i == self.DATE_COL:
-                        if item is not '':
-                           datestring = item
-                           #split at '+' if timezone is there, we're only interested in year
-                           dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
-                           rowstr = rowstr + ',"' + str(dt.year) + '"'
-                        else:
-                           rowstr = rowstr + ',"' + "no value" + '"'''
-               
-               #print rowstr
-               #cursor.execute("INSERT INTO droid VALUES (" + rowstr.lstrip(',') + ")")
