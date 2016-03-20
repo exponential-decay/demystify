@@ -100,7 +100,7 @@ class GenerateBaselineDB:
    #Database metadata table
    def createDBMD(self, cursor):
       cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP, HASH_TYPE)")
-      cursor.execute("INSERT INTO dbmd VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
+      cursor.execute("INSERT INTO " + self.METADATATABLE + " VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
    
    def createfield(self, table, column, type=False):
       if type is not False:
