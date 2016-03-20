@@ -52,9 +52,9 @@ class GenerateBaselineDB:
       self.createDBMD(self.cursor)
 
       # Save (commit) the changes
-      '''self.conn.execute("CREATE INDEX HASH ON droid(HASH)");
-      self.conn.execute("CREATE INDEX NAME ON droid(NAME)");
-      self.conn.execute("CREATE INDEX PUID ON droid(PUID)");'''
+      self.conn.execute("CREATE INDEX HASH ON " + self.FILEDATATABLE + "(HASH)");
+      self.conn.execute("CREATE INDEX NAME ON " + self.FILEDATATABLE + "(NAME)");
+      self.conn.execute("CREATE INDEX PUID ON " + self.IDTABLE + "(ID)");
 
       # Save (commit) the changes
       self.conn.commit()
