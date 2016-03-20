@@ -18,31 +18,6 @@ class DROIDLoader:
       self.basedb = basedb
       self.BOM = BOM
    
-   def createDROIDTable(self, cursor, csvcolumnheaders):
-      # turn csv headers list into a csv string, write query, create table
-
-      self.csvcolumncount = len(csvcolumnheaders)
-      columns = ""
-      for header in csvcolumnheaders:
-         if header == "URI":
-            columns = columns + header + ", " + "URI_SCHEME, "
-            self.csvcolumncount+=1
-         elif header == "FILE_PATH":
-            columns = columns + header + ", " + "DIR_NAME, "
-            self.csvcolumncount+=1
-         elif "_HASH" in header:    #regex alternative: ^([[:alnum:]]*)(_HASH)$
-            self.basedb.sethashtype(header.split('_', 1)[0])
-            columns = columns + "HASH" + ", "
-         elif header == "LAST_MODIFIED":
-            columns = columns + header + " TIMESTAMP" + ","
-            columns = columns + "YEAR INTEGER" + ","
-         else:
-            #sys.stderr.write(header + "\n")
-            columns = columns + header + ", "
-
-      cursor.execute("CREATE TABLE droid (" + columns[:-2] + ")")
-      return True
-
    def insertfiledbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE
       return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
@@ -80,8 +55,6 @@ class DROIDLoader:
                idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
                idvaluestring = idvaluestring + "'" + value + "', "
 
-
-   
          cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
          file = cursor.lastrowid
          
