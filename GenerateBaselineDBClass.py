@@ -4,20 +4,24 @@ import sqlite3
 
 class GenerateBaselineDB:
 
-   IDTABLE = 'idtable'
-   METADATATABLE = 'dbmd'
-   FILEDATATABLE = 'filedata'
+   IDTABLE = 'IDDATA'
+   METADATATABLE = 'DBMD'
+   FILEDATATABLE = 'FILEDATA'
    NAMESPACETABLE = 'namespacedata'
-   ID_JUNCTION = 'idresults'
+   ID_JUNCTION = 'IDRESULTS'
+   
+   #file_id_junction
+   FILEID = "FILE_ID"
+   IDID = "ID_ID"
    
    #How to create an ID in SQLITE: http://stackoverflow.com/a/9342301
    #FILE ID is a new ID for the purpose of this database
    #INPUT_FILE_ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
-   FILEDATA_TABLE = ["FILE_ID","INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   FILEDATA_TABLE = [FILEID,"INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    #TODO: FORMAT COUNT WILL LIKELY NEED TO BE MOVED TO NAMESPACEDATA BY CREATING A SECOND ID ROW
-   IDTABLE_TABLE = ['ID_ID','NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
+   IDTABLE_TABLE = [IDID,'NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
 
    dbname = ''
    timestamp = ''
@@ -37,7 +41,7 @@ class GenerateBaselineDB:
       #create a table to hold information about the file only
       self.createfiledatatable()
       self.createidtable()
-      self.createjunctiontable(self.ID_JUNCTION, "FILE_ID", "ID_ID")
+      self.createjunctiontable(self.ID_JUNCTION, self.FILEID, self.IDID)
       return self.cursor
 
    def getcursor(self):
@@ -124,7 +128,7 @@ class GenerateBaselineDB:
    def createidtable(self):   
       table = 'CREATE TABLE ' + self.IDTABLE + ' ('
       for column in self.IDTABLE_TABLE:
-         if column == 'ID_ID':
+         if column == self.IDID:
             table = self.createfield(table, column, "integer primary key")            
          else:
             table = self.createfield(table, column)
