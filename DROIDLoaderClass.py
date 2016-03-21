@@ -50,7 +50,7 @@ class DROIDLoader:
                   self.basedb.hashtype = key.split('_', 1)[0]
                elif key == "HASH":
                   #no hash used in export
-                  self.basedb.hashtype = "NONE"
+                  self.basedb.hashtype = "None"
             if key in ToolMapping.FILE_MAP:
                filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + value + "', "

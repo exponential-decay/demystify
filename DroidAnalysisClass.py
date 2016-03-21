@@ -84,10 +84,6 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
 
-   def determineifHASHwasused(self):
-      return self.__countQuery__(
-         "select count(*) from DROID where HASH != 'no value' and  TYPE = 'File'")
-
    def countFilesQuery(self):
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
@@ -308,9 +304,17 @@ class DROIDAnalysis:
    # Additional functions on DB
    ###
    
-   def __querydb__(self, query):
+   def __querydb__(self, query, fetchone=False):
       self.cursor.execute(query)
-      return self.cursor.fetchall()   
+      if fetchone is True:
+         return self.cursor.fetchone()
+      else:
+         return self.cursor.fetchall()
+   
+   
+   def determineifHASHwasused(self):
+      return self.__countQuery__(
+         "select count(*) from DROID where HASH != 'no value' and  TYPE = 'File'")
    
    def __generatefilenamelistwithdirs__(self):
       countDirs = "SELECT DIR_NAME, NAME FROM droid"
@@ -350,12 +354,13 @@ class DROIDAnalysis:
       self.fnamelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
       self.fdirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
       
-      self.hashtype = False
-      self.analysisresults.hashused = self.determineifHASHwasused()
-      if self.analysisresults.hashused <= 0:
-         sys.stderr.write("No HASH algorithm used in DROID report. Unable to calculate duplicates." + "\n")
-      else:
-         self.hashtype = self.__getHashAlgorithm__()  
+      self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
+      
+      #self.analysisresults.hashused = self.determineifHASHwasused()
+      #if self.analysisresults.hashused <= 0:
+      #   sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
+      #else:
+      #   self.hashtype = self.__getHashAlgorithm__()  
 
       '''self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()
