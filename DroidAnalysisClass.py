@@ -93,10 +93,6 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
    
-   def countTotalUnidentifiedQuery(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='no value' OR METHOD='Extension')")	
-
    def countZeroID(self):
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
@@ -338,8 +334,11 @@ class DROIDAnalysis:
 
       self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
 
-      '''self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
-      self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
+      self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)
+      
+      print self.analysisresults.unidentifiedfilecount
+      
+      '''self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
       self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
       self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
       self.analysisresults.extmismatchCount = self.countExtensionMismatches()
