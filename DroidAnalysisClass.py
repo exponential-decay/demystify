@@ -312,12 +312,6 @@ class DROIDAnalysis:
       self.cursor.execute(query)
       return self.cursor.fetchall()   
    
-   def __generatefilenamelist__(self):
-      #multi-use variable: get filenames from DB
-      countDirs = "SELECT FILEDATA.NAME FROM FILEDATA"
-      self.cursor.execute(countDirs)
-      self.fnamelist = self.cursor.fetchall()
-      
    def __generatefilenamelistwithdirs__(self):
       countDirs = "SELECT DIR_NAME, NAME FROM droid"
       self.cursor.execute(countDirs)
@@ -353,11 +347,10 @@ class DROIDAnalysis:
         
    def queryDB(self):
       #preliminary functions to generate data from DB
-      self.fnamelist = self.__generatefilenamelist__()
+      self.fnamelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
+      self.fdirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
       
-      '''self.__generatefilenamelistwithdirs__()
-      
-      self.hashtype = 0
+      '''self.hashtype = 0
       self.analysisresults.hashused = self.determineifHASHwasused()
       if self.analysisresults.hashused <= 0:
          sys.stderr.write("No HASH algorithm used in DROID report. Unable to calculate duplicates." + "\n")
