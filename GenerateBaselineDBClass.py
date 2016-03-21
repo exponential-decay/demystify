@@ -130,7 +130,7 @@ class GenerateBaselineDB:
       for column in self.IDTABLE_TABLE:
          if column == self.IDID:
             table = self.createfield(table, column, "integer primary key") 
-         elif column == 'FORMAT_COUNT':
+         elif column == 'FORMAT_COUNT' or column == 'NAMESPACE':
             table = self.createfield(table, column, "integer")
          else:
             table = self.createfield(table, column)
