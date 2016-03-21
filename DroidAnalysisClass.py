@@ -93,10 +93,6 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
    
-   def countMultipleIdentifications(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
-
    def countTotalUnidentifiedQuery(self):
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='no value' OR METHOD='Extension')")	
@@ -340,9 +336,9 @@ class DROIDAnalysis:
       
       self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
 
-      print self.analysisresults.identifiedfilecount
-      '''self.analysisresults.multipleidentificationcount = self.countMultipleIdentifications()
-      self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
+      self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
+
+      '''self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
       self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
       self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
       self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
