@@ -118,7 +118,7 @@ class GenerateBaselineDB:
             table = self.createfield(table, column, "INTEGER")
          elif column == 'FILE_ID':
             table = self.createfield(table, column, "integer primary key")
-         elif column == 'PARENT_ID' or column == 'INPUT_ID':
+         elif column == 'PARENT_ID' or column == 'INPUT_ID' or column == 'SIZE':
             table = self.createfield(table, column, "integer")
          else:
             table = self.createfield(table, column)      

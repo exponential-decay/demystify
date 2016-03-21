@@ -48,6 +48,15 @@ class DROIDAnalysis:
    ## DB self.cursor
    cursor = None
    
+   def __querydb__(self, query, fetchone=False, numberquery=False):
+      self.cursor.execute(query)
+      if fetchone is True and numberquery is False:
+         return self.cursor.fetchone()
+      if fetchone is True and numberquery is True:
+         return self.cursor.fetchone()[0]
+      else:
+         return self.cursor.fetchall()   
+   
    def __countQuery__(self, query):
       self.cursor.execute(query)
       count = self.cursor.fetchone()[0]
@@ -83,40 +92,7 @@ class DROIDAnalysis:
       self.cursor.execute(query)
       result = self.cursor.fetchall()
       return result
-
-   def countFilesQuery(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
-
-   def getCollectionSizeQuery(self):
-      return self.__countQuery__(
-         "SELECT SUM(SIZE) FROM DROID WHERE SIZE != 'no value'")
-
-   # Container objects known by DROID...
-   def countContainerObjects(self):
-      return self.__countQuery__(
-         "SELECT COUNT(NAME) FROM droid WHERE TYPE='Container'")
    
-   def countFilesInContainerObjects(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE (URI_SCHEME!='file') AND (TYPE='File' OR TYPE='Container')")
-
-   def countFoldersQuery(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE TYPE='Folder'")
-
-   def countUniqueFileNames(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(DISTINCT NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container')")
-
-   def countUniqueDirectoryNames(self):
-      return (self.__countQuery__( 
-         "SELECT COUNT(DISTINCT DIR_NAME) FROM droid") - 1)	#Will always be minus one accounts for base-dirs
-
-   def countIdentifiedQuery(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' or METHOD='Container')")
-
    def countMultipleIdentifications(self):
       return self.__countQuery__( 
          "SELECT COUNT(FORMAT_COUNT) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
@@ -303,15 +279,7 @@ class DROIDAnalysis:
    ###
    # Additional functions on DB
    ###
-   
-   def __querydb__(self, query, fetchone=False):
-      self.cursor.execute(query)
-      if fetchone is True:
-         return self.cursor.fetchone()
-      else:
-         return self.cursor.fetchall()
-   
-   
+      
    def determineifHASHwasused(self):
       return self.__countQuery__(
          "select count(*) from DROID where HASH != 'no value' and  TYPE = 'File'")
@@ -358,16 +326,22 @@ class DROIDAnalysis:
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
 
-      '''self.analysisresults.collectionsize = self.getCollectionSizeQuery()
-      self.analysisresults.filecount = self.countFilesQuery()
-      self.analysisresults.containercount = self.countContainerObjects()
-      self.analysisresults.filesincontainercount = self.countFilesInContainerObjects()
-      self.analysisresults.directoryCount = self.countFoldersQuery()
-      self.analysisresults.uniqueFileNames = self.countUniqueFileNames()
-      self.analysisresults.uniqueDirectoryNames = self.countUniqueDirectoryNames()
-      self.analysisresults.identifiedfilecount = self.countIdentifiedQuery()
+      self.analysisresults.collectionsize = self.__querydb__(AnalysisQueries.SELECT_COLLECTION_SIZE, True, True)
+      self.analysisresults.filecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES, True, True)
+      self.analysisresults.containercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_CONTAINERS, True, True)
+
+      self.analysisresults.filesincontainercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES_IN_CONTAINERS, True, True)
+            
+      self.analysisresults.directoryCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FOLDERS, True, True)
       
-      self.analysisresults.multipleidentificationcount = self.countMultipleIdentifications()
+      self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
+      
+      self.analysisresults.uniqueDirectoryNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True)
+      
+      self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
+
+      print self.analysisresults.identifiedfilecount
+      '''self.analysisresults.multipleidentificationcount = self.countMultipleIdentifications()
       self.analysisresults.unidentifiedfilecount = self.countTotalUnidentifiedQuery()
       self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
       self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
@@ -378,6 +352,9 @@ class DROIDAnalysis:
       self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
       
       self.analysisresults.zeroidcount = self.countZeroID()
+      
+      
+      
 
       #NOTE: Must be calculated after we have total, and subset values
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
