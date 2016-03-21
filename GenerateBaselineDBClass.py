@@ -129,7 +129,9 @@ class GenerateBaselineDB:
       table = 'CREATE TABLE ' + self.IDTABLE + ' ('
       for column in self.IDTABLE_TABLE:
          if column == self.IDID:
-            table = self.createfield(table, column, "integer primary key")            
+            table = self.createfield(table, column, "integer primary key") 
+         elif column == 'FORMAT_COUNT':
+            table = self.createfield(table, column, "integer")
          else:
             table = self.createfield(table, column)
       table = table.rstrip(',') + ')'
