@@ -11,7 +11,6 @@ from CSVHandlerClass import *
 class DROIDLoader:
 
    basedb = ''
-   hashtype = ''
    BOM = False
          
    def __init__(self, basedb, BOM=False):
@@ -46,7 +45,9 @@ class DROIDLoader:
          idkeystring = ''
          idvaluestring = ''
          for key, value in x.items():
-                  
+            if self.basedb.hashtype == False:
+               if "_HASH" in key:
+                  self.basedb.hashtype = key.split('_', 1)[0]
             if key in ToolMapping.FILE_MAP:
                filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + value + "', "

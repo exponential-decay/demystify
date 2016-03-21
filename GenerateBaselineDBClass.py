@@ -26,7 +26,7 @@ class GenerateBaselineDB:
    dbname = ''
    timestamp = ''
    cursor = ''
-   hashtype = ''
+   hashtype = False
 
    def __init__(self, export):
       self.dbname = self.getDBFilename(export)
@@ -99,7 +99,7 @@ class GenerateBaselineDB:
 
    #Database metadata table
    def createDBMD(self, cursor):
-      cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP, HASH_TYPE)")
+      cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP TIMESTAMPE, HASH_TYPE)")
       cursor.execute("INSERT INTO " + self.METADATATABLE + " VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
    
    def createfield(self, table, column, type=False):

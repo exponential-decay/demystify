@@ -350,14 +350,14 @@ class DROIDAnalysis:
       self.fnamelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
       self.fdirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
       
-      '''self.hashtype = 0
+      self.hashtype = False
       self.analysisresults.hashused = self.determineifHASHwasused()
       if self.analysisresults.hashused <= 0:
          sys.stderr.write("No HASH algorithm used in DROID report. Unable to calculate duplicates." + "\n")
       else:
          self.hashtype = self.__getHashAlgorithm__()  
 
-      self.analysisresults.collectionsize = self.getCollectionSizeQuery()
+      '''self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()
       self.analysisresults.containercount = self.countContainerObjects()
       self.analysisresults.filesincontainercount = self.countFilesInContainerObjects()
