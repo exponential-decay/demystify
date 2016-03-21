@@ -355,12 +355,8 @@ class DROIDAnalysis:
       self.fdirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
       
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
-      
-      #self.analysisresults.hashused = self.determineifHASHwasused()
-      #if self.analysisresults.hashused <= 0:
-      #   sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
-      #else:
-      #   self.hashtype = self.__getHashAlgorithm__()  
+      if self.hashtype == "None":
+         sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
 
       '''self.analysisresults.collectionsize = self.getCollectionSizeQuery()
       self.analysisresults.filecount = self.countFilesQuery()

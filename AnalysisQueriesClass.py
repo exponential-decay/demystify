@@ -10,4 +10,4 @@
    
    
    #ERRORS, TODO: Place somewhere else?
-   ERROR_NOHASH = "No HASH algorithm used by identification tool. Unable to calculate duplicates."
+   ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
