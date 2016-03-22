@@ -78,5 +78,12 @@
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
+   SELECT_COUNT_ZEROID = """SELECT COUNT(FILEDATA.NAME) 
+                              FROM IDRESULTS
+                              JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                              JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID  
+                              WHERE IDDATA.METHOD='' 
+                              AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

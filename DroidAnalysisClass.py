@@ -92,11 +92,7 @@ class DROIDAnalysis:
       self.cursor.execute(query)
       result = self.cursor.fetchall()
       return result
-   
-   def countZeroID(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
-   
+      
    def countZeroByteObjects(self):
       return self.__countQuery__( 
          "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
@@ -310,15 +306,14 @@ class DROIDAnalysis:
       self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       
-      print self.analysisresults.mimetypeFrequency
       
-      '''self.analysisresults.zeroidcount = self.countZeroID()
+      self.analysisresults.zeroidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZEROID, True, True)
       
-      
+      print self.analysisresults.zeroidcount
       
 
       #NOTE: Must be calculated after we have total, and subset values
-      self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
+      '''self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
       self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
