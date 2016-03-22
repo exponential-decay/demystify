@@ -85,6 +85,10 @@
                               WHERE IDDATA.METHOD='' 
                               AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
+   SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION 
+                                          FROM IDDATA
+                                          WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
+
    SELECT_BINARY_MATCH_COUNT = """SELECT IDDATA.ID, COUNT(*) AS total 
                                     FROM IDRESULTS 
                                     JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID

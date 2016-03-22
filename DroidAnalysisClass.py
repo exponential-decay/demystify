@@ -108,10 +108,6 @@ class DROIDAnalysis:
 
    ###
    # List queries
-   ###
-   def listUniqueBinaryMatchedPUIDS(self):
-      return self.__listPUIDSQuery__(
-         "SELECT DISTINCT PUID, FORMAT_NAME, FORMAT_VERSION FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')", "\n")
 
    def listAllUniqueExtensions(self):	
       return self.__listQuery__(
@@ -304,17 +300,18 @@ class DROIDAnalysis:
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
-
-
-      self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
+      
+      self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)
+      self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
+      self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
+      
 
       
-      self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)
       
-      print self.analysisresults.dateFrequency
-      '''self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
-      self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
-      self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
+      #self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
+      
+      
+      '''self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
       self.analysisresults.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
       self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
