@@ -101,10 +101,6 @@ class DROIDAnalysis:
    ###
    # List queries
 
-   def listContainerTypes(self):
-      return self.__listQuery__(
-         "SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')")
-
    def listZeroByteObjects(self):
       return self.__listQuery1__(	
          "SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'")
@@ -123,10 +119,8 @@ class DROIDAnalysis:
       for r in result:
          self.analysisresults.totalHASHduplicates = self.analysisresults.totalHASHduplicates + int(r[1])
          
-      #result list([HASH, COUNT])
-      
-      query = AnalysisQueries()
-      
+      #result list([HASH, COUNT])      
+      query = AnalysisQueries()      
       for r in result:
          example = self.__querydb__(query.list_duplicate_paths(r[0]))
          resultlist = []
@@ -171,23 +165,6 @@ class DROIDAnalysis:
             duplicatelist = duplicatelist + duplicatestr
       self.analysisresults.totalHASHduplicates = totalduplicates
       return duplicatelist    
-
-   ###
-   # Top n listings...
-   ###
-   def topPUIDS(self, number):
-      # Hypothesis: 80% of the effects come from 20% of the causes		
-
-      eightyPercentTotalPUIDs = int(self.analysisresults.identifiedfilecount * 0.80)		# 80 percent figure
-      countIdentifiedPuids = "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC"
-      return self.listTopItems(self.__alternativeFrequencyQuery__(countIdentifiedPuids), number)
-      
-   def topExts(self, number):
-      # Hypothesis: 80% of the effects come from 20% of the causes		
-
-      eightyPercentTotalExts = int(self.analysisresults.filecount * 0.80)		# 80 percent figure
-      countExtensions = "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC"
-      return self.listTopItems(self.__alternativeFrequencyQuery__(countExtensions), number)
 
    #TODO: Delete and refine functions above...
    def listTopItems(self, frequencyQueryResult, number):
@@ -297,27 +274,32 @@ class DROIDAnalysis:
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
       
+      
+      
+      
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
       self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
       self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS)
-     
-      
-      
-      #expensive duplicate checking [default: ON]
-      self.listDuplicateFilesFromHASH()
+      self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]
 
-      #self.analysisresults.topPUIDList = self.topPUIDS(5)
-      '''self.analysisresults.topExtensionList = self.topExts(5)		
-      self.analysisresults.containertypeslist = self.listContainerTypes()
+      #Originally PARETO principle: 80% of the effects from from 20% of the causes
+      self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]
+      self.analysisresults.topExtensionList = self.analysisresults.frequencyOfAllExtensions[0:5]
       
-      self.analysisresults.zerobytecount = self.countZeroByteObjects()
+      
+
+      self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
+      
+
+      
+      '''self.analysisresults.zerobytecount = self.countZeroByteObjects()
       self.analysisresults.zerobytelist = self.listZeroByteObjects()
-
       self.analysisresults.badFilenames = self.msoftfnameanalysis()
-
       self.analysisresults.allfilepaths = self.__generatefilepathlistnodirs__()
+
+
 
       #rogues
       self.analysisresults.duplicateHASHpathlisting = False
