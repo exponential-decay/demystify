@@ -45,5 +45,14 @@
                                        WHERE IDDATA.METHOD='Extension' 
                                        AND(FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
+
+   SELECT_COUNT_FORMAT_RANGE = """SELECT COUNT(DISTINCT IDDATA.ID) 
+                                       FROM IDRESULTS 
+                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                       
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
+
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

@@ -97,10 +97,6 @@ class DROIDAnalysis:
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
    
-   # PUIDS for files identified by DROID using binary matching techniques
-   def countDistinctSignaturePUIDS(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(DISTINCT PUID) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container')")
       
    def countDistinctExtensions(self):
       return self.__countQuery__( 
@@ -328,8 +324,9 @@ class DROIDAnalysis:
       
 
       
-      '''self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
-      self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
+      self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)
+            
+      '''self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
       self.analysisresults.extmismatchCount = self.countExtensionMismatches()
       
       self.analysisresults.idmethodFrequency = self.idmethodFrequencyCount()
