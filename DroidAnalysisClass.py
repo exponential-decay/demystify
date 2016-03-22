@@ -98,20 +98,12 @@ class DROIDAnalysis:
          "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
       return
 
-   def extensionOnlyIdentificationFrequency(self):
-      return self.__listQuery__( 
-         "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Extension') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
-
    def allExtensionsFrequency(self):
       return self.__listQuery__(
          "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
 
    ###
    # List queries
-
-   def listAllUniqueExtensions(self):	
-      return self.__listQuery__(
-         "SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
    def listMultipleIdentifications(self):
       return self.__listQuery1__(		
@@ -130,9 +122,9 @@ class DROIDAnalysis:
       return self.__listQuery1__(	
          "SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'")
 
-   def listExtensionIDOnly(self):
+   '''def listExtensionIDOnly(self):
       return self.__listQuery1__( 
-         "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")
+         "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")'''
     
    def listExtensionMismatches(self):
       return self.__listQuery1__( 
@@ -303,15 +295,23 @@ class DROIDAnalysis:
       
 
       
-      
+      #TODO: POTENTIALLY DELETE BELOW
+      #TODO: POTENTIALLY DELETE BELOW
+      #TODO: POTENTIALLY DELETE BELOW
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
+      #TODO: WE MIGHT NOT USE THIS
+      #self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
+      self.analysisresults.extensionOnlyIDFrequency = self.__querydb__(AnalysisQueries.SELECT_EXT_ONLY_FREQUENCY)
+      #TODO: POTENTIALLY DELETE ABOVE
+      #TODO: POTENTIALLY DELETE ABOVE
+      #TODO: POTENTIALLY DELETE ABOVE
       
-      print self.analysisresults.extensionOnlyIDList
+      #OKAY stat...
+      self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       
-      '''self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
-      self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
-      self.analysisresults.uniqueExtensionsInCollectionList = self.listAllUniqueExtensions()
-      self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
+
+      
+      '''self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
       self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
       self.analysisresults.extmismatchList = self.listExtensionMismatches()
       

@@ -103,10 +103,23 @@
                                        GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC"""
 
 
+   #TODO: THIS STAT NEEDS REVISITING IN LIGHT OF SIEGFRIED
+   #MULTIPLE IDS WILL BE REFLECTED USING MULTIPLE NAMESPACE PLACES - HOW TO REPORT ON?
    SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME 
                                        FROM IDDATA 
-                                       WHERE METHOD='Extension'
-                                       AND FORMAT_COUNT=1"""
+                                       WHERE IDDATA.METHOD='Extension'
+                                       AND IDDATA.FORMAT_COUNT=1"""
+   
+   #TODO: THIS STAT IS DIFFERENT FROM THE ON ABOVE BECAUSE IT INCLUDES MULTIPLE FORMAT COUNT - UGH!
+   SELECT_EXT_ONLY_FREQUENCY = """SELECT IDDATA.ID, COUNT(*) AS total 
+                                    FROM IDDATA                                     
+                                    WHERE IDDATA.METHOD='Extension'
+                                    GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
+
+
+   SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT 
+                                       FROM FILEDATA 
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
