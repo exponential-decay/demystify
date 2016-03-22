@@ -102,5 +102,11 @@
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
                                        GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC"""
 
+
+   SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME 
+                                       FROM IDDATA 
+                                       WHERE METHOD='Extension'
+                                       AND FORMAT_COUNT=1"""
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

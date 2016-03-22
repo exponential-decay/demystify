@@ -113,10 +113,6 @@ class DROIDAnalysis:
       return self.__listQuery__(
          "SELECT DISTINCT EXT FROM droid WHERE (TYPE='File' OR TYPE='Container')")
 
-   def listExtensionOnlyIdentificationPUIDS(self):	
-      return self.__listQuery__(		
-         "SELECT DISTINCT PUID, FORMAT_NAME FROM droid WHERE (TYPE='File' OR TYPE='Container') AND METHOD='Extension'")
-
    def listMultipleIdentifications(self):
       return self.__listQuery1__(		
          "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
@@ -308,8 +304,9 @@ class DROIDAnalysis:
 
       
       
-      #self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
+      self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
       
+      print self.analysisresults.extensionOnlyIDList
       
       '''self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
