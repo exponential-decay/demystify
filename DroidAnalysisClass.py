@@ -62,15 +62,15 @@ class DROIDAnalysis:
       count = self.cursor.fetchone()[0]
       return count
 
-   def __listQuery1__(self, query):
+   '''def __listQuery1__(self, query):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
       resultlist = []
       for r in result:
          resultlist.append(r[0])
-      return resultlist
+      return resultlist'''
 
-   def __listQuery__(self, query, separator=False):
+   def __listQuery__(self, query):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
       return result
@@ -119,11 +119,6 @@ class DROIDAnalysis:
    def allExtensionsFrequency(self):
       return self.__listQuery__(
          "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
-
-   def idmethodFrequencyCount(self):
-      return self.__listQuery__(
-         "SELECT METHOD, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY METHOD ORDER BY TOTAL DESC", "\n")	
-   
 
    def mimetypeFrequencyCount(self):
       return self.__listQuery__(
@@ -312,19 +307,20 @@ class DROIDAnalysis:
       self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
       self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
       self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
-      self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)
-            
+      self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)            
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
-      
-      
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MISMATCHES, True, True)
+
+      self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)
       
+      print self.analysisresults.idmethodFrequency 
+
+      '''def idmethodFrequencyCount(self):
+      return self.__listQuery__(
+      "SELECT METHOD, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY METHOD ORDER BY TOTAL DESC", "\n")	'''
+
       
-      print self.analysisresults.extmismatchCount
-      
-      
-      '''self.analysisresults.idmethodFrequency = self.idmethodFrequencyCount()
-      self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
+      '''self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
       
       self.analysisresults.zeroidcount = self.countZeroID()
       

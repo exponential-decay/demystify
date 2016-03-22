@@ -64,5 +64,12 @@
                                     WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
                                     AND (IDDATA.EXTENSION_MISMATCH=1)"""
 
+   SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total 
+                                       FROM IDRESULTS  
+                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                          
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""	
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
