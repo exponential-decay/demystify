@@ -120,10 +120,6 @@ class DROIDAnalysis:
       return self.__listQuery__(
          "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
 
-   def mimetypeFrequencyCount(self):
-      return self.__listQuery__(
-         "SELECT MIME_TYPE, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY MIME_TYPE ORDER BY TOTAL DESC")
-
    ###
    # List queries
    ###
@@ -311,18 +307,12 @@ class DROIDAnalysis:
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MISMATCHES, True, True)
 
-      self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)
+      self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
+      self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       
-      print self.analysisresults.idmethodFrequency 
-
-      '''def idmethodFrequencyCount(self):
-      return self.__listQuery__(
-      "SELECT METHOD, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY METHOD ORDER BY TOTAL DESC", "\n")	'''
-
+      print self.analysisresults.mimetypeFrequency
       
-      '''self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
-      
-      self.analysisresults.zeroidcount = self.countZeroID()
+      '''self.analysisresults.zeroidcount = self.countZeroID()
       
       
       
