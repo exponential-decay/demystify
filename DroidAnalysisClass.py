@@ -75,10 +75,10 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
 
-   def __listPUIDSQuery__(self, query, separator=False):
+   '''def __listPUIDSQuery__(self, query, separator=False):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
-      return result
+      return result'''
 
    def __listDuplicateQuery__(self, query):
       self.cursor.execute(query)
@@ -103,10 +103,6 @@ class DROIDAnalysis:
    ###
    def dateRangeFrequency(self):
       return self.__listPUIDSQuery__("SELECT YEAR, COUNT(YEAR) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY YEAR ORDER BY TOTAL DESC")
-
-   def identifiedBinaryMatchedPUIDFrequency(self):
-      return self.__listPUIDSQuery__( 
-         "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Signature' OR METHOD='Container') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
 
    def extensionOnlyIdentificationFrequency(self):
       return self.__listQuery__( 
@@ -316,9 +312,13 @@ class DROIDAnalysis:
 
 
 
-      '''self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
-      self.analysisresults.dateFrequency = self.dateRangeFrequency()
-      self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
+      self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
+
+      
+      #self.analysisresults.dateFrequency = self.dateRangeFrequency()
+      
+      
+      '''self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
       self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
       self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.extensionOnlyIdentificationFrequency()
