@@ -97,15 +97,6 @@ class DROIDAnalysis:
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
    
-      
-   def countDistinctExtensions(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(DISTINCT EXT) FROM droid WHERE TYPE='File' OR TYPE='Container'")
-   
-   def countExtensionMismatches(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(EXTENSION_MISMATCH) FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")	
-
    def countZeroByteObjects(self):
       return self.__countQuery__( 
          "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
@@ -321,15 +312,18 @@ class DROIDAnalysis:
       self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
       self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
       self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
-      
-
-      
       self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)
             
-      '''self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
-      self.analysisresults.extmismatchCount = self.countExtensionMismatches()
+      self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       
-      self.analysisresults.idmethodFrequency = self.idmethodFrequencyCount()
+      
+      self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MISMATCHES, True, True)
+      
+      
+      print self.analysisresults.extmismatchCount
+      
+      
+      '''self.analysisresults.idmethodFrequency = self.idmethodFrequencyCount()
       self.analysisresults.mimetypeFrequency = self.mimetypeFrequencyCount()
       
       self.analysisresults.zeroidcount = self.countZeroID()
