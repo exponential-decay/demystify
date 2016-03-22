@@ -98,10 +98,6 @@ class DROIDAnalysis:
          "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
       return
 
-   def allExtensionsFrequency(self):
-      return self.__listQuery__(
-         "SELECT EXT, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY EXT ORDER BY TOTAL DESC")
-
    ###
    # List queries
 
@@ -114,10 +110,6 @@ class DROIDAnalysis:
       return self.__listQuery__(
          "SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')")
 
-   def listNoIdentificationFiles(self):
-      return self.__listQuery1__(	
-         "SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
-
    def listZeroByteObjects(self):
       return self.__listQuery1__(	
          "SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'")
@@ -126,10 +118,6 @@ class DROIDAnalysis:
       return self.__listQuery1__( 
          "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")'''
     
-   def listExtensionMismatches(self):
-      return self.__listQuery1__( 
-         "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (EXTENSION_MISMATCH='true')")   
-
    def listDuplicateFilesFromHASH(self):		
       duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
       result = self.__alternativeFrequencyQuery__(duplicatequery)
@@ -302,20 +290,20 @@ class DROIDAnalysis:
       #TODO: WE MIGHT NOT USE THIS
       #self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.__querydb__(AnalysisQueries.SELECT_EXT_ONLY_FREQUENCY)
+      #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
+      #self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
       
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
+      self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
+      self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES)
       
-
+      print self.analysisresults.extmismatchList
       
-      '''self.analysisresults.frequencyOfAllExtensions = self.allExtensionsFrequency()
-      self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
-      self.analysisresults.extmismatchList = self.listExtensionMismatches()
-      
-      self.analysisresults.multipleIDList = self.listMultipleIdentifications()
+      '''self.analysisresults.multipleIDList = self.listMultipleIdentifications()
       
       #expensive duplicate checking [default: ON]
       self.analysisresults.duplicateHASHlisting = self.listDuplicateFilesFromHASH()

@@ -121,5 +121,17 @@
                                        FROM FILEDATA 
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
+   SELECT_COUNT_EXTENSION_FREQUENCY = """SELECT FILEDATA.EXT, COUNT(*) AS total 
+                                             FROM FILEDATA
+                                             WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                             GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
+
+   SELECT_EXTENSION_MISMATCHES = """SELECT FILEDATA.FILE_PATH 
+                                             FROM IDRESULTS 
+                                             JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                             JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                              
+                                             WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                             AND (IDDATA.EXTENSION_MISMATCH=1)"""
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
