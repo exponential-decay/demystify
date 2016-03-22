@@ -96,10 +96,6 @@ class DROIDAnalysis:
    def countZeroID(self):
       return self.__countQuery__( 
          "SELECT COUNT(NAME) FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')")
-
-   def countExtensionIDOnly(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(NAME) FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")
    
    # PUIDS for files identified by DROID using binary matching techniques
    def countDistinctSignaturePUIDS(self):
@@ -321,25 +317,18 @@ class DROIDAnalysis:
       self.analysisresults.collectionsize = self.__querydb__(AnalysisQueries.SELECT_COLLECTION_SIZE, True, True)
       self.analysisresults.filecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES, True, True)
       self.analysisresults.containercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_CONTAINERS, True, True)
-
       self.analysisresults.filesincontainercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES_IN_CONTAINERS, True, True)
-            
       self.analysisresults.directoryCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FOLDERS, True, True)
-      
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
-      
       self.analysisresults.uniqueDirectoryNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True)
-      
       self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
-
       self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
+      self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
+      self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
+      
 
-      self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)
       
-      print self.analysisresults.unidentifiedfilecount
-      
-      '''self.analysisresults.extensionIDOnlyCount = self.countExtensionIDOnly()
-      self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
+      '''self.analysisresults.distinctSignaturePuidcount = self.countDistinctSignaturePUIDS()
       self.analysisresults.distinctextensioncount = self.countDistinctExtensions()
       self.analysisresults.extmismatchCount = self.countExtensionMismatches()
       
