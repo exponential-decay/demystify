@@ -133,5 +133,14 @@
                                              WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
                                              AND (IDDATA.EXTENSION_MISMATCH=1)"""
 
+   #MULTIPLE ID FOR FILES GREATER THAN ZERO BYTES
+   SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH 
+                                 FROM IDRESULTS 
+                                 JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
+                                 WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                 AND (IDDATA.FORMAT_COUNT > 1) 
+                                 AND (FILEDATA.SIZE > 0)"""
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

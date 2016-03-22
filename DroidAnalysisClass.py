@@ -101,11 +101,6 @@ class DROIDAnalysis:
    ###
    # List queries
 
-   def listMultipleIdentifications(self):
-      return self.__listQuery1__(		
-         "SELECT FILE_PATH FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (FORMAT_COUNT!='1' AND FORMAT_COUNT!='0') AND (CAST(SIZE AS INT) > 0)")
-      return
-
    def listContainerTypes(self):
       return self.__listQuery__(
          "SELECT DISTINCT URI_SCHEME FROM droid WHERE (TYPE='File' AND URI_SCHEME!='file')")
@@ -301,12 +296,15 @@ class DROIDAnalysis:
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
       self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES)
       
-      print self.analysisresults.extmismatchList
       
-      '''self.analysisresults.multipleIDList = self.listMultipleIdentifications()
+      
+      self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS)
+      
+      print self.analysisresults.multipleIDList
+      
       
       #expensive duplicate checking [default: ON]
-      self.analysisresults.duplicateHASHlisting = self.listDuplicateFilesFromHASH()
+      '''self.analysisresults.duplicateHASHlisting = self.listDuplicateFilesFromHASH()
 
       self.analysisresults.topPUIDList = self.topPUIDS(5)
       self.analysisresults.topExtensionList = self.topExts(5)		
