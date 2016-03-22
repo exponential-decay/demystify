@@ -309,14 +309,14 @@ class DROIDAnalysis:
       
       self.analysisresults.zeroidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZEROID, True, True)
       
-      print self.analysisresults.zeroidcount
-      
 
       #NOTE: Must be calculated after we have total, and subset values
-      '''self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
+      self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)		
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
-      self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
+
+
+      '''self.analysisresults.sigIDPUIDList = self.listUniqueBinaryMatchedPUIDS()
       self.analysisresults.dateFrequency = self.dateRangeFrequency()
       self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
       self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
