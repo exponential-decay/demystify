@@ -142,5 +142,15 @@
                                  AND (IDDATA.FORMAT_COUNT > 1) 
                                  AND (FILEDATA.SIZE > 0)"""
 
+   SELECT_COUNT_DUPLICATE_CHECKSUMS = """SELECT FILEDATA.HASH, COUNT(*) AS TOTAL
+                                          FROM FILEDATA
+                                          WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'
+                                          GROUP BY HASH
+                                          HAVING TOTAL > 1
+                                          ORDER BY TOTAL DESC"""
+
+   def list_duplicate_paths(self, checksum):
+      return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='" + checksum + "'ORDER BY FILEDATA.FILE_PATH"
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

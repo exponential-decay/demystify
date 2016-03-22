@@ -114,27 +114,33 @@ class DROIDAnalysis:
          "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")'''
     
    def listDuplicateFilesFromHASH(self):		
-      duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
-      result = self.__alternativeFrequencyQuery__(duplicatequery)
-      
-      duplicatestr = {}
+      result = self.__querydb__(AnalysisQueries.SELECT_COUNT_DUPLICATE_CHECKSUMS)
+
+      duplicate_sum = {}
       duplicatelist = []
-      totalduplicates = 0
+      
+      self.analysisresults.totalHASHduplicates = 0
+      for r in result:
+         self.analysisresults.totalHASHduplicates = self.analysisresults.totalHASHduplicates + int(r[1])
+         
+      #result list([HASH, COUNT])
+      
+      query = AnalysisQueries()
+      
+      for r in result:
+         example = self.__querydb__(query.list_duplicate_paths(r[0]))
+         resultlist = []
+         for e in example:
+            resultlist.append(e[0])
 
-      for r in result:     #result = (hash, count)
-         count = r[1]
-         if count > 1:
-            totalduplicates = totalduplicates + count
-            duplicateHASH = r[0]
-            examples = self.__listDuplicateQuery__("SELECT FILE_PATH FROM droid WHERE HASH='" + duplicateHASH + "'ORDER BY DIR_NAME")          
-            duplicatestr['checksum'] = str(duplicateHASH)
-            duplicatestr['count'] = str(count)
-            duplicatestr['examples'] = examples
-            duplicatelist.append(duplicatestr)
-            duplicatestr = {}
-
-      self.analysisresults.totalHASHduplicates = totalduplicates
-      return duplicatelist
+         duplicate_sum['checksum'] = str(r[0])
+         duplicate_sum['count'] = str(r[1])
+         duplicate_sum['examples'] = resultlist
+         duplicatelist.append(duplicate_sum)
+         duplicate_sum = {}
+         
+      self.analysisresults.duplicateHASHlisting = duplicatelist
+      return len(self.analysisresults.duplicateHASHlisting)
 
    def listRoguePUIDs(self, puidlist):
       searchlist = []
@@ -294,20 +300,16 @@ class DROIDAnalysis:
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
-      self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES)
-      
-      
-      
+      self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
       self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS)
-      
-      print self.analysisresults.multipleIDList
+     
       
       
       #expensive duplicate checking [default: ON]
-      '''self.analysisresults.duplicateHASHlisting = self.listDuplicateFilesFromHASH()
+      self.listDuplicateFilesFromHASH()
 
-      self.analysisresults.topPUIDList = self.topPUIDS(5)
-      self.analysisresults.topExtensionList = self.topExts(5)		
+      #self.analysisresults.topPUIDList = self.topPUIDS(5)
+      '''self.analysisresults.topExtensionList = self.topExts(5)		
       self.analysisresults.containertypeslist = self.listContainerTypes()
       
       self.analysisresults.zerobytecount = self.countZeroByteObjects()
