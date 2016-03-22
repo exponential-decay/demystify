@@ -55,6 +55,11 @@ class DROIDLoader:
                filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + value + "', "
             if key in ToolMapping.DROID_ID_MAP:
+               if key == 'EXTENSION_MISMATCH':
+                  if value == 'true':
+                     value = "1"
+                  elif value == 'false':
+                     value = "0"
                idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
                idvaluestring = idvaluestring + "'" + value + "', "
 

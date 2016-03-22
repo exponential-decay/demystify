@@ -132,6 +132,8 @@ class GenerateBaselineDB:
             table = self.createfield(table, column, "integer primary key") 
          elif column == 'FORMAT_COUNT' or column == 'NAMESPACE':
             table = self.createfield(table, column, "integer")
+         elif column == 'EXTENSION_MISMATCH':
+            table = self.createfield(table, column, "boolean")
          else:
             table = self.createfield(table, column)
       table = table.rstrip(',') + ')'
