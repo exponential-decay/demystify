@@ -93,5 +93,10 @@
                                     AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container') 
                                     GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
 
+   SELECT_YEAR_FREQUENCY_COUNT = """SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total 
+                                       FROM FILEDATA 
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC"""
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

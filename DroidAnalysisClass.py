@@ -98,12 +98,6 @@ class DROIDAnalysis:
          "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
       return
 
-   ###
-   # Frequency list queries
-   ###
-   def dateRangeFrequency(self):
-      return self.__listPUIDSQuery__("SELECT YEAR, COUNT(YEAR) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY YEAR ORDER BY TOTAL DESC")
-
    def extensionOnlyIdentificationFrequency(self):
       return self.__listQuery__( 
          "SELECT PUID, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') AND (METHOD='Extension') GROUP BY PUID ORDER BY TOTAL DESC",  " | ")
@@ -315,9 +309,9 @@ class DROIDAnalysis:
       self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
 
       
-      #self.analysisresults.dateFrequency = self.dateRangeFrequency()
+      self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)
       
-      
+      print self.analysisresults.dateFrequency
       '''self.analysisresults.sigIDPUIDFrequency = self.identifiedBinaryMatchedPUIDFrequency()
       self.analysisresults.extensionOnlyIDList = self.listExtensionOnlyIdentificationPUIDS()
       self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
