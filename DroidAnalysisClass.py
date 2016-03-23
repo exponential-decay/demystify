@@ -16,6 +16,11 @@ from lxml import etree, html
 
 class DROIDAnalysis:
 
+   #we need this value because we extract basedirs for all folders, including
+   #the root directory of the extract, creating one additional entry
+   #TODO: consider handling better...
+   NONROOTBASEDIR = 1
+
    def __init__(self, config=False):
       self.config = self.__readconfig__(config)       
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
@@ -170,7 +175,7 @@ class DROIDAnalysis:
       self.analysisresults.filesincontainercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES_IN_CONTAINERS, True, True)
       self.analysisresults.directoryCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FOLDERS, True, True)
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
-      self.analysisresults.uniqueDirectoryNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True)
+      self.analysisresults.uniqueDirectoryNames = (self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True) - self.NONROOTBASEDIR)
       self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
       self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
       self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
