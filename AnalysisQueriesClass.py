@@ -40,7 +40,7 @@
                                     JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID   
                                     WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                    AND (IDDATA.METHOD='' OR IDDATA.METHOD='Extension')"""
+                                    AND (IDDATA.METHOD='None' OR IDDATA.METHOD='Extension')"""
 
    SELECT_COUNT_EXTENSION_ONLY = """SELECT COUNT(FILEDATA.NAME) 
                                        FROM IDRESULTS 
@@ -86,7 +86,7 @@
                               FROM IDRESULTS
                               JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                               JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID  
-                              WHERE IDDATA.METHOD='' 
+                              WHERE IDDATA.METHOD='None' 
                               AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
    SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION 
@@ -157,7 +157,7 @@
                                  FROM IDRESULTS
                                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                   
-                                 WHERE IDDATA.METHOD='' 
+                                 WHERE IDDATA.METHOD='None' 
                                  AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
    def list_duplicate_paths(self, checksum):

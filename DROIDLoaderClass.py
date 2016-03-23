@@ -45,6 +45,9 @@ class DROIDLoader:
          idkeystring = ''
          idvaluestring = ''
          for key, value in x.items():
+            if key == "MIME_TYPE" or key == "METHOD":
+               if value == '':
+                  value = 'None'
             if self.basedb.hashtype == False:
                if "_HASH" in key:
                   self.basedb.hashtype = key.split('_', 1)[0]
