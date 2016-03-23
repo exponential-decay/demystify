@@ -17,8 +17,7 @@ from lxml import etree, html
 class DROIDAnalysis:
 
    def __init__(self, config=False):
-      self.config = self.__readconfig__(config)
-         
+      self.config = self.__readconfig__(config)       
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
    def __version__(self):
@@ -112,18 +111,19 @@ class DROIDAnalysis:
          
       #result list([HASH, COUNT])      
       query = AnalysisQueries()      
-      for r in result:
+      for r in result:               
          example = self.__querydb__(query.list_duplicate_paths(r[0]))
-         resultlist = []
+         pathlist = []
          for e in example:
-            resultlist.append(e[0])
+            pathlist.append(e[0])
+            self.analysisresults.duplicatespathlist.append(e[0])   #create rogues listing
 
          duplicate_sum['checksum'] = str(r[0])
          duplicate_sum['count'] = str(r[1])
-         duplicate_sum['examples'] = resultlist
+         duplicate_sum['examples'] = pathlist
          duplicatelist.append(duplicate_sum)
          duplicate_sum = {}
-         
+                  
       self.analysisresults.duplicateHASHlisting = duplicatelist
       return len(self.analysisresults.duplicateHASHlisting)
 
@@ -149,80 +149,35 @@ class DROIDAnalysis:
 
       return roguepuidpathlist
 
-   def listDuplicateHASHFilepaths(self):
-      duplicatequery = "SELECT HASH, COUNT(*) AS total FROM droid WHERE (TYPE='File' OR TYPE='Container') GROUP BY HASH ORDER BY TOTAL DESC"
-      result = self.__alternativeFrequencyQuery__(duplicatequery)
-      
-      duplicatestr = ''
-      duplicatelist = []
-      totalduplicates = 0
-      for r in result:
-         count = r[1]
-         if count > 1:
-            totalduplicates = totalduplicates + count
-            duplicatestr = self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE HASH='" + r[0] + "' ORDER BY FILE_PATH DESC")
-            duplicatelist = duplicatelist + duplicatestr
-      self.analysisresults.totalHASHduplicates = totalduplicates
-      return duplicatelist    
-
-   #TODO: Delete and refine functions above...
-   def listTopItems(self, frequencyQueryResult, number):
-      return frequencyQueryResult[0:number]
-
-   ###
-   # Stats output...
-   ###
    def calculatePercent(self, total, subset):
       if total > 0:
          percentage = (subset/total)*100
          return '%.1f' % round(percentage, 1)
-
-   ###
-   # Additional functions on DB
-   ###
-      
-   def determineifHASHwasused(self):
-      return self.__countQuery__(
-         "select count(*) from DROID where HASH != 'no value' and  TYPE = 'File'")
-   
-   def __generatefilenamelistwithdirs__(self):
-      countDirs = "SELECT DIR_NAME, NAME FROM droid"
-      self.cursor.execute(countDirs)
-      self.fdirlist = self.cursor.fetchall()
-
-   def __generatefilepathlistnodirs__(self):
-      pathlist = []
-      allfilepaths = "SELECT FILE_PATH FROM DROID WHERE TYPE != 'Folder' and FILE_PATH != 'no value'"     
-      self.cursor.execute(allfilepaths)
-      for x in self.cursor.fetchall():
-         pathlist.append(x[0])
-      return pathlist
-     
+        
    def msoftfnameanalysis(self):
+      namelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
+      dirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
+      
       charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
-      fnamereport = []
-      #Pass filename to fname analysis
-      for d in self.fnamelist:
-         fnamestring = d[0]
-         checkedname = charcheck.completeFnameAnalysis(fnamestring).encode('utf-8')
+      
+      namereport = []
+      for d in namelist:
+         namestring = d[0]
+         checkedname = charcheck.completeFnameAnalysis(namestring).encode('utf-8')
          if checkedname != '':
-            fnamereport.append(checkedname)
-      return fnamereport
-   
-   def __getHashAlgorithm__(self):
-      hashtype = 0
-      findhash = "SELECT HASH_TYPE from DBMD;"
-      self.cursor.execute(findhash)
-      result = self.cursor.fetchone()[0]
-      if result is not None:
-         hashtype = result
-      return hashtype 
+            namereport.append(checkedname)
+
+      dirreport = []
+      for d in dirlist:
+         dirstring = d[0]
+         checkedname = charcheck.completeFnameAnalysis(dirstring).encode('utf-8')
+         if checkedname != '':
+            dirreport.append(checkedname)
+
+      self.analysisresults.badFileNames = namereport
+      self.analysisresults.badDirNames = dirreport
         
    def queryDB(self):
-      #preliminary functions to generate data from DB
-      self.fnamelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
-      self.fdirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
-      
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
@@ -272,16 +227,13 @@ class DROIDAnalysis:
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
-      
-      
-      
-      
+
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
       self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
       self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS)
-      self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]
+      
 
       #Originally PARETO principle: 80% of the effects from from 20% of the causes
       self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]
@@ -290,23 +242,16 @@ class DROIDAnalysis:
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
       
-
-      
+      #more complicated listings
+      self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
       self.listzerobytefiles()
-      
-      '''self.analysisresults.badFilenames = self.msoftfnameanalysis()
-      self.analysisresults.allfilepaths = self.__generatefilepathlistnodirs__()
+      self.msoftfnameanalysis()
+
+      #self.analysisresults.duplicateHASHpathlisting
+      print self.analysisresults.duplicatespathlist
 
 
-
-      #rogues
-      self.analysisresults.duplicateHASHpathlisting = False
-               
-      if self.roguesduplicatechecksums == "true":
-         self.analysisresults.duplicateHASHpathlisting = self.listDuplicateHASHFilepaths()
-      else:
-         sys.stderr.write("Rogue gallery: Will not output paths for duplicate checksums." + "\n")
-
+      '''
       if self.roguepuids != False:
          sys.stderr.write("Rogue gallery: Will output rogue PUIDs in rogue listing." + "\n")
          self.analysisresults.roguepuidlisting = self.listRoguePUIDs(self.roguepuids)

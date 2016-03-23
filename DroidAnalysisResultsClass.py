@@ -71,6 +71,9 @@ class DROIDAnalysisResults:
    
    multiplespacelist = ''
    badFilenames = ''
+   
+   #rogues
+   duplicatespathlist = []
       
    def __version__(self):
       analysis = DroidAnalysisClass.DROIDAnalysis()
