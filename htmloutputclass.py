@@ -282,14 +282,25 @@ class DROIDAnalysisHTMLOutput:
             self.__htmlnewline__(2) 
          self.printFormattedText("<hr/>")
 
-      if len(self.analysisresults.badFilenames) > 0:
+      if len(self.analysisresults.badFileNames) > 0:
          #Troublesome Filenames
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
          self.__htmlnewline__() 
-         for fnames in self.analysisresults.badFilenames:
+         for fnames in self.analysisresults.badFileNames:
             self.printFormattedText(fnames)
-            self.__htmlnewline__() 
+            self.__htmlnewline__(2) 
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
+
+      if len(self.analysisresults.badDirNames) > 0:
+         #Troublesome Filenames
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_DIRNAMES) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES))
+         self.__htmlnewline__() 
+         for fnames in self.analysisresults.badDirNames:
+            self.printFormattedText(fnames)
+            self.__htmlnewline__(2) 
          self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
       
