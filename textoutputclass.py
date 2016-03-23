@@ -131,14 +131,13 @@ class DROIDAnalysisTextOutput:
       self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
       self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency))
 
-      self.printFormattedText("\n")
       if self.analysisresults.zerobytecount > 0:
+         self.printFormattedText("\n")
          self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount))
          self.printFormattedText(self.__itemlist__(self.analysisresults.zerobytelist))
 
-      self.printFormattedText("\n")
-
       if len(self.analysisresults.filesWithNoIDList) > 0:
+         self.printFormattedText("\n")
          self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount))
          self.printFormattedText(self.__itemlist__(self.analysisresults.filesWithNoIDList))
       
