@@ -93,17 +93,8 @@ class DROIDAnalysis:
       result = self.cursor.fetchall()
       return result
       
-   def countZeroByteObjects(self):
-      return self.__countQuery__( 
-         "SELECT COUNT(SIZE) FROM droid WHERE (TYPE='File') AND (SIZE='0')")
-      return
-
    ###
    # List queries
-
-   def listZeroByteObjects(self):
-      return self.__listQuery1__(	
-         "SELECT FILE_PATH FROM droid WHERE TYPE='File' AND SIZE='0'")
 
    '''def listExtensionIDOnly(self):
       return self.__listQuery1__( 
@@ -135,6 +126,14 @@ class DROIDAnalysis:
          
       self.analysisresults.duplicateHASHlisting = duplicatelist
       return len(self.analysisresults.duplicateHASHlisting)
+
+   def listzerobytefiles(self):
+      self.analysisresults.zerobytecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZERO_BYTE_FILES)
+      if self.analysisresults.zerobytecount > 0:
+         self.analysisresults.zerobytelist = self.__querydb__(AnalysisQueries.SELECT_ZERO_BYTE_FILEPATHS)
+      else:
+         self.analysisresults.zerobytelist = None   
+      return self.analysisresults.zerobytecount
 
    def listRoguePUIDs(self, puidlist):
       searchlist = []
@@ -288,15 +287,14 @@ class DROIDAnalysis:
       self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]
       self.analysisresults.topExtensionList = self.analysisresults.frequencyOfAllExtensions[0:5]
       
-      
-
+      #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
       
 
       
-      '''self.analysisresults.zerobytecount = self.countZeroByteObjects()
-      self.analysisresults.zerobytelist = self.listZeroByteObjects()
-      self.analysisresults.badFilenames = self.msoftfnameanalysis()
+      self.listzerobytefiles()
+      
+      '''self.analysisresults.badFilenames = self.msoftfnameanalysis()
       self.analysisresults.allfilepaths = self.__generatefilepathlistnodirs__()
 
 
