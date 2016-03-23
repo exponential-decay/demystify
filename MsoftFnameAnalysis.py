@@ -14,7 +14,7 @@ class MsoftFnameAnalysis:
       self.STRINGS = IN_EN
 
    #Note: verbose default false because of potential no. characters in a collection
-   def completeFnameAnalysis(self, s, verbose=False):
+   def completeFnameAnalysis(self, s, folders=False, verbose=False):
       #need to ensure argument is interpreted correctly as UNICODE on way in
       #without explicit decode we have str type
       s = s.decode('utf8')
@@ -23,7 +23,7 @@ class MsoftFnameAnalysis:
       self.verbose = verbose
       
       self.detectNonAsciiCharacters(s)
-      self.detectNonRecommendedCharacters(s)
+      self.detectNonRecommendedCharacters(s, folders)
       self.detectNonPrintableCharacters(s)
       self.detectMsoftReservedNames(s)
       self.detectSpaceAtEndOfName(s)
@@ -50,8 +50,11 @@ class MsoftFnameAnalysis:
             if self.verbose == False:
                break
 
-   def detectNonRecommendedCharacters(self, s):
+   def detectNonRecommendedCharacters(self, s, folders=False):
       charlist = ['<','>',':','"','/','\\','?','*','|', ']', '[']
+      if folders==True:
+         charlist = ['<','>','"','?','*','|', ']', '[']
+         
       for c in s:
          if c in charlist:
             self.reportIssue(s, self.STRINGS.FNAME_CHECK_NOT_RECOMMENDED + ":", hex(ord(c)) + ", " + self.unicodename(c))
