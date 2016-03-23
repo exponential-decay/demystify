@@ -84,7 +84,7 @@ def main():
       outputtime(start_time)
    if args.db:
       analysisresults = handleDROIDDB(args.db, config)
-      #handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
+      handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
    if args.export:
       ex = ExportDBClass.ExportDB()

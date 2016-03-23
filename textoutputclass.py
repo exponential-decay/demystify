@@ -160,12 +160,14 @@ class DROIDAnalysisTextOutput:
             self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
             self.printFormattedText(self.__outputdupes__(self.analysisresults.duplicateHASHlisting))
                   
-      if len(self.analysisresults.badFilenames) > 0:
+      if len(self.analysisresults.badFileNames) > 0:
          self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
-         for badnames in self.analysisresults.badFilenames:
+         for badnames in self.analysisresults.badFileNames:
             # Already UTF-8 on way into here...
             self.printFormattedText(badnames, False)
 
-
-
-
+      if len(self.analysisresults.badDirNames) > 0:
+         self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
+         for badnames in self.analysisresults.badDirNames:
+            # Already UTF-8 on way into here...
+            self.printFormattedText(badnames, False)      

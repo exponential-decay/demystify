@@ -1,7 +1,7 @@
 ﻿class AnalysisQueries:
    
-   SELECT_ALL_NAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
-   SELECT_FILENAMES_AND_DIRNAMES = "SELECT FILEDATA.DIR_NAME, FILEDATA.NAME FROM FILEDATA"
+   SELECT_FILENAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
+   SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
    
    SELECT_HASH = "SELECT DBMD.HASH_TYPE FROM DBMD"
    
@@ -152,6 +152,13 @@
                                           GROUP BY FILEDATA.HASH
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
+
+   SELECT_ZERO_ID_FILES = """SELECT FILEDATA.FILE_PATH
+                                 FROM IDRESULTS
+                                 JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                   
+                                 WHERE IDDATA.METHOD='' 
+                                 AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
    def list_duplicate_paths(self, checksum):
       return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='" + checksum + "'ORDER BY FILEDATA.FILE_PATH"

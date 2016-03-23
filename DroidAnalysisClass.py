@@ -47,46 +47,21 @@ class DROIDAnalysis:
    ## DB self.cursor
    cursor = None
    
-   def __querydb__(self, query, fetchone=False, numberquery=False):
+   def __querydb__(self, query, fetchone=False, numberquery=False, tolist=False):
       self.cursor.execute(query)
       if fetchone is True and numberquery is False:
          return self.cursor.fetchone()
       if fetchone is True and numberquery is True:
-         return self.cursor.fetchone()[0]
+         return self.cursor.fetchone()[0]      
       else:
-         return self.cursor.fetchall()   
+         if tolist is False:
+            return self.cursor.fetchall()
+         else:
+            list = []
+            for result in self.cursor.fetchall():
+               list.append(result[0])
+            return list               
    
-   '''def __countQuery__(self, query):
-      self.cursor.execute(query)
-      count = self.cursor.fetchone()[0]
-      return count'''
-
-   '''def __listQuery1__(self, query):
-      self.cursor.execute(query)
-      result = self.cursor.fetchall()
-      resultlist = []
-      for r in result:
-         resultlist.append(r[0])
-      return resultlist'''
-
-   def __listQuery__(self, query):
-      self.cursor.execute(query)
-      result = self.cursor.fetchall()
-      return result
-
-   '''def __listPUIDSQuery__(self, query, separator=False):
-      self.cursor.execute(query)
-      result = self.cursor.fetchall()
-      return result'''
-
-   def __listDuplicateQuery__(self, query):
-      self.cursor.execute(query)
-      result = self.cursor.fetchall()
-      examples = []
-      for a in result:
-         examples.append(str(a[0]))
-      return examples
-
    def __alternativeFrequencyQuery__(self, query):
       self.cursor.execute(query)
       result = self.cursor.fetchall()
@@ -128,9 +103,9 @@ class DROIDAnalysis:
       return len(self.analysisresults.duplicateHASHlisting)
 
    def listzerobytefiles(self):
-      self.analysisresults.zerobytecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZERO_BYTE_FILES)
+      self.analysisresults.zerobytecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZERO_BYTE_FILES, True, True)
       if self.analysisresults.zerobytecount > 0:
-         self.analysisresults.zerobytelist = self.__querydb__(AnalysisQueries.SELECT_ZERO_BYTE_FILEPATHS)
+         self.analysisresults.zerobytelist = self.__querydb__(AnalysisQueries.SELECT_ZERO_BYTE_FILEPATHS, False, False, True)
       else:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
@@ -158,8 +133,8 @@ class DROIDAnalysis:
          return '%.1f' % round(percentage, 1)
         
    def msoftfnameanalysis(self):
-      namelist = self.__querydb__(AnalysisQueries.SELECT_ALL_NAMES)
-      dirlist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES_AND_DIRNAMES)
+      namelist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES)
+      dirlist = self.__querydb__(AnalysisQueries.SELECT_DIRNAMES)
       
       charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
       
@@ -170,10 +145,11 @@ class DROIDAnalysis:
          if checkedname != '':
             namereport.append(checkedname)
 
+      #TODO: Handle recursive paths better to avoid duplication
       dirreport = []
       for d in dirlist:
          dirstring = d[0]
-         checkedname = charcheck.completeFnameAnalysis(dirstring).encode('utf-8')
+         checkedname = charcheck.completeFnameAnalysis(dirstring, True).encode('utf-8')
          if checkedname != '':
             dirreport.append(checkedname)
 
@@ -184,6 +160,8 @@ class DROIDAnalysis:
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
+      else:
+         self.analysisresults.hashused = True
 
       self.analysisresults.collectionsize = self.__querydb__(AnalysisQueries.SELECT_COLLECTION_SIZE, True, True)
       self.analysisresults.filecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES, True, True)
@@ -226,7 +204,7 @@ class DROIDAnalysis:
       #self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
       self.analysisresults.extensionOnlyIDFrequency = self.__querydb__(AnalysisQueries.SELECT_EXT_ONLY_FREQUENCY)
       #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
-      #self.analysisresults.filesWithNoIDList = self.listNoIdentificationFiles()
+      self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
       #TODO: POTENTIALLY DELETE ABOVE
@@ -235,8 +213,9 @@ class DROIDAnalysis:
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
       self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
-      self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS)
       
+      
+      self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS, False, False, True)
 
       #Originally PARETO principle: 80% of the effects from from 20% of the causes
       self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]

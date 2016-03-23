@@ -43,6 +43,7 @@ class AnalysisStringsEN:
    HEADING_ARCHIVE_FORMATS = "Archive File Types in Accession/Extract"
    HEADING_IDENTICAL_CONTENT = "Files With Identical Content (Checksum Value)" 
    HEADING_TROUBLESOME_FILENAMES = "Identifying Non-ASCII and System File Names" 
+   HEADING_TROUBLESOME_DIRNAMES = "Identifying Non-ASCII and System Directory Names" 
 
    SUMMARY_DESC_TOTAL_FILES = "Number of digital files in the accession/extract." 
    SUMMARY_DESC_ARCHIVE_FILES = "The total number of archive files in the accession/extract overall. Archive files are objects that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after." 
@@ -78,6 +79,7 @@ class AnalysisStringsEN:
    HEADING_DESC_ARCHIVE_FORMATS = "Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after."
    HEADING_DESC_IDENTICAL_CONTENT = "This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received." 
    HEADING_DESC_TROUBLESOME_FILENAMES = "Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"    
+   HEADING_DESC_TROUBLESOME_DIRNAMES = "Lists drectory names that may cause issues across different systems and applications. These could be directory names that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Directory names identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"    
 
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
