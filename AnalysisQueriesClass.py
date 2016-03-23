@@ -156,5 +156,18 @@
    def list_duplicate_paths(self, checksum):
       return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='" + checksum + "'ORDER BY FILEDATA.FILE_PATH"
 
+   def count_id_instances(self, id):
+      return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='" + id + "')"
+
+   def search_id_instance_filepaths(self, id):
+      query_part1 = """SELECT FILEDATA.FILE_PATH 
+                        FROM IDRESULTS 
+                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID  
+                        WHERE IDDATA.ID='""" 
+      
+      query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"      
+      return query_part1 + query_part2
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

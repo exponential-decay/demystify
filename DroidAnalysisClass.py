@@ -56,10 +56,10 @@ class DROIDAnalysis:
       else:
          return self.cursor.fetchall()   
    
-   def __countQuery__(self, query):
+   '''def __countQuery__(self, query):
       self.cursor.execute(query)
       count = self.cursor.fetchone()[0]
-      return count
+      return count'''
 
    '''def __listQuery1__(self, query):
       self.cursor.execute(query)
@@ -116,7 +116,7 @@ class DROIDAnalysis:
          pathlist = []
          for e in example:
             pathlist.append(e[0])
-            self.analysisresults.duplicatespathlist.append(e[0])   #create rogues listing
+            self.analysisresults.duplicatespathlist.append(e[0])   #create path only listing
 
          duplicate_sum['checksum'] = str(r[0])
          duplicate_sum['count'] = str(r[1])
@@ -135,19 +135,22 @@ class DROIDAnalysis:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
 
-   def listRoguePUIDs(self, puidlist):
-      searchlist = []
+   def listRoguePUIDs(self, puidlist):   
+      query = AnalysisQueries()       
+      searchlist = []            
       for puid in puidlist:
-         puidquery = "SELECT COUNT(*) AS total FROM droid WHERE (PUID='" + puid + "')"
-         result = self.__countQuery__(puidquery)      
+         result = self.__querydb__(query.count_id_instances(puid), True, True)   
          if result > 0:
             searchlist.append(puid)
 
       roguepuidpathlist = []
-      for p in searchlist:
-         roguepuidpathlist = roguepuidpathlist + self.__listQuery1__("SELECT FILE_PATH FROM droid WHERE PUID='" + p + "' ORDER BY FILE_PATH DESC")
-
-      return roguepuidpathlist
+      for puid in searchlist:
+         result = self.__querydb__(query.search_id_instance_filepaths(puid))        
+         for r in result:
+            roguepuidpathlist.append(r[0])
+            
+      self.analysisresults.roguepuidlisting = roguepuidpathlist      
+      return len(self.analysisresults.roguepuidlisting)
 
    def calculatePercent(self, total, subset):
       if total > 0:
@@ -247,16 +250,8 @@ class DROIDAnalysis:
       self.listzerobytefiles()
       self.msoftfnameanalysis()
 
-      #self.analysisresults.duplicateHASHpathlisting
-      print self.analysisresults.duplicatespathlist
-
-
-      '''
       if self.roguepuids != False:
-         sys.stderr.write("Rogue gallery: Will output rogue PUIDs in rogue listing." + "\n")
-         self.analysisresults.roguepuidlisting = self.listRoguePUIDs(self.roguepuids)
-
-      '''
+         self.listRoguePUIDs(self.roguepuids)
 
       return self.analysisresults
       
