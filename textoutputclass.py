@@ -85,7 +85,7 @@ class DROIDAnalysisTextOutput:
 
       #return the size of the collection
       size = self.analysisresults.collectionsize #easier to reference from a var
-      self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(size) + " bytes | " + str(size/(1048576)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
+      self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
 
       self.__output_list_title__(self.STRINGS.HEADING_IDENTIFIED)
       for item in self.analysisresults.sigIDPUIDList:
