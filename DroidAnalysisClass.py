@@ -83,7 +83,7 @@ class DROIDAnalysis:
       self.analysisresults.totalHASHduplicates = 0
       for r in result:
          self.analysisresults.totalHASHduplicates = self.analysisresults.totalHASHduplicates + int(r[1])
-         
+        
       #result list([HASH, COUNT])      
       query = AnalysisQueries()      
       for r in result:               
@@ -160,6 +160,7 @@ class DROIDAnalysis:
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
+         self.analysisresults.hashused = False
       else:
          self.analysisresults.hashused = True
 
@@ -225,7 +226,9 @@ class DROIDAnalysis:
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
       
       #more complicated listings
-      self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
+      if self.analysisresults.hashused is True:
+         self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
+         
       self.listzerobytefiles()
       self.msoftfnameanalysis()
 
