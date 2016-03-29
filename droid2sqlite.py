@@ -39,6 +39,7 @@ def main():
          handleDROIDCSV(args.export, True)
       elif type == id.SFTYPE:
          sf = SFYaml()
+         sf.sfaslist(args.export)
       elif type == id.UNKTYPE:
          sys.stderr.write("Unknown export type." + "\n")	
    else:
