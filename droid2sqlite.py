@@ -36,8 +36,10 @@ def main():
          handleDROIDCSV(args.export)
       elif type == id.DROIDTYPEBOM:
          handleDROIDCSV(args.export, True)
+      elif type == id.SFTYPE:
+         print "handle sigfried"
       elif type == id.UNKTYPE:
-         sys.stderr.write("Unknown export type." + "\n")		
+         sys.stderr.write("Unknown export type." + "\n")	
    else:
       sys.exit(1)
 
