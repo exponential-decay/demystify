@@ -6,6 +6,7 @@ import sys
 from IdentifyExportClass import IdentifyExport
 from GenerateBaselineDBClass import GenerateBaselineDB
 from DROIDLoaderClass import DROIDLoader
+from SFHandlerClass import SFYaml
 
 def handleDROIDCSV(droidcsv, BOM=False): 
    global basedb
@@ -37,7 +38,7 @@ def main():
       elif type == id.DROIDTYPEBOM:
          handleDROIDCSV(args.export, True)
       elif type == id.SFTYPE:
-         print "handle sigfried"
+         sf = SFYaml()
       elif type == id.UNKTYPE:
          sys.stderr.write("Unknown export type." + "\n")	
    else:
