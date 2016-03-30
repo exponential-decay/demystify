@@ -31,6 +31,10 @@ class SFYaml:
 
    PROCESSING_ERROR = -1
    filecount = 0
+   
+   sfdata = {}
+   DICTHEADER = 'header'
+   DICTFILES = 'files'
 
    def stripkey(self, line):
       line = line.strip()
@@ -121,5 +125,8 @@ class SFYaml:
          self.filecount = len(self.files)
       else:
          self.filecount = self.PROCESSING_ERROR
-         
+      
+      #concatenate header and file details (not needed, but maybe convenient)
+      self.sfdata[self.DICTHEADER] = self.header
+      self.sfdata[self.DICTFILES] = self.files      
       return self.filecount
