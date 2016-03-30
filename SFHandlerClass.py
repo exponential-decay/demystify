@@ -25,7 +25,10 @@ class SFYaml:
 
    #all files in report
    files = []
-   
+
+   fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
+   iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
+
    def stripkey(self, line):
       line = line.strip()
       line = line.replace('- ', '')
@@ -56,11 +59,19 @@ class SFYaml:
          elif line[0] != 'identifiers':
             self.header[line[0]] = line[1]
 
-   def filesection(self, line):
+   def filesection(self, sfrecord):
       iddict = {}    # { nsname : {id : x, mime : x } }  
       filedict = {}
-      print len(line)
-      
+      for s in sfrecord:
+         s = self.handleentry(s)
+         if s[0] in self.fileheaders:
+            print s[0] + " is file data."   
+         if s[0] in self.iddata:
+            print s[0] + " is identification data."
+            #if s[0] == 'ns':
+               
+         #ignore 'matches'
+
    def sfaslist(self, sfname):
       processing = False
       filedata = []
