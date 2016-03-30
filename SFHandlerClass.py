@@ -29,6 +29,9 @@ class SFYaml:
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
    iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
 
+   PROCESSING_ERROR = -1
+   filecount = 0
+
    def stripkey(self, line):
       line = line.strip()
       line = line.replace('- ', '')
@@ -62,15 +65,31 @@ class SFYaml:
    def filesection(self, sfrecord):
       iddict = {}    # { nsname : {id : x, mime : x } }  
       filedict = {}
+      
+      ns = ''
+      iddata = {}
+      
       for s in sfrecord:
          s = self.handleentry(s)
          if s[0] in self.fileheaders:
-            print s[0] + " is file data."   
+            filedict[s[0]] = s[1]
+            #print s[0] + " is file data."   
          if s[0] in self.iddata:
-            print s[0] + " is identification data."
-            #if s[0] == 'ns':
-               
-         #ignore 'matches'
+            #add data to dict on NS trigger, create new dict
+            if s[0] == 'ns':
+               if len(iddata) > 0:
+                  iddict[ns] = iddata
+                  iddata = {}
+               ns = s[1]               
+            else:
+               iddata[s[0]] = s[1]
+      
+      #on loop completion add final id record
+      iddict[ns] = iddata
+      
+      #add complete id data to filedata, return
+      filedict['identification'] = iddict
+      return filedict
 
    def sfaslist(self, sfname):
       processing = False
@@ -86,11 +105,21 @@ class SFYaml:
                self.headersection(line)
             elif self.sectioncount > 1:
                if processing == False and len(filedata) > 0:
-                  self.filesection(filedata) 
+                  self.files.append(self.filesection(filedata))
                   filedata = []
                else:
                   processing = True
                   if line != self.YAMLSECTION: 
                      filedata.append(line)
-
-      #print self.header
+      
+      #Add final section of data to list
+      if len(filedata) > 0:         
+         self.files.append(self.filesection(filedata))
+      
+      #Attempt at useful return value - number of files processed vs. processing error
+      if len(self.files) == self.sectioncount - 1:
+         self.filecount = len(self.files)
+      else:
+         self.filecount = self.PROCESSING_ERROR
+         
+      return self.filecount
