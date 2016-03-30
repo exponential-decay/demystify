@@ -17,6 +17,15 @@ class SFYaml:
    HEADNAMESPACE = 'id_namespace'
    HEADCOUNT = 'identifier_count'
 
+   FILERECORDLEN = 6
+
+   #structures for holding formst information
+   filedetails = {}
+   iddetails = {}
+
+   #all files in report
+   files = []
+   
    def stripkey(self, line):
       line = line.strip()
       line = line.replace('- ', '')
@@ -47,13 +56,30 @@ class SFYaml:
          elif line[0] != 'identifiers':
             self.header[line[0]] = line[1]
 
+   def filesection(self, line):
+      iddict = {}    # { nsname : {id : x, mime : x } }  
+      filedict = {}
+      print len(line)
+      
    def sfaslist(self, sfname):
+      processing = False
+      filedata = []
       with open(sfname, 'rb') as sfile:
          for line in sfile: 
             line = line.strip()
             if line == self.YAMLSECTION:
-               self.sectioncount += 1 
+               self.sectioncount += 1
+               # new section so handle appropriately 
+               processing = False
             if self.sectioncount == 1:
                self.headersection(line)
+            elif self.sectioncount > 1:
+               if processing == False and len(filedata) > 0:
+                  self.filesection(filedata) 
+                  filedata = []
+               else:
+                  processing = True
+                  if line != self.YAMLSECTION: 
+                     filedata.append(line)
 
-      print self.header
+      #print self.header
