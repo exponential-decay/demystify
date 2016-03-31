@@ -1,6 +1,6 @@
 ﻿class ToolMapping:
 
-   FILE_MAP = {
+   DROID_FILE_MAP = {
       "ID" : "INPUT_ID",
       "PARENT_ID" : "PARENT_ID",
       "URI" : "URI",

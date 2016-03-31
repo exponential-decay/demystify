@@ -54,8 +54,8 @@ class DROIDLoader:
                elif key == "HASH":
                   #no hash used in export
                   self.basedb.hashtype = "None"
-            if key in ToolMapping.FILE_MAP:
-               filekeystring = filekeystring + ToolMapping.FILE_MAP[key] + ", "
+            if key in ToolMapping.DROID_FILE_MAP:
+               filekeystring = filekeystring + ToolMapping.DROID_FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + value + "', "
             if key in ToolMapping.DROID_ID_MAP:
                if key == 'EXTENSION_MISMATCH':
