@@ -2,7 +2,7 @@
 # we don't import YAML handler for this 
 # as no standard PYTHON handler library
 
-class SFYaml:
+class SFYAMLHandler:
    
    sectioncount = 0
    identifiercount = 0
@@ -95,7 +95,7 @@ class SFYaml:
       filedict['identification'] = iddict
       return filedict
 
-   def sfaslist(self, sfname):
+   def readSFYAML(self, sfname):
       processing = False
       filedata = []
       with open(sfname, 'rb') as sfile:
