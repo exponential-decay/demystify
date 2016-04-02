@@ -13,4 +13,10 @@ class SFLoader:
       sf = SFYAMLHandler()
       print sf.readSFYAML(sfexport)
       
-      
+      sfdata = sf.sfdata
+
+      sf.adddirname(sfdata)
+
+      #print sfdata[sf.DICTHEADER]
+
+      #print sfdata[sf.DICTFILES]
