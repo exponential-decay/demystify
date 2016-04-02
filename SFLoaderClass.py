@@ -18,6 +18,11 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
+      for x in sfdata[sf.DICTFILES]:
+         print x    
+         print
+         print
+
       #print sfdata[sf.DICTHEADER]
 
       #print sfdata[sf.DICTFILES]

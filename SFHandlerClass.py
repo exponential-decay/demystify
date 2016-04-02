@@ -30,6 +30,7 @@ class SFYAMLHandler:
 
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
    iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
+   containers = {'zip': 'x-fmt/263', 'gzip': 'x-fmt/266', 'tar': 'x-fmt/265', 'warc': 'fmt/289'}
 
    PROCESSING_ERROR = -1
    filecount = 0
@@ -37,6 +38,7 @@ class SFYAMLHandler:
    sfdata = {}
    DICTHEADER = 'header'
    DICTFILES = 'files'
+   DICTID = 'identification'
 
    def stripkey(self, line):
       line = line.strip()
@@ -78,8 +80,7 @@ class SFYAMLHandler:
       for s in sfrecord:
          s = self.handleentry(s)
          if s[0] in self.fileheaders:
-            filedict[s[0]] = s[1]
-            #print s[0] + " is file data."   
+            filedict[s[0]] = s[1]  
          if s[0] in self.iddata:
             #add data to dict on NS trigger, create new dict
             if s[0] == 'ns':
@@ -88,13 +89,15 @@ class SFYAMLHandler:
                   iddata = {}
                ns = s[1]               
             else:
+               if s[0] == 'id':
+                  self.getContainers(s[1], filedict)
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
       iddict[ns] = iddata
       
       #add complete id data to filedata, return
-      filedict['identification'] = iddict
+      filedict[self.DICTID] = iddict
       return filedict
 
    def readSFYAML(self, sfname):
@@ -148,22 +151,23 @@ class SFYAMLHandler:
          row['year'] = self.getYear(year)
       return sfdata
 
-
-   def getYear(Self, datestring):
+   def getYear(self, datestring):
       #sf example: 2016-04-02T20:45:12+13:00
       dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
       return int(dt.year)
 
+   def getContainers(self, id, filedict):
+      #only set as File if and only if it isn't a Container
+      #container overrides all...
+      if id in self.containers.values():
+         filedict['type'] = 'Container'
+      else:
+         if 'type' in filedict:
+            if filedict['type'] != 'Container':
+               filedict['type'] = 'File' 
+         else: 
+            filedict['type'] = 'File' 
 '''
-   def addYear(self, droidlist):
-      for row in droidlist:
-         if row['LAST_MODIFIED'] is not '':
-            row['YEAR'] = str(self.getYear(row['LAST_MODIFIED']))
-      return droidlist
-
-   def getYear(self, datestring):
-      
-      return int(dt.year)
 
    def addurischeme(self, droidlist):
       for row in droidlist:
@@ -175,6 +179,5 @@ class SFYAMLHandler:
 
    
    from urlparse import urlparse
-
 
 '''
