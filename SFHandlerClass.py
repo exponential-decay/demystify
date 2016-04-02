@@ -153,6 +153,7 @@ class SFYAMLHandler:
 
    def getYear(self, datestring):
       #sf example: 2016-04-02T20:45:12+13:00
+      datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)
       dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
       return int(dt.year)
 
