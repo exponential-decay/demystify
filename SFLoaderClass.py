@@ -19,10 +19,11 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
-      for x in sfdata[sf.DICTFILES]:
+      '''for x in sfdata[sf.DICTFILES]:
          print x    
          print
-         print
+         print'''
+
 
       #print sfdata[sf.DICTHEADER]
 

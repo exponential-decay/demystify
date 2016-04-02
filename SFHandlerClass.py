@@ -40,6 +40,9 @@ class SFYAMLHandler:
    DICTFILES = 'files'
    DICTID = 'identification'
 
+   TYPECONT = 'Container'
+   TYPEFILE = 'File'
+
    def stripkey(self, line):
       line = line.strip()
       line = line.replace('- ', '')
@@ -170,13 +173,13 @@ class SFYAMLHandler:
       #only set as File if and only if it isn't a Container
       #container overrides all...
       if id in self.containers.values():
-         filedict['type'] = 'Container'
+         filedict['type'] = self.TYPECONT
       else:
          if 'type' in filedict:
-            if filedict['type'] != 'Container':
-               filedict['type'] = 'File' 
+            if filedict['type'] != self.TYPECONT:
+               filedict['type'] = self.TYPEFILE
          else: 
-            filedict['type'] = 'File' 
+            filedict['type'] = self.TYPEFILE 
 '''
 
    def addurischeme(self, droidlist):
