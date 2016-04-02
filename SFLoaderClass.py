@@ -15,6 +15,7 @@ class SFLoader:
       
       sfdata = sf.sfdata
 
+      sf.addfilename(sfdata)
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 

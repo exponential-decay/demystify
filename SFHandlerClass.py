@@ -139,10 +139,19 @@ class SFYAMLHandler:
    def getDirName(self, filepath):
       return os.path.dirname(filepath)   
 
+   def getFileName(self, filepath):
+      return os.path.basename(filepath)
+   
    def adddirname(self, sfdata):
       for row in sfdata[self.DICTFILES]:
          fname = row['filename']
          row['directory'] = self.getDirName(fname) 
+      return sfdata
+
+   def addfilename(self, sfdata):
+      for row in sfdata[self.DICTFILES]:
+         fname = row['filename']
+         row['name'] = self.getFileName(fname)
       return sfdata
 
    def addYear(self, sfdata):
