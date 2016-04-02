@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # we don't import YAML handler for this 
 # as no standard PYTHON handler library
-import os
+import os.path
+import datetime
 
 class SFYAMLHandler:
    
@@ -141,6 +142,18 @@ class SFYAMLHandler:
          row['directory'] = self.getDirName(fname) 
       return sfdata
 
+   def addYear(self, sfdata):
+      for row in sfdata[self.DICTFILES]:
+         year = row['modified']
+         row['year'] = self.getYear(year)
+      return sfdata
+
+
+   def getYear(Self, datestring):
+      #sf example: 2016-04-02T20:45:12+13:00
+      dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
+      return int(dt.year)
+
 '''
    def addYear(self, droidlist):
       for row in droidlist:
@@ -149,7 +162,7 @@ class SFYAMLHandler:
       return droidlist
 
    def getYear(self, datestring):
-      dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
+      
       return int(dt.year)
 
    def addurischeme(self, droidlist):
@@ -160,8 +173,7 @@ class SFYAMLHandler:
    def getURIScheme(self, url):
       return urlparse(url).scheme
 
-   import os.path
-   import datetime
+   
    from urlparse import urlparse
 
 

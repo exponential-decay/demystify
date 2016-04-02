@@ -16,6 +16,7 @@ class SFLoader:
       sfdata = sf.sfdata
 
       sf.adddirname(sfdata)
+      sf.addYear(sfdata)
 
       #print sfdata[sf.DICTHEADER]
 
