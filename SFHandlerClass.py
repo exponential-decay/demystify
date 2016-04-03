@@ -3,6 +3,7 @@
 # as no standard PYTHON handler library
 import os.path
 import datetime
+from urlparse import urlparse
 
 class SFYAMLHandler:
    
@@ -30,7 +31,7 @@ class SFYAMLHandler:
 
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
    iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
-   containers = {'zip': 'x-fmt/263', 'gzip': 'x-fmt/266', 'tar': 'x-fmt/265', 'warc': 'fmt/289'}
+   containers = {'zip': 'x-fmt/263', 'gz': 'x-fmt/266', 'tar': 'x-fmt/265', 'warc': 'fmt/289'}
 
    PROCESSING_ERROR = -1
    filecount = 0
@@ -42,6 +43,12 @@ class SFYAMLHandler:
 
    TYPECONT = 'Container'
    TYPEFILE = 'File'
+   
+   #additional fields given to SF output
+   FIELDURI = 'uri'
+   FIELDURISCHEME = 'uri scheme'
+   FIELDDIRNAME = 'directory'
+   FIELDYEAR = 'year'
 
    def stripkey(self, line):
       line = line.strip()
@@ -84,6 +91,20 @@ class SFYAMLHandler:
          s = self.handleentry(s)
          if s[0] in self.fileheaders:
             filedict[s[0]] = s[1]  
+            
+            if s[0] == 'filename':
+               fname = filedict['filename']
+               fname = self.addFileURI(fname)
+               for f in self.files:
+                  needle_name = f['filename']
+                  needle_type = f['type']
+                  haystack = fname
+                  if needle_name in haystack:
+                     if needle_type == self.TYPECONT:
+                        fname = self.addContainerURI(f, filedict, fname)                      
+               filedict[self.FIELDURI] = fname
+               filedict[self.FIELDURISCHEME] = self.geturischeme(fname)
+
          if s[0] in self.iddata:
             #add data to dict on NS trigger, create new dict
             if s[0] == 'ns':
@@ -148,7 +169,7 @@ class SFYAMLHandler:
    def adddirname(self, sfdata):
       for row in sfdata[self.DICTFILES]:
          fname = row['filename']
-         row['directory'] = self.getDirName(fname) 
+         row[self.FIELDDIRNAME] = self.getDirName(fname) 
       return sfdata
 
    def addfilename(self, sfdata):
@@ -160,7 +181,7 @@ class SFYAMLHandler:
    def addYear(self, sfdata):
       for row in sfdata[self.DICTFILES]:
          year = row['modified']
-         row['year'] = self.getYear(year)
+         row[self.FIELDYEAR] = self.getYear(year)
       return sfdata
 
    def getYear(self, datestring):
@@ -174,23 +195,24 @@ class SFYAMLHandler:
       #container overrides all...
       if id in self.containers.values():
          filedict['type'] = self.TYPECONT
+         #get container type: http://stackoverflow.com/a/13149770
+         filedict['containertype'] = self.containers.keys()[self.containers.values().index(id)]
       else:
          if 'type' in filedict:
             if filedict['type'] != self.TYPECONT:
                filedict['type'] = self.TYPEFILE
          else: 
             filedict['type'] = self.TYPEFILE 
-'''
 
-   def addurischeme(self, droidlist):
-      for row in droidlist:
-         row['URI_SCHEME'] = self.getURIScheme(row['URI'])
-      return droidlist
+   def addFileURI(self, fname):
+      fname = "file:" + fname
+      return fname
 
-   def getURIScheme(self, url):
-      return urlparse(url).scheme
+   def addContainerURI(self, container, containedfile, fname):
+      fname = container['containertype'] + ":" + fname 
+      fname = fname.replace(container['filename'], container['filename'] + "!")
+      return fname
 
-   
-   from urlparse import urlparse
+   def geturischeme(self, fname):
+      return urlparse(fname).scheme
 
-'''
