@@ -3,7 +3,8 @@
 # as no standard PYTHON handler library
 import os.path
 import datetime
-from urlparse import urlparse
+import urllib
+from urlparse import urlparse, urljoin
 
 class SFYAMLHandler:
    
@@ -91,19 +92,18 @@ class SFYAMLHandler:
          s = self.handleentry(s)
          if s[0] in self.fileheaders:
             filedict[s[0]] = s[1]  
-            
             if s[0] == 'filename':
                fname = filedict['filename']
-               fname = self.addFileURI(fname)
+               furi = self.addFileURI(fname)
                for f in self.files:
                   needle_name = f['filename']
                   needle_type = f['type']
                   haystack = fname
                   if needle_name in haystack:
                      if needle_type == self.TYPECONT:
-                        fname = self.addContainerURI(f, filedict, fname)                      
-               filedict[self.FIELDURI] = fname
-               filedict[self.FIELDURISCHEME] = self.geturischeme(fname)
+                        furi = self.addContainerURI(f, filedict, furi)                      
+               filedict[self.FIELDURI] = furi
+               filedict[self.FIELDURISCHEME] = self.geturischeme(furi)
 
          if s[0] in self.iddata:
             #add data to dict on NS trigger, create new dict
@@ -205,7 +205,11 @@ class SFYAMLHandler:
             filedict['type'] = self.TYPEFILE 
 
    def addFileURI(self, fname):
-      fname = "file:" + fname
+      fname = fname.replace("\\","/")
+      fname = urljoin('file:', urllib.pathname2url(fname))
+
+      #decode to match droid/sf output
+      fname = urllib.unquote(fname).decode('utf8')
       return fname
 
    def addContainerURI(self, container, containedfile, fname):

@@ -20,7 +20,10 @@ class SFLoader:
       sf.addYear(sfdata)
 
       '''for x in sfdata[sf.DICTFILES]:
-         print x    
+         print x[sf.FIELDURI]
+         print x[sf.FIELDURISCHEME]'''
+
+      '''   print x    
          print
          print'''
 
