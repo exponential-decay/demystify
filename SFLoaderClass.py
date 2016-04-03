@@ -19,14 +19,26 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
+#   HEADDETAILS = 'id details '
+#   HEADNAMESPACE = 'id namespace '
+#   HEADCOUNT = 'identifier count'
+
+      identifiers = sf.getIdentifiersList()
+
+#      for x in identidiers:
+                  
+      
+     #    print x
+
       for x in sfdata[sf.DICTFILES]:
-         print x[sf.FIELDURI]
-         print x[sf.FIELDURISCHEME]
+         for y in identifiers:         
+            print x[sf.DICTID][y]['basis']
 
-      '''   print x    
-         print
-         print'''
-
+            #for z in y:
+               #print z
+      #for x in sfdata[sf.DICTFILES]:
+      #   print x[sf.FIELDURI]
+      #   print x[sf.FIELDURISCHEME]
 
       #print sfdata[sf.DICTHEADER]
 

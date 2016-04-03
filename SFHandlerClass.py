@@ -17,9 +17,9 @@ class SFYAMLHandler:
 
    header = {}
 
-   HEADDETAILS = 'id_details'
-   HEADNAMESPACE = 'id_namespace'
-   HEADCOUNT = 'identifier_count'
+   HEADDETAILS = 'id details '
+   HEADNAMESPACE = 'id namespace '
+   HEADCOUNT = 'identifier count'
 
    FILERECORDLEN = 6
 
@@ -53,6 +53,13 @@ class SFYAMLHandler:
    FIELDYEAR = 'year'
    FIELDCONTTYPE = 'containertype'
    FIELDTYPE = 'type'
+
+   def getIdentifiersList(self):
+      namespaces = []
+      ids = self.sfdata[self.DICTHEADER][self.HEADCOUNT]
+      for x in range(ids):
+         namespaces.append(self.sfdata[self.DICTHEADER][self.HEADNAMESPACE + str(x+1)]) 
+      return namespaces
 
    def stripkey(self, line):
       line = line.strip()
@@ -118,6 +125,9 @@ class SFYAMLHandler:
             else:
                if s[0] == 'id':
                   self.getContainers(s[1], filedict)
+               if s[0] == 'basis':
+                  if s[1] == '':
+                     s[1] = None
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
