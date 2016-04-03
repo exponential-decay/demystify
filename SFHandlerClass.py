@@ -46,10 +46,13 @@ class SFYAMLHandler:
    TYPEFILE = 'File'
    
    #additional fields given to SF output
+   FIELDFILENAME = 'filename'
    FIELDURI = 'uri'
    FIELDURISCHEME = 'uri scheme'
    FIELDDIRNAME = 'directory'
    FIELDYEAR = 'year'
+   FIELDCONTTYPE = 'containertype'
+   FIELDTYPE = 'type'
 
    def stripkey(self, line):
       line = line.strip()
@@ -92,12 +95,12 @@ class SFYAMLHandler:
          s = self.handleentry(s)
          if s[0] in self.fileheaders:
             filedict[s[0]] = s[1]  
-            if s[0] == 'filename':
-               fname = filedict['filename']
+            if s[0] == self.FIELDFILENAME:
+               fname = filedict[self.FIELDFILENAME]
                furi = self.addFileURI(fname)
                for f in self.files:
-                  needle_name = f['filename']
-                  needle_type = f['type']
+                  needle_name = f[self.FIELDFILENAME]
+                  needle_type = f[self.FIELDTYPE]
                   haystack = fname
                   if needle_name in haystack:
                      if needle_type == self.TYPECONT:
@@ -168,13 +171,13 @@ class SFYAMLHandler:
    
    def adddirname(self, sfdata):
       for row in sfdata[self.DICTFILES]:
-         fname = row['filename']
+         fname = row[self.FIELDFILENAME]
          row[self.FIELDDIRNAME] = self.getDirName(fname) 
       return sfdata
 
    def addfilename(self, sfdata):
       for row in sfdata[self.DICTFILES]:
-         fname = row['filename']
+         fname = row[self.FIELDFILENAME]
          row['name'] = self.getFileName(fname)
       return sfdata
 
@@ -194,15 +197,15 @@ class SFYAMLHandler:
       #only set as File if and only if it isn't a Container
       #container overrides all...
       if id in self.containers.values():
-         filedict['type'] = self.TYPECONT
+         filedict[self.FIELDTYPE] = self.TYPECONT
          #get container type: http://stackoverflow.com/a/13149770
-         filedict['containertype'] = self.containers.keys()[self.containers.values().index(id)]
+         filedict[self.FIELDCONTTYPE] = self.containers.keys()[self.containers.values().index(id)]
       else:
-         if 'type' in filedict:
-            if filedict['type'] != self.TYPECONT:
-               filedict['type'] = self.TYPEFILE
+         if self.FIELDTYPE in filedict:
+            if filedict[self.FIELDTYPE] != self.TYPECONT:
+               filedict[self.FIELDTYPE] = self.TYPEFILE
          else: 
-            filedict['type'] = self.TYPEFILE 
+            filedict[self.FIELDTYPE] = self.TYPEFILE 
 
    def addFileURI(self, fname):
       fname = fname.replace("\\","/")
@@ -213,8 +216,8 @@ class SFYAMLHandler:
       return fname
 
    def addContainerURI(self, container, containedfile, fname):
-      fname = container['containertype'] + ":" + fname 
-      fname = fname.replace(container['filename'], container['filename'] + "!")
+      fname = container[self.FIELDCONTTYPE] + ":" + fname 
+      fname = fname.replace(container[self.FIELDFILENAME], container[self.FIELDFILENAME] + "!")
       return fname
 
    def geturischeme(self, fname):

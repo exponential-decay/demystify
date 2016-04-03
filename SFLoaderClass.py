@@ -19,9 +19,9 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
-      '''for x in sfdata[sf.DICTFILES]:
+      for x in sfdata[sf.DICTFILES]:
          print x[sf.FIELDURI]
-         print x[sf.FIELDURISCHEME]'''
+         print x[sf.FIELDURISCHEME]
 
       '''   print x    
          print
