@@ -29,11 +29,13 @@ class SFLoader:
                   
       
      #    print x
-
+'''
       for x in sfdata[sf.DICTFILES]:
-         for y in identifiers:         
-            print x[sf.DICTID][y]['basis']
-
+         for y in identifiers:   
+            basis = x[sf.DICTID][y]['basis']
+            if basis is not None:
+               print '"' + basis + '"'
+               '''
             #for z in y:
                #print z
       #for x in sfdata[sf.DICTFILES]:

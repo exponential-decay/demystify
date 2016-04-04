@@ -128,6 +128,11 @@ class SFYAMLHandler:
                if s[0] == 'basis':
                   if s[1] == '':
                      s[1] = None
+                  self.getMethod(s[1], iddata)
+               if s[0] == 'warning':
+                  if s[1] == '':
+                     s[1] = None
+                  print '"' + str(s[1]) + '"'
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
@@ -172,6 +177,9 @@ class SFYAMLHandler:
       self.sfdata[self.DICTHEADER] = self.header
       self.sfdata[self.DICTFILES] = self.files      
       return self.filecount
+
+   def getMethod(self, basis, iddata):
+      return basis
 
    def getDirName(self, filepath):
       return os.path.dirname(filepath)   
