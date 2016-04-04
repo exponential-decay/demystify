@@ -32,10 +32,10 @@ class SFLoader:
 '''
       for x in sfdata[sf.DICTFILES]:
          for y in identifiers:   
-            basis = x[sf.DICTID][y]['basis']
+            basis = x[sf.DICTID][y]['method']
             if basis is not None:
                print '"' + basis + '"'
-               '''
+   '''            
             #for z in y:
                #print z
       #for x in sfdata[sf.DICTFILES]:

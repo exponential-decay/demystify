@@ -33,6 +33,15 @@ class SFYAMLHandler:
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
    iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
    containers = {'zip': 'x-fmt/263', 'gz': 'x-fmt/266', 'tar': 'x-fmt/265', 'warc': 'fmt/289'}
+   
+   mismatch_warning = 'extension mismatch'
+   filename_only = 'match on filename only' 
+   extension_only = 'match on extension only' 
+
+   text_basis = 'text match'
+   byte_basis = 'byte match'
+   container_basis = 'container match'
+   xml_basis = 'xml match'
 
    PROCESSING_ERROR = -1
    filecount = 0
@@ -53,6 +62,8 @@ class SFYAMLHandler:
    FIELDYEAR = 'year'
    FIELDCONTTYPE = 'containertype'
    FIELDTYPE = 'type'
+   FIELDMETHOD = 'method'
+   FIELDMISMATCH = 'extension mismatch'
 
    def getIdentifiersList(self):
       namespaces = []
@@ -132,7 +143,8 @@ class SFYAMLHandler:
                if s[0] == 'warning':
                   if s[1] == '':
                      s[1] = None
-                  print '"' + str(s[1]) + '"'
+                  self.getMethod(s[1], iddata, True)
+                  self.getMismatch(s[1], iddata)
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
@@ -178,8 +190,36 @@ class SFYAMLHandler:
       self.sfdata[self.DICTFILES] = self.files      
       return self.filecount
 
-   def getMethod(self, basis, iddata):
-      return basis
+   def getMismatch(self, warning, iddata):
+      if warning is not None:
+         if self.mismatch_warning in warning:
+            iddata[self.FIELDMISMATCH] = True
+         else:
+            iddata[self.FIELDMISMATCH] = False
+
+   def getMethod(self, basis, iddata, warning=False):
+      if warning is False and basis != None:
+         if self.container_basis in basis:
+            iddata[self.FIELDMETHOD] = 'Container'
+         elif self.byte_basis in basis:
+            iddata[self.FIELDMETHOD] = 'Signature'
+         elif self.xml_basis in basis:
+            iddata[self.FIELDMETHOD] = 'XML'
+         elif self.text_basis in basis:
+            iddata[self.FIELDMETHOD] = 'Text'
+         
+      if warning is True and basis != None: 
+         if self.filename_only in basis:
+            method = 'Filename'
+         elif self.extension_only in basis:
+            method = 'Extension'     
+         else:
+            #warning comes after basis in SF report
+            method = 'None' 
+            print basis
+         if self.FIELDMETHOD not in iddata: 
+            iddata[self.FIELDMETHOD] = method
+
 
    def getDirName(self, filepath):
       return os.path.dirname(filepath)   
