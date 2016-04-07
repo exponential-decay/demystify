@@ -143,7 +143,7 @@ class SFYAMLHandler:
                if s[0] == 'warning':
                   if s[1] == '':
                      s[1] = None
-                  self.getMethod(s[1], iddata, True)
+                  self.getMethod(s[1], iddata, filedict, True)
                   self.getMismatch(s[1], iddata)
                iddata[s[0]] = s[1]
       
@@ -197,7 +197,7 @@ class SFYAMLHandler:
          else:
             iddata[self.FIELDMISMATCH] = False
 
-   def getMethod(self, basis, iddata, warning=False):
+   def getMethod(self, basis, iddata, filedict=False, warning=False):
       if warning is False and basis != None:
          if self.container_basis in basis:
             iddata[self.FIELDMETHOD] = 'Container'
@@ -215,8 +215,9 @@ class SFYAMLHandler:
             method = 'Extension'     
          else:
             #warning comes after basis in SF report
+            #posit: at this point anything else is not 
+            #really an identification at all 
             method = 'None' 
-            print basis
          if self.FIELDMETHOD not in iddata: 
             iddata[self.FIELDMETHOD] = method
 
