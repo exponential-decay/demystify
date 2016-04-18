@@ -38,7 +38,12 @@ class SFLoader:
             if key in ToolMapping.SF_FILE_MAP:
                filekeystring = filekeystring + ToolMapping.SF_FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + str(value) + "', "
-               print filekeystring
-               print filevaluestring
+               #print filekeystring
+               #print filevaluestring
+            else:
+               #understand what to do with errors in SF output
+               if key == 'errors':
+                  if value != '':
+                     sys.stderr.write("LOG: " + value + "\n")
 
 
