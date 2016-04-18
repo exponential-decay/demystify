@@ -49,3 +49,16 @@
       "sha512" : "HASH",     
       "crc" : "HASH"     
    }
+
+   #file count doesn't have a place yet...
+   SF_ID_MAP = {
+      'method' : 'METHOD',
+      #'STATUS' : 'STATUS',
+      'id' : 'ID',
+      'mime' : 'MIME_TYPE',
+      'format' : 'FORMAT_NAME',
+      'version' : 'FORMAT_VERSION',    #no version for tika or freedesktop
+      'extension mismatch' : 'EXTENSION_MISMATCH',
+      #'FORMAT_COUNT' : 'FORMAT_COUNT'  #mismatch extends into multiple namespace records
+      }
+
