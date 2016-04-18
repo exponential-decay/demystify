@@ -10,6 +10,18 @@ class SFLoader:
    def __init__(self, basedb):
       self.basedb = basedb
 
+   def insertfiledbstring(self, keys, values):
+      insert = "INSERT INTO " + self.basedb.FILEDATATABLE
+      return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
+
+   def insertiddbstring(self, keys, values):
+      insert = "INSERT INTO " + self.basedb.IDTABLE
+      return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
+
+   def file_id_junction_insert(self, file, id):
+      return "INSERT INTO " + self.basedb.ID_JUNCTION + "(" + self.basedb.FILEID + "," \
+               + self.basedb.IDID + ") VALUES (" + str(file) + "," + str(id) + ");"
+
    def handleID(self, idsection, idkeystring, idvaluestring):
       idk = []
       idv = []
@@ -27,17 +39,13 @@ class SFLoader:
       
    def sfDBSetup(self, sfexport, cursor):
       sf = SFYAMLHandler()
-      print sf.readSFYAML(sfexport)
+      sf.readSFYAML(sfexport)
       
       sfdata = sf.sfdata
 
       sf.addfilename(sfdata)
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
-
-      #   HEADDETAILS = 'id details '
-      #   HEADNAMESPACE = 'id namespace '
-      #   HEADCOUNT = 'identifier count'
 
       self.identifiers = sf.getIdentifiersList()
       files = sf.getFiles()
@@ -56,15 +64,27 @@ class SFLoader:
             if key in ToolMapping.SF_FILE_MAP:
                filekeystring = filekeystring + ToolMapping.SF_FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + str(value) + "', "
-               #print filekeystring
-               #print filevaluestring
             else:
                #understand what to do with errors in SF output
                if key == 'errors':
                   if value != '':
                      sys.stderr.write("LOG: " + value + "\n")
                if key == sf.DICTID:
-                  idk, idv = self.handleID(value, idkeystring, idvaluestring)
+                  idkey, idvalue = self.handleID(value, idkeystring, idvaluestring)
 
+      
+         cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
+         fileid = cursor.lastrowid
 
+         insert = []  
+         for x in range(len(idkey)):
+            insert.append(self.insertiddbstring(''.join(idkey[x]), ''.join(idvalue[x])))
+
+         rowlist = []
+         for i in insert:
+            cursor.execute(i)
+            rowlist.append(cursor.lastrowid)
+
+         for rowid in rowlist:
+            cursor.execute(self.file_id_junction_insert(fileid,rowid))
 
