@@ -19,16 +19,20 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
-#   HEADDETAILS = 'id details '
-#   HEADNAMESPACE = 'id namespace '
-#   HEADCOUNT = 'identifier count'
+      #   HEADDETAILS = 'id details '
+      #   HEADNAMESPACE = 'id namespace '
+      #   HEADCOUNT = 'identifier count'
 
       identifiers = sf.getIdentifiersList()
+      files = sf.getFiles()
 
-#      for x in identidiers:
-                  
-      
-     #    print x
+      #Awkward structure to navigate
+      #sf.sfdata['header']
+      #sf.sfdata['files']
+      #sf.sfdata['files'][0]['identification']
+
+      #  for x in identidiers:
+      #  print x
 '''
       for x in sfdata[sf.DICTFILES]:
          for y in identifiers:   

@@ -72,6 +72,9 @@ class SFYAMLHandler:
          namespaces.append(self.sfdata[self.DICTHEADER][self.HEADNAMESPACE + str(x+1)]) 
       return namespaces
 
+   def getFiles(self):
+      return self.sfdata[self.DICTFILES]
+
    def stripkey(self, line):
       line = line.strip()
       line = line.replace('- ', '')
