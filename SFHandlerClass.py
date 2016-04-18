@@ -30,6 +30,9 @@ class SFYAMLHandler:
    #all files in report
    files = []
 
+   hashtype = False
+
+   hashes = ['md5', 'sha1', 'sha256', 'sha512', 'crc']
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
    iddata = ['ns', 'id', 'format', 'version', 'mime', 'basis', 'warning']
    containers = {'zip': 'x-fmt/263', 'gz': 'x-fmt/266', 'tar': 'x-fmt/265', 'warc': 'fmt/289'}
@@ -128,6 +131,8 @@ class SFYAMLHandler:
                         furi = self.addContainerURI(f, filedict, furi)                      
                filedict[self.FIELDURI] = furi
                filedict[self.FIELDURISCHEME] = self.geturischeme(furi)
+            if s[0] in self.hashes and self.hashtype == False:
+               self.hashtype = s[0]
 
          if s[0] in self.iddata:
             #add data to dict on NS trigger, create new dict

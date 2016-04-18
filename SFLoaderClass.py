@@ -88,3 +88,5 @@ class SFLoader:
          for rowid in rowlist:
             cursor.execute(self.file_id_junction_insert(fileid,rowid))
 
+         if sf.hashtype != False:
+            self.basedb.hashtype = sf.hashtype
