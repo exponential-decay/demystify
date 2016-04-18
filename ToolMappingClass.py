@@ -29,3 +29,23 @@
       'EXTENSION_MISMATCH' : 'EXTENSION_MISMATCH',
       'FORMAT_COUNT' : 'FORMAT_COUNT'  #TODO: Remove into namespace tables
       }
+
+   SF_FILE_MAP = {
+      #"_" : "INPUT_ID",
+      #"_" : "PARENT_ID",
+      "uri" : "URI",
+      "uri scheme" : "URI_SCHEME",
+      "filename" : "FILE_PATH",
+      "directory" : "DIR_NAME",
+      "name" : "NAME", 
+      "filesize" : "SIZE",
+      "type" : "TYPE",
+      #"_" : "EXT",
+      "modified" : "LAST_MODIFIED",
+      "year" : "YEAR",
+      "md5" : "HASH",     
+      "sha1" : "HASH",     
+      "sha256" : "HASH",     
+      "sha512" : "HASH",     
+      "crc" : "HASH"     
+   }

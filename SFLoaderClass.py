@@ -31,21 +31,14 @@ class SFLoader:
       #sf.sfdata['files']
       #sf.sfdata['files'][0]['identification']
 
-      #  for x in identidiers:
-      #  print x
-'''
-      for x in sfdata[sf.DICTFILES]:
-         for y in identifiers:   
-            basis = x[sf.DICTID][y]['method']
-            if basis is not None:
-               print '"' + basis + '"'
-   '''            
-            #for z in y:
-               #print z
-      #for x in sfdata[sf.DICTFILES]:
-      #   print x[sf.FIELDURI]
-      #   print x[sf.FIELDURISCHEME]
+      for f in files:
+         filekeystring = ''
+         filevaluestring = ''
+         for key, value in f.items():
+            if key in ToolMapping.SF_FILE_MAP:
+               filekeystring = filekeystring + ToolMapping.SF_FILE_MAP[key] + ", "
+               filevaluestring = filevaluestring + "'" + str(value) + "', "
+               print filekeystring
+               print filevaluestring
 
-      #print sfdata[sf.DICTHEADER]
 
-      #print sfdata[sf.DICTFILES]
