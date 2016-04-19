@@ -73,6 +73,7 @@ class DROIDLoader:
                      idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
                      idvaluestring = idvaluestring + "'" + value + "', "
                else:
+                  #self.pupulateNSTable()
                   print x[droidcsvhandler.DICT_FORMATS]
          
          id = None
