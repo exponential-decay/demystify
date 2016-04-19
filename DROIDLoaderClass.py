@@ -35,9 +35,9 @@ class DROIDLoader:
          droidcsvhandler = droidCSVHandler()
          droidlist = droidcsvhandler.readDROIDCSV(droidcsv, self.BOM)
 
-      droidlist = droidcsvhandler.addurischeme(droidlist)
-      droidlist = droidcsvhandler.addYear(droidlist)
-      droidlist = droidcsvhandler.adddirname(droidlist)
+      #droidlist = droidcsvhandler.addurischeme(droidlist)
+      #droidlist = droidcsvhandler.addYear(droidlist)
+      #droidlist = droidcsvhandler.adddirname(droidlist)
 
       for x in droidlist:
          filekeystring = ''
