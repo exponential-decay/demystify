@@ -36,7 +36,11 @@ class SFLoader:
          idkeystring = ''
          idvaluestring = ''
       return idk, idv
-      
+
+   def populateIDtable(self, ids):
+      self.identifiers = ids
+      return ''
+
    def sfDBSetup(self, sfexport, cursor):
       sf = SFYAMLHandler()
       sf.readSFYAML(sfexport)
@@ -47,15 +51,14 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
-      self.identifiers = sf.getIdentifiersList()
-      files = sf.getFiles()
+      self.populateIDtable(sf.getIdentifiersList())      
 
-      #Awkward structure to navigate
-      #sf.sfdata['header']
-      #sf.sfdata['files']
-      #sf.sfdata['files'][0]['identification']
-
-      for f in files:
+      #Awkward structures to navigate----------#
+      #sf.sfdata['header']                     #
+      #sf.sfdata['files']                      #
+      #sf.sfdata['files'][0]['identification'] #
+      #----------------------------------------#
+      for f in sf.getFiles():
          filekeystring = ''
          filevaluestring = ''
          idkeystring = ''
