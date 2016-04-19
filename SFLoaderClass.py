@@ -22,7 +22,7 @@ class SFLoader:
       return "INSERT INTO " + self.basedb.ID_JUNCTION + "(" + self.basedb.FILEID + "," \
                + self.basedb.IDID + ") VALUES (" + str(file) + "," + str(id) + ");"
 
-   def handleID(self, idsection, idkeystring, idvaluestring):
+   def handleID(self, idsection, idkeystring, idvaluestring, nsdict):
       idk = []
       idv = []
       for x in self.identifiers:
@@ -31,16 +31,42 @@ class SFLoader:
                idkeystring = idkeystring + ToolMapping.SF_ID_MAP[key] + ", "
                idvaluestring = idvaluestring + "'" + str(value) + "', "
             #unmapped: Basis and Warning
-         idk.append(idkeystring)
-         idv.append(idvaluestring)
+         if x in nsdict:
+            idkeystring = idkeystring + self.basedb.NSID 
+            idvaluestring = idvaluestring + str(nsdict[x])
+         else:
+            sys.stderr.write("LOG: Issue with namespace dictionary table.")
+         idk.append(idkeystring.strip(", "))
+         idv.append(idvaluestring.strip(", "))
          idkeystring = ''
          idvaluestring = ''
       return idk, idv
 
-   def populateIDtable(self, ids):
-      for x in ids:
-         print x
-      return ''
+   def populateIDtable(self, sf, cursor, header):
+
+      nsdict = {}
+
+      #N.B. Not handling: sig.sig name
+      #N.B. Not handling: scandate
+      #N.B. Not handling: siegfried version
+
+      count = header[sf.HEADCOUNT]
+      nstext = sf.HEADNAMESPACE
+      detailstext = sf.HEADDETAILS
+
+      for h in range(count):
+         no = h+1
+         ns = nstext + str(no)
+         details = detailstext + str(no)
+
+         #NSID is integer primary key == rowid()
+         insert = "INSERT INTO " + self.basedb.NAMESPACETABLE + "(" + 'NS_NAME' + ", " \
+               + 'NS_DETAILS' + ") VALUES ('" + str(header[ns]) + "', '" + str(header[details]) + "');"
+
+         cursor.execute(insert)
+         nsdict[str(header[ns])] = cursor.lastrowid 
+   
+      return nsdict
 
    def sfDBSetup(self, sfexport, cursor):
       sf = SFYAMLHandler()
@@ -53,7 +79,7 @@ class SFLoader:
       sf.addYear(sfdata)
 
       self.identifiers = sf.getIdentifiersList()
-      self.populateIDtable(sf.getHeaders())      
+      nsdict = self.populateIDtable(sf, cursor, sf.getHeaders())      
 
       #Awkward structures to navigate----------#
       #sf.sfdata['header']                     #
@@ -75,7 +101,7 @@ class SFLoader:
                   if value != '':
                      sys.stderr.write("LOG: " + value + "\n")
                if key == sf.DICTID:
-                  idkey, idvalue = self.handleID(value, idkeystring, idvaluestring)
+                  idkey, idvalue = self.handleID(value, idkeystring, idvaluestring, nsdict)
 
          cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
          fileid = cursor.lastrowid
