@@ -68,6 +68,9 @@ class SFYAMLHandler:
    FIELDMETHOD = 'method'
    FIELDMISMATCH = 'extension mismatch'
 
+   def getHeaders(self):
+      return self.sfdata[self.DICTHEADER]
+
    def getIdentifiersList(self):
       namespaces = []
       ids = self.sfdata[self.DICTHEADER][self.HEADCOUNT]

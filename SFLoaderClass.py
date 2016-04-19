@@ -38,7 +38,8 @@ class SFLoader:
       return idk, idv
 
    def populateIDtable(self, ids):
-      self.identifiers = ids
+      for x in ids:
+         print x
       return ''
 
    def sfDBSetup(self, sfexport, cursor):
@@ -51,7 +52,8 @@ class SFLoader:
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
 
-      self.populateIDtable(sf.getIdentifiersList())      
+      self.identifiers = sf.getIdentifiersList()
+      self.populateIDtable(sf.getHeaders())      
 
       #Awkward structures to navigate----------#
       #sf.sfdata['header']                     #
