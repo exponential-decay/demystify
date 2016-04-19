@@ -72,7 +72,6 @@ class SFLoader:
                if key == sf.DICTID:
                   idkey, idvalue = self.handleID(value, idkeystring, idvaluestring)
 
-      
          cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
          fileid = cursor.lastrowid
 

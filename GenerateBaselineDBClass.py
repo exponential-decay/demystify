@@ -4,15 +4,18 @@ import sqlite3
 
 class GenerateBaselineDB:
 
+   log = False
+   
    IDTABLE = 'IDDATA'
    METADATATABLE = 'DBMD'
    FILEDATATABLE = 'FILEDATA'
-   NAMESPACETABLE = 'namespacedata'
+   NAMESPACETABLE = 'NSDATA'
    ID_JUNCTION = 'IDRESULTS'
    
    #file_id_junction
    FILEID = "FILE_ID"
    IDID = "ID_ID"
+   NSID = 'NS_ID'   
    
    #How to create an ID in SQLITE: http://stackoverflow.com/a/9342301
    #FILE ID is a new ID for the purpose of this database
@@ -21,7 +24,10 @@ class GenerateBaselineDB:
    FILEDATA_TABLE = [FILEID,"INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","DIR_NAME","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
    #TODO: FORMAT COUNT WILL LIKELY NEED TO BE MOVED TO NAMESPACEDATA BY CREATING A SECOND ID ROW
-   IDTABLE_TABLE = [IDID,'NAMESPACE','METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
+   IDTABLE_TABLE = [IDID,NSID,'METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
+
+   #NAMESPACE_TABLE
+   NS_TABLE = [NSID, 'NS_NAME', 'NS_DETAILS']
 
    dbname = ''
    timestamp = ''
@@ -42,6 +48,7 @@ class GenerateBaselineDB:
       self.createfiledatatable()
       self.createidtable()
       self.createjunctiontable(self.ID_JUNCTION, self.FILEID, self.IDID)
+      self.createNStable()
       return self.cursor
 
    def getcursor(self):
@@ -77,6 +84,7 @@ class GenerateBaselineDB:
       self.dropFILEDATATable(cursor)
       self.dropIDTable(cursor)
       self.dropIDJunction(cursor)
+      self.dropNSTable(cursor)
 
    def dropTable(self, cursor, tablename):
       #check we have a table to drop
@@ -97,6 +105,9 @@ class GenerateBaselineDB:
    def dropIDJunction(self, cursor):
       self.dropTable(cursor, self.ID_JUNCTION)
 
+   def dropNSTable(self, cursor):
+      self.dropTable(cursor, self.NAMESPACETABLE)
+
    #Database metadata table
    def createDBMD(self, cursor):
       cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP TIMESTAMPE, HASH_TYPE)")
@@ -104,9 +115,9 @@ class GenerateBaselineDB:
    
    def createfield(self, table, column, type=False):
       if type is not False:
-         table = table + str(column) + " " + type + ","
+         table = table + str(column) + " " + type + ", "
       else:
-         table = table + str(column) + ","
+         table = table + str(column) + ", "
       return table
       
    def createfiledatatable(self):   
@@ -122,8 +133,8 @@ class GenerateBaselineDB:
             table = self.createfield(table, column, "integer")
          else:
             table = self.createfield(table, column)      
-      table = table.rstrip(',') + ')'
-      self.cursor.execute(table)
+      table = table.rstrip(', ') + ')'
+      self.execute_create(table)
       
    def createidtable(self):   
       table = 'CREATE TABLE ' + self.IDTABLE + ' ('
@@ -136,13 +147,30 @@ class GenerateBaselineDB:
             table = self.createfield(table, column, "boolean")
          else:
             table = self.createfield(table, column)
-      table = table.rstrip(',') + ')'
-      self.cursor.execute(table)
+      table = table.rstrip(', ') + ')'
+      self.execute_create(table)
       
    def createjunctiontable(self, name, pkey1, pkey2):      
+      #CREATE TABLE IDRESULTS(FILE_ID INTEGER, ID_ID INTEGER, PRIMARY KEY (FILE_ID,ID_ID)) ???
       table = 'CREATE TABLE ' + name + '('
       table = table + pkey1 + " INTEGER, "
       table = table + pkey2 + " INTEGER, "
-      table = table + "PRIMARY KEY (" + pkey1 + "," + pkey2 + ")"
+      table = table + "PRIMARY KEY (" + pkey1 + ", " + pkey2 + ")"    #composite primary key? (correct?)
       table = table.rstrip(',') + ')'
-      self.cursor.execute(table)
+      self.execute_create(table)
+
+   def createNStable(self):
+      table = 'CREATE TABLE ' + self.NAMESPACETABLE + ' ('
+      for column in self.NS_TABLE:
+         if column == self.NSID:
+            table = table + column + " INTEGER PRIMARY KEY, "
+         else:
+            table = table + column + ", "
+      table = table.rstrip(', ') + ')'
+      self.execute_create(table)
+
+   def execute_create(self, query):
+      if self.log != False:         #TODO: toggle output of create queries
+         sys.stderr.write("LOG: " + query + "\n")
+      return self.cursor.execute(query)
+
