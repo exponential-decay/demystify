@@ -41,12 +41,71 @@ class genericCSVHandler():
                   csvlist.append(csv_dict)
       return csvlist
 
+   # bespoke function for DROID only - non-transferrable (probably)
+   def csvaslist_DROID(self, csvfname):
+
+      MULTIPLE = False
+      FORMAT_COUNT = 13  #index of FORMAT_COUNT
+      multi_fields = ["PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"]
+      multilist = []
+
+      columncount = 0
+      csvlist = None
+      if os.path.isfile(csvfname): 
+         csvlist = []
+         with open(csvfname, 'rb') as csvfile:
+            if self.BOM is True:
+               csvfile.seek(len(self.BOMVAL))
+            csvreader = unicodecsv.reader(csvfile)
+            for row in csvreader:
+               if csvreader.line_num == 1:		# not zero-based index
+                  header_list = self.__getCSVheaders__(row)
+                  columncount = len(header_list)
+               else:
+                  csv_dict = {}
+                  #for each column in header
+                  #note: don't need ID data. Ignoring multiple ID.
+                  for i in range(columncount):
+                     if i == FORMAT_COUNT:
+                        count = int(row[i])
+                        csv_dict[header_list[i]] = count
+                        if count > 1:
+                           MULTIPLE = True
+
+                           max_fields = len(multi_fields) * count
+                           
+                           #continue to put the remainder of the content into a dict
+                           format_list = row[FORMAT_COUNT+1:]
+                           format_list = format_list[:max_fields]
+
+                           while count > 0:
+                              temp = multi_fields
+                              td = {}
+                              for i,t in enumerate(temp):
+                                 td[t] = format_list[i]
+                              format_list = format_list[len(temp):]
+                              multilist.append(td)
+                              count-=1
+                           #break after cycling through remainder
+                           break
+                     else:
+                        csv_dict[header_list[i]] = row[i]
+
+                  if MULTIPLE == True:
+                     csv_dict['formats'] = multilist
+
+                  #add list and reset variables
+                  csvlist.append(csv_dict)
+                  MULTIPLE = False
+                  multilist = []
+      return csvlist
+
 class droidCSVHandler():
 
    #returns droidlist type
    def readDROIDCSV(self, droidcsvfname, BOM=False):
       csvhandler = genericCSVHandler(BOM)
-      self.csv = csvhandler.csvaslist(droidcsvfname)
+      self.csv = csvhandler.csvaslist_DROID(droidcsvfname)
       return self.csv
 
    def getDirName(self, filepath):
