@@ -44,6 +44,11 @@ class DROIDLoader:
          filevaluestring = ''
          idkeystring = ''
          idvaluestring = ''
+
+         MULTIPLE = False
+         if int(x['FORMAT_COUNT']) > 1:
+            MULTIPLE = True
+
          for key, value in x.items():
             if key != 'FORMAT_COUNT':
                if key == "MIME_TYPE" or key == "METHOD":
@@ -58,19 +63,28 @@ class DROIDLoader:
                if key in ToolMapping.DROID_FILE_MAP:
                   filekeystring = filekeystring + ToolMapping.DROID_FILE_MAP[key] + ", "
                   filevaluestring = filevaluestring + "'" + value + "', "
-               if key in ToolMapping.DROID_ID_MAP:
-                  if key == 'EXTENSION_MISMATCH':
-                     if value == 'true':
-                        value = "1"
-                     elif value == 'false':
-                        value = "0"
-                  idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
-                  idvaluestring = idvaluestring + "'" + value + "', "
-
-         cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
-         file = cursor.lastrowid
+               if MULTIPLE == False:
+                  if key in ToolMapping.DROID_ID_MAP:
+                     if key == 'EXTENSION_MISMATCH':
+                        if value == 'true':
+                           value = "1"
+                        elif value == 'false':
+                           value = "0"
+                     idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
+                     idvaluestring = idvaluestring + "'" + value + "', "
+               else:
+                  print x[droidcsvhandler.DICT_FORMATS]
          
-         cursor.execute(self.insertiddbstring(idkeystring, idvaluestring))
-         id = (cursor.lastrowid)
+         id = None
+         file = None
+                      
+         if filekeystring != '' and filevaluestring != '':
+            cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
+            file = cursor.lastrowid
+         
+         if idkeystring != '' and idvaluestring != '':
+            cursor.execute(self.insertiddbstring(idkeystring, idvaluestring))
+            id = (cursor.lastrowid)
 
-         cursor.execute(self.file_id_junction_insert(file,id))
+         if id != None and file != None:
+            cursor.execute(self.file_id_junction_insert(file,id))

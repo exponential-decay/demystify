@@ -41,6 +41,8 @@ class genericCSVHandler():
                   csvlist.append(csv_dict)
       return csvlist
 
+   DICT_FORMATS = 'FORMATS'
+
    # bespoke function for DROID only - non-transferrable (probably)
    def csvaslist_DROID(self, csvfname):
 
@@ -92,7 +94,7 @@ class genericCSVHandler():
                         csv_dict[header_list[i]] = row[i]
 
                   if MULTIPLE == True:
-                     csv_dict['formats'] = multilist
+                     csv_dict[self.DICT_FORMATS] = multilist
 
                   #add list and reset variables
                   csvlist.append(csv_dict)
@@ -105,6 +107,7 @@ class droidCSVHandler():
    #returns droidlist type
    def readDROIDCSV(self, droidcsvfname, BOM=False):
       csvhandler = genericCSVHandler(BOM)
+      self.DICT_FORMATS = csvhandler.DICT_FORMATS
       self.csv = csvhandler.csvaslist_DROID(droidcsvfname)
       return self.csv
 
