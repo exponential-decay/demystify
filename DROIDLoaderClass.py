@@ -45,26 +45,27 @@ class DROIDLoader:
          idkeystring = ''
          idvaluestring = ''
          for key, value in x.items():
-            if key == "MIME_TYPE" or key == "METHOD":
-               if value == '':
-                  value = 'None'
-            if self.basedb.hashtype == False:
-               if "_HASH" in key:
-                  self.basedb.hashtype = key.split('_', 1)[0]
-               elif key == "HASH":
-                  #no hash used in export
-                  self.basedb.hashtype = "None"
-            if key in ToolMapping.DROID_FILE_MAP:
-               filekeystring = filekeystring + ToolMapping.DROID_FILE_MAP[key] + ", "
-               filevaluestring = filevaluestring + "'" + value + "', "
-            if key in ToolMapping.DROID_ID_MAP:
-               if key == 'EXTENSION_MISMATCH':
-                  if value == 'true':
-                     value = "1"
-                  elif value == 'false':
-                     value = "0"
-               idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
-               idvaluestring = idvaluestring + "'" + value + "', "
+            if key != 'FORMAT_COUNT':
+               if key == "MIME_TYPE" or key == "METHOD":
+                  if value == '':
+                     value = 'None'
+               if self.basedb.hashtype == False:
+                  if "_HASH" in key:
+                     self.basedb.hashtype = key.split('_', 1)[0]
+                  elif key == "HASH":
+                     #no hash used in export
+                     self.basedb.hashtype = "None"
+               if key in ToolMapping.DROID_FILE_MAP:
+                  filekeystring = filekeystring + ToolMapping.DROID_FILE_MAP[key] + ", "
+                  filevaluestring = filevaluestring + "'" + value + "', "
+               if key in ToolMapping.DROID_ID_MAP:
+                  if key == 'EXTENSION_MISMATCH':
+                     if value == 'true':
+                        value = "1"
+                     elif value == 'false':
+                        value = "0"
+                  idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
+                  idvaluestring = idvaluestring + "'" + value + "', "
 
          cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
          file = cursor.lastrowid

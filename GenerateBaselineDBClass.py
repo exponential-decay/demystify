@@ -23,8 +23,8 @@ class GenerateBaselineDB:
    #PARENT ID is the ID of the parent of the file, will be a folder
    FILEDATA_TABLE = [FILEID,"INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","DIR_NAME","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
 
-   #TODO: FORMAT COUNT WILL LIKELY NEED TO BE MOVED TO NAMESPACEDATA BY CREATING A SECOND ID ROW
-   IDTABLE_TABLE = [IDID,NSID,'METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH','FORMAT_COUNT']
+   #N.B. FORMAT_COUNT removed to reside in multiple NS rows
+   IDTABLE_TABLE = [IDID,NSID,'METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH']
 
    #NAMESPACE_TABLE
    NS_TABLE = [NSID, 'NS_NAME', 'NS_DETAILS']
@@ -141,7 +141,7 @@ class GenerateBaselineDB:
       for column in self.IDTABLE_TABLE:
          if column == self.IDID:
             table = self.createfield(table, column, "integer primary key") 
-         elif column == 'FORMAT_COUNT' or column == 'NAMESPACE':
+         elif column == 'NAMESPACE':
             table = self.createfield(table, column, "integer")
          elif column == 'EXTENSION_MISMATCH':
             table = self.createfield(table, column, "boolean")
