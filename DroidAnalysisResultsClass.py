@@ -10,7 +10,7 @@ class DROIDAnalysisResults:
    filename = ''
 
    #hashused
-   hashused = 0
+   hashused = False
 
    # Counts
    collectionsize = 0
@@ -67,12 +67,13 @@ class DROIDAnalysisResults:
    containertypeslist = None
    
    zerobytecount = 0
-   zerobytelist = 0
+   zerobytelist = None
    
    multiplespacelist = ''
    badFileNames = None
    badDirNames = None
    
+   duplicateHASHlisting = None
    totalHASHduplicates = None
 
    #rogues

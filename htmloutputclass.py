@@ -126,183 +126,199 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
-      #Signature identified PUIDs in collection (signature and container)
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTIFIED))
-      self.__htmlnewline__() 
+      if self.analysisresults.sigIDPUIDList is not None:
+
+         #Signature identified PUIDs in collection (signature and container)
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTIFIED))
+         self.__htmlnewline__() 
       
-      self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th>')
-      for puid in self.analysisresults.sigIDPUIDList:
-         if puid[2] != 'no value':
-            new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
-         else:
-            new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
-         self.printFormattedText(new_x)
-      self.printFormattedText('</table>')
+         self.printFormattedText('<table>')
+         self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th>')
+         for puid in self.analysisresults.sigIDPUIDList:
+            if puid[2] != 'no value':
+               new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
+            else:
+               new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
+            self.printFormattedText(new_x)
+         self.printFormattedText('</table>')
 
-      self.__htmlnewline__(2)  
-      self.printFormattedText("<hr/>")
+         self.__htmlnewline__(2)  
+         self.printFormattedText("<hr/>")
 
-      #Signature ID PUIDs
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
-      self.__htmlnewline__()
-      self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
-      for sig in self.analysisresults.sigIDPUIDFrequency:
-         self.printFormattedText('<tr><td style="width: 100px;">')
-         self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
-         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
- 
-         #Unused Meter Code...
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
-        
-         self.printFormattedText('</tr>')
-        
-      self.printFormattedText('</table>')
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
-      #Date Ranges
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
-      self.__htmlnewline__()
-      self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
-      for dates in self.analysisresults.dateFrequency:
-         self.printFormattedText('<tr><td style="width: 100px;">')
-                 
-         if self.wiki is True:
-            self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + str(dates[0]) + '">' + str(dates[0]) + '</a>')
-         else:
-            self.printFormattedText('<b>' + str(dates[0]) + '</b>')
-            
-         self.printFormattedText('</td><td>' + str(dates[1]).strip() + '</td>')
- 
-         #Unused Meter Code...
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(dates[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
-        
-         self.printFormattedText('</tr>')
-        
-      self.printFormattedText('</table>')
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
-      #ID Method Frequency
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ID_METHOD))
-      self.__htmlnewline__() 
-      for method in self.analysisresults.idmethodFrequency:
-         self.printFormattedText(str(method[0]) + ", " + str(method[1]) + '</br>')
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")
-
-      if len(self.analysisresults.extensionOnlyIDList) > 0:
-         #Extension Only ID
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
-         self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
-         
-      if len(self.analysisresults.extensionOnlyIDList) > 0:
-         #Extension Only Identification
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
-         self.__keyvalue_output__(self.analysisresults.extensionOnlyIDFrequency)
-
-      #Unique Extensions Identified
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS))
-      self.__htmlnewline__()
-      extstr = ''
-      for ext in self.analysisresults.uniqueExtensionsInCollectionList:
-         extstr = extstr + ext[0] + ", "
-      self.printFormattedText(extstr.strip(", "))
-      self.__htmlnewline__(2) 
-      self.printFormattedText("<hr/>")
-
-      if len(self.analysisresults.multipleIDList) > 0:
-         #Files with multiple identifications
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
+      if self.analysisresults.sigIDPUIDFrequency is not None:
+         #Signature ID PUIDs
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
          self.__htmlnewline__()
-         self.printFormattedText("<code>")
-         self.printFormattedText(self.analysisresults.multipleIDList)
-         self.printFormattedText("</code>")
+         self.printFormattedText('<table>')
+         self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+         for sig in self.analysisresults.sigIDPUIDFrequency:
+            self.printFormattedText('<tr><td style="width: 100px;">')
+            self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
+            self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
+    
+            #Unused Meter Code...
+            self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+           
+            self.printFormattedText('</tr>')
+           
+         self.printFormattedText('</table>')
          self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
 
-      #Extension Frequency
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL))
-      self.__keyvalue_output__(self.analysisresults.frequencyOfAllExtensions)
-      
-      #Mimetype Frequency
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
-      self.__keyvalue_output__(self.analysisresults.mimetypeFrequency)
-
-      if len(self.analysisresults.zerobytelist):
-         #Zero Byte Objects
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
+      if self.analysisresults.dateFrequency is not None:
+         #Date Ranges
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
+         self.__htmlnewline__()
+         self.printFormattedText('<table>')
+         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+         for dates in self.analysisresults.dateFrequency:
+            self.printFormattedText('<tr><td style="width: 100px;">')
+                    
+            if self.wiki is True:
+               self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + str(dates[0]) + '">' + str(dates[0]) + '</a>')
+            else:
+               self.printFormattedText('<b>' + str(dates[0]) + '</b>')
+               
+            self.printFormattedText('</td><td>' + str(dates[1]).strip() + '</td>')
+    
+            #Unused Meter Code...
+            self.printFormattedText('<td><meter style="width: 300px;" value="' + str(dates[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+            self.printFormattedText('</tr>')
+           
+         self.printFormattedText('</table>')
          self.__htmlnewline__() 
-         self.printFormattedText("<code>")
-         self.printFormattedText(self.analysisresults.zerobytelist)
-         self.printFormattedText("</code>")
          self.printFormattedText("<hr/>")
 
-      if len(self.analysisresults.filesWithNoIDList) > 0:
-         #Zero Identification
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
+      if self.analysisresults.idmethodFrequency is not None:
+         #ID Method Frequency
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ID_METHOD))
          self.__htmlnewline__() 
-         self.printFormattedText("<code>")
-         self.printFormattedText(self.analysisresults.filesWithNoIDList)
-         self.printFormattedText("</code>")
+         for method in self.analysisresults.idmethodFrequency:
+            self.printFormattedText(str(method[0]) + ", " + str(method[1]) + '</br>')
+         self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
 
-      if len(self.analysisresults.containertypeslist) > 0:
-         #archive file types
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
-         self.__csv_output__(self.analysisresults.containertypeslist)
+      if self.analysisresults.extensionOnlyIDList is not None:
+         if len(self.analysisresults.extensionOnlyIDList) > 0:
+            #Extension Only ID
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
+            self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
+         
+      if self.analysisresults.extensionOnlyIDList is not None:
+         if len(self.analysisresults.extensionOnlyIDList) > 0:
+            #Extension Only Identification
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
+            self.__keyvalue_output__(self.analysisresults.extensionOnlyIDFrequency)
 
-      if self.analysisresults.hashused > 0:
-         #Duplicate Content      
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTICAL_CONTENT) + "(" + str(self.analysisresults.totalHASHduplicates) + ")" + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT))
-         self.__htmlnewline__() 
-         for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
-            self.printFormattedText("<b>" + dupes['checksum'] + "</b> Count: " + dupes['count'] + "<br/><br/>")
+      if self.analysisresults.uniqueExtensionsInCollectionList is not None:
+         #Unique Extensions Identified
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS))
+         self.__htmlnewline__()
+         extstr = ''
+         for ext in self.analysisresults.uniqueExtensionsInCollectionList:
+            extstr = extstr + ext[0] + ", "
+         self.printFormattedText(extstr.strip(", "))
+         self.__htmlnewline__(2) 
+         self.printFormattedText("<hr/>")
+
+      if self.analysisresults.multipleIDList is not None:
+         if len(self.analysisresults.multipleIDList) > 0:
+            #Files with multiple identifications
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
+            self.__htmlnewline__()
             self.printFormattedText("<code>")
-            for ex in dupes['examples']:
-               self.printFormattedText(ex + "<br/>")
+            self.printFormattedText(self.analysisresults.multipleIDList)
             self.printFormattedText("</code>")
-            self.__htmlnewline__(2) 
-         self.printFormattedText("<hr/>")
+            self.__htmlnewline__() 
+            self.printFormattedText("<hr/>")
 
-      if len(self.analysisresults.badFileNames) > 0:
-         #Troublesome Filenames
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
-         self.__htmlnewline__() 
-         for fnames in self.analysisresults.badFileNames:
-            self.printFormattedText(fnames)
-            self.__htmlnewline__(2) 
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
+      if self.analysisresults.frequencyOfAllExtensions is not None: 
+         #Extension Frequency
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL))
+         self.__keyvalue_output__(self.analysisresults.frequencyOfAllExtensions)
 
-      if len(self.analysisresults.badDirNames) > 0:
-         #Troublesome Filenames
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_DIRNAMES) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES))
-         self.__htmlnewline__() 
-         for fnames in self.analysisresults.badDirNames:
-            self.printFormattedText(fnames)
-            self.__htmlnewline__(2) 
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
+      if self.analysisresults.mimetypeFrequency is not None:      
+         #Mimetype Frequency
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
+         self.__keyvalue_output__(self.analysisresults.mimetypeFrequency)
+
+      if self.analysisresults.zerobytelist is not None:
+         if len(self.analysisresults.zerobytelist):
+            #Zero Byte Objects
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
+            self.__htmlnewline__() 
+            self.printFormattedText("<code>")
+            self.printFormattedText(self.analysisresults.zerobytelist)
+            self.printFormattedText("</code>")
+            self.printFormattedText("<hr/>")
+
+      if self.analysisresults.filesWithNoIDList is not None:
+         if len(self.analysisresults.filesWithNoIDList) > 0:
+            #Zero Identification
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
+            self.__htmlnewline__() 
+            self.printFormattedText("<code>")
+            self.printFormattedText(self.analysisresults.filesWithNoIDList)
+            self.printFormattedText("</code>")
+            self.printFormattedText("<hr/>")
+
+      if self.analysisresults.containertypeslist is not None:
+         if len(self.analysisresults.containertypeslist) > 0:
+            #archive file types
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
+            self.__csv_output__(self.analysisresults.containertypeslist)
+
+      if self.analysisresults.hashused is True:
+         if self.analysisresults.duplicateHASHlisting is not None:
+            #Duplicate Content      
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTICAL_CONTENT) + "(" + str(self.analysisresults.totalHASHduplicates) + ")" + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT))
+            self.__htmlnewline__() 
+            for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
+               self.printFormattedText("<b>" + dupes['checksum'] + "</b> Count: " + dupes['count'] + "<br/><br/>")
+               self.printFormattedText("<code>")
+               for ex in dupes['examples']:
+                  self.printFormattedText(ex + "<br/>")
+               self.printFormattedText("</code>")
+               self.__htmlnewline__(2) 
+            self.printFormattedText("<hr/>")
+
+      if self.analysisresults.badFileNames is not None:
+         if len(self.analysisresults.badFileNames) > 0:
+            #Troublesome Filenames
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
+            self.__htmlnewline__() 
+            for fnames in self.analysisresults.badFileNames:
+               self.printFormattedText(fnames)
+               self.__htmlnewline__(2) 
+            self.__htmlnewline__() 
+            self.printFormattedText("<hr/>")
+
+      if self.analysisresults.badDirNames is not None:
+         if len(self.analysisresults.badDirNames) > 0:
+            #Troublesome Filenames
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_DIRNAMES) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES))
+            self.__htmlnewline__() 
+            for fnames in self.analysisresults.badDirNames:
+               self.printFormattedText(fnames)
+               self.__htmlnewline__(2) 
+            self.__htmlnewline__() 
+            self.printFormattedText("<hr/>")
       
       self.__htmlnewline__(2) 
       self.printFormattedText("</body>")
