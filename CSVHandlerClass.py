@@ -80,12 +80,12 @@ class genericCSVHandler():
                            format_list = format_list[:max_fields]
 
                            while count > 0:
-                              temp = multi_fields
-                              td = {}
-                              for i,t in enumerate(temp):
-                                 td[t] = '"' + format_list[i] + '"'
-                              format_list = format_list[len(temp):]
-                              multilist.append(td)
+                              mfields = multi_fields
+                              mdict = {}
+                              for i,t in enumerate(mfields):
+                                 mdict[t] = '"' + format_list[i] + '"'
+                              format_list = format_list[len(mfields):]
+                              multilist.append(mdict)
                               count-=1
                            #break after cycling through remainder
                            break
