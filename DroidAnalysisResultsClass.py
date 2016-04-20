@@ -34,27 +34,27 @@ class DROIDAnalysisResults:
    unidentifiedPercentage = 0
    identifiedPercentage = 0
    
-   sigIDPUIDList = 0
-   sigIDPUIDFrequency = 0
+   sigIDPUIDList = None
+   sigIDPUIDFrequency = None
    
-   dateFrequency = 0
+   dateFrequency = None
 
-   extensionOnlyIDList = 0
+   extensionOnlyIDList = None
    extensionOnlyIDFrequency = 0
    extensionOnlyIDfnameList = 0 
    
    #TODO: Turn lists into lists? Formatting at end..?
-   uniqueExtensionsInCollectionList = 0
-   multipleIDList = 0
-   frequencyOfAllExtensions = 0
+   uniqueExtensionsInCollectionList = None
+   multipleIDList = None
+   frequencyOfAllExtensions = None
    
-   idmethodFrequency = 0
+   idmethodFrequency = None
    
-   mimetypeFrequency = 0
+   mimetypeFrequency = None
    
-   filesWithNoIDList = 0
-   topPUIDList = 0
-   topExtensionList = 0
+   filesWithNoIDList = None
+   topPUIDList = None
+   topExtensionList = None
    
    totalmd5duplicates = 0
    duplicatemd5listing = []
@@ -64,14 +64,17 @@ class DROIDAnalysisResults:
    duplicatefnamelisting = [] 
    duplicatefnamealtlisting = []
    
-   containertypeslist = 0
+   containertypeslist = None
    
    zerobytecount = 0
    zerobytelist = 0
    
    multiplespacelist = ''
-   badFilenames = ''
+   badFileNames = None
+   badDirNames = None
    
+   totalHASHduplicates = None
+
    #rogues
    duplicatespathlist = []
       

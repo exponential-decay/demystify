@@ -169,6 +169,8 @@ class DROIDAnalysis:
       else:
          self.analysisresults.hashused = True
 
+
+      '''
       self.analysisresults.collectionsize = self.__querydb__(AnalysisQueries.SELECT_COLLECTION_SIZE, True, True)
       self.analysisresults.filecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES, True, True)
       self.analysisresults.containercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_CONTAINERS, True, True)      
@@ -239,6 +241,8 @@ class DROIDAnalysis:
 
       if self.roguepuids != False:
          self.listRoguePUIDs(self.roguepuids)
+
+      '''
 
       return self.analysisresults
       
