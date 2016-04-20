@@ -42,7 +42,7 @@ class SFLoader:
          idvaluestring = ''
       return idk, idv
 
-   def populateIDtable(self, sf, cursor, header):
+   def populateNStable(self, sf, cursor, header):
 
       nsdict = {}
 
@@ -79,7 +79,7 @@ class SFLoader:
       sf.addYear(sfdata)
 
       self.identifiers = sf.getIdentifiersList()
-      nsdict = self.populateIDtable(sf, cursor, sf.getHeaders())      
+      nsdict = self.populateNStable(sf, cursor, sf.getHeaders())      
 
       #Awkward structures to navigate----------#
       #sf.sfdata['header']                     #
@@ -103,8 +103,11 @@ class SFLoader:
                if key == sf.DICTID:
                   idkey, idvalue = self.handleID(value, idkeystring, idvaluestring, nsdict)
 
-         cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
-         fileid = cursor.lastrowid
+         fileid = None
+         
+         if filekeystring != '' and filevaluestring != '':
+            cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
+            fileid = cursor.lastrowid
 
          insert = []  
          for x in range(len(idkey)):
