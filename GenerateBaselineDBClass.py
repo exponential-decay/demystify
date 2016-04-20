@@ -141,7 +141,7 @@ class GenerateBaselineDB:
       for column in self.IDTABLE_TABLE:
          if column == self.IDID:
             table = self.createfield(table, column, "integer primary key") 
-         elif column == 'NAMESPACE':
+         elif column == self.NSID:
             table = self.createfield(table, column, "integer")
          elif column == 'EXTENSION_MISMATCH':
             table = self.createfield(table, column, "boolean")

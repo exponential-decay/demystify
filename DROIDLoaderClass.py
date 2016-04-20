@@ -14,7 +14,7 @@ class DROIDLoader:
    BOM = False
    NS_NAME = 'pronom'
    NS_ID = 0
-   NS_DETAILS = 'droid'
+   NS_DETAILS = 'droid'    #to be overwritten by filename
          
    def __init__(self, basedb, BOM=False):
       self.basedb = basedb
