@@ -96,6 +96,7 @@ class genericCSVHandler():
                      else:
                         csv_dict[header_list[i]] = row[i]
 
+                  #continue with exception and add new dict to primary dict
                   if MULTIPLE == True:
                      csv_dict[self.DICT_FORMATS] = multilist
 
