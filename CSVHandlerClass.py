@@ -7,6 +7,7 @@ class genericCSVHandler():
 
    BOM = False
    BOMVAL = '\xEF\xBB\xBF'
+   DICT_FORMATS = 'FORMATS'
 
    def __init__(self, BOM=False):
       self.BOM = BOM
@@ -40,15 +41,13 @@ class genericCSVHandler():
                      csv_dict[header_list[i]] = row[i]
                   csvlist.append(csv_dict)
       return csvlist
-
-   DICT_FORMATS = 'FORMATS'
-
+      
    # bespoke function for DROID only - non-transferrable (probably)
    def csvaslist_DROID(self, csvfname):
 
       MULTIPLE = False
       FORMAT_COUNT = 13  #index of FORMAT_COUNT
-      multi_fields = ["PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"]
+      multi_fields = ["ID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"]
       multilist = []
 
       columncount = 0
@@ -84,7 +83,7 @@ class genericCSVHandler():
                               temp = multi_fields
                               td = {}
                               for i,t in enumerate(temp):
-                                 td[t] = format_list[i]
+                                 td[t] = '"' + format_list[i] + '"'
                               format_list = format_list[len(temp):]
                               multilist.append(td)
                               count-=1
