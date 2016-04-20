@@ -70,9 +70,10 @@ class genericCSVHandler():
                      if i == FORMAT_COUNT:
                         count = int(row[i])
                         csv_dict[header_list[i]] = count
+                        
+                        #exception for multiple ids
                         if count > 1:
                            MULTIPLE = True
-
                            max_fields = len(multi_fields) * count
                            
                            #continue to put the remainder of the content into a dict
@@ -87,7 +88,10 @@ class genericCSVHandler():
                               format_list = format_list[len(mfields):]
                               multilist.append(mdict)
                               count-=1
-                           #break after cycling through remainder
+                              
+                           #break for loop after cycling through remainder
+                           #for loop controls regular number of columns (count)
+                           #while loop takes us the into an exception mechanism negating that
                            break
                      else:
                         csv_dict[header_list[i]] = row[i]
