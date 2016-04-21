@@ -26,7 +26,7 @@
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
-                                       AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container' or IDDATA.METHOD='Text');"""
+                                       AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container');"""
                                        
    SELECT_COUNT_MULTIPLE_ID = """SELECT COUNT(IDDATA.FORMAT_COUNT) 
                                     FROM IDRESULTS
