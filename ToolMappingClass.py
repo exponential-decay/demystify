@@ -40,7 +40,7 @@
       "name" : "NAME", 
       "filesize" : "SIZE",
       "type" : "TYPE",
-      #"_" : "EXT",
+      "ext" : "EXT",
       "modified" : "LAST_MODIFIED",
       "year" : "YEAR",
       "md5" : "HASH",     

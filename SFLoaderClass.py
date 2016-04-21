@@ -77,6 +77,7 @@ class SFLoader:
       sf.addfilename(sfdata)
       sf.adddirname(sfdata)
       sf.addYear(sfdata)
+      sf.addExt(sfdata)
 
       self.identifiers = sf.getIdentifiersList()
       nsdict = self.populateNStable(sf, cursor, sf.getHeaders())      

@@ -67,6 +67,7 @@ class SFYAMLHandler:
    FIELDTYPE = 'type'
    FIELDMETHOD = 'method'
    FIELDMISMATCH = 'extension mismatch'
+   FIELDEXT = 'ext'
 
    def getHeaders(self):
       return self.sfdata[self.DICTHEADER]
@@ -293,3 +294,10 @@ class SFYAMLHandler:
    def geturischeme(self, fname):
       return urlparse(fname).scheme
 
+   def addExt(self, sfdata):
+      for row in sfdata[self.DICTFILES]:
+         name = row['name'].rsplit('.', 1)
+         if len(name) == 2:
+            row[self.FIELDEXT] = name[1]
+         #else, no extension...
+      return sfdata
