@@ -22,6 +22,20 @@ class SFLoader:
       return "INSERT INTO " + self.basedb.ID_JUNCTION + "(" + self.basedb.FILEID + "," \
                + self.basedb.IDID + ") VALUES (" + str(file) + "," + str(id) + ");"
 
+   def addDirsToDB(self, dirs, cursor):
+      for d in dirs:
+         if '/' not in d:
+            name = d.rsplit('\\',1)
+         else:
+            name = d.rsplit('/',1)
+         if len(name) == 2:
+            name = name[1]
+         else:
+            name = d            
+         insert = "INSERT INTO " + self.basedb.FILEDATATABLE + " (" + 'FILE_PATH, DIR_NAME, NAME,SIZE, TYPE' + ")" \
+            + "VALUES ('" + d + "','" + d + "','" + name + "',0,'Folder'" + ");"
+         cursor.execute(insert)
+
    def handleID(self, idsection, idkeystring, idvaluestring, nsdict):
       idk = []
       idv = []
@@ -43,17 +57,13 @@ class SFLoader:
       return idk, idv
 
    def populateNStable(self, sf, cursor, header):
-
       nsdict = {}
-
       #N.B. Not handling: sig.sig name
       #N.B. Not handling: scandate
       #N.B. Not handling: siegfried version
-
       count = header[sf.HEADCOUNT]
       nstext = sf.HEADNAMESPACE
       detailstext = sf.HEADDETAILS
-
       for h in range(count):
          no = h+1
          ns = nstext + str(no)
@@ -65,9 +75,24 @@ class SFLoader:
 
          cursor.execute(insert)
          nsdict[str(header[ns])] = cursor.lastrowid 
-   
       return nsdict
 
+   #find all unique directory values in listing...
+   def handledirectories(self, dirs, sf, count=False):
+      newlist = []
+      dirset = set(dirs)
+      for d in dirset:
+         newlist.append(sf.getDirName(d))
+      newlist = set(newlist)                 #make newlist unique
+      dirset = list(dirset) + list(newlist)  #concatenate unique sets as lists
+      if count == False:
+         return self.handledirectories(dirset, sf, len(dirset))
+      else:
+         if len(dirset) != count:
+            return self.handledirectories(dirset, sf, len(dirset))
+         else:
+            return dirset
+         
    def sfDBSetup(self, sfexport, cursor):
       sf = SFYAMLHandler()
       sf.readSFYAML(sfexport)
@@ -81,6 +106,8 @@ class SFLoader:
 
       self.identifiers = sf.getIdentifiersList()
       nsdict = self.populateNStable(sf, cursor, sf.getHeaders())      
+
+      dirlist = []
 
       #Awkward structures to navigate----------#
       #sf.sfdata['header']                     #
@@ -96,6 +123,8 @@ class SFLoader:
             if key in ToolMapping.SF_FILE_MAP:
                filekeystring = filekeystring + ToolMapping.SF_FILE_MAP[key] + ", "
                filevaluestring = filevaluestring + "'" + str(value) + "', "
+            if key == sf.FIELDDIRNAME:
+               dirlist.append(value)
             else:
                #understand what to do with errors in SF output
                if key == 'errors':
@@ -124,3 +153,9 @@ class SFLoader:
 
          if sf.hashtype != False:
             self.basedb.hashtype = sf.hashtype
+            
+      #final act - add directories to file table--#
+      #---does not work well for absolute paths---#
+      #uniquedirs = self.handledirectories(dirlist, sf)
+      uniquedirs = set(dirlist)
+      self.addDirsToDB(uniquedirs, cursor)
