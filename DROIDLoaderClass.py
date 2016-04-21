@@ -19,6 +19,7 @@ class DROIDLoader:
    def __init__(self, basedb, BOM=False):
       self.basedb = basedb
       self.BOM = BOM
+      self.basedb.tooltype = 'droid'
    
    def insertfiledbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE

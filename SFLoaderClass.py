@@ -9,6 +9,7 @@ class SFLoader:
 
    def __init__(self, basedb):
       self.basedb = basedb
+      self.basedb.tooltype = 'siegfried'
 
    def insertfiledbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE

@@ -33,6 +33,7 @@ class GenerateBaselineDB:
    timestamp = ''
    cursor = ''
    hashtype = False
+   tooltype = False
 
    def __init__(self, export):
       self.dbname = self.getDBFilename(export)
@@ -110,8 +111,8 @@ class GenerateBaselineDB:
 
    #Database metadata table
    def createDBMD(self, cursor):
-      cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP TIMESTAMPE, HASH_TYPE)")
-      cursor.execute("INSERT INTO " + self.METADATATABLE + " VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "')")
+      cursor.execute("CREATE TABLE " + self.METADATATABLE + " (TIMESTAMP TIMESTAMP, HASH_TYPE, TOOL_TYPE)")
+      cursor.execute("INSERT INTO " + self.METADATATABLE + " VALUES ('" + str(self.timestamp) + "', + '" + str(self.hashtype) + "','" + str(self.tooltype) + "')")
    
    def createfield(self, table, column, type=False):
       if type is not False:
