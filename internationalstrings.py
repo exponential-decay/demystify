@@ -7,6 +7,7 @@ class AnalysisStringsEN:
    REPORT_VERSION = "Analysis Version"
    REPORT_FILE = "Analysis File"
    REPORT_TOOL = "Analysis Tool"
+   NAMESPACES = "Namespaces Used"
    
    REPORT_MORE_INFORMATION = "More Detail:"
    

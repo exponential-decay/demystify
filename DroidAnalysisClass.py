@@ -163,6 +163,8 @@ class DROIDAnalysis:
         
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
+      self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
+      
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")

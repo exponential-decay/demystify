@@ -15,6 +15,9 @@ class DROIDAnalysisResults:
    #tooltype
    tooltype = None
 
+   #namespace count
+   namespacecount = None
+
    # Counts
    collectionsize = 0
    filecount = 0

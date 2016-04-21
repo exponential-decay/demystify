@@ -55,11 +55,13 @@ class DROIDAnalysisTextOutput:
          
       return output.strip("\n")
 
-   def generateTEXT(self):
+   def generateTEXT(self):   
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
       self.printFormattedText(self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename)
       self.printFormattedText(self.STRINGS.REPORT_TOOL + ": " + self.analysisresults.tooltype)
+      self.printFormattedText("")
+      self.printFormattedText(self.STRINGS.NAMESPACES + ": " + str(self.analysisresults.namespacecount))
       
       self.printFormattedText("")
       

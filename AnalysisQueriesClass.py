@@ -21,12 +21,30 @@
    SELECT_COUNT_UNIQUE_FILENAMES = "SELECT COUNT(DISTINCT FILEDATA.NAME) FROM FILEDATA WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
    SELECT_COUNT_UNIQUE_DIRNAMES =  "SELECT COUNT(DISTINCT FILEDATA.DIR_NAME) FROM FILEDATA"
    
+   SELECT_COUNT_NAMESPACES = 'SELECT COUNT(NSDATA.NS_ID) FROM NSDATA'
+   
    SELECT_COUNT_IDENTIFIED_FILES = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID))
                                        FROM IDRESULTS
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
                                        AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container');"""
+
+   '''
+   SELECT_COUNT_TEXT_IDENTIFIED_FILES = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID))
+                                       FROM IDRESULTS
+                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
+                                       AND (IDDATA.METHOD='Text');"""
+                                       
+   SELECT_COUNT_FILENAME_IDENTIFIED_FILES = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID))
+                                       FROM IDRESULTS
+                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
+                                       AND (IDDATA.METHOD='Filename');"""                                       
+   '''                                          
                                        
    SELECT_COUNT_MULTIPLE_ID = """SELECT COUNT(IDDATA.FORMAT_COUNT) 
                                     FROM IDRESULTS
