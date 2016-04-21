@@ -16,7 +16,7 @@ class AnalysisStringsEN:
    SUMMARY_DIRECTORIES = "Total Directories" 
    SUMMARY_UNIQUE_DIRNAMES = "Total Unique Directory Names" 
    SUMMARY_IDENTIFIED_FILES = "Total Identified Files (Based on Signature)"
-   SUMMARY_MULTIPLE = "Total Multiple Identifications (Baed on Signature)"
+   SUMMARY_MULTIPLE = "Total Multiple Identifications (Based on Signature)"
    SUMMARY_UNIDENTIFIED = "Total Unidentified Files" 
    SUMMARY_EXTENSION_ID = "Total Extension ID Only Count"
    SUMMARY_EXTENSION_MISMATCH = "Total Extension Mismatches" 
