@@ -162,6 +162,7 @@ class DROIDAnalysis:
       self.analysisresults.badDirNames = dirreport
         
    def queryDB(self):
+      self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
@@ -169,8 +170,6 @@ class DROIDAnalysis:
       else:
          self.analysisresults.hashused = True
 
-
-      
       self.analysisresults.collectionsize = self.__querydb__(AnalysisQueries.SELECT_COLLECTION_SIZE, True, True)
       self.analysisresults.filecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILES, True, True)
       self.analysisresults.containercount = self.__querydb__(AnalysisQueries.SELECT_COUNT_CONTAINERS, True, True)      
@@ -179,6 +178,7 @@ class DROIDAnalysis:
       
       self.analysisresults.directoryCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FOLDERS, True, True)
       
+
       
       '''
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)

@@ -59,6 +59,7 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
       self.printFormattedText(self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename)
+      self.printFormattedText(self.STRINGS.REPORT_TOOL + ": " + self.analysisresults.tooltype)
       
       self.printFormattedText("")
       

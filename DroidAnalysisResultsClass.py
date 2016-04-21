@@ -12,6 +12,9 @@ class DROIDAnalysisResults:
    #hashused
    hashused = False
 
+   #tooltype
+   tooltype = None
+
    # Counts
    collectionsize = 0
    filecount = 0
