@@ -179,6 +179,16 @@
                                  WHERE IDDATA.METHOD='None' 
                                  AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
+   def count_multiple_ids(self, nscount):
+      multi = """SELECT count(FREQUENCY) from(SELECT FILE_ID, COUNT(FILE_ID) AS FREQUENCY
+                  FROM IDRESULTS
+                  GROUP BY FILE_ID
+                  ORDER BY
+                  COUNT(FILE_ID) DESC)
+                  WHERE FREQUENCY > """
+      multi = multi + str(nscount)
+      return multi
+
    def list_duplicate_paths(self, checksum):
       return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='" + checksum + "'ORDER BY FILEDATA.FILE_PATH"
 

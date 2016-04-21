@@ -160,11 +160,15 @@ class DROIDAnalysis:
 
       self.analysisresults.badFileNames = namereport
       self.analysisresults.badDirNames = dirreport
-        
+
+   def multiplecount(self, nscount):
+      query = AnalysisQueries()       
+      return self.__querydb__(query.count_multiple_ids(self.analysisresults.namespacecount), True, True)         
+         
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
-      
+            
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
@@ -186,8 +190,12 @@ class DROIDAnalysis:
       
       self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
       
+      
+      self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)
+
+      #self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
+
       '''
-      self.analysisresults.multipleidentificationcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MULTIPLE_ID, True, True)
       self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
       self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
       self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)            
