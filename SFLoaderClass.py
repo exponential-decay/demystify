@@ -9,8 +9,7 @@ class SFLoader:
 
    def __init__(self, basedb):
       self.basedb = basedb
-      self.basedb.tooltype = 'siegfried'
-
+      
    def insertfiledbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE
       return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
@@ -98,6 +97,9 @@ class SFLoader:
       sf = SFYAMLHandler()
       sf.readSFYAML(sfexport)
       
+      headers = sf.getHeaders()
+      self.basedb.tooltype = 'siegfried: ' + str(headers['siegfried'])
+      
       sfdata = sf.sfdata
 
       sf.addfilename(sfdata)
@@ -106,7 +108,7 @@ class SFLoader:
       sf.addExt(sfdata)
 
       self.identifiers = sf.getIdentifiersList()
-      nsdict = self.populateNStable(sf, cursor, sf.getHeaders())      
+      nsdict = self.populateNStable(sf, cursor, headers)      
 
       dirlist = []
 
