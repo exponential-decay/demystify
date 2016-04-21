@@ -191,6 +191,11 @@ class DROIDAnalysis:
 
       self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
 
+      #NEW SF STATS ONLY
+      self.analysisresults.textidfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIED_FILES, True, True)  
+      self.analysisresults.filenameidfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIED_FILES, True, True)  
+      #NEW SF STATS ONLY
+
       '''
       self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
       self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)            

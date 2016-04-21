@@ -28,30 +28,33 @@
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
-                                       AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container');"""
+                                       AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
+                                       AND (IDDATA.METHOD!='Text' or IDDATA.METHOD!='Filename' or IDDATA.METHOD!='None');"""
 
-   '''
    SELECT_COUNT_TEXT_IDENTIFIED_FILES = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID))
                                        FROM IDRESULTS
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
-                                       AND (IDDATA.METHOD='Text');"""
+                                       AND (IDDATA.METHOD='Text')
+                                       AND (IDDATA.METHOD!='Signature' or IDDATA.METHOD!='Container' or IDDATA.METHOD!='None');"""    
                                        
    SELECT_COUNT_FILENAME_IDENTIFIED_FILES = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID))
                                        FROM IDRESULTS
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (FILEDATA.TYPE='File' or FILEDATA.TYPE='Container')
-                                       AND (IDDATA.METHOD='Filename');"""                                       
-   '''                                          
+                                       AND (IDDATA.METHOD='Filename')
+                                       AND (IDDATA.METHOD!='Text' or IDDATA.METHOD!='Signature' or IDDATA.METHOD!='Container' or IDDATA.METHOD!='None');"""                                                                            
                                           
-   SELECT_COUNT_UNIDENTIFIED = """SELECT COUNT(FILEDATA.NAME) 
+   #depends what we do with FILENAME and TEXT identification... TBD                                                
+   SELECT_COUNT_UNIDENTIFIED = """SELECT COUNT(DISTINCT(FILEDATA.FILE_ID)) 
                                     FROM IDRESULTS 
                                     JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID   
                                     WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                    AND (IDDATA.METHOD='None' OR IDDATA.METHOD='Extension')"""
+                                    AND (IDDATA.METHOD='None' OR IDDATA.METHOD='Extension')
+                                    AND (IDDATA.METHOD!='Signature' or IDDATA.METHOD!='Container' or IDDATA.METHOD!='Text');"""                                        
 
    SELECT_COUNT_EXTENSION_ONLY = """SELECT COUNT(FILEDATA.NAME) 
                                        FROM IDRESULTS 

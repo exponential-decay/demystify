@@ -28,6 +28,10 @@ class AnalysisStringsEN:
    SUMMARY_MULTIPLE_SPACES = "Total Files with Multiple Contiguous Space Characters"
    SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
    SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
+
+   #NEW SUMMARY STRINGS
+   SUMMARY_TEXT_ID = "Total Text ID Only Count"
+   SUMMARY_FILENAME_ID = "Total Filename ID Only Count"
    
    HEADING_SIZE = "Size of the accession/extract"
    HEADING_IDENTIFIED = "Identified File Formats in Accession/Extract" 

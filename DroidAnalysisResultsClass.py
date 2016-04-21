@@ -34,6 +34,11 @@ class DROIDAnalysisResults:
    distinctextensioncount = 0
    zeroidcount = 0
 
+   #SF ONLY
+   textidfilecount = 0
+   filenameidfilecount = 0
+   #SF ONLY
+
    extmismatchCount = 0
    extmismatchList = 0
    
