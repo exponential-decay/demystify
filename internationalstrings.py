@@ -6,7 +6,7 @@ class AnalysisStringsEN:
    REPORT_SUMMARY = "Summary Statistics" 
    REPORT_VERSION = "Analysis Version"
    REPORT_FILE = "Analysis File"
-   REPORT_TOOL = "Format ID Tool"
+   REPORT_TOOL = "Analysis Tool"
    
    REPORT_MORE_INFORMATION = "More Detail:"
    
