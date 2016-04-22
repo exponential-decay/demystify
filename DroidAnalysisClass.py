@@ -164,6 +164,75 @@ class DROIDAnalysis:
    def multiplecount(self, nscount):
       query = AnalysisQueries()       
       return self.__querydb__(query.count_multiple_ids(self.analysisresults.namespacecount), True, True)         
+
+   def handleIDBreakdown(self, query):
+
+      allids = self.__querydb__(query)
+      
+      stuff = []
+      
+      container_bin = []
+      text = []
+      filename = []
+      extension = []
+      none = []
+      
+      #create a set to remove the fileids with duplicate methods
+      for id in allids:
+         file = id[0]
+         method = id[1]
+         stuff.append(str(file) + "," + method)
+   
+      for id in list(stuff):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'Container' or type == 'Signature':
+            if idno not in container_bin:             
+               container_bin.append(idno)
+            
+      for id in list(stuff):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'Text':
+            if idno not in container_bin and idno not in text:
+               text.append(idno)      
+
+      for id in list(stuff):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'Filename':
+            if idno not in container_bin and idno not in text and idno not in filename:
+               filename.append(idno)      
+   
+      for id in list(stuff):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'Extension':
+            if idno not in container_bin and idno not in text and idno not in filename and idno not in extension:
+               extension.append(idno)       
+
+      for id in list(stuff):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'None':
+            if idno not in container_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
+               none.append(idno)      
+   
+      self.analysisresults.identifiedfilecount = len(container_bin)
+      self.analysisresults.unidentifiedfilecount = len(none)            
+      self.analysisresults.extensionIDOnlyCount = len(extension)
+      
+      #NEW SF STATS ONLY
+      self.analysisresults.textidfilecount = len(text) 
+      self.analysisresults.filenameidfilecount = len(filename) 
+      #NEW SF STATS ONLY
+      
+      self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
          
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
@@ -186,18 +255,16 @@ class DROIDAnalysis:
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
       
       self.analysisresults.uniqueDirectoryNames = (self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True) - self.NONROOTBASEDIR)
-      self.analysisresults.identifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_IDENTIFIED_FILES, True, True)
-      self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)
+      
+      
+      #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#                  
+      self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_METHODS)
+      #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#    
+      
+      
 
-      self.analysisresults.unidentifiedfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIDENTIFIED, True, True)            
-
-      #NEW SF STATS ONLY
-      self.analysisresults.textidfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIED_FILES, True, True)  
-      self.analysisresults.filenameidfilecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIED_FILES, True, True)  
-      #NEW SF STATS ONLY
-
+      
       '''
-      self.analysisresults.extensionIDOnlyCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_ONLY, True, True)
       self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True)            
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_MISMATCHES, True, True)
