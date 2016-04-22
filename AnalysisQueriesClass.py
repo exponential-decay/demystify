@@ -47,6 +47,21 @@
                                        WHERE (NSDATA.NS_NAME!='pronom')
                                        AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
 
+   #PRONOM and OTHERS Text identifiers as one result
+   SELECT_COUNT_TEXT_IDENTIFIERS = """SELECT count(DISTINCT IDMETHOD)
+                                       FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
+                                       FROM IDRESULTS
+                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       AND (IDDATA.METHOD='Text'))"""
+
+   SELECT_COUNT_FILENAME_IDENTIFIERS = """SELECT COUNT(DISTINCT IDMETHOD)
+                                             FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
+                                             FROM IDRESULTS
+                                             JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                             JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                             AND (IDDATA.METHOD='Filename'))"""
+
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
                                        FROM FILEDATA  
                                        WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'"""

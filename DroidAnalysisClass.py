@@ -165,7 +165,7 @@ class DROIDAnalysis:
       query = AnalysisQueries()       
       return self.__querydb__(query.count_multiple_ids(self.analysisresults.namespacecount), True, True)         
 
-   def handleIDBreakdown(self, query):
+   def handleIDBreakdown(self, query, tooltype):
 
       allids = self.__querydb__(query)
       
@@ -227,10 +227,9 @@ class DROIDAnalysis:
       self.analysisresults.unidentifiedfilecount = len(none)            
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
-      #NEW SF STATS ONLY
-      self.analysisresults.textidfilecount = len(text) 
-      self.analysisresults.filenameidfilecount = len(filename) 
-      #NEW SF STATS ONLY
+      if tooltype != 'droid':
+         self.analysisresults.textidfilecount = len(text) 
+         self.analysisresults.filenameidfilecount = len(filename) 
       
       self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
          
@@ -258,13 +257,17 @@ class DROIDAnalysis:
       
       
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#                  
-      self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_ID_METHODS)
+      self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_ID_METHODS, self.analysisresults.tooltype)
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#    
 
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXT_MISMATCHES, True, True)
       self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_COUNT, True, True) 
-      self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
 
+      if self.analysisresults.tooltype != 'droid':
+         self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
+         self.analysisresults.distinctTextIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIERS, True, True)
+         self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIERS, True, True)
+         
       '''
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       
