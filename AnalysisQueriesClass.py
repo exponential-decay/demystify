@@ -23,10 +23,16 @@
    
    SELECT_COUNT_NAMESPACES = 'SELECT COUNT(NSDATA.NS_ID) FROM NSDATA'
    
-   SELECT_COUNT_METHODS = """SELECT IDRESULTS.FILE_ID, IDDATA.METHOD as METHOD
+   SELECT_COUNT_ID_METHODS = """SELECT IDRESULTS.FILE_ID, IDDATA.METHOD as METHOD
                               FROM IDRESULTS
                               JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
+
+   SELECT_COUNT_EXT_MISMATCHES = """SELECT COUNT(distinct(IDRESULTS.FILE_ID))
+                                       FROM IDRESULTS
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE IDDATA.EXTENSION_MISMATCH='True'"""
                                           
+
    SELECT_COUNT_FORMAT_RANGE = """SELECT COUNT(DISTINCT IDDATA.ID) 
                                        FROM IDRESULTS 
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
@@ -38,12 +44,6 @@
                                        FROM FILEDATA  
                                        WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'"""
 
-   SELECT_COUNT_MISMATCHES = """SELECT COUNT(IDDATA.EXTENSION_MISMATCH) 
-                                    FROM IDRESULTS 
-                                    JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                       
-                                    WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                    AND (IDDATA.EXTENSION_MISMATCH=1)"""
 
    SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total 
                                        FROM IDRESULTS  
