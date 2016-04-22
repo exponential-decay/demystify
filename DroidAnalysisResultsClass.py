@@ -30,6 +30,7 @@ class DROIDAnalysisResults:
    multipleidentificationcount = 0 
    unidentifiedfilecount = 0
    distinctSignaturePuidcount = 0
+   distinctOtherIdentifiers = 0
    extensionIDOnlyCount = 0
    distinctextensioncount = 0
    zeroidcount = 0

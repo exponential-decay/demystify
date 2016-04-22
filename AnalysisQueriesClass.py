@@ -32,11 +32,19 @@
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE IDDATA.EXTENSION_MISMATCH='True'"""                                          
 
-   SELECT_COUNT_FORMAT_RANGE = """SELECT COUNT(DISTINCT IDDATA.ID) 
-                                       FROM IDRESULTS 
-                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                       
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+   #TODO: Currency is PUID, what do we do for Tika and Freedesktop and others?
+   SELECT_COUNT_FORMAT_COUNT = """SELECT COUNT(DISTINCT IDDATA.ID)
+                                    FROM IDRESULTS
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                    WHERE (NSDATA.NS_NAME='pronom')
+                                    AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
+
+   SELECT_COUNT_OTHER_FORMAT_COUNT = """SELECT COUNT(DISTINCT IDDATA.ID)
+                                       FROM IDRESULTS
+                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE (NSDATA.NS_NAME!='pronom')
                                        AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
 
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 

@@ -260,22 +260,14 @@ class DROIDAnalysis:
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#                  
       self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_ID_METHODS)
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#    
-      
-      
-
-      
-      
-           
-      
-      
-      
 
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXT_MISMATCHES, True, True)
-
+      self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_COUNT, True, True) 
+      self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
 
       '''
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
-      #self.analysisresults.distinctSignaturePuidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_FORMAT_RANGE, True, True) 
+      
       self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       

@@ -81,6 +81,11 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
+      
+      if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_OTHER_ID_COUNT, self.analysisresults.distinctOtherIdentifiers))
+      
+      
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS, self.analysisresults.distinctextensioncount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount))
 
