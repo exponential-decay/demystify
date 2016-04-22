@@ -268,9 +268,10 @@ class DROIDAnalysis:
          self.analysisresults.distinctTextIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIERS, True, True)
          self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIERS, True, True)
          
-      '''
+      
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       
+      '''
       self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       

@@ -55,6 +55,7 @@
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        AND (IDDATA.METHOD='Text'))"""
 
+   #PRONOM and OTHERS Filename identifiers as one result
    SELECT_COUNT_FILENAME_IDENTIFIERS = """SELECT COUNT(DISTINCT IDMETHOD)
                                              FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
                                              FROM IDRESULTS
@@ -65,7 +66,6 @@
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
                                        FROM FILEDATA  
                                        WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'"""
-
 
    SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total 
                                        FROM IDRESULTS  
