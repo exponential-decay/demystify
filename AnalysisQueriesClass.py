@@ -30,8 +30,7 @@
    SELECT_COUNT_EXT_MISMATCHES = """SELECT COUNT(distinct(IDRESULTS.FILE_ID))
                                        FROM IDRESULTS
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       WHERE IDDATA.EXTENSION_MISMATCH='True'"""
-                                          
+                                       WHERE IDDATA.EXTENSION_MISMATCH='True'"""                                          
 
    SELECT_COUNT_FORMAT_RANGE = """SELECT COUNT(DISTINCT IDDATA.ID) 
                                        FROM IDRESULTS 

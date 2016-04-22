@@ -78,9 +78,9 @@ class DROIDLoader:
          STATUS = file['STATUS']
          MISMATCH = file['EXTENSION_MISMATCH']
          if MISMATCH == 'true':
-            MISMATCH = '1'
+            MISMATCH = True
          else:
-            MISMATCH = '0'
+            MISMATCH = False
 
          MULTIPLE = False
          if int(file['FORMAT_COUNT']) > 1:
