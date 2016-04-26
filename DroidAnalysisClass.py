@@ -305,8 +305,10 @@ class DROIDAnalysis:
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
-      '''
+      
       self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)
+      
+      '''
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
       self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
       
