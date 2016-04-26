@@ -159,7 +159,7 @@ class SFYAMLHandler:
                   self.getMismatch(s[1], iddata)
                if s[0] == 'mime':
                   if s[1] == 'UNKNOWN' or s[1] == '':
-                     s[1] = 'None'
+                     s[1] = 'none'
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
