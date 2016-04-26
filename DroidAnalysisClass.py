@@ -181,14 +181,14 @@ class DROIDAnalysis:
       #create a set to remove the fileids with duplicate methods
       for id in allids:
          file = id[0]
-         method = id[1]
+         method = id[1].lower().strip()
          method_list.append(str(file) + "," + method)
    
       for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Container':
+         if type == 'container':
             if idno not in container_bin:             
                container_bin.append(idno)
 
@@ -196,7 +196,7 @@ class DROIDAnalysis:
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Signature':
+         if type == 'signature':
             if idno not in container_bin and idno not in binary_bin:             
                binary_bin.append(idno)
             
@@ -204,7 +204,7 @@ class DROIDAnalysis:
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Text':
+         if type == 'text':
             if idno not in container_bin and idno not in binary_bin and idno not in text:
                text.append(idno)      
 
@@ -212,7 +212,7 @@ class DROIDAnalysis:
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Filename':
+         if type == 'filename':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename:
                filename.append(idno)      
    
@@ -220,7 +220,7 @@ class DROIDAnalysis:
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Extension':
+         if type == 'extension':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension:
                extension.append(idno)       
 
@@ -228,7 +228,7 @@ class DROIDAnalysis:
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'None':
+         if type == 'none':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
                none.append(idno)      
    
@@ -241,6 +241,13 @@ class DROIDAnalysis:
          self.analysisresults.filenameidfilecount = len(filename) 
       
       self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
+
+      #ID Method frequencylist can be created here also
+      #[('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
+      #self.analysisresults.idmethodFrequency
+      
+
+
          
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
@@ -283,6 +290,8 @@ class DROIDAnalysis:
       
       self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
       
+      print self.analysisresults.idmethodFrequency
+
       '''
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       
