@@ -74,11 +74,10 @@
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
                                        GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""	
 
-   SELECT_MIME_FREQUENCY_COUNT = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total 
+   #select the gamut of MIMEs in the accession/extract, not counts
+   SELECT_MIME_RANGE = """SELECT DISTINCT IDDATA.MIME_TYPE AS total 
                                        FROM IDRESULTS 
-                                       JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                          
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
    SELECT_COUNT_ZEROID = """SELECT COUNT(FILEDATA.NAME) 

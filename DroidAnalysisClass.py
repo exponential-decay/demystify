@@ -298,7 +298,7 @@ class DROIDAnalysis:
       
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
 
-      self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
+      self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_RANGE)
       
       '''      
       self.analysisresults.zeroidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZEROID, True, True)

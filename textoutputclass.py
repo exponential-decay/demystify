@@ -36,10 +36,14 @@ class DROIDAnalysisTextOutput:
       self.generateTEXT()
       return self.textoutput
 
-   def __frequencyoutput__(self, list):
+   def __frequencyoutput__(self, list, zeros=False):
       val = ''
       for item in list:
-         val = val + str(item[0]) + " (" + str(item[1]) + "), "
+         if zeros == True:
+            val = val + str(item[0]) + ", "
+         else:
+            val = val + str(item[0]) + " (" + str(item[1]) + "), "
+         
       return val.strip(", ")
    
    def getDateList(self):
@@ -155,7 +159,7 @@ class DROIDAnalysisTextOutput:
 
       if self.analysisresults.mimetypeFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency))
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
 
       if self.analysisresults.zerobytecount > 0:
          self.printFormattedText("\n")
