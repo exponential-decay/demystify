@@ -243,12 +243,23 @@ class DROIDAnalysis:
       self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
 
       #ID Method frequencylist can be created here also
-      #[('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
+      #e.g. [('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
       #self.analysisresults.idmethodFrequency
-      
+      list1 = ('XNone', len(none))
+      list2 = ('Container', len(container_bin))
+      list3 = ('Signature', len(binary_bin))
+      list4 = ('Extension', len(extension))
 
+      list_of_lists = [list1, list2, list3, list4]
+      if tooltype != 'droid':
+         list5 = ('Filename', len(filename))
+         list6 = ('Text', len(text))
+         list_of_lists.append(list5)
+         list_of_lists.append(list6)
 
-         
+      list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
+      self.analysisresults.idmethodFrequency = list_of_lists
+
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
@@ -288,9 +299,9 @@ class DROIDAnalysis:
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       
       
-      self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
+      #self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
       
-      print self.analysisresults.idmethodFrequency
+      #print self.analysisresults.idmethodFrequency
 
       '''
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
