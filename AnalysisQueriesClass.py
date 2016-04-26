@@ -80,13 +80,6 @@
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
-   SELECT_COUNT_ZEROID = """SELECT COUNT(FILEDATA.NAME) 
-                              FROM IDRESULTS
-                              JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                              JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID  
-                              WHERE IDDATA.METHOD='None' 
-                              AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
-
    SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION 
                                           FROM IDDATA
                                           WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""

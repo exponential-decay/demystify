@@ -259,6 +259,7 @@ class DROIDAnalysis:
 
       list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
       self.analysisresults.idmethodFrequency = list_of_lists
+      self.analysisresults.zeroidcount = len(none)
 
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
@@ -300,15 +301,11 @@ class DROIDAnalysis:
 
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_RANGE)
       
-      '''      
-      self.analysisresults.zeroidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZEROID, True, True)
-      
-
       #NOTE: Must be calculated after we have total, and subset values
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
 
-      
+      '''
       self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
       self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
