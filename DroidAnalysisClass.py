@@ -245,7 +245,7 @@ class DROIDAnalysis:
       #ID Method frequencylist can be created here also
       #e.g. [('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
       #self.analysisresults.idmethodFrequency
-      list1 = ('XNone', len(none))
+      list1 = ('None', len(none))
       list2 = ('Container', len(container_bin))
       list3 = ('Signature', len(binary_bin))
       list4 = ('Extension', len(extension))
@@ -297,16 +297,10 @@ class DROIDAnalysis:
          
       
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
-      
-      
-      #self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
-      
-      #print self.analysisresults.idmethodFrequency
 
-      '''
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       
-      
+      '''      
       self.analysisresults.zeroidcount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZEROID, True, True)
       
 
