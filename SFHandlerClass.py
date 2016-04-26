@@ -157,6 +157,9 @@ class SFYAMLHandler:
                      s[1] = None
                   self.getMethod(s[1], iddata, filedict, True)
                   self.getMismatch(s[1], iddata)
+               if s[0] == 'mime':
+                  if s[1] == 'UNKNOWN' or s[1] == '':
+                     s[1] = 'None'
                iddata[s[0]] = s[1]
       
       #on loop completion add final id record
