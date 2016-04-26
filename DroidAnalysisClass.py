@@ -169,9 +169,10 @@ class DROIDAnalysis:
 
       allids = self.__querydb__(query)
       
-      stuff = []
+      method_list = []
       
       container_bin = []
+      binary_bin = []
       text = []
       filename = []
       extension = []
@@ -181,49 +182,57 @@ class DROIDAnalysis:
       for id in allids:
          file = id[0]
          method = id[1]
-         stuff.append(str(file) + "," + method)
+         method_list.append(str(file) + "," + method)
    
-      for id in list(stuff):
+      for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
-         if type == 'Container' or type == 'Signature':
+         if type == 'Container':
             if idno not in container_bin:             
                container_bin.append(idno)
+
+      for id in list(method_list):
+         idlist = id.split(',', 1)
+         type = idlist[1]
+         idno = idlist[0]
+         if type == 'Signature':
+            if idno not in container_bin and idno not in binary_bin:             
+               binary_bin.append(idno)
             
-      for id in list(stuff):
+      for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
          if type == 'Text':
-            if idno not in container_bin and idno not in text:
+            if idno not in container_bin and idno not in binary_bin and idno not in text:
                text.append(idno)      
 
-      for id in list(stuff):
+      for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
          if type == 'Filename':
-            if idno not in container_bin and idno not in text and idno not in filename:
+            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename:
                filename.append(idno)      
    
-      for id in list(stuff):
+      for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
          if type == 'Extension':
-            if idno not in container_bin and idno not in text and idno not in filename and idno not in extension:
+            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension:
                extension.append(idno)       
 
-      for id in list(stuff):
+      for id in list(method_list):
          idlist = id.split(',', 1)
          type = idlist[1]
          idno = idlist[0]
          if type == 'None':
-            if idno not in container_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
+            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
                none.append(idno)      
    
-      self.analysisresults.identifiedfilecount = len(container_bin)
+      self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
       self.analysisresults.unidentifiedfilecount = len(none)            
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
@@ -271,8 +280,10 @@ class DROIDAnalysis:
       
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
       
-      '''
+      
       self.analysisresults.idmethodFrequency = self.__querydb__(AnalysisQueries.SELECT_METHOD_FREQUENCY_COUNT)      
+      
+      '''
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_FREQUENCY_COUNT)
       
       
