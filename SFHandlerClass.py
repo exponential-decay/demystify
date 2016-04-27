@@ -68,6 +68,7 @@ class SFYAMLHandler:
    FIELDMETHOD = 'method'
    FIELDMISMATCH = 'extension mismatch'
    FIELDEXT = 'ext'
+   FIELDVERSION = 'version'
 
    def getHeaders(self):
       return self.sfdata[self.DICTHEADER]
@@ -138,13 +139,20 @@ class SFYAMLHandler:
             if s[0] in self.hashes and self.hashtype == False:
                self.hashtype = s[0]
 
-         if s[0] in self.iddata:
-            #add data to dict on NS trigger, create new dict
+         if s[0] in self.iddata:         
+            #-------------------------------------------------------------#
+            #TRIGGER: add data to dict on NS as a trigger, create new dict#
+            #-------------------------------------------------------------# 
             if s[0] == 'ns':
                if len(iddata) > 0:
+                  if self.FIELDVERSION not in iddata:
+                     iddata[self.FIELDVERSION] = ''
                   iddict[ns] = iddata
                   iddata = {}
-               ns = s[1]               
+               ns = s[1]     
+            #-------------------------------------------------------------#
+            #TRIGGER: add data to dict on NS as a trigger, create new dict#
+            #-------------------------------------------------------------#           
             else:
                if s[0] == 'id':
                   self.getContainers(s[1], filedict)
@@ -161,6 +169,9 @@ class SFYAMLHandler:
                   if s[1] == 'UNKNOWN' or s[1] == '':
                      s[1] = 'none'
                iddata[s[0]] = s[1]
+
+      if self.FIELDVERSION not in iddata:
+         iddata[self.FIELDVERSION] = ''
       
       #on loop completion add final id record
       iddict[ns] = iddata
