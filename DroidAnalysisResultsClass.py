@@ -53,7 +53,6 @@ class DROIDAnalysisResults:
    
    dateFrequency = None
 
-   extensionOnlyIDList = None
    extensionOnlyIDFrequency = 0
    extensionOnlyIDfnameList = 0 
    
@@ -66,7 +65,6 @@ class DROIDAnalysisResults:
    
    mimetypeFrequency = None
    
-   filesWithNoIDList = None
    topPUIDList = None
    topExtensionList = None
    

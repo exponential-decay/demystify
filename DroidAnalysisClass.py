@@ -23,6 +23,7 @@ class DROIDAnalysis:
 
    #variables we need internally:
    extensionIDonly = None
+   rogueFileIDs = None
 
    def __init__(self, config=False):
       self.config = self.__readconfig__(config)       
@@ -114,6 +115,9 @@ class DROIDAnalysis:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
 
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
    def listRoguePUIDs(self, puidlist):   
       query = AnalysisQueries()       
       searchlist = []            
@@ -121,6 +125,9 @@ class DROIDAnalysis:
          result = self.__querydb__(query.count_id_instances(puid), True, True)   
          if result > 0:
             searchlist.append(puid)
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
+   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
 
       roguepuidpathlist = []
       for puid in searchlist:
@@ -235,6 +242,7 @@ class DROIDAnalysis:
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
       self.extensionIDonly = extension
+      self.rogueFileIDs = extension + none
       
       if tooltype != 'droid':
          self.analysisresults.textidfilecount = len(text) 
@@ -313,7 +321,7 @@ class DROIDAnalysis:
       #most complicated way to retrieve extension only PUIDs
       if len(self.extensionIDonly) > 0:
          query = AnalysisQueries()
-         extid = query.extension_only_identification(self.extensionIDonly, 'Extension')
+         extid = query.query_from_ids(self.extensionIDonly, 'Extension')
          print extid
          test = self.__querydb__(extid)
          combined_list = []   #namespace + id
@@ -325,12 +333,6 @@ class DROIDAnalysis:
          self.analysisresults.extensionOnlyIDFrequency = sorted_list
       
       '''
-      #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
-      self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)
-      #TODO: POTENTIALLY DELETE ABOVE
-      #TODO: POTENTIALLY DELETE ABOVE
-      #TODO: POTENTIALLY DELETE ABOVE
-
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
@@ -352,10 +354,19 @@ class DROIDAnalysis:
          
       self.listzerobytefiles()
       self.msoftfnameanalysis()
-
+      '''
+      
+      '''
+      #ROGUE QUERIES (relies on returning filepaths)
       if self.roguepuids != False:
-         self.listRoguePUIDs(self.roguepuids)
-
+         query = AnalysisQueries()
+         rogues = query.query_from_ids(self.rogueFileIDs)
+         print self.__querydb__(rogues)
+         #self.listRoguePUIDs(self.roguepuids)
+         #self.analysisresults.extensionOnlyID = ''
+         #self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)         
+         #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
+         #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
       '''
 
       return self.analysisresults

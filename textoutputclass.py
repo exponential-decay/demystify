@@ -183,11 +183,13 @@ class DROIDAnalysisTextOutput:
          self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount))
          self.printFormattedText(self.__itemlist__(self.analysisresults.zerobytelist))
 
+      '''
       if self.analysisresults.filesWithNoIDList is not None:
          if len(self.analysisresults.filesWithNoIDList) > 0:
             self.printFormattedText("\n")
             self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount))
             self.printFormattedText(self.__itemlist__(self.analysisresults.filesWithNoIDList))
+      '''
       
       if self.analysisresults.topPUIDList is not None:
          self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_PUIDS)

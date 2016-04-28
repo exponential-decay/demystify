@@ -137,13 +137,6 @@
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
 
-   SELECT_ZERO_ID_FILES = """SELECT FILEDATA.FILE_PATH
-                                 FROM IDRESULTS
-                                 JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                   
-                                 WHERE IDDATA.METHOD='None' 
-                                 AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
-
    def count_multiple_ids(self, nscount):
       multi = """SELECT count(FREQUENCY) from(SELECT FILE_ID, COUNT(FILE_ID) AS FREQUENCY
                   FROM IDRESULTS
@@ -170,20 +163,32 @@
       query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"      
       return query_part1 + query_part2
 
-   def extension_only_identification(self, idlist, method):
-      list = 'AND '
+   #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
+   def query_from_ids(self, idlist, idmethod=False):      
+      list = ''
       for i in idlist:
-         where = "IDRESULTS.FILE_ID=" + str(i) + " OR "
+         if idmethod != False:
+            where = "IDRESULTS.FILE_ID=" + str(i) + " OR "
+         else:
+            where = "FILEDATA.FILE_ID=" + str(i) + " OR "
          list = list + where
-      list = list.rstrip(' OR ')            
-      SELECT_EXT_ONLY_FREQUENCY = """SELECT NSDATA.NS_NAME, IDDATA.ID
-                                       FROM IDRESULTS
-                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       WHERE IDDATA.METHOD="""
-                                       
-      SELECT_EXT_ONLY_FREQUENCY = SELECT_EXT_ONLY_FREQUENCY + "'" + method + "'"    #which method?         
-      return SELECT_EXT_ONLY_FREQUENCY + "\n" + list                                     
+      list = list.rstrip(' OR ')
+
+      SELECT_PATHS = """SELECT FILEDATA.FILE_PATH
+                        FROM FILEDATA"""
+
+      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID
+                                    FROM IDRESULTS
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                    WHERE IDDATA.METHOD="""
+      if idmethod != False:
+         SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS + "'" + idmethod + "'"    #which method?   
+         list = 'OR ' + list
+         return SELECT_NAMESPACE_AND_IDS + "\n" + list                                     
+      else:
+         list = 'WHERE ' + list
+         return SELECT_PATHS + "\n" + list
 
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
