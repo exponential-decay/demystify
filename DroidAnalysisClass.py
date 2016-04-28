@@ -339,17 +339,11 @@ class DROIDAnalysis:
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
-      
-      #query = AnalysisQueries()
-      #print query.get_multi_paths(self.analysisresults.namespacecount)
-      '''
-      #Originally PARETO principle: 80% of the effects from from 20% of the causes
-      self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]
-      self.analysisresults.topExtensionList = self.analysisresults.frequencyOfAllExtensions[0:5]
-      
+                  
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
-            
+      
+      '''
       #more complicated listings
       if self.analysisresults.hashused is True:
          self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
