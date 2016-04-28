@@ -36,14 +36,25 @@ class DROIDAnalysisTextOutput:
       self.generateTEXT()
       return self.textoutput
 
-   def __frequencyoutput__(self, list, zeros=False):
+   #namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
+   def __frequencyoutput__(self, list, zeros=False, namespace=False):         
       val = ''
+      ns = None
       for item in list:
+         if namespace == True: 
+            if ns is None:
+               ns = str(item[0])
+            else:
+               if ns != str(item[0]):
+                  val = val.strip(', ') + "\n\n"
+                  ns = str(item[0])
+            val = val + 'ns:' + str(ns) + " "
+            item = (item[1], item[2])
          if zeros == True:
             val = val + str(item[0]) + ", "
          else:
             val = val + str(item[0]) + " (" + str(item[1]) + "), "
-         
+
       return val.strip(", ")
    
    def getDateList(self):
@@ -119,7 +130,7 @@ class DROIDAnalysisTextOutput:
 
       if self.analysisresults.sigIDPUIDFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.sigIDPUIDFrequency))
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.sigIDPUIDFrequency, False, True))
 
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:

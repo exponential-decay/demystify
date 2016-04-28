@@ -86,13 +86,12 @@
                                              WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
                                              ORDER BY NSDATA.NS_NAME"""
 
-   SELECT_BINARY_MATCH_COUNT = """SELECT IDDATA.ID, COUNT(*) AS total 
-                                    FROM IDRESULTS 
-                                    JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
-                                    WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                    AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container') 
-                                    GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
+   SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
+                                    FROM IDRESULTS
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                    WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
+                                    GROUP BY IDDATA.ID ORDER BY NSDATA.NS_NAME, TOTAL DESC"""
 
    SELECT_YEAR_FREQUENCY_COUNT = """SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total 
                                        FROM FILEDATA 
