@@ -42,14 +42,14 @@ class DROIDAnalysis:
       #self.roguesduplicatenames = True // to implement
 
       self.roguesduplicatechecksums = True
-      self.roguepuids = False
+      self.rogueids = False
       
       if config != False:
          if config.has_section('rogues'):
             if config.has_option('rogues', 'duplicatechecksums'):
                self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
-            if config.has_option('rogues', 'roguepuids'):
-               self.roguepuids = config.get('rogues', 'roguepuids').split(',')  
+            if config.has_option('rogues', 'ids'):
+               self.rogueids = config.get('rogues', 'ids').split(',')  
 
       return configout
 
@@ -115,27 +115,21 @@ class DROIDAnalysis:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
 
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
-   def listRoguePUIDs(self, puidlist):   
+   def listRogueIDs(self, idlist):   
       query = AnalysisQueries()       
       searchlist = []            
-      for puid in puidlist:
-         result = self.__querydb__(query.count_id_instances(puid), True, True)   
+      for id in idlist:
+         result = self.__querydb__(query.count_id_instances(id), True, True)   
          if result > 0:
-            searchlist.append(puid)
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
-   #WITH REFACTOR FUNCTION NEEDS REWORKING - E.G. TO INCLUDE ALTERNATE METHODS... WHERE ID=''
+            searchlist.append(id)
 
-      roguepuidpathlist = []
-      for puid in searchlist:
-         result = self.__querydb__(query.search_id_instance_filepaths(puid))        
+      rogueidpathlist = []
+      for id in searchlist:
+         result = self.__querydb__(query.search_id_instance_filepaths(id))        
          for r in result:
-            roguepuidpathlist.append(r[0])
+            rogueidpathlist.append(r[0])
             
-      self.analysisresults.roguepuidlisting = roguepuidpathlist      
+      self.analysisresults.roguepuidlisting = rogueidpathlist      
       return len(self.analysisresults.roguepuidlisting)
 
    def calculatePercent(self, total, subset):
@@ -353,7 +347,7 @@ class DROIDAnalysis:
       
       #ROGUE QUERIES (relies on returning filepaths)
       #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
-      if self.roguepuids != False:
+      if self.rogueids != False:
          query = AnalysisQueries()
          if len(self.extensionIDonly) > 0:
             extonly = query.query_from_ids(self.extensionIDonly)
@@ -367,7 +361,7 @@ class DROIDAnalysis:
          if self.analysisresults.multipleidentificationcount > 0:
             self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
-         self.listRoguePUIDs(self.roguepuids)
+         self.listRogueIDs(self.rogueids)
 
       return self.analysisresults
       
