@@ -103,16 +103,8 @@
    #MULTIPLE IDS WILL BE REFLECTED USING MULTIPLE NAMESPACE PLACES - HOW TO REPORT ON?
    SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME 
                                        FROM IDDATA 
-                                       WHERE IDDATA.METHOD='Extension'
-                                       AND IDDATA.FORMAT_COUNT=1"""
+                                       WHERE (IDDATA.METHOD='Extension')"""
    
-   #TODO: THIS STAT IS DIFFERENT FROM THE ON ABOVE BECAUSE IT INCLUDES MULTIPLE FORMAT COUNT - UGH!
-   SELECT_EXT_ONLY_FREQUENCY = """SELECT IDDATA.ID, COUNT(*) AS total 
-                                    FROM IDDATA                                     
-                                    WHERE IDDATA.METHOD='Extension'
-                                    GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
-
-
    SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT 
                                        FROM FILEDATA 
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
@@ -177,6 +169,21 @@
       
       query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"      
       return query_part1 + query_part2
+
+   def extension_only_identification(self, idlist, method):
+      list = 'AND '
+      for i in idlist:
+         where = "IDRESULTS.FILE_ID=" + str(i) + " OR "
+         list = list + where
+      list = list.rstrip(' OR ')            
+      SELECT_EXT_ONLY_FREQUENCY = """SELECT NSDATA.NS_NAME, IDDATA.ID
+                                       FROM IDRESULTS
+                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE IDDATA.METHOD="""
+                                       
+      SELECT_EXT_ONLY_FREQUENCY = SELECT_EXT_ONLY_FREQUENCY + "'" + method + "'"    #which method?         
+      return SELECT_EXT_ONLY_FREQUENCY + "\n" + list                                     
 
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

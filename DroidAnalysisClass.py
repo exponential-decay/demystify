@@ -21,6 +21,9 @@ class DROIDAnalysis:
    #TODO: consider handling better...
    NONROOTBASEDIR = 1
 
+   #variables we need internally:
+   extensionIDonly = None
+
    def __init__(self, config=False):
       self.config = self.__readconfig__(config)       
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
@@ -74,10 +77,6 @@ class DROIDAnalysis:
       
    ###
    # List queries
-
-   '''def listExtensionIDOnly(self):
-      return self.__listQuery1__( 
-         "SELECT FILE_PATH FROM droid WHERE METHOD='Extension' AND(TYPE='File' OR TYPE='Container')")'''
     
    def listDuplicateFilesFromHASH(self):		
       result = self.__querydb__(AnalysisQueries.SELECT_COUNT_DUPLICATE_CHECKSUMS)
@@ -167,8 +166,7 @@ class DROIDAnalysis:
 
    def handleIDBreakdown(self, query, tooltype):
 
-      allids = self.__querydb__(query)
-      
+      allids = self.__querydb__(query)      
       method_list = []
       
       container_bin = []
@@ -235,6 +233,8 @@ class DROIDAnalysis:
       self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
       self.analysisresults.unidentifiedfilecount = len(none)            
       self.analysisresults.extensionIDOnlyCount = len(extension)
+      
+      self.extensionIDonly = extension
       
       if tooltype != 'droid':
          self.analysisresults.textidfilecount = len(text) 
@@ -314,15 +314,23 @@ class DROIDAnalysis:
       
       self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)
       
-
-      '''
-      #TODO: POTENTIALLY DELETE BELOW
-      #TODO: POTENTIALLY DELETE BELOW
-      #TODO: POTENTIALLY DELETE BELOW
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
-      #TODO: WE MIGHT NOT USE THIS
-      #self.analysisresults.extensionOnlyIDfnameList = self.listExtensionIDOnly()
-      self.analysisresults.extensionOnlyIDFrequency = self.__querydb__(AnalysisQueries.SELECT_EXT_ONLY_FREQUENCY)
+      
+      #most complicated way to retrieve extension only PUIDs
+      if len(self.extensionIDonly) > 0:
+         query = AnalysisQueries()
+         extid = query.extension_only_identification(self.extensionIDonly, 'Extension')
+         print extid
+         test = self.__querydb__(extid)
+         combined_list = []   #namespace + id
+         from collections import Counter
+         for entry in test:
+            entry = 'ns:' + ' '.join(entry)
+            combined_list.append(entry) 
+         sorted_list = Counter(elem for elem in combined_list).most_common()
+         self.analysisresults.extensionOnlyIDFrequency = sorted_list
+      
+      '''
       #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
       self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)
       #TODO: POTENTIALLY DELETE ABOVE

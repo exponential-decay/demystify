@@ -37,23 +37,26 @@ class DROIDAnalysisTextOutput:
       return self.textoutput
 
    #namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
-   def __frequencyoutput__(self, list, zeros=False, namespace=False):         
+   def __frequencyoutput__(self, itemlist, zeros=False, namespace=False):         
       val = ''
       ns = None
-      for item in list:
-         if namespace == True: 
-            if ns is None:
-               ns = str(item[0])
-            else:
-               if ns != str(item[0]):
-                  val = val.strip(', ') + "\n\n"
+      if type(itemlist) is not list:
+         sys.stderr.write("LOG: Not sending a list to a function wanting a list." + "\n")
+      else:
+         for item in itemlist:
+            if namespace == True: 
+               if ns is None:
                   ns = str(item[0])
-            val = val + 'ns:' + str(ns) + " "
-            item = (item[1], item[2])
-         if zeros == True:
-            val = val + str(item[0]) + ", "
-         else:
-            val = val + str(item[0]) + " (" + str(item[1]) + "), "
+               else:
+                  if ns != str(item[0]):
+                     val = val.strip(', ') + "\n\n"
+                     ns = str(item[0])
+               val = val + 'ns:' + str(ns) + " "
+               item = (item[1], item[2])
+            if zeros == True:
+               val = val + str(item[0]) + ", "
+            else:
+               val = val + str(item[0]) + " (" + str(item[1]) + "), "
 
       return val.strip(", ")
    
@@ -132,12 +135,13 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.sigIDPUIDFrequency, False, True))
 
-      if self.analysisresults.extensionOnlyIDList is not None:
-         if len(self.analysisresults.extensionOnlyIDList) > 0:
-            self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
-            for item in self.analysisresults.extensionOnlyIDList:
-               output = item[0] + ", " + item[1]
-               self.printFormattedText(output)
+      if self.analysisresults.extensionIDOnlyCount > 0:
+         if self.analysisresults.extensionOnlyIDList is not None:
+            if len(self.analysisresults.extensionOnlyIDList) > 0:
+               self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
+               for item in self.analysisresults.extensionOnlyIDList:
+                  output = item[0] + ", " + item[1]
+                  self.printFormattedText(output)
       
       dates = self.getDateList()
       if dates is not None:
@@ -147,11 +151,12 @@ class DROIDAnalysisTextOutput:
       if self.analysisresults.idmethodFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.idmethodFrequency))
-
-      if self.analysisresults.extensionOnlyIDList is not None:
-         if len(self.analysisresults.extensionOnlyIDList) > 0:
-            self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY)
-            self.printFormattedText(self.__frequencyoutput__(self.analysisresults.extensionOnlyIDFrequency))
+      
+      if self.analysisresults.extensionIDOnlyCount > 0:
+         if self.analysisresults.extensionOnlyIDList is not None and self.analysisresults.extensionOnlyIDFrequency is not None:
+            if len(self.analysisresults.extensionOnlyIDList) > 0:
+               self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY)
+               self.printFormattedText(self.__frequencyoutput__(self.analysisresults.extensionOnlyIDFrequency))
 
       if self.analysisresults.uniqueExtensionsInCollectionList is not None:
          self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
