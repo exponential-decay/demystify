@@ -26,6 +26,7 @@ class DROIDAnalysis:
    noids = None
 
    def __init__(self, config=False):
+      self.query = AnalysisQueries()
       self.config = self.__readconfig__(config)       
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
@@ -89,10 +90,9 @@ class DROIDAnalysis:
       for r in result:
          self.analysisresults.totalHASHduplicates = self.analysisresults.totalHASHduplicates + int(r[1])
         
-      #result list([HASH, COUNT])      
-      query = AnalysisQueries()      
+      #result list([HASH, COUNT])           
       for r in result:               
-         example = self.__querydb__(query.list_duplicate_paths(r[0]))
+         example = self.__querydb__(self.query.list_duplicate_paths(r[0]))
          pathlist = []
          for e in example:
             pathlist.append(e[0])
@@ -115,17 +115,16 @@ class DROIDAnalysis:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
 
-   def listRogueIDs(self, idlist):   
-      query = AnalysisQueries()       
+   def listRogueIDs(self, idlist):        
       searchlist = []            
       for id in idlist:
-         result = self.__querydb__(query.count_id_instances(id), True, True)   
+         result = self.__querydb__(self.query.count_id_instances(id), True, True)   
          if result > 0:
             searchlist.append(id)
 
       rogueidpathlist = []
       for id in searchlist:
-         result = self.__querydb__(query.search_id_instance_filepaths(id))        
+         result = self.__querydb__(self.query.search_id_instance_filepaths(id))        
          for r in result:
             rogueidpathlist.append(r[0])
             
@@ -161,13 +160,11 @@ class DROIDAnalysis:
       self.analysisresults.badFileNames = namereport
       self.analysisresults.badDirNames = dirreport
 
-   def multiplecount(self, nscount):
-      query = AnalysisQueries()       
-      return self.__querydb__(query.count_multiple_ids(nscount), True, True)         
+   def multiplecount(self, nscount):    
+      return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)         
 
-   def multipleIDList(self, nscount):
-      query = AnalysisQueries()       
-      return self.__querydb__(query.count_multiple_ids(nscount, True), False, False, True) 
+   def multipleIDList(self, nscount):       
+      return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 
 
    def handleIDBreakdown(self, query, tooltype):
 
@@ -318,8 +315,7 @@ class DROIDAnalysis:
       
       #most complicated way to retrieve extension only PUIDs
       if len(self.extensionIDonly) > 0:
-         query = AnalysisQueries()
-         extid = query.query_from_ids(self.extensionIDonly, 'Extension')
+         extid = self.query.query_from_ids(self.extensionIDonly, 'Extension')
          test = self.__querydb__(extid)
          combined_list = []   #namespace + id
          from collections import Counter
@@ -348,12 +344,11 @@ class DROIDAnalysis:
       #ROGUE QUERIES (relies on returning filepaths)
       #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
       if self.rogueids != False:
-         query = AnalysisQueries()
          if len(self.extensionIDonly) > 0:
-            extonly = query.query_from_ids(self.extensionIDonly)
+            extonly = self.query.query_from_ids(self.extensionIDonly)
             extrogues = self.__querydb__(extonly)
          if len(self.noids) > 0:
-            none = query.query_from_ids(self.noids)
+            none = self.query.query_from_ids(self.noids)
             nonerogues = self.__querydb__(none)
 
          self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
