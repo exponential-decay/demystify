@@ -57,8 +57,9 @@ class DROIDAnalysisTextOutput:
                val = val + str(item[0]) + ", "
             else:
                val = val + str(item[0]) + " (" + str(item[1]) + "), "
-
-      return val.strip(", ")
+         val = val.strip(", ")
+         
+      return val
    
    def getDateList(self):
       if self.analysisresults.dateFrequency is not None:
@@ -70,7 +71,6 @@ class DROIDAnalysisTextOutput:
          output = output + "Checksum: " + str(dupes['checksum']) + "\n"
          output = output + "Count: " + str(dupes['count']) + "\n"
          output = output + "Example: " + str(dupes['examples'][0]) + "\n\n"
-         
       return output.strip("\n")
 
    def generateTEXT(self):   
@@ -191,25 +191,19 @@ class DROIDAnalysisTextOutput:
             self.printFormattedText(self.__itemlist__(self.analysisresults.filesWithNoIDList))
       '''
       
-      if self.analysisresults.topPUIDList is not None:
-         self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_PUIDS)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.topPUIDList))
-      
-      if self.analysisresults.topExtensionList is not None:
-         self.__output_list_title__(self.STRINGS.TEXT_ONLY_FIVE_TOP_EXTENSIONS)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.topExtensionList))
-
       if self.analysisresults.containertypeslist is not None:
          if len(self.analysisresults.containertypeslist) > 0:
             self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
             output = ""
             for archive in self.analysisresults.containertypeslist:
                output = output + archive[0] + ", " 
-            self.printFormattedText(output.strip(", ") + "\n\n")
+            self.printFormattedText(output.strip(", "))
+
+      self.printFormattedText('\n' , True)
 
       if self.analysisresults.hashused > 0:
          if self.analysisresults.totalHASHduplicates > 0:
-            self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
+            self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates))
             self.printFormattedText(self.__outputdupes__(self.analysisresults.duplicateHASHlisting))
 
       if self.analysisresults.badFileNames is not None:

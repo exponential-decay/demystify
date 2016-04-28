@@ -7,6 +7,7 @@ import sys
 import droid2sqlite
 import ConfigParser
 import libs.ExportDBClass
+import droid2sqlite
 from libs.htmloutputclass import DROIDAnalysisHTMLOutput
 from libs.textoutputclass import DROIDAnalysisTextOutput
 from libs.roguesgalleryoutputclass import rogueoutputclass
@@ -40,10 +41,11 @@ def handleDROIDDB(dbfilename, config=False):
    return analysisresults
 
 def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, heroes=False, config=False):
-   dbfilename = droid2sqlite.handleDROIDCSV(droidcsv)
-   if analyse == True:
-      analysisresults = handleDROIDDB(dbfilename, config)
-      handleOutput(analysisresults, htmlout, rogues, heroes)
+   dbfilename = droid2sqlite.identifyinput(droidcsv)
+   if dbfilename is not None:
+      if analyse == True:
+         analysisresults = handleDROIDDB(dbfilename, config)
+         handleOutput(analysisresults, htmlout, rogues, heroes)
 
 def outputtime(start_time):
    sys.stderr.write("--- %s seconds ---" % (time.time() - start_time) + "\n")
@@ -54,14 +56,13 @@ def main():
 
    #	Handle command line arguments for the script
    parser = argparse.ArgumentParser(description='Analyse DROID results stored in a SQLite DB')
-   parser.add_argument('--csv', help='Optional: Single DROID CSV to read.', default=False)
-   parser.add_argument('--csva', help='Optional: DROID CSV to read, and then analyse.', default=False)
+   parser.add_argument('--export', '--droid', '--sf', '--exp', help='Optional: DROID or Siegfried export to read, and then analyse.', default=False)
    parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
    parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
-   parser.add_argument("--blacklist", "--bl", help="Use configured blacklist.", action="store_true")
-   parser.add_argument("--export", "--exp", help="Export SQLITE DB as CSV.", default=False)
+   parser.add_argument("--blacklist", help="Use configured blacklist.", action="store_true")
+   parser.add_argument("--dump", help="UNSTABLE: Export SQLITE DB as CSV.", default=False)
 
    start_time = time.time()
 
@@ -75,20 +76,17 @@ def main():
    
    config = handleConfig(args.blacklist)
    
-   if args.csv:
-      handleDROIDCSV(args.csv)
-      outputtime(start_time)
-   if args.csva:
-      handleDROIDCSV(args.csva, True, args.htm, args.rogues, args.heroes, config)
+   if args.export:
+      handleDROIDCSV(args.export, True, args.htm, args.rogues, args.heroes, config)
       outputtime(start_time)
    if args.db:
       analysisresults = handleDROIDDB(args.db, config)
       handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
-   if args.export:
+   if args.dump:
       ex = ExportDBClass.ExportDB()
-      ex.exportDB(args.export)
-   
+      ex.exportDB(args.export)  
+      outputtime(start_time) 
    else:
       sys.exit(1)
 

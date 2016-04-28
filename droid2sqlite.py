@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import division
 import argparse
 import sys
@@ -8,12 +7,26 @@ from libs.GenerateBaselineDBClass import GenerateBaselineDB
 from libs.DROIDLoaderClass import DROIDLoader
 from libs.SFLoaderClass import SFLoader
 
+def identifyinput(export):
+   id = IdentifyExport()
+   type = id.exportid(export)
+   if type == id.DROIDTYPE:
+      return handleDROIDCSV(export)
+   elif type == id.DROIDTYPEBOM:
+      return handleDROIDCSV(export, True)
+   elif type == id.SFTYPE:
+      return handleSFYAML(export)
+   elif type == id.UNKTYPE:
+      sys.stderr.write("Unknown export type." + "\n")	
+      return None
+
 def handleDROIDCSV(droidcsv, BOM=False): 
    global basedb
    basedb = GenerateBaselineDB(droidcsv)
    loader = DROIDLoader(basedb, BOM)
    loader.droidDBSetup(droidcsv, basedb.getcursor())
    basedb.closedb()
+   return basedb.dbname   
 
 def handleSFYAML(sfexport):
    global basedb
@@ -21,6 +34,7 @@ def handleSFYAML(sfexport):
    loader = SFLoader(basedb)
    loader.sfDBSetup(sfexport, basedb.getcursor())
    basedb.closedb()
+   return basedb.dbname
 
 def main():
 
@@ -38,16 +52,7 @@ def main():
    args = parser.parse_args()
    
    if args.export:
-      id = IdentifyExport()
-      type = id.exportid(args.export)
-      if type == id.DROIDTYPE:
-         handleDROIDCSV(args.export)
-      elif type == id.DROIDTYPEBOM:
-         handleDROIDCSV(args.export, True)
-      elif type == id.SFTYPE:
-         handleSFYAML(args.export)
-      elif type == id.UNKTYPE:
-         sys.stderr.write("Unknown export type." + "\n")	
+      identifyinput()
    else:
       sys.exit(1)
 

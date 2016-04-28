@@ -29,7 +29,7 @@ class DROIDAnalysis:
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
    def __version__(self):
-      self.analysisresults.__version__ = '0.3.0' #need something reasonable here...
+      self.analysisresults.__version__ = '0.4.0' #need something reasonable here...
       return self.analysisresults.__version__
 
    def __readconfig__(self, config):
