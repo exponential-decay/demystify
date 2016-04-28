@@ -4,6 +4,7 @@
 import os.path
 import datetime
 import urllib
+import codecs
 from urlparse import urlparse, urljoin
 
 class SFYAMLHandler:
@@ -183,7 +184,7 @@ class SFYAMLHandler:
    def readSFYAML(self, sfname):
       processing = False
       filedata = []
-      with open(sfname, 'rb') as sfile:
+      with codecs.open(sfname, encoding='utf-8') as sfile:
          for line in sfile: 
             line = line.strip()
             if line == self.YAMLSECTION:
@@ -294,13 +295,15 @@ class SFYAMLHandler:
 
    def addFileURI(self, fname):
       fname = fname.replace("\\","/")
-      fname = urljoin('file:', urllib.pathname2url(fname))
+      test = urllib.pathname2url(fname.encode('utf-8'))
+      fname = urljoin('file:', test)
 
       #decode to match droid/sf output
-      fname = urllib.unquote(fname).decode('utf8')
+      fname = urllib.unquote(fname).decode('utf-8')
       return fname
 
    def addContainerURI(self, container, containedfile, fname):
+      fname = fname
       fname = container[self.FIELDCONTTYPE] + ":" + fname 
       fname = fname.replace(container[self.FIELDFILENAME], container[self.FIELDFILENAME] + "!")
       return fname

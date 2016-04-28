@@ -343,14 +343,16 @@ class DROIDAnalysis:
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
       
-      '''
+      
       #more complicated listings
       if self.analysisresults.hashused is True:
          self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
+      
          
       self.listzerobytefiles()
+            
       self.msoftfnameanalysis()
-      '''
+      
       
       '''
       #ROGUE QUERIES (relies on returning filepaths)

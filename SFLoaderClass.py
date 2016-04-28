@@ -1,4 +1,5 @@
-﻿import sys
+# -*- coding: utf-8 -*-
+import sys
 from ToolMappingClass import ToolMapping
 from SFHandlerClass import SFYAMLHandler
 
@@ -125,7 +126,11 @@ class SFLoader:
          for key, value in f.items():
             if key in ToolMapping.SF_FILE_MAP:
                filekeystring = filekeystring + ToolMapping.SF_FILE_MAP[key] + ", "
-               filevaluestring = filevaluestring + "'" + str(value) + "', "
+               if type(value) is not int:
+                  tmp = value.encode('utf-8')
+               else:
+                  tmp = value
+               filevaluestring = filevaluestring + "'" + str(tmp) + "', "
             if key == sf.FIELDDIRNAME:
                dirlist.append(value)
             else:
