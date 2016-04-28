@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import division
 import time
 import argparse
@@ -7,11 +6,11 @@ import os
 import sys
 import droid2sqlite
 import ConfigParser
-import htmloutputclass
-import textoutputclass
-import roguesgalleryoutputclass
-import DroidAnalysisClass
-import ExportDBClass
+import libs.ExportDBClass
+from libs.htmloutputclass import DROIDAnalysisHTMLOutput
+from libs.textoutputclass import DROIDAnalysisTextOutput
+from libs.roguesgalleryoutputclass import rogueoutputclass
+from libs.DroidAnalysisClass import DROIDAnalysis
 
 def handleConfig(blacklist):
    config = blacklist
@@ -23,20 +22,20 @@ def handleConfig(blacklist):
 
 def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
    if htmlout is True:
-      htmloutput = htmloutputclass.DROIDAnalysisHTMLOutput(analysisresults)
+      htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
       sys.stdout.write(htmloutput.printHTMLResults())   
    elif rogues is True:
-      rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults)
+      rogueoutput = rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
    elif heroes is True:
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heroes)
       rogueoutput.printTextResults()      
    else:
-      textoutput = textoutputclass.DROIDAnalysisTextOutput(analysisresults)
+      textoutput = DROIDAnalysisTextOutput(analysisresults)
       sys.stdout.write(textoutput.printTextResults()) # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, config=False):
-   analysis = DroidAnalysisClass.DROIDAnalysis(config)	
+   analysis = DROIDAnalysis(config)	
    analysisresults = analysis.openDROIDDB(dbfilename)
    return analysisresults
 

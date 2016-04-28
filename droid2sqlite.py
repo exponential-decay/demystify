@@ -3,10 +3,10 @@
 from __future__ import division
 import argparse
 import sys
-from IdentifyExportClass import IdentifyExport
-from GenerateBaselineDBClass import GenerateBaselineDB
-from DROIDLoaderClass import DROIDLoader
-from SFLoaderClass import SFLoader
+from libs.IdentifyExportClass import IdentifyExport
+from libs.GenerateBaselineDBClass import GenerateBaselineDB
+from libs.DROIDLoaderClass import DROIDLoader
+from libs.SFLoaderClass import SFLoader
 
 def handleDROIDCSV(droidcsv, BOM=False): 
    global basedb

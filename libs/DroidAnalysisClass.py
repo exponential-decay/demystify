@@ -5,8 +5,6 @@ import argparse
 import sys
 import sqlite3
 import csv
-import droid2sqlite
-import droidsqliteanalysis
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
 import DroidAnalysisResultsClass
