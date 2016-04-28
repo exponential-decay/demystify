@@ -77,7 +77,8 @@
    #select the gamut of MIMEs in the accession/extract, not counts
    SELECT_MIME_RANGE = """SELECT DISTINCT IDDATA.MIME_TYPE AS total 
                                        FROM IDRESULTS 
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE IDDATA.MIME_TYPE!='none'
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
    SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, NSDATA.NS_NAME, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION
@@ -102,25 +103,25 @@
    #TODO: THIS STAT NEEDS REVISITING IN LIGHT OF SIEGFRIED
    #MULTIPLE IDS WILL BE REFLECTED USING MULTIPLE NAMESPACE PLACES - HOW TO REPORT ON?
    SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME 
-                                       FROM IDDATA 
-                                       WHERE (IDDATA.METHOD='Extension')"""
+                                    FROM IDDATA 
+                                    WHERE (IDDATA.METHOD='Extension')"""
    
    SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT 
-                                       FROM FILEDATA 
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
-                                       AND FILEDATA.EXT!=''"""
+                                    FROM FILEDATA 
+                                    WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
+                                    AND FILEDATA.EXT!=''"""
 
    SELECT_COUNT_EXTENSION_FREQUENCY = """SELECT FILEDATA.EXT, COUNT(*) AS total 
-                                             FROM FILEDATA
-                                             WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                             GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
+                                       FROM FILEDATA
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       AND FILEDATA.EXT!=''
+                                       GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
 
-   SELECT_EXTENSION_MISMATCHES = """SELECT FILEDATA.FILE_PATH 
-                                             FROM IDRESULTS 
-                                             JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                             JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                              
-                                             WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                             AND (IDDATA.EXTENSION_MISMATCH=1)"""
+   SELECT_EXTENSION_MISMATCHES = """SELECT FILEDATA.FILE_PATH
+                                    FROM IDRESULTS
+                                    JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                    AND (IDDATA.EXTENSION_MISMATCH='True')"""
 
    #MULTIPLE ID FOR FILES GREATER THAN ZERO BYTES
    SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH 
