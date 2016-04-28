@@ -344,19 +344,19 @@ class DROIDAnalysis:
       #ROGUE QUERIES (relies on returning filepaths)
       #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
       if self.rogueids != False:
-         if len(self.extensionIDonly) > 0:
-            extonly = self.query.query_from_ids(self.extensionIDonly)
-            extrogues = self.__querydb__(extonly)
-         if len(self.noids) > 0:
-            none = self.query.query_from_ids(self.noids)
-            nonerogues = self.__querydb__(none)
-
-         self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
-
-         if self.analysisresults.multipleidentificationcount > 0:
-            self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
-
          self.listRogueIDs(self.rogueids)
+
+      if len(self.extensionIDonly) > 0:
+         extonly = self.query.query_from_ids(self.extensionIDonly)
+         extrogues = self.__querydb__(extonly)
+      if len(self.noids) > 0:
+         none = self.query.query_from_ids(self.noids)
+         nonerogues = self.__querydb__(none)
+
+      self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
+
+      if self.analysisresults.multipleidentificationcount > 0:
+         self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
       return self.analysisresults
       
