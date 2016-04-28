@@ -332,9 +332,11 @@ class DROIDAnalysis:
          sorted_list = Counter(elem for elem in combined_list).most_common()
          self.analysisresults.extensionOnlyIDFrequency = sorted_list
       
-      '''
+      
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
+      
+      '''
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
       self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
       

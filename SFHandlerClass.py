@@ -313,5 +313,6 @@ class SFYAMLHandler:
          name = row['name'].rsplit('.', 1)
          if len(name) == 2:
             row[self.FIELDEXT] = name[1]
-         #else, no extension...
+         else:       #no extension...
+            row[self.FIELDEXT] = ''            
       return sfdata
