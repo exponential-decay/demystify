@@ -153,7 +153,6 @@
       query = ''
       if paths == False:
          query = count + body + str(nscount)
-         print query
       else:
          query = pathquery + body + str(nscount)
       return query

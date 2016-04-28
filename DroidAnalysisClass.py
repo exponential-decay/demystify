@@ -23,7 +23,7 @@ class DROIDAnalysis:
 
    #variables we need internally:
    extensionIDonly = None
-   rogueFileIDs = None
+   noids = None
 
    def __init__(self, config=False):
       self.config = self.__readconfig__(config)       
@@ -246,7 +246,7 @@ class DROIDAnalysis:
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
       self.extensionIDonly = extension
-      self.rogueFileIDs = extension + none
+      self.noids = none
       
       if tooltype != 'droid':
          self.analysisresults.textidfilecount = len(text) 
@@ -326,7 +326,6 @@ class DROIDAnalysis:
       if len(self.extensionIDonly) > 0:
          query = AnalysisQueries()
          extid = query.query_from_ids(self.extensionIDonly, 'Extension')
-         print extid
          test = self.__querydb__(extid)
          combined_list = []   #namespace + id
          from collections import Counter
@@ -348,27 +347,27 @@ class DROIDAnalysis:
       if self.analysisresults.hashused is True:
          self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
       
-         
-      self.listzerobytefiles()
-            
+      #handle output of zero-byte files and filename analysis  
+      self.listzerobytefiles()      
       self.msoftfnameanalysis()
       
-      
-      '''
       #ROGUE QUERIES (relies on returning filepaths)
+      #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
       if self.roguepuids != False:
          query = AnalysisQueries()
-         rogues = query.query_from_ids(self.rogueFileIDs)
-         print self.__querydb__(rogues)
+         if len(self.extensionIDonly) > 0:
+            extonly = query.query_from_ids(self.extensionIDonly)
+            extrogues = self.__querydb__(extonly)
+         if len(self.noids) > 0:
+            none = query.query_from_ids(self.noids)
+            nonerogues = self.__querydb__(none)
+
          self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
+
          if self.analysisresults.multipleidentificationcount > 0:
             self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
-         #self.listRoguePUIDs(self.roguepuids)
-         #self.analysisresults.extensionOnlyID = ''
-         #self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)         
-         #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
-         #"SELECT FILE_PATH FROM droid WHERE METHOD='no value' AND (TYPE='File' OR TYPE='Container')"
-      '''
+
+         self.listRoguePUIDs(self.roguepuids)
 
       return self.analysisresults
       
