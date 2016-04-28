@@ -80,9 +80,11 @@
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
-   SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION 
-                                          FROM IDDATA
-                                          WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"""
+   SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, NSDATA.NS_NAME, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION
+                                             FROM IDDATA
+                                             JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                             WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
+                                             ORDER BY NSDATA.NS_NAME"""
 
    SELECT_BINARY_MATCH_COUNT = """SELECT IDDATA.ID, COUNT(*) AS total 
                                     FROM IDRESULTS 
