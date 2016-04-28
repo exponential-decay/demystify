@@ -169,7 +169,11 @@ class DROIDAnalysis:
 
    def multiplecount(self, nscount):
       query = AnalysisQueries()       
-      return self.__querydb__(query.count_multiple_ids(self.analysisresults.namespacecount), True, True)         
+      return self.__querydb__(query.count_multiple_ids(nscount), True, True)         
+
+   def multipleIDList(self, nscount):
+      query = AnalysisQueries()       
+      return self.__querydb__(query.count_multiple_ids(nscount, True), False, False, True) 
 
    def handleIDBreakdown(self, query, tooltype):
 
@@ -335,10 +339,9 @@ class DROIDAnalysis:
       #OKAY stat...
       self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS)
       self.analysisresults.frequencyOfAllExtensions = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY)
-
       
-      #self.analysisresults.multipleIDList = self.__querydb__(AnalysisQueries.SELECT_MULTIPLE_ID_PATHS, False, False, True)
-
+      #query = AnalysisQueries()
+      #print query.get_multi_paths(self.analysisresults.namespacecount)
       '''
       #Originally PARETO principle: 80% of the effects from from 20% of the causes
       self.analysisresults.topPUIDList = self.analysisresults.sigIDPUIDFrequency[0:5]
@@ -362,6 +365,8 @@ class DROIDAnalysis:
          rogues = query.query_from_ids(self.rogueFileIDs)
          print self.__querydb__(rogues)
          self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
+         if self.analysisresults.multipleidentificationcount > 0:
+            self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
          #self.listRoguePUIDs(self.roguepuids)
          #self.analysisresults.extensionOnlyID = ''
          #self.analysisresults.filesWithNoIDList = self.__querydb__(AnalysisQueries.SELECT_ZERO_ID_FILES, False, False, True)         

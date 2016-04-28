@@ -139,15 +139,24 @@
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
 
-   def count_multiple_ids(self, nscount):
-      multi = """SELECT count(FREQUENCY) from(SELECT FILE_ID, COUNT(FILE_ID) AS FREQUENCY
+   def count_multiple_ids(self, nscount, paths=False):
+      count = 'SELECT count(FREQUENCY)' + "\n"
+      pathquery = 'SELECT PATH' + "\n"               
+      body = """FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
                   FROM IDRESULTS
-                  GROUP BY FILE_ID
-                  ORDER BY
-                  COUNT(FILE_ID) DESC)
+                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                  GROUP BY FILEDATA.FILE_ID
+                  ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
                   WHERE FREQUENCY > """
-      multi = multi + str(nscount)
-      return multi
+      
+      query = ''
+      if paths == False:
+         query = count + body + str(nscount)
+         print query
+      else:
+         query = pathquery + body + str(nscount)
+      return query
 
    def list_duplicate_paths(self, checksum):
       return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='" + checksum + "'ORDER BY FILEDATA.FILE_PATH"
