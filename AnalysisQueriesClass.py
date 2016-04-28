@@ -107,7 +107,8 @@
    
    SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT 
                                        FROM FILEDATA 
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
+                                       AND FILEDATA.EXT!=''"""
 
    SELECT_COUNT_EXTENSION_FREQUENCY = """SELECT FILEDATA.EXT, COUNT(*) AS total 
                                              FROM FILEDATA
