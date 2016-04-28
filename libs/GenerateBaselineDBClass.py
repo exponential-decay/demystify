@@ -72,7 +72,7 @@ class GenerateBaselineDB:
       self.conn.close()
    
    def getDBFilename(self, export):
-      return export.replace(".csv", "") + ".db"
+      return export.split('.',1)[0] + ".db" 
 
    def sethashtype(self, hash):
       self.hashtype = hash
