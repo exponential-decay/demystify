@@ -22,6 +22,8 @@ class DROIDAnalysis:
    #variables we need internally:
    extensionIDonly = None
    noids = None
+   textIDs = None
+   filenameIDs = None
 
    def __init__(self, config=False):
       self.query = AnalysisQueries()
@@ -236,7 +238,10 @@ class DROIDAnalysis:
       
       self.extensionIDonly = extension
       self.noids = none
-      
+
+      self.textIDs = text
+      self.filenameIDs = filename
+
       self.analysisresults.textidfilecount = len(text) 
       self.analysisresults.filenameidfilecount = len(filename) 
       
@@ -328,8 +333,7 @@ class DROIDAnalysis:
                   
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
-      
-      
+            
       #more complicated listings
       if self.analysisresults.hashused is True:
          self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
@@ -354,6 +358,15 @@ class DROIDAnalysis:
 
       if self.analysisresults.multipleidentificationcount > 0:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
+
+      #New functions thanks to Siegfried
+      if self.textIDs is not None and len(self.textIDs) > 0:
+         textids = self.query.query_from_ids(self.textIDs, 'Text')
+         print self.__querydb__(textids)
+
+      if self.filenameIDs is not None and len(self.filenameIDs) > 0:
+         filenameids = self.query.query_from_ids(self.filenameIDs, 'Filename')
+         print self.__querydb__(filenameids)
 
       return self.analysisresults
       
