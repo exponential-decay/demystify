@@ -237,9 +237,8 @@ class DROIDAnalysis:
       self.extensionIDonly = extension
       self.noids = none
       
-      if tooltype != 'droid':
-         self.analysisresults.textidfilecount = len(text) 
-         self.analysisresults.filenameidfilecount = len(filename) 
+      self.analysisresults.textidfilecount = len(text) 
+      self.analysisresults.filenameidfilecount = len(filename) 
       
       self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
 
