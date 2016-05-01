@@ -76,6 +76,12 @@ http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 Code contains copy of library from Cooper Hewitt to enable writing of plain text
 descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
 
+### Usage Notes
+
+Binary / Text / Filename stats are compiled with absolute agnosticism. A set() is created to filter filenames with identical methods. 
+We need to monitor how these results turn out, but for now, in the stats that use this method (non-namespace specific stats) we will find
+cases where a Tika binary match may outweight a PRONOM binary match based on how the set was ordered. 
+
 ### TODO
 
 * Everything is stored in the DB as a string, understand potential for typing
