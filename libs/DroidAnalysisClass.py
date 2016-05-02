@@ -384,6 +384,7 @@ class DROIDAnalysis:
       if self.analysisresults.multipleidentificationcount > 0:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
+      #create a statistic for aggregated binary identification
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
          self.analysisresults.signatureidentifiers = self.getMethodIDResults(self.binaryIDs, True)
 
