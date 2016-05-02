@@ -60,7 +60,18 @@ class DROIDAnalysisTextOutput:
          val = val.strip(", ")
          
       return val
-   
+
+   def __aggregatelists__(self, itemlist):
+      outstr = ''
+      if type(itemlist) is not list:
+         sys.stderr.write("LOG: Not sending a list to a function wanting a list." + "\n")
+      else:
+         for item in itemlist:
+            name = item[0]
+            count = "(" + str(item[1]) + ")"
+            outstr = outstr + name + " " + count + "\n"
+      return outstr.strip("\n")
+      
    def getDateList(self):
       if self.analysisresults.dateFrequency is not None:
          return self.__frequencyoutput__(self.analysisresults.dateFrequency)   
@@ -127,16 +138,13 @@ class DROIDAnalysisTextOutput:
 
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
-         for item in self.analysisresults.binaryidentifiers:
-            self.printFormattedText(item)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))
       if self.analysisresults.textidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
-         for item in self.analysisresults.textidentifiers:
-            self.printFormattedText(item)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.textidentifiers))
       if self.analysisresults.filenameidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
-         for item in self.analysisresults.filenameidentifiers:
-            self.printFormattedText(item)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.filenameidentifiers))
 
       if self.analysisresults.sigIDPUIDFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)

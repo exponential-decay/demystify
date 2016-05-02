@@ -280,11 +280,21 @@ class DROIDAnalysis:
       text = ''
       methodresults = self.__querydb__(self.query.query_from_idrows(methodids))
       for id in methodresults:
+         name = id[2]
+         if name == '':
+            name = ", "
+         else:
+            name = ", " + name + ", "
+         basis = id[3]
+         if basis is not None:
+            basis = "[" + basis + "]"
+         else:
+            basis = ''
          #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
-         idval = "ns:" + id[0] + " " + id[1] + ", " + id[2] + ", " + id[3]
+         idval = "ns:" + id[0] + " " + id[1] + name + basis
          if version == True:
             #we're creating a less detailed statistic for summary purposes
-            idval = "ns:" + id[0] + " " + id[1] + ", " + id[2] + ", " + id[4]
+            idval = "ns:" + id[0] + " " + id[1] + name + id[4]
          countlist.append(idval)      
       #counter returns dict
       templist = Counter(countlist)           
