@@ -274,23 +274,23 @@ class DROIDAnalysis:
       self.analysisresults.idmethodFrequency = list_of_lists
       self.analysisresults.zeroidcount = len(none)
 
-   def getMethodIDResults(self, methodids):
+   def getMethodIDResults(self, methodids, version=False):
+      #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
       text = ''
       methodresults = self.__querydb__(self.query.query_from_idrows(methodids))
-            
       for id in methodresults:
          #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
-         id = "ns:" + id[0] + " " + id[1] + " " + id[2] + ", " + id[3]
-         countlist.append(id)
-      
+         idval = "ns:" + id[0] + " " + id[1] + ", " + id[2] + ", " + id[3]
+         if version == True:
+            #we're creating a less detailed statistic for summary purposes
+            idval = "ns:" + id[0] + " " + id[1] + ", " + id[2] + ", " + id[4]
+         countlist.append(idval)      
       #counter returns dict
-      templist = Counter(countlist)     
-      
+      templist = Counter(countlist)           
       countlist = []
       for k,v in templist.iteritems():
-         countlist.append((k,v))
-         
+         countlist.append((k,v))         
       return countlist
             
    def queryDB(self):
@@ -327,8 +327,7 @@ class DROIDAnalysis:
          self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
          self.analysisresults.distinctTextIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIERS, True, True)
          self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIERS, True, True)
-         
-      
+               
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
 
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_RANGE)
@@ -336,8 +335,7 @@ class DROIDAnalysis:
       #NOTE: Must be calculated after we have total, and subset values
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
-      
-      self.analysisresults.signatureidentifiers = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)      
+         
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
       self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
@@ -385,6 +383,9 @@ class DROIDAnalysis:
 
       if self.analysisresults.multipleidentificationcount > 0:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
+
+      if self.binaryIDs is not None and len(self.binaryIDs) > 0:
+         self.analysisresults.signatureidentifiers = self.getMethodIDResults(self.binaryIDs, True)
 
       #New functions thanks to Siegfried
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:

@@ -115,21 +115,15 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
-
       #return the size of the collection
       size = self.analysisresults.collectionsize #easier to reference from a var
       self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
 
       if self.analysisresults.signatureidentifiers is not None:
-         #[0]DISTINCT IDDATA.ID, [1]NSDATA.NS_NAME, [2]IDDATA.FORMAT_NAME, [3]IDDATA.FORMAT_VERSION
-         self.__output_list_title__(self.STRINGS.HEADING_IDENTIFIED)
-         for item in self.analysisresults.signatureidentifiers:
-            output = ""
-            if item[3] != 'no value':
-               output = 'ns:' + item[1] + ' ' + item[0] + ", " + item[2] + " " + item[3]
-            else:
-               output = 'ns:' + item[1] + ' ' + item[0] + ", " + item[2]            
-            self.printFormattedText(output.rstrip(', '))
+         #('ns:pronom x-fmt/266 GZIP Format, extension match gz; byte match at 0, 3', 1)
+         self.__output_list_title__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
+         for ids in self.analysisresults.signatureidentifiers:
+            self.printFormattedText(ids[0].rstrip(", "))
 
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)

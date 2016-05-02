@@ -81,12 +81,6 @@
                                        WHERE IDDATA.MIME_TYPE!='none'
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
-   SELECT_DISTINCT_BINARY_MATCH_NAMES = """SELECT DISTINCT IDDATA.ID, NSDATA.NS_NAME, IDDATA.FORMAT_NAME, IDDATA.FORMAT_VERSION
-                                             FROM IDDATA
-                                             JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                             WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
-                                             ORDER BY NSDATA.NS_NAME"""
-
    SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
@@ -180,7 +174,7 @@
          list = list + where
       list = list.rstrip(' OR ')
       
-      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS
+      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
