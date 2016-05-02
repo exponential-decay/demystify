@@ -166,6 +166,14 @@ class DROIDAnalysis:
    def multipleIDList(self, nscount):       
       return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 
 
+   def __getsplit__(self, vals):
+      idlist = vals.split(',', 2)
+      if len(idlist) is 3:         
+         type = idlist[1]
+         idno = idlist[0]
+         idrow = idlist[2]
+         return type, idno, idrow
+
    def handleIDBreakdown(self, query, tooltype):
 
       allids = self.__querydb__(query)      
@@ -178,56 +186,50 @@ class DROIDAnalysis:
       extension = []
       none = []
       
+      textidrows = []
+      filenameidrows = []
+      
       #create a set to remove the fileids with duplicate methods
       for id in allids:
          file = id[0]
-         method = id[1].lower().strip()
-         method_list.append(str(file) + "," + method)
+         method = id[2].lower().strip()
+         idrow = id[1]
+         method_list.append(str(file) + "," + method + "," + str(idrow))
    
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'container':
             if idno not in container_bin:             
                container_bin.append(idno)
 
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'signature':
             if idno not in container_bin and idno not in binary_bin:             
                binary_bin.append(idno)
             
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'text':
             if idno not in container_bin and idno not in binary_bin and idno not in text:
-               text.append(idno)      
+               text.append(idno)   
+               textidrows.append((idno, idrow))
 
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'filename':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename:
-               filename.append(idno)      
+               filename.append(idno)
+               filenameidrows.append((idno, idrow))
    
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'extension':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension:
                extension.append(idno)       
 
       for id in list(method_list):
-         idlist = id.split(',', 1)
-         type = idlist[1]
-         idno = idlist[0]
+         type, idno, idrow = self.__getsplit__(id)
          if type == 'none':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
                none.append(idno)      
@@ -239,8 +241,8 @@ class DROIDAnalysis:
       self.extensionIDonly = extension
       self.noids = none
 
-      self.textIDs = text
-      self.filenameIDs = filename
+      self.textIDs = textidrows
+      self.filenameIDs = filenameidrows
 
       self.analysisresults.textidfilecount = len(text) 
       self.analysisresults.filenameidfilecount = len(filename) 
@@ -360,13 +362,16 @@ class DROIDAnalysis:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
       #New functions thanks to Siegfried
-      if self.textIDs is not None and len(self.textIDs) > 0:
+      '''if self.textIDs is not None and len(self.textIDs) > 0:
          textids = self.query.query_from_ids(self.textIDs, 'Text')
-         print self.__querydb__(textids)
+         print self.__querydb__(textids)'''
 
-      if self.filenameIDs is not None and len(self.filenameIDs) > 0:
+      '''if self.filenameIDs is not None and len(self.filenameIDs) > 0:
          filenameids = self.query.query_from_ids(self.filenameIDs, 'Filename')
-         print self.__querydb__(filenameids)
+         print self.__querydb__(filenameids)'''
+
+      #print self.textIDs
+      #print self.filenameIDs
 
       return self.analysisresults
       
