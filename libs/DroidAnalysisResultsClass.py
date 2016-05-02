@@ -43,6 +43,7 @@ class DROIDAnalysisResults:
    textidentifiers = None
    filenameidentifiers = None
    binaryidentifiers = None
+   maxoffset = None
    #SF ONLY
 
    extmismatchCount = 0

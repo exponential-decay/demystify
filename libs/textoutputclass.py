@@ -91,6 +91,9 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.STRINGS.REPORT_TOOL + ": " + self.analysisresults.tooltype)
       self.printFormattedText("")
       self.printFormattedText(self.STRINGS.NAMESPACES + ": " + str(self.analysisresults.namespacecount))
+
+      if self.analysisresults.maxoffset is not None:
+         self.printFormattedText(self.STRINGS.SUMMARY_MAXIMUM_OFFSET + ": " + str(self.analysisresults.maxoffset))
       
       self.printFormattedText("")
       

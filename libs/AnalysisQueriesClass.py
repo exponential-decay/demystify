@@ -132,6 +132,12 @@
                                           GROUP BY FILEDATA.HASH
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
+   #siegfried only...
+   SELECT_BYTE_MATCH_BASIS = """SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME
+                                 FROM IDRESULTS
+                                 JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                 WHERE IDDATA.BASIS LIKE '%byte match%'"""
 
    def count_multiple_ids(self, nscount, paths=False):
       count = 'SELECT count(FREQUENCY)' + "\n"

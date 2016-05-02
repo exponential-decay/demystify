@@ -302,7 +302,25 @@ class DROIDAnalysis:
       for k,v in templist.iteritems():
          countlist.append((k,v))         
       return countlist
-            
+
+   def __analysebasis__(self):
+      basislist = []
+      basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS) 
+      for idrow in basis:
+         val = idrow[0].split(';')
+         for x in val:
+            if 'byte match' in x:
+               offset = x.strip().replace('byte match at ', '')
+               offset = offset.split(',',1)[0]
+               basislist.append((offset, idrow))
+
+      basislist.sort(key=lambda tup: tup[0], reverse=True)
+      top = basislist[0]
+      fname = top[1][2]
+      idval = top[1][1]
+      matchdetails = top[1][0]
+      return idval + ", " + matchdetails + " e.g. " + fname 
+
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
@@ -324,7 +342,6 @@ class DROIDAnalysis:
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
       
       self.analysisresults.uniqueDirectoryNames = (self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True) - self.NONROOTBASEDIR)
-      
       
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#                  
       self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_ID_METHODS, self.analysisresults.tooltype)
@@ -405,6 +422,8 @@ class DROIDAnalysis:
          self.analysisresults.textidentifiers = self.getMethodIDResults(self.textIDs)
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
          self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
+      if self.analysisresults.tooltype != 'droid':
+         self.analysisresults.maxoffset = self.__analysebasis__() 
 
       return self.analysisresults
       
