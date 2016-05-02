@@ -11,6 +11,7 @@ import DroidAnalysisResultsClass
 from AnalysisQueriesClass import AnalysisQueries
 from urlparse import urlparse
 from lxml import etree, html
+from collections import Counter
 
 class DROIDAnalysis:
 
@@ -268,6 +269,23 @@ class DROIDAnalysis:
       self.analysisresults.idmethodFrequency = list_of_lists
       self.analysisresults.zeroidcount = len(none)
 
+   def getTextIDResults(self, methodids):
+      countlist = []
+      text = ''
+      textresults = self.__querydb__(self.query.query_from_idrows(methodids))
+      for id in textresults:
+         #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
+         id = "ns:" + id[0] + " " + id[1] + " " + id[2] + ", " + id[3]
+         countlist.append(id)
+      
+      #counter returns dict
+      templist = Counter(countlist)
+      countlist = []
+      for k,v in templist.iteritems():
+         countlist.append((k,v))
+         
+      return countlist
+            
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
@@ -312,7 +330,7 @@ class DROIDAnalysis:
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
       
-      self.analysisresults.sigIDPUIDList = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)      
+      self.analysisresults.signatureidentifiers = self.__querydb__(AnalysisQueries.SELECT_DISTINCT_BINARY_MATCH_NAMES)      
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
       self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
@@ -362,16 +380,10 @@ class DROIDAnalysis:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
       #New functions thanks to Siegfried
-      '''if self.textIDs is not None and len(self.textIDs) > 0:
-         textids = self.query.query_from_ids(self.textIDs, 'Text')
-         print self.__querydb__(textids)'''
-
-      '''if self.filenameIDs is not None and len(self.filenameIDs) > 0:
-         filenameids = self.query.query_from_ids(self.filenameIDs, 'Filename')
-         print self.__querydb__(filenameids)'''
-
-      #print self.textIDs
-      #print self.filenameIDs
+      if self.textIDs is not None and len(self.textIDs) > 0:
+         self.analysisresults.textidentifiers = self.getTextIDResults(self.textIDs)
+      if self.filenameIDs is not None and len(self.filenameIDs) > 0:
+         self.analysisresults.filenameidentifiers = self.getTextIDResults(self.filenameIDs)
 
       return self.analysisresults
       

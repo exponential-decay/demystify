@@ -173,6 +173,21 @@
       query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"      
       return query_part1 + query_part2
 
+   def query_from_idrows(self, idlist):      
+      list = 'WHERE '
+      for i in idlist:
+         where = "IDRESULTS.ID_ID=" + str(i[1]) + " OR "
+         list = list + where
+      list = list.rstrip(' OR ')
+      
+      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS
+                                    FROM IDRESULTS
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
+                                    
+      SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS 
+      return SELECT_NAMESPACE_AND_IDS + "\n" + list                                     
+
    #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
    def query_from_ids(self, idlist, idmethod=False):      
       list = ''

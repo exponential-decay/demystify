@@ -29,12 +29,14 @@ class AnalysisStringsEN:
    SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
    SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
 
-   #NEW SUMMARY STRINGS
+   #NEW SIEGFRIED STRINGS
    SUMMARY_TEXT_ID = "Total Text ID Only Count"
    SUMMARY_FILENAME_ID = "Total Filename ID Only Count"
    SUMMARY_OTHER_ID_COUNT = "Total Other Discrete (Non-PUID) File Format Signature Identifiers in the Accession/Extract"
    SUMMARY_TEXT_ID_COUNT = "Total Text Based Identification Identifiers in the Accession/Extract"
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
+   HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
+   HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
    
    HEADING_SIZE = "Size of the accession/extract"
    HEADING_IDENTIFIED = "Identified File Formats in Accession/Extract" 

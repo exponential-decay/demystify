@@ -40,6 +40,8 @@ class DROIDAnalysisResults:
    distinctOtherIdentifiers = 0
    distinctTextIdentifiers = 0
    distinctFilenameIdentifiers = 0
+   textidentifiers = None
+   filenameidentifiers = None
    #SF ONLY
 
    extmismatchCount = 0
@@ -48,7 +50,7 @@ class DROIDAnalysisResults:
    unidentifiedPercentage = 0
    identifiedPercentage = 0
    
-   sigIDPUIDList = None
+   signatureidentifiers = None
    sigIDPUIDFrequency = None
    
    dateFrequency = None

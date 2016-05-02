@@ -120,16 +120,25 @@ class DROIDAnalysisTextOutput:
       size = self.analysisresults.collectionsize #easier to reference from a var
       self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
 
-      if self.analysisresults.sigIDPUIDList is not None:
+      if self.analysisresults.signatureidentifiers is not None:
          #[0]DISTINCT IDDATA.ID, [1]NSDATA.NS_NAME, [2]IDDATA.FORMAT_NAME, [3]IDDATA.FORMAT_VERSION
          self.__output_list_title__(self.STRINGS.HEADING_IDENTIFIED)
-         for item in self.analysisresults.sigIDPUIDList:
+         for item in self.analysisresults.signatureidentifiers:
             output = ""
             if item[3] != 'no value':
                output = 'ns:' + item[1] + ' ' + item[0] + ", " + item[2] + " " + item[3]
             else:
                output = 'ns:' + item[1] + ' ' + item[0] + ", " + item[2]            
             self.printFormattedText(output.rstrip(', '))
+
+      if self.analysisresults.textidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
+         for item in self.analysisresults.textidentifiers:
+            self.printFormattedText(item)
+      if self.analysisresults.filenameidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
+         for item in self.analysisresults.filenameidentifiers:
+            self.printFormattedText(item)
 
       if self.analysisresults.sigIDPUIDFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
