@@ -219,8 +219,26 @@
    SELECT_NS_DATA = """SELECT * 
                         FROM NSDATA"""
 
+   def get_ns_methods(self, id, binary=True, method=False):
+      
+      AND_NS = "AND NS_ID=" + str(id)
 
+      COUNT_IDS_NS = """SELECT COUNT(*)
+                        FROM IDDATA
+                        WHERE IDDATA.METHOD='Signature' or IDDATA.METHOD='Container'
+                        """ 
 
+      ID_METHODS_COUNT = """SELECT COUNT(*)
+                              FROM IDDATA
+                              WHERE IDDATA.METHOD=""" 
+
+      query = ''
+      if binary is True:
+         query = COUNT_IDS_NS + AND_NS
+      elif method is not False:
+         query = ID_METHODS_COUNT + method + " " + AND_NS
+
+      return query.replace('  ', '')
 
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

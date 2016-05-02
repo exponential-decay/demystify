@@ -42,7 +42,7 @@ class DROIDAnalysisResults:
    binaryidentifiers = None
    maxoffset = None
    namespacecount = None
-   namespacedata = 
+   namespacedata = None
    #SF ONLY
 
    extmismatchCount = 0

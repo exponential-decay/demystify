@@ -427,7 +427,11 @@ class DROIDAnalysis:
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
-         print self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+         namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+         for ns in namespacedata:
+            print self.query.get_ns_methods(ns[0])
+            print 
+            print self.query.get_ns_methods(ns[0], False, 'Text')
          sys.exit(1)
 
       return self.analysisresults
