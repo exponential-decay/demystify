@@ -78,7 +78,7 @@
    SELECT_MIME_RANGE = """SELECT DISTINCT IDDATA.MIME_TYPE AS total 
                                        FROM IDRESULTS 
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       WHERE IDDATA.MIME_TYPE!='none'
+                                       WHERE IDDATA.MIME_TYPE!='None'
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
    SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
