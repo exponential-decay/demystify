@@ -187,6 +187,7 @@ class DROIDAnalysis:
       extension = []
       none = []
       
+      binaryidrows = []    #and containers
       textidrows = []
       filenameidrows = []
       
@@ -202,12 +203,14 @@ class DROIDAnalysis:
          if type == 'container':
             if idno not in container_bin:             
                container_bin.append(idno)
+               binaryidrows.append((idno, idrow))
 
       for id in list(method_list):
          type, idno, idrow = self.__getsplit__(id)
          if type == 'signature':
             if idno not in container_bin and idno not in binary_bin:             
                binary_bin.append(idno)
+               binaryidrows.append((idno, idrow))
             
       for id in list(method_list):
          type, idno, idrow = self.__getsplit__(id)
@@ -236,12 +239,14 @@ class DROIDAnalysis:
                none.append(idno)      
    
       self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
+      
       self.analysisresults.unidentifiedfilecount = len(none)            
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
       self.extensionIDonly = extension
       self.noids = none
 
+      self.binaryIDs = binaryidrows
       self.textIDs = textidrows
       self.filenameIDs = filenameidrows
 
@@ -269,17 +274,19 @@ class DROIDAnalysis:
       self.analysisresults.idmethodFrequency = list_of_lists
       self.analysisresults.zeroidcount = len(none)
 
-   def getTextIDResults(self, methodids):
+   def getMethodIDResults(self, methodids):
       countlist = []
       text = ''
-      textresults = self.__querydb__(self.query.query_from_idrows(methodids))
-      for id in textresults:
+      methodresults = self.__querydb__(self.query.query_from_idrows(methodids))
+            
+      for id in methodresults:
          #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
          id = "ns:" + id[0] + " " + id[1] + " " + id[2] + ", " + id[3]
          countlist.append(id)
       
       #counter returns dict
-      templist = Counter(countlist)
+      templist = Counter(countlist)     
+      
       countlist = []
       for k,v in templist.iteritems():
          countlist.append((k,v))
@@ -380,10 +387,12 @@ class DROIDAnalysis:
          self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
       #New functions thanks to Siegfried
+      if self.binaryIDs is not None and len(self.binaryIDs) > 0:
+         self.analysisresults.binaryidentifiers = self.getMethodIDResults(self.binaryIDs)
       if self.textIDs is not None and len(self.textIDs) > 0:
-         self.analysisresults.textidentifiers = self.getTextIDResults(self.textIDs)
+         self.analysisresults.textidentifiers = self.getMethodIDResults(self.textIDs)
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
-         self.analysisresults.filenameidentifiers = self.getTextIDResults(self.filenameIDs)
+         self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
 
       return self.analysisresults
       

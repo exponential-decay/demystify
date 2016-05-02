@@ -131,6 +131,10 @@ class DROIDAnalysisTextOutput:
                output = 'ns:' + item[1] + ' ' + item[0] + ", " + item[2]            
             self.printFormattedText(output.rstrip(', '))
 
+      if self.analysisresults.binaryidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
+         for item in self.analysisresults.binaryidentifiers:
+            self.printFormattedText(item)
       if self.analysisresults.textidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
          for item in self.analysisresults.textidentifiers:
