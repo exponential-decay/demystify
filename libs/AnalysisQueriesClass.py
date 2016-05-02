@@ -215,5 +215,12 @@
          list = 'WHERE ' + list
          return SELECT_PATHS + "\n" + list
 
+   #NAMESPACE QUERIES
+   SELECT_NS_DATA = """SELECT * 
+                        FROM NSDATA"""
+
+
+
+
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."

@@ -15,9 +15,6 @@ class DROIDAnalysisResults:
    #tooltype
    tooltype = None
 
-   #namespace count
-   namespacecount = None
-
    # Counts
    collectionsize = 0
    filecount = 0
@@ -44,6 +41,8 @@ class DROIDAnalysisResults:
    filenameidentifiers = None
    binaryidentifiers = None
    maxoffset = None
+   namespacecount = None
+   namespacedata = 
    #SF ONLY
 
    extmismatchCount = 0

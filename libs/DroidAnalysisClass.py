@@ -424,6 +424,11 @@ class DROIDAnalysis:
          self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
       if self.analysisresults.tooltype != 'droid':
          self.analysisresults.maxoffset = self.__analysebasis__() 
+      #we need namespace data - ann NS queries can be generic
+      #ns count earlier on in this function can be left as-is
+      if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
+         print self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+         sys.exit(1)
 
       return self.analysisresults
       
