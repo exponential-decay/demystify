@@ -255,7 +255,12 @@ class SFYAMLHandler:
       return os.path.dirname(filepath)   
 
    def getFileName(self, filepath):
-      return os.path.basename(filepath)
+      fname = os.path.basename(filepath)
+      if len(fname) == len(filepath):
+         #retrieving filename probably didn't work... maybe windows path
+         import ntpath  #imported in Windows when OS is imported
+         fname = ntpath.basename(filepath)
+      return os.path.basename(fname)
    
    def adddirname(self, sfdata):
       for row in sfdata[self.DICTFILES]:
