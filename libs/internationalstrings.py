@@ -40,6 +40,8 @@ class AnalysisStringsEN:
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
    HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"
+   HEADING_NAMESPACE_SPECIFIC_STATISTICS = "Results Per Identifier Namespace"
+   HEADING_NAMESPACE = "Namespace"
    #NEW SIEGFRIED STRINGS
       
    #This statistic may be obsoleted...
@@ -47,7 +49,7 @@ class AnalysisStringsEN:
    #This statistic may be obsoleted...
 
    HEADING_SIZE = "Size of the accession/extract"   
-   HEADING_FREQUENCY_PUIDS_IDENTIFIED = "Frequency of File Format Signature Identified PUIDs"
+   HEADING_FREQUENCY_PUIDS_IDENTIFIED = "Frequency of File Format Signature Identified IDs"
    HEADING_DATE_RANGE = "Date Range of Items in the Accession/Extract"
    HEADING_EXTENSION_ONLY = "Extension Only Identification in the Accession/Extract"
    HEADING_ID_METHOD = "Identification Method Frequency" 

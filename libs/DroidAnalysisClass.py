@@ -20,6 +20,15 @@ class DROIDAnalysis:
    #TODO: consider handling better...
    NONROOTBASEDIR = 1
 
+   #somenamespaceconsts
+   NS_CONST_TITLE = 'namespace title'
+   NS_CONST_DETAILS = 'namespace details'
+   NS_CONST_TEXT_COUNT = 'text method count'
+   NS_CONST_FILENAME_COUNT = 'filename method count'
+   NS_CONST_EXTENSION_COUNT = 'extension method count'
+   NS_CONST_BINARY_COUNT = 'binary method count'
+   NS_CONST_MULTIPLE_IDS = 'multiple ids'
+
    #variables we need internally:
    extensionIDonly = None
    noids = None
@@ -364,7 +373,7 @@ class DROIDAnalysis:
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
          
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
-      self.analysisresults.sigIDPUIDFrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
+      self.analysisresults.signatureidentifiedfrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
       
       #most complicated way to retrieve extension only PUIDs
@@ -428,12 +437,20 @@ class DROIDAnalysis:
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
          namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+         nsdatalist = []
          for ns in namespacedata:
-            print self.query.get_ns_methods(ns[0])
-            print 
-            print self.query.get_ns_methods(ns[0], False, 'Text')
-         sys.exit(1)
-
+            nsdict = {}
+            nsid = ns[0]
+            nsdict[self.NS_CONST_TITLE] = ns[1]
+            nsdict[self.NS_CONST_DETAILS] = ns[2]
+            nsdict[self.NS_CONST_BINARY_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid), True, True)
+            nsdict[self.NS_CONST_TEXT_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Text'), True, True)
+            nsdict[self.NS_CONST_FILENAME_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Filename'), True, True)
+            nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Filename'), True, True)
+            nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(self.query.get_ns_multiple_ids(nsid, self.analysisresults.namespacecount), True, True)
+            nsdatalist.append(nsdict)
+         self.analysisresults.nsdatalist = nsdatalist
+         
       return self.analysisresults
       
    def openDROIDDB(self, dbfilename):

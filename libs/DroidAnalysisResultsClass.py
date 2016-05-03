@@ -43,6 +43,7 @@ class DROIDAnalysisResults:
    maxoffset = None
    namespacecount = None
    namespacedata = None
+   nsdatalist = None
    #SF ONLY
 
    extmismatchCount = 0
@@ -52,7 +53,7 @@ class DROIDAnalysisResults:
    identifiedPercentage = 0
    
    signatureidentifiers = None
-   sigIDPUIDFrequency = None
+   signatureidentifiedfrequency = None
    
    dateFrequency = None
 
@@ -93,7 +94,7 @@ class DROIDAnalysisResults:
 
    #rogues
    duplicatespathlist = []
-      
+         
    def __version__(self):
       analysis = DroidAnalysisClass.DROIDAnalysis()
       self.version = analysis.__version__()

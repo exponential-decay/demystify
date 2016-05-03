@@ -219,6 +219,24 @@
    SELECT_NS_DATA = """SELECT * 
                         FROM NSDATA"""
 
+   def get_ns_multiple_ids(self, nsid, nscount):
+      SELECT_NAMESPACE_BINARY_IDS1 = """SELECT count(*)
+                                          FROM (SELECT COUNT(FILEDATA.FILE_ID) AS FREQUENCY
+                                          FROM IDRESULTS
+                                          JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                                          JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                          WHERE IDDATA.NS_ID="""
+                                          
+      SELECT_NAMESPACE_BINARY_IDS2 = """AND IDDATA.METHOD='Binary' or IDDATA.METHOD='Container'
+                                          GROUP BY FILEDATA.FILE_ID
+                                          ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
+                                          WHERE FREQUENCY >"""
+
+      part1 = SELECT_NAMESPACE_BINARY_IDS1 + str(nsid) + "\n"
+      part2 = SELECT_NAMESPACE_BINARY_IDS2 + str(nsid)
+      query = part1 + part2
+      return query.replace('  ', '')
+      
    def get_ns_methods(self, id, binary=True, method=False):
       
       AND_NS = "AND NS_ID=" + str(id)
@@ -236,7 +254,7 @@
       if binary is True:
          query = COUNT_IDS_NS + AND_NS
       elif method is not False:
-         query = ID_METHODS_COUNT + method + " " + AND_NS
+         query = ID_METHODS_COUNT + "'" + method + "' " + AND_NS
 
       return query.replace('  ', '')
 

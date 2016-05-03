@@ -84,6 +84,40 @@ class DROIDAnalysisTextOutput:
          output = output + "Example: " + str(dupes['examples'][0]) + "\n\n"
       return output.strip("\n")
 
+   def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
+      #e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org', 
+      #'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}   
+      ds = DroidAnalysisClass.DROIDAnalysis()
+      output = ''
+      for ns in nsdatalist:
+         signatureids = signaturefrequency
+         nstitle = ns[ds.NS_CONST_TITLE]
+         identified = ns[ds.NS_CONST_BINARY_COUNT]
+         text = ns[ds.NS_CONST_TEXT_COUNT]
+         filename = ns[ds.NS_CONST_FILENAME_COUNT]
+         ext = ns[ds.NS_CONST_EXTENSION_COUNT]
+         unidentified = self.analysisresults.filecount - identified
+         percent_not = ds.calculatePercent(self.analysisresults.filecount, unidentified)
+         percent_ok = ds.calculatePercent(self.analysisresults.filecount, identified)
+         output = output + self.STRINGS.HEADING_NAMESPACE + ": " + nstitle + " (" + ns[ds.NS_CONST_DETAILS] + ")" "\n"
+         output = output + self.STRINGS.SUMMARY_IDENTIFIED_FILES + ": " + str(identified) + "\n"         
+         output = output + self.STRINGS.SUMMARY_MULTIPLE + ": " + str(ns[ds.NS_CONST_MULTIPLE_IDS]) + "\n"
+         output = output + self.STRINGS.SUMMARY_UNIDENTIFIED + ": " + str(unidentified) + "\n"
+         output = output + self.STRINGS.SUMMARY_EXTENSION_ID + ": " + str(ext) + "\n"
+         output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
+         output = output + self.STRINGS.SUMMARY_FILENAME_ID + ": " + str(filename) + "\n"
+         output = output + self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED + ": " + str(percent_ok) + "\n"
+         output = output + self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED + ": " + str(percent_not) + "\n"
+         output = output + "\n"
+         output = output + self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED + "\n"
+         for idrow in signatureids:
+            if idrow[0] == nstitle:
+               output = output + idrow[1] + " (" + str(idrow[2]) + "), "
+         output = output.strip(", ")
+         output = output + "\n\n"
+         
+      return output.strip("\n")
+
    def generateTEXT(self):   
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
@@ -149,10 +183,6 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
          self.printFormattedText(self.__aggregatelists__(self.analysisresults.filenameidentifiers))
 
-      if self.analysisresults.sigIDPUIDFrequency is not None:
-         self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.sigIDPUIDFrequency, False, True))
-
       if self.analysisresults.extensionIDOnlyCount > 0:
          if self.analysisresults.extensionOnlyIDList is not None:
             if len(self.analysisresults.extensionOnlyIDList) > 0:
@@ -196,18 +226,16 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
 
+      ##########NS STUFF####################
+      if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS)
+         self.printFormattedText(self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency))
+      ##########NS STUFF####################
+
       if self.analysisresults.zerobytecount > 0:
          self.printFormattedText("\n")
          self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount))
          self.printFormattedText(self.__itemlist__(self.analysisresults.zerobytelist))
-
-      '''
-      if self.analysisresults.filesWithNoIDList is not None:
-         if len(self.analysisresults.filesWithNoIDList) > 0:
-            self.printFormattedText("\n")
-            self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_NO_ID, self.analysisresults.zeroidcount))
-            self.printFormattedText(self.__itemlist__(self.analysisresults.filesWithNoIDList))
-      '''
       
       if self.analysisresults.containertypeslist is not None:
          if len(self.analysisresults.containertypeslist) > 0:
