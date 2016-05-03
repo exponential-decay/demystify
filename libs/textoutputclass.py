@@ -226,11 +226,11 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
 
-      ##########NS STUFF####################
+      ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
          self.__output_list_title__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS)
          self.printFormattedText(self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency))
-      ##########NS STUFF####################
+      ##########NS SPECIFIC OUTPUT####################
 
       if self.analysisresults.zerobytecount > 0:
          self.printFormattedText("\n")

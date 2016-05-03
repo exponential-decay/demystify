@@ -240,7 +240,7 @@
       part1 = SELECT_NAMESPACE_BINARY_IDS1 + str(nsid) + "\n"
       part2 = SELECT_NAMESPACE_BINARY_IDS2 + str(nsid)
       query = part1 + part2
-      return query.replace('  ', '')
+      return query
       
    def get_ns_methods(self, id, binary=True, method=False):
       
@@ -250,7 +250,7 @@
                         FROM IDDATA
                         """
                         
-      COUNT_IDS_METHODS = "AND IDDATA.METHOD='Signature' or IDDATA.METHOD='Container'"
+      COUNT_IDS_METHODS = "AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')"
 
       ID_METHODS_COUNT = """SELECT COUNT(*)
                               FROM IDDATA
@@ -263,7 +263,7 @@
          query = COUNT_IDS_NS + AND_NS + "\n" + COUNT_IDS_METHODS
       elif method is not False:
          query = ID_METHODS_COUNT + AND_NS + "\n" + ID_METHODS_METHOD + "'" + method + "'"         
-      return query.replace('  ', '')
+      return query
 
    #ERRORS, TODO: Place somewhere else?
    ERROR_NOHASH = "Unable to detect duplicates: No HASH algorithm used by identification tool."
