@@ -40,13 +40,15 @@ class SFYAMLHandler:
    
    mismatch_warning = 'extension mismatch'
    filename_only = 'match on filename only' 
-   extension_only = 'match on extension only' 
+   extension_only_one = 'match on extension only' 
+   extension_only_two = 'extension match'
 
    text_basis = 'text match'
    byte_basis = 'byte match'
    container_basis_one = 'container match'
    container_basis_two = 'container name'
    xml_basis = 'xml match'
+   
 
    PROCESSING_ERROR = -1
    filecount = 0
@@ -235,13 +237,15 @@ class SFYAMLHandler:
             iddata[self.FIELDMETHOD] = 'XML'
          elif self.text_basis in basis:
             iddata[self.FIELDMETHOD] = 'Text'
+         elif self.extension_only_two in basis:
+            iddata[self.FIELDMETHOD] = 'Extension'
          else: 
             iddata[self.FIELDMETHOD] = ''
          
       if warning is True and basis != None: 
          if self.filename_only in basis:
             method = 'Filename'
-         elif self.extension_only in basis:
+         elif self.extension_only_one in basis:
             method = 'Extension'     
          else:
             #warning comes after basis in SF report

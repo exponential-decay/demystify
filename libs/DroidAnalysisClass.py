@@ -446,7 +446,7 @@ class DROIDAnalysis:
             nsdict[self.NS_CONST_BINARY_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid), True, True)
             nsdict[self.NS_CONST_TEXT_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Text'), True, True)
             nsdict[self.NS_CONST_FILENAME_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Filename'), True, True)
-            nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Filename'), True, True)
+            nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Extension'), True, True)
             nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(self.query.get_ns_multiple_ids(nsid, self.analysisresults.namespacecount), True, True)
             nsdatalist.append(nsdict)
          self.analysisresults.nsdatalist = nsdatalist
