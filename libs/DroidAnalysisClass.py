@@ -68,7 +68,7 @@ class DROIDAnalysis:
    cursor = None
    
    def __querydb__(self, query, fetchone=False, numberquery=False, tolist=False):
-      self.cursor.execute(query)
+      self.cursor.execute(query.replace('  ', ''))
       if fetchone is True and numberquery is False:
          return self.cursor.fetchone()
       if fetchone is True and numberquery is True:
@@ -306,11 +306,11 @@ class DROIDAnalysis:
             idval = "ns:" + id[0] + " " + id[1] + name + id[4]
          countlist.append(idval)      
       #counter returns dict
-      templist = Counter(countlist)           
+      templist = Counter(countlist)            
       countlist = []
       for k,v in templist.iteritems():
-         countlist.append((k,v))         
-      return countlist
+         countlist.append((k,v))      
+      return sorted(countlist)
 
    def __analysebasis__(self):
       basislist = []
