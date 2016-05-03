@@ -243,23 +243,25 @@
       
    def get_ns_methods(self, id, binary=True, method=False):
       
-      AND_NS = "AND NS_ID=" + str(id)
+      AND_NS = "WHERE NS_ID=" + str(id)
 
       COUNT_IDS_NS = """SELECT COUNT(*)
                         FROM IDDATA
-                        WHERE IDDATA.METHOD='Signature' or IDDATA.METHOD='Container'
-                        """ 
+                        """
+                        
+      COUNT_IDS_METHODS = "AND IDDATA.METHOD='Signature' or IDDATA.METHOD='Container'"
 
       ID_METHODS_COUNT = """SELECT COUNT(*)
                               FROM IDDATA
-                              WHERE IDDATA.METHOD=""" 
+                              """
+      
+      ID_METHODS_METHOD = "AND IDDATA.METHOD=" 
 
       query = ''
       if binary is True:
-         query = COUNT_IDS_NS + AND_NS
+         query = COUNT_IDS_NS + AND_NS + "\n" + COUNT_IDS_METHODS
       elif method is not False:
-         query = ID_METHODS_COUNT + "'" + method + "' " + AND_NS
-
+         query = ID_METHODS_COUNT + AND_NS + "\n" + ID_METHODS_METHOD + "'" + method + "'"         
       return query.replace('  ', '')
 
    #ERRORS, TODO: Place somewhere else?
