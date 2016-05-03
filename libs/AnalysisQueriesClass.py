@@ -190,15 +190,18 @@
       return SELECT_NAMESPACE_AND_IDS + "\n" + list                                     
 
    #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
-   def query_from_ids(self, idlist, idmethod=False):      
-      list = ''
-      for i in idlist:
-         if idmethod != False:
-            where = "IDRESULTS.FILE_ID=" + str(i) + " OR "
-         else:
-            where = "FILEDATA.FILE_ID=" + str(i) + " OR "
-         list = list + where
-      list = list.rstrip(' OR ')
+   def query_from_ids(self, idlist, idmethod=False):     
+      if idmethod != False:
+         list = 'IDRESULTS.FILE_ID IN '
+         where = '('
+         for i in idlist:         
+            where = where + str(i[1]) + ", "
+      else:
+         list = 'FILEDATA.FILE_ID IN '
+         where = '('
+         for i in idlist:
+            where = where + str(i[1]) + ", "     
+      list = list + where.strip(", ") + ")"
 
       SELECT_PATHS = """SELECT FILEDATA.FILE_PATH
                         FROM FILEDATA"""
