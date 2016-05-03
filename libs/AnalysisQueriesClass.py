@@ -65,7 +65,7 @@
 
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
                                        FROM FILEDATA  
-                                       WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'"""
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
    SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total 
                                        FROM IDRESULTS  
@@ -78,7 +78,7 @@
    SELECT_MIME_RANGE = """SELECT DISTINCT IDDATA.MIME_TYPE AS total 
                                        FROM IDRESULTS 
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       WHERE IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none'
+                                       WHERE (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none')
                                        GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
 
    SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
