@@ -44,7 +44,8 @@ class SFYAMLHandler:
 
    text_basis = 'text match'
    byte_basis = 'byte match'
-   container_basis = 'container match'
+   container_basis_one = 'container match'
+   container_basis_two = 'container name'
    xml_basis = 'xml match'
 
    PROCESSING_ERROR = -1
@@ -226,7 +227,7 @@ class SFYAMLHandler:
 
    def getMethod(self, basis, iddata, filedict=False, warning=False):
       if warning is False and basis != None:
-         if self.container_basis in basis:
+         if self.container_basis_one in basis or self.container_basis_two in basis:
             iddata[self.FIELDMETHOD] = 'Container'
          elif self.byte_basis in basis:
             iddata[self.FIELDMETHOD] = 'Signature'
@@ -249,7 +250,6 @@ class SFYAMLHandler:
             method = 'None' 
          if self.FIELDMETHOD not in iddata: 
             iddata[self.FIELDMETHOD] = method
-
 
    def getDirName(self, filepath):
       return os.path.dirname(filepath)   

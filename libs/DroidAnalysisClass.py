@@ -321,7 +321,7 @@ class DROIDAnalysis:
             if 'byte match' in x:
                offset = x.strip().replace('byte match at ', '')
                offset = offset.split(',',1)[0]
-               basislist.append((offset, idrow))
+               basislist.append((int(offset), idrow))
 
       basislist.sort(key=lambda tup: tup[0], reverse=True)
       top = basislist[0]

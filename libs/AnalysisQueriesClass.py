@@ -137,7 +137,8 @@
                                  FROM IDRESULTS
                                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                 WHERE IDDATA.BASIS LIKE '%byte match%'"""
+                                 WHERE IDDATA.METHOD!='Container'
+                                 AND IDDATA.BASIS LIKE '%byte match%'"""
 
    def count_multiple_ids(self, nscount, paths=False):
       count = 'SELECT count(FREQUENCY)' + "\n"
