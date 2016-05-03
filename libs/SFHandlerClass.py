@@ -234,6 +234,8 @@ class SFYAMLHandler:
             iddata[self.FIELDMETHOD] = 'XML'
          elif self.text_basis in basis:
             iddata[self.FIELDMETHOD] = 'Text'
+         else: 
+            iddata[self.FIELDMETHOD] = ''
          
       if warning is True and basis != None: 
          if self.filename_only in basis:
