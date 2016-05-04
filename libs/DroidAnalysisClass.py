@@ -464,7 +464,8 @@ class DROIDAnalysis:
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
          self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
       if self.analysisresults.tooltype != 'droid':
-         self.analysisresults.bof_distance, self.analysisresults.eof_distance = self.__analysebasis__() 
+         #self.analysisresults.bof_distance, self.analysisresults.eof_distance = self.__analysebasis__() 
+         self.analysisresults.bof_distance, self.analysisresults.eof_distance = None, None
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
