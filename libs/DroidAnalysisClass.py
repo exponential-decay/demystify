@@ -344,21 +344,21 @@ class DROIDAnalysis:
 
       basislist_bof.sort(key=lambda tup: tup[0], reverse=True)
       basislist_eof.sort(key=lambda tup: tup[0], reverse=False)
+      
       top_bof = basislist_bof[0]
-      top_eof = basislist_eof[0]     
-
       idval_bof = top_bof[1][1]
       fname_bof = top_bof[1][2]
       matchdetails_bof = top_bof[1][0]
       size_bof = str(top_bof[1][3])
-      
+
+      top_eof = basislist_eof[0]           
       idval_eof = top_eof[1][1]
       fname_eof = top_eof[1][2]
       matchdetails_eof = top_eof[1][0]  
       size_eof = str(top_eof[1][3])
     
-      distance_bof = idval_bof + ", " + matchdetails_bof + " e.g. " + fname_bof + " " + size_bof + " bytes"
-      distance_eof = idval_eof + ", " + matchdetails_eof + " e.g. " + fname_eof + " " + size_eof + " bytes"
+      distance_bof = "(" + str(top_bof[0]) + ") " + idval_bof + ", " + matchdetails_bof + " e.g. " + fname_bof + " " + size_bof + " bytes"
+      distance_eof = "(" + str(top_eof[0]) + ") " + idval_eof + ", " + matchdetails_eof + " e.g. " + fname_eof + " " + size_eof + " bytes"
       return distance_bof, distance_eof
 
    def queryDB(self):
