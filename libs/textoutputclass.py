@@ -163,6 +163,9 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
+      if self.analysisresults.identificationgaps is not None:
+         self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
+
       #return the size of the collection
       size = self.analysisresults.collectionsize #easier to reference from a var
       self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2

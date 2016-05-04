@@ -44,6 +44,7 @@ class DROIDAnalysisResults:
    namespacecount = None
    namespacedata = None
    nsdatalist = None
+   identificationgaps = None
    #SF ONLY
 
    extmismatchCount = 0

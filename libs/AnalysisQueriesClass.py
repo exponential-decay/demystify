@@ -133,7 +133,7 @@
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
    #siegfried only...
-   SELECT_BYTE_MATCH_BASIS = """SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME
+   SELECT_BYTE_MATCH_BASIS = """SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME, FILEDATA.SIZE
                                  FROM IDRESULTS
                                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
@@ -224,6 +224,14 @@
    SELECT_NS_DATA = """SELECT * 
                         FROM NSDATA"""
 
+   def get_ns_gap_count_lists(self, nsid):
+      unidentified = """SELECT IDRESULTS.FILE_ID
+         FROM IDRESULTS
+         JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+         WHERE (IDDATA.METHOD!='Signature' AND IDDATA.METHOD!='Container')
+         AND IDDATA.NS_ID="""
+      return unidentified + str(nsid)
+
    def get_ns_multiple_ids(self, nsid, nscount):
       SELECT_NAMESPACE_BINARY_IDS1 = """SELECT count(*)
                                           FROM (SELECT COUNT(FILEDATA.FILE_ID) AS FREQUENCY
@@ -242,8 +250,7 @@
       query = part1 + part2
       return query
       
-   def get_ns_methods(self, id, binary=True, method=False):
-      
+   def get_ns_methods(self, id, binary=True, method=False):      
       AND_NS = "WHERE NS_ID=" + str(id)
 
       COUNT_IDS_NS = """SELECT COUNT(*)

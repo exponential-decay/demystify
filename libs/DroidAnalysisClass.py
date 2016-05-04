@@ -35,6 +35,8 @@ class DROIDAnalysis:
    textIDs = None
    filenameIDs = None
 
+   namespacedata = None
+
    def __init__(self, config=False):
       self.query = AnalysisQueries()
       self.config = self.__readconfig__(config)       
@@ -249,7 +251,7 @@ class DROIDAnalysis:
    
       self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
       
-      self.analysisresults.unidentifiedfilecount = len(none)            
+      self.analysisresults.unidentifiedfilecount = self.analysisresults.filecount - self.analysisresults.identifiedfilecount           
       self.analysisresults.extensionIDOnlyCount = len(extension)
       
       self.extensionIDonly = extension
@@ -314,9 +316,11 @@ class DROIDAnalysis:
 
    def __analysebasis__(self):
       basislist = []
+      #basislist_eof = []
       basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS) 
       for idrow in basis:
          val = idrow[0].split(';')
+         filesize = idrow[3]
          for x in val:
             if 'byte match' in x:
                offset = x.strip().replace('byte match at ', '')
@@ -328,9 +332,17 @@ class DROIDAnalysis:
                   offset = offset.replace(']]]','').replace(']]','')
                   offset = offset.split(' ',4)[2]
                basislist.append((int(offset), idrow))
-
+               #if int(offset) != 0:
+               #   basislist_eof.append(((filesize-int(offset)), idrow))
       basislist.sort(key=lambda tup: tup[0], reverse=True)
+      #basislist_eof.sort(key=lambda tup: tup[0], reverse=True)
       top = basislist[0]
+      #top_eof = basislist_eof[0]
+      
+      #print top
+      #print top_eof      
+      #sys.exit(0)
+      
       fname = top[1][2]
       idval = top[1][1]
       matchdetails = top[1][0]
@@ -442,9 +454,9 @@ class DROIDAnalysis:
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
-         namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+         self.namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
          nsdatalist = []
-         for ns in namespacedata:
+         for ns in self.namespacedata:
             nsdict = {}
             nsid = ns[0]
             nsdict[self.NS_CONST_TITLE] = ns[1]
@@ -456,6 +468,19 @@ class DROIDAnalysis:
             nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(self.query.get_ns_multiple_ids(nsid, self.analysisresults.namespacecount), True, True)
             nsdatalist.append(nsdict)
          self.analysisresults.nsdatalist = nsdatalist
+         
+         #get nsgap count
+         idslist = []
+         for ns in self.namespacedata:
+            nsid = ns[0]
+            idslist = idslist + self.__querydb__(self.query.get_ns_gap_count_lists(nsid), False, False, True)
+
+         counted = dict(Counter(idslist))         
+         noids = []
+         for x in counted:
+            if counted[x] == self.analysisresults.namespacecount:
+               noids.append(x)
+         self.analysisresults.identificationgaps = len(noids)
          
       return self.analysisresults
       

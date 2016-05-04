@@ -36,6 +36,7 @@ class AnalysisStringsEN:
    SUMMARY_TEXT_ID_COUNT = "Total Text Based Identification Identifiers in the Accession/Extract"
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
    SUMMARY_MAXIMUM_OFFSET = "Max Offset Reached"
+   SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers"
    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
