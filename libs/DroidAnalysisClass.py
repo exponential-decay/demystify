@@ -350,7 +350,7 @@ class DROIDAnalysis:
       idval_bof = top_bof[1][1]
       fname_bof = top_bof[1][2]
       matchdetails_bof = top_bof[1][0]
-      size_bof = str(top_eof[1][3])
+      size_bof = str(top_bof[1][3])
       
       idval_eof = top_eof[1][1]
       fname_eof = top_eof[1][2]
