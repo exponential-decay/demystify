@@ -321,6 +321,12 @@ class DROIDAnalysis:
             if 'byte match' in x:
                offset = x.strip().replace('byte match at ', '')
                offset = offset.split(',',1)[0]
+               if '[[[' in offset:
+                  #offset might look like: byte match at [[[0 4]] [[30 19]]] (signature 1/2)
+                  #highest match is at 30 bytes, for 19 bytes...
+                  offset = offset.replace('[[[','').replace('[[','')
+                  offset = offset.replace(']]]','').replace(']]','')
+                  offset = offset.split(' ',4)[2]
                basislist.append((int(offset), idrow))
 
       basislist.sort(key=lambda tup: tup[0], reverse=True)
