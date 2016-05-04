@@ -40,7 +40,8 @@ class DROIDAnalysisResults:
    textidentifiers = None
    filenameidentifiers = None
    binaryidentifiers = None
-   maxoffset = None
+   bof_distance = None
+   eof_distance = None
    namespacecount = None
    namespacedata = None
    nsdatalist = None

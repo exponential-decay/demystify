@@ -315,38 +315,51 @@ class DROIDAnalysis:
       return sorted(countlist)
 
    def __analysebasis__(self):
-      basislist = []
-      #basislist_eof = []
+      basislist_bof = []
+      basislist_eof = []
       basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS) 
       for idrow in basis:
          val = idrow[0].split(';')
-         filesize = idrow[3]
+         filesize = int(idrow[3])
          for x in val:
             if 'byte match' in x:
-               offset = x.strip().replace('byte match at ', '')
-               offset = offset.split(',',1)[0]
+               length = 0
+               value = x.strip().replace('byte match at ', '')
+               offset = value.split(',',1)[0]
                if '[[[' in offset:
                   #offset might look like: byte match at [[[0 4]] [[30 19]]] (signature 1/2)
                   #highest match is at 30 bytes, for 19 bytes...
-                  offset = offset.replace('[[[','').replace('[[','')
-                  offset = offset.replace(']]]','').replace(']]','')
-                  offset = offset.split(' ',4)[2]
-               basislist.append((int(offset), idrow))
-               #if int(offset) != 0:
-               #   basislist_eof.append(((filesize-int(offset)), idrow))
-      basislist.sort(key=lambda tup: tup[0], reverse=True)
-      #basislist_eof.sort(key=lambda tup: tup[0], reverse=True)
-      top = basislist[0]
-      #top_eof = basislist_eof[0]
+                  splitvals = offset.replace('[[[','').replace('[[','')
+                  splitvals = splitvals.replace(']]]','').replace(']]','')
+                  tmp = splitvals.split(' ',4)
+                  if len(tmp) > 3:
+                     offset = int(tmp[2])
+                     length = int(tmp[3])
+               else:
+                  offset = int(offset)
+                  length = int(value.replace(',','').split(' ',2)[1])
+               offlen = offset+length
+               basislist_bof.append((offlen, idrow))
+               basislist_eof.append(((filesize-offlen), idrow))
+
+      basislist_bof.sort(key=lambda tup: tup[0], reverse=True)
+      basislist_eof.sort(key=lambda tup: tup[0], reverse=False)
+      top_bof = basislist_bof[0]
+      top_eof = basislist_eof[0]     
+
+      idval_bof = top_bof[1][1]
+      fname_bof = top_bof[1][2]
+      matchdetails_bof = top_bof[1][0]
+      size_bof = str(top_eof[1][3])
       
-      #print top
-      #print top_eof      
-      #sys.exit(0)
-      
-      fname = top[1][2]
-      idval = top[1][1]
-      matchdetails = top[1][0]
-      return idval + ", " + matchdetails + " e.g. " + fname 
+      idval_eof = top_eof[1][1]
+      fname_eof = top_eof[1][2]
+      matchdetails_eof = top_eof[1][0]  
+      size_eof = str(top_eof[1][3])
+    
+      distance_bof = idval_bof + ", " + matchdetails_bof + " e.g. " + fname_bof + " " + size_bof + " bytes"
+      distance_eof = idval_eof + ", " + matchdetails_eof + " e.g. " + fname_eof + " " + size_eof + " bytes"
+      return distance_bof, distance_eof
 
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
@@ -426,10 +439,11 @@ class DROIDAnalysis:
       if self.rogueids != False:
          self.listRogueIDs(self.rogueids)
 
+      #MORE WORK NEEDED ON ROGUES NOW... ACCURACY IS PARAMOUNT
       if len(self.extensionIDonly) > 0:
          extonly = self.query.query_from_ids(self.extensionIDonly)
          extrogues = self.__querydb__(extonly)
-      if len(self.noids) > 0:
+      if len(self.noids) > 0:    #NOT THE SAME AS COMPLETELY UNIDENTIFIED
          none = self.query.query_from_ids(self.noids)
          nonerogues = self.__querydb__(none)
 
@@ -450,7 +464,7 @@ class DROIDAnalysis:
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
          self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
       if self.analysisresults.tooltype != 'droid':
-         self.analysisresults.maxoffset = self.__analysebasis__() 
+         self.analysisresults.bof_distance, self.analysisresults.eof_distance = self.__analysebasis__() 
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:

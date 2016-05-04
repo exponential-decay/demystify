@@ -126,8 +126,11 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText("")
       self.printFormattedText(self.STRINGS.NAMESPACES + ": " + str(self.analysisresults.namespacecount))
 
-      if self.analysisresults.maxoffset is not None:
-         self.printFormattedText(self.STRINGS.SUMMARY_MAXIMUM_OFFSET + ": " + str(self.analysisresults.maxoffset))
+      if self.analysisresults.bof_distance is not None:
+         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_BOF + ": " + str(self.analysisresults.bof_distance))
+
+      if self.analysisresults.bof_distance is not None:
+         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_EOF + ": " + str(self.analysisresults.eof_distance))
       
       self.printFormattedText("")
       
