@@ -34,8 +34,8 @@ class DROIDAnalysis:
    noids = None
    textIDs = None
    filenameIDs = None
-
    namespacedata = None
+   pronom_ns_id = None
 
    def __init__(self, config=False):
       self.query = AnalysisQueries()
@@ -359,6 +359,17 @@ class DROIDAnalysis:
    def queryDB(self):
       self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
       self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
+      self.namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
+            
+      nsdata = self.namespacedata
+      for ns_deets in nsdata:
+         #to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
+         #'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
+         sig_deets = ns_deets[2]
+         if "DROID_" in sig_deets and "limited to" not in sig_deets:
+            id_for_pronom = ns_deets[0]
+            self.pronom_ns_id = id_for_pronom
+            break 
             
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
@@ -464,7 +475,6 @@ class DROIDAnalysis:
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is
       if self.analysisresults.namespacecount is not None and self.analysisresults.namespacecount > 0:
-         self.namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
          nsdatalist = []
          for ns in self.namespacedata:
             nsdict = {}
