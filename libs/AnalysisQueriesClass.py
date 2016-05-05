@@ -23,9 +23,15 @@
    
    SELECT_COUNT_NAMESPACES = 'SELECT COUNT(NSDATA.NS_ID) FROM NSDATA'
    
+   SELECT_FREQUENCY_ERRORS = """SELECT FILEDATA.ERROR, COUNT(*) AS TOTAL
+                                 FROM FILEDATA
+                                 WHERE FILEDATA.TYPE!='Folder'
+                                 AND FILEDATA.ERROR!=''
+                                 GROUP BY FILEDATA.ERROR ORDER BY TOTAL DESC"""
+   
    SELECT_COUNT_ID_METHODS = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD as METHOD
-                              FROM IDRESULTS
-                              JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
+                                 FROM IDRESULTS
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
 
    SELECT_COUNT_EXT_MISMATCHES = """SELECT COUNT(distinct(IDRESULTS.FILE_ID))
                                        FROM IDRESULTS

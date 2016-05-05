@@ -271,3 +271,7 @@ class DROIDAnalysisTextOutput:
             for badnames in self.analysisresults.badDirNames:
                # Already UTF-8 on way into here...
                self.printFormattedText(badnames, False)      
+
+      if self.analysisresults.errorlist is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_ERRORS)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.errorlist)) 
