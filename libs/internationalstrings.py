@@ -37,7 +37,7 @@ class AnalysisStringsEN:
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
    SUMMARY_DISTANCE_BOF = "Max Distance Scanned from Beginning of File"
    SUMMARY_DISTANCE_EOF = "Min Distance Scanned from End of File"
-   SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers"
+   SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Based on Signature)"
    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
