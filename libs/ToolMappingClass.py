@@ -47,7 +47,8 @@
       "sha1" : "HASH",     
       "sha256" : "HASH",     
       "sha512" : "HASH",     
-      "crc" : "HASH"     
+      "crc" : "HASH", 
+      "errors" : "ERROR"
    }
 
    #file count doesn't have a place yet...

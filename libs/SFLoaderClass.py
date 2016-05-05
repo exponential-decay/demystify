@@ -134,10 +134,6 @@ class SFLoader:
             if key == sf.FIELDDIRNAME:
                dirlist.append(value)
             else:
-               #understand what to do with errors in SF output
-               if key == 'errors':
-                  if value != '':
-                     sys.stderr.write("LOG (understanding ERROR output): " + value + "\n")
                if key == sf.DICTID:
                   idkey, idvalue = self.handleID(value, idkeystring, idvaluestring, nsdict)
 

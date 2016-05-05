@@ -21,7 +21,7 @@ class GenerateBaselineDB:
    #FILE ID is a new ID for the purpose of this database
    #INPUT_FILE_ID is the ID from the input analysis
    #PARENT ID is the ID of the parent of the file, will be a folder
-   FILEDATA_TABLE = [FILEID,"INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","DIR_NAME","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH"]
+   FILEDATA_TABLE = [FILEID,"INPUT_ID","PARENT_ID","URI","URI_SCHEME","FILE_PATH","DIR_NAME","NAME","SIZE","TYPE","EXT","LAST_MODIFIED","YEAR","HASH","ERROR"]
 
    #N.B. FORMAT_COUNT removed to reside in multiple NS rows
    IDTABLE_TABLE = [IDID,NSID,'METHOD','STATUS','ID','BASIS','MIME_TYPE','FORMAT_NAME','FORMAT_VERSION','EXTENSION_MISMATCH']
