@@ -29,10 +29,27 @@
                                  AND FILEDATA.ERROR!=''
                                  GROUP BY FILEDATA.ERROR ORDER BY TOTAL DESC"""
    
-   SELECT_COUNT_ID_METHODS = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD as METHOD
+   ns_pattern = "{{ ns_id }}"
+   SELECT_COUNT_ID_METHODS_PATTERN = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID
                                  FROM IDRESULTS
-                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                 ORDER BY
+                                 CASE IDDATA.NS_ID
+                                   WHEN '{{ ns_id }}' THEN 1
+                                   ELSE 2
+                                 END"""
+                           
+   #Prority of results is based on order input to database...
+   SELECT_COUNT_ID_METHODS_NONE = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID
+                                    FROM IDRESULTS
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""                              
 
+   def methods_return_ns_sort(self, ns_id):
+      if ns_id is not None:
+         return self.SELECT_COUNT_ID_METHODS_PATTERN.replace(self.ns_pattern, str(ns_id))
+      else:
+         return self.SELECT_COUNT_ID_METHODS_NONE
+   
    SELECT_COUNT_EXT_MISMATCHES = """SELECT COUNT(distinct(IDRESULTS.FILE_ID))
                                        FROM IDRESULTS
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID

@@ -36,15 +36,20 @@ def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
       sys.stdout.write(textoutput.printTextResults()) # Text class still uses print statements... 
 
 def handleDROIDDB(dbfilename, config=False):
-   analysis = DROIDAnalysis(config)	
-   analysisresults = analysis.openDROIDDB(dbfilename)
+   cfg = 'config.cfg'
+   if os.path.exists(cfg) and os.path.isfile(cfg):
+      conf = ConfigParser.ConfigParser()
+      conf.read(cfg)
+   analysis = DROIDAnalysis(dbfilename, conf)	
+   analysisresults = analysis.runanalysis()
+   analysis.closeDROIDDB()
    return analysisresults
 
-def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, heroes=False, config=False):
+def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, heroes=False, blacklist=False):
    dbfilename = droid2sqlite.identifyinput(droidcsv)
    if dbfilename is not None:
       if analyse == True:
-         analysisresults = handleDROIDDB(dbfilename, config)
+         analysisresults = handleDROIDDB(dbfilename, config, blacklist)
          handleOutput(analysisresults, htmlout, rogues, heroes)
 
 def outputtime(start_time):
@@ -74,13 +79,13 @@ def main():
    global args
    args = parser.parse_args()
    
-   config = handleConfig(args.blacklist)
+   blacklist = handleConfig(args.blacklist)
    
    if args.export:
-      handleDROIDCSV(args.export, True, args.htm, args.rogues, args.heroes, config)
+      handleDROIDCSV(args.export, True, args.htm, args.rogues, args.heroes, blacklist)
       outputtime(start_time)
    if args.db:
-      analysisresults = handleDROIDDB(args.db, config)
+      analysisresults = handleDROIDDB(args.db, blacklist)
       handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
       outputtime(start_time)
    if args.dump:

@@ -15,6 +15,10 @@ from collections import Counter
 
 class DROIDAnalysis:
 
+   def __version__(self):
+      self.analysisresults.__version_no__ = '0.4.0' #need something reasonable here...
+      return self.analysisresults.__version_no__
+
    #we need this value because we extract basedirs for all folders, including
    #the root directory of the extract, creating one additional entry
    #TODO: consider handling better...
@@ -35,25 +39,79 @@ class DROIDAnalysis:
    textIDs = None
    filenameIDs = None
    namespacedata = None
+   priority_ns_id = None
+
+   #namespaceids
    pronom_ns_id = None
+   freedesktop_ns_id = None
+   tika_ns_id = None
 
-   def __init__(self, config=False):
-      self.query = AnalysisQueries()
-      self.config = self.__readconfig__(config)       
+   ID_TIKA = 'TIKA'
+   ID_PRONOM = 'PRONOM'
+   ID_FREEDESKTOP = 'FREE'
+   ID_NONE = 'NONE'
+
+   def __init__(self, dbfilename=None, config=False, blacklist=False):
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
-
-   def __version__(self):
-      self.analysisresults.__version__ = '0.4.0' #need something reasonable here...
-      return self.analysisresults.__version__
-
+      if dbfilename!=None:
+         self.openDROIDDB(dbfilename)
+         self.query = AnalysisQueries()   
+         self.blacklist = self.__readblacklistconfig__(blacklist)
+         self.analysisresults.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[0]
+         self.analysisresults.namespacecount = self.__querydb__(self.query.SELECT_COUNT_NAMESPACES, True)[0]
+         self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)      
+         nsdata = self.namespacedata
+         if self.analysisresults.namespacecount > 1:
+            for ns_deets in nsdata:
+               #to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
+               #'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
+               sig_deets = ns_deets[2]
+               if "DROID_" in sig_deets and "limited to" not in sig_deets:
+                  self.pronom_ns_id = ns_deets[0]
+               elif "tika" in sig_deets:
+                  self.tika_ns_id = ns_deets[0]
+               elif "freedesktop" in sig_deets:
+                  self.freedesktop_ns_id = ns_deets[0]            
+            self.__get_ns_priority__(self.__readconfig__(config))
+            
+   def __get_ns_priority__(self, config):
+      if config == False:
+         self.priority_ns_id = self.pronom_ns_id
+      else:
+         if config == self.ID_PRONOM:
+            self.priority_ns_id = self.pronom_ns_id
+         if config == self.ID_FREEDESKTOP:
+            self.priority_ns_id = self.freedesktop_ns_id
+         if config == self.ID_TIKA:
+            self.priority_ns_id = self.tika_ns_id
+         if config == self.ID_NONE:
+            self.priority_ns_id = None            
+            
    def __readconfig__(self, config):
+      ns_out = None
+      if config != None:
+         if config.has_section('priority'):
+            if config.has_option('priority', 'pronom') is True and config.get('priority', 'pronom').lower() == 'true':
+               ns_out = self.ID_PRONOM
+            elif config.has_option('priority', 'freedesktop') and config.get('priority', 'freedesktop').lower() == 'true':
+               ns_out = self.ID_FREEDESKTOP
+            elif config.has_option('priority', 'tika') and config.get('priority', 'tika').lower() == 'true':
+               ns_out = self.ID_TIKA
+            elif config.has_option('priority', 'none') and config.get('priority', 'none').lower() == 'true':
+               ns_out = self.ID_NONE    
+            else:
+               ns_out = None               
+            if ns_out == '':
+               ns_out = None
+               
+      return ns_out
+
+   def __readblacklistconfig__(self, config):
       configout = False
       
       self.blacklistpuids = False
       self.blacklistzeros = False
       
-      #self.roguesduplicatenames = True // to implement
-
       self.roguesduplicatechecksums = True
       self.rogueids = False
       
@@ -174,18 +232,21 @@ class DROIDAnalysis:
       return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 
 
    def __getsplit__(self, vals):
-      idlist = vals.split(',', 2)
-      if len(idlist) is 3:         
+      idlist = vals.split(',', 3)
+      if len(idlist) is 4:         
          type = idlist[1]
          idno = idlist[0]
          idrow = idlist[2]
-         return type, idno, idrow
+         ns = idlist[3]
+         return type, idno, idrow, ns
 
-   def handleIDBreakdown(self, query, tooltype):
+   def create_id_breakdown(self):
 
+      tooltype = self.analysisresults.tooltype
+      query = self.query.methods_return_ns_sort(self.priority_ns_id)
       allids = self.__querydb__(query)      
       method_list = []
-      
+            
       container_bin = []
       binary_bin = []
       text = []
@@ -202,44 +263,44 @@ class DROIDAnalysis:
          file = id[0]
          method = id[2].lower().strip()
          idrow = id[1]
-         method_list.append(str(file) + "," + method + "," + str(idrow))
-   
+         ns = id[3]
+         method_list.append(str(file) + "," + method + "," + str(idrow) + "," + str(ns))
+
+      #go through list the first time and prioritize container and signature
+      #and THEN our sorted list of NS identifiers...
       for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
+         type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'container':
             if idno not in container_bin:             
                container_bin.append(idno)
                binaryidrows.append((idno, idrow))
-
-      for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
          if type == 'signature':
-            if idno not in container_bin and idno not in binary_bin:             
+            if idno not in container_bin and idno not in binary_bin:
                binary_bin.append(idno)
                binaryidrows.append((idno, idrow))
-            
+                           
       for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
+         type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'text':
             if idno not in container_bin and idno not in binary_bin and idno not in text:
                text.append(idno)   
                textidrows.append((idno, idrow))
 
       for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
+         type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'filename':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename:
                filename.append(idno)
                filenameidrows.append((idno, idrow))
    
       for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
+         type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'extension':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension:
                extension.append(idno)       
 
       for id in list(method_list):
-         type, idno, idrow = self.__getsplit__(id)
+         type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'none':
             if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
                none.append(idno)      
@@ -280,7 +341,7 @@ class DROIDAnalysis:
       self.analysisresults.idmethodFrequency = list_of_lists
       self.analysisresults.zeroidcount = len(none)
 
-   def getMethodIDResults(self, methodids, version=False):
+   def getMethodIDResults(self, methodids, fmt_version=False):
       #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
       text = ''
@@ -298,7 +359,7 @@ class DROIDAnalysis:
             basis = ''
          #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
          idval = "ns:" + id[0] + " " + id[1] + name + basis
-         if version == True:
+         if fmt_version == True:
             #we're creating a less detailed statistic for summary purposes
             idval = "ns:" + id[0] + " " + id[1] + name + id[4]
          countlist.append(idval)      
@@ -357,20 +418,7 @@ class DROIDAnalysis:
       return distance_bof, distance_eof
 
    def queryDB(self):
-      self.analysisresults.tooltype = self.__querydb__(AnalysisQueries.SELECT_TOOL, True)[0]
-      self.analysisresults.namespacecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_NAMESPACES, True)[0]
-      self.namespacedata = self.__querydb__(AnalysisQueries.SELECT_NS_DATA)
-            
-      nsdata = self.namespacedata
-      for ns_deets in nsdata:
-         #to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
-         #'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
-         sig_deets = ns_deets[2]
-         if "DROID_" in sig_deets and "limited to" not in sig_deets:
-            id_for_pronom = ns_deets[0]
-            self.pronom_ns_id = id_for_pronom
-            break 
-            
+
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
@@ -389,8 +437,8 @@ class DROIDAnalysis:
       
       self.analysisresults.uniqueDirectoryNames = (self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True) - self.NONROOTBASEDIR)
       
-      #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#                  
-      self.handleIDBreakdown(AnalysisQueries.SELECT_COUNT_ID_METHODS, self.analysisresults.tooltype)
+      #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#
+      self.create_id_breakdown()                  
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#    
 
       self.analysisresults.extmismatchCount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXT_MISMATCHES, True, True)
@@ -503,16 +551,16 @@ class DROIDAnalysis:
          self.analysisresults.identificationgaps = len(noids)
          
       return self.analysisresults
-      
-   def openDROIDDB(self, dbfilename):
-      self.analysisresults.filename = dbfilename.rstrip('.db')
    
-      conn = sqlite3.connect(dbfilename)
-      conn.text_factory = str		#encoded as ascii, not unicode / return ascii
-      
-      self.cursor = conn.cursor()
+   def runanalysis(self):
       analysisresults = self.queryDB()		# primary db query functions
+      return self.analysisresults   
+   
+   def openDROIDDB(self, dbfilename):
+      self.filename = dbfilename.rstrip('.db')   
+      self.conn = sqlite3.connect(dbfilename)
+      self.conn.text_factory = str		#encoded as ascii, not unicode / return ascii
+      self.cursor = self.conn.cursor()
       
-      conn.close()
-
-      return self.analysisresults
+   def closeDROIDDB(self):
+      self.conn.close()
