@@ -197,21 +197,30 @@
       query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"      
       return query_part1 + query_part2
 
-   def query_from_idrows(self, idlist):         
+   def query_from_idrows(self, idlist, priority=None):         
       list = 'WHERE IDRESULTS.ID_ID IN '
       where = '('
       for i in idlist:
          where = where + str(i[1]) + ", "
       list = list + where.strip(", ") + ")"
       
-      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION
+      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
-                                    
+                            
+      PRIORITY_ID = """ORDER BY
+                        CASE IDDATA.NS_ID
+                           WHEN '{{ ns_id }}' THEN 1
+                           ELSE 2
+                        END"""       
       #print list
       SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS 
-      return SELECT_NAMESPACE_AND_IDS + "\n" + list                                     
+      query = SELECT_NAMESPACE_AND_IDS + "\n" + list  
+      if priority != None:
+         query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
+
+      return query
 
    #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
    def query_from_ids(self, idlist, idmethod=False):     

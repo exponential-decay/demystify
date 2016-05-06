@@ -344,9 +344,11 @@ class DROIDAnalysis:
    def getMethodIDResults(self, methodids, fmt_version=False):
       #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
-      text = ''
-      methodresults = self.__querydb__(self.query.query_from_idrows(methodids))
+      text = ''            
+      methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))
+            
       for id in methodresults:
+         ns_id = id[5]
          name = id[2]
          if name == '':
             name = ", "
@@ -362,12 +364,25 @@ class DROIDAnalysis:
          if fmt_version == True:
             #we're creating a less detailed statistic for summary purposes
             idval = "ns:" + id[0] + " " + id[1] + name + id[4]
-         countlist.append(idval)      
+         countlist.append((idval, ns_id))  
+    
       #counter returns dict
-      templist = Counter(countlist)            
+      templist = Counter(countlist)   
+
       countlist = []
+
+      for x in templist:
+         print x
+
       for k,v in templist.iteritems():
-         countlist.append((k,v))      
+         countlist.append((k[0],v,k[1]))  
+    
+      #print countlist
+    
+      countlist.sort(key=lambda tup: tup[2], 1)
+    
+      print countlist
+    
       return sorted(countlist)
 
    def __analysebasis__(self):
@@ -509,6 +524,11 @@ class DROIDAnalysis:
       #create a statistic for aggregated binary identification
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
          self.analysisresults.signatureidentifiers = self.getMethodIDResults(self.binaryIDs, True)
+         
+         
+         #print self.analysisresults.signatureidentifiers
+         sys.exit(1)
+
 
       #New functions thanks to Siegfried
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
