@@ -223,17 +223,18 @@
       return query
 
    #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
-   def query_from_ids(self, idlist, idmethod=False):     
+   def query_from_ids(self, idlist, idmethod=False):   
+
       if idmethod != False:
          list = 'IDRESULTS.FILE_ID IN '
          where = '('
          for i in idlist:         
-            where = where + str(i[1]) + ", "
+            where = where + str(i) + ", "
       else:
          list = 'FILEDATA.FILE_ID IN '
          where = '('
          for i in idlist:
-            where = where + str(i[1]) + ", "     
+            where = where + str(i) + ", "     
       list = list + where.strip(", ") + ")"
 
       SELECT_PATHS = """SELECT FILEDATA.FILE_PATH
