@@ -371,19 +371,31 @@ class DROIDAnalysis:
 
       countlist = []
 
-      for x in templist:
-         print x
-
       for k,v in templist.iteritems():
-         countlist.append((k[0],v,k[1]))  
+         countlist.append((k[0],v,k[1]))  #add ns to sort by
     
-      #print countlist
+      countlist = self.__prioritysort__(countlist)
     
-      countlist.sort(key=lambda tup: tup[2], 1)
-    
-      print countlist
-    
-      return sorted(countlist)
+      final_countlist = []
+      for c in countlist:
+         final_countlist.append((c[0],c[1]))
+
+      if self.priority_ns_id is None:
+         return sorted(final_countlist)
+      else:
+         return final_countlist
+
+   def __prioritysort__(self, method_list):
+      #sort into two sets then combine
+      l1 = []
+      l2 = []
+      for m in method_list:      
+         if m[2] == self.priority_ns_id:
+            l1.append(m)
+         else:
+            l2.append(m)
+         l2.sort(reverse=True)
+      return l1 + l2
 
    def __analysebasis__(self):
       basislist_bof = []
@@ -524,11 +536,6 @@ class DROIDAnalysis:
       #create a statistic for aggregated binary identification
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
          self.analysisresults.signatureidentifiers = self.getMethodIDResults(self.binaryIDs, True)
-         
-         
-         #print self.analysisresults.signatureidentifiers
-         sys.exit(1)
-
 
       #New functions thanks to Siegfried
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
