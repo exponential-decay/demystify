@@ -381,7 +381,7 @@ class DROIDAnalysis:
          idval = id[0] + id[1] + name + basis
          if fmt_version == True:
             #we're creating a less detailed statistic for summary purposes
-            idval = id[0] + id[1] + name + id[4]
+            idval = id[0] + id[1] + name + id[4] + " (" + str(id[6]) + ")" #concatenate count
          countlist.append((idval, ns_id))  
     
       #counter returns dict

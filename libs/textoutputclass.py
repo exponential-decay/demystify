@@ -169,8 +169,13 @@ class DROIDAnalysisTextOutput:
       if self.analysisresults.signatureidentifiers is not None:
          #('ns:pronom x-fmt/266 GZIP Format, extension match gz; byte match at 0, 3', 1)
          self.__output_list_title__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
+
+         #print self.analysisresults.signatureidentifiers
+
          for ids in self.analysisresults.signatureidentifiers:
             self.printFormattedText(ids[0].rstrip(", "))
+
+      #sys.exit(1)
 
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
