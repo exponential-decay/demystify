@@ -32,14 +32,17 @@ class DROIDAnalysisResults:
    zeroidcount = 0
 
    #SF ONLY
+   xmlidfilecount = 0
    textidfilecount = 0
    filenameidfilecount = 0
    distinctOtherIdentifiers = 0
+   distinctXMLIdentifiers = 0
    distinctTextIdentifiers = 0
    distinctFilenameIdentifiers = 0
    textidentifiers = None
    filenameidentifiers = None
    binaryidentifiers = None
+   xmlidentifiers = None
    bof_distance = None
    eof_distance = None
    namespacecount = None

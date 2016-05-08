@@ -144,15 +144,17 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_UNIDENTIFIED, self.analysisresults.unidentifiedfilecount))
       
       if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_XML_ID, self.analysisresults.xmlidfilecount))
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_TEXT_ID, self.analysisresults.textidfilecount))
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_FILENAME_ID, self.analysisresults.filenameidfilecount))
-            
+
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
       
       if self.analysisresults.tooltype != 'droid':
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_OTHER_ID_COUNT, self.analysisresults.distinctOtherIdentifiers))
+         self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_XML_ID_COUNT, self.analysisresults.distinctXMLIdentifiers))
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_TEXT_ID_COUNT, self.analysisresults.distinctTextIdentifiers))
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_FILENAME_ID_COUNT, self.analysisresults.distinctFilenameIdentifiers))      
       
@@ -182,6 +184,9 @@ class DROIDAnalysisTextOutput:
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
          self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))
+      if self.analysisresults.xmlidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.xmlidentifiers))
       if self.analysisresults.textidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
          self.printFormattedText(self.__aggregatelists__(self.analysisresults.textidentifiers))

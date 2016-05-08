@@ -30,15 +30,18 @@ class AnalysisStringsEN:
    SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
 
    #NEW SIEGFRIED STRINGS
+   SUMMARY_XML_ID = "Total XML ID Only Count"
    SUMMARY_TEXT_ID = "Total Text ID Only Count"
    SUMMARY_FILENAME_ID = "Total Filename ID Only Count"
    SUMMARY_OTHER_ID_COUNT = "Total Other Discrete (Non-PUID) File Format Signature Identifiers in the Accession/Extract"
+   SUMMARY_XML_ID_COUNT = "Total XML Based Identification Identifiers in the Accession/Extract"
    SUMMARY_TEXT_ID_COUNT = "Total Text Based Identification Identifiers in the Accession/Extract"
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
    SUMMARY_DISTANCE_BOF = "Max Distance Scanned from Beginning of File"
    SUMMARY_DISTANCE_EOF = "Min Distance Scanned from End of File"
    SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Based on Signature)"
    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
+   HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in Accession/Extract"
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
    HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"

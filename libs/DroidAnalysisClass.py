@@ -36,6 +36,7 @@ class DROIDAnalysis:
    #variables we need internally:
    extensionIDonly = None
    noids = None
+   xmlIDs = None
    textIDs = None
    filenameIDs = None
    namespacedata = None
@@ -327,9 +328,11 @@ class DROIDAnalysis:
       self.noids = none_bin
 
       self.binaryIDs = binaryidrows
+      self.xmlIDs = xmlidrows
       self.textIDs = textidrows
       self.filenameIDs = filenameidrows
 
+      self.analysisresults.xmlidfilecount = len(xml_bin)
       self.analysisresults.textidfilecount = len(text_bin) 
       self.analysisresults.filenameidfilecount = len(filename_bin) 
       
@@ -347,8 +350,10 @@ class DROIDAnalysis:
       if tooltype != 'droid':
          list5 = ('Filename', len(filename_bin))
          list6 = ('Text', len(text_bin))
+         list7 = ('XML', len(xml_bin))
          list_of_lists.append(list5)
          list_of_lists.append(list6)
+         list_of_lists.append(list7)
 
       list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
       self.analysisresults.idmethodFrequency = list_of_lists
@@ -484,6 +489,7 @@ class DROIDAnalysis:
 
       if self.analysisresults.tooltype != 'droid':
          self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
+         self.analysisresults.distinctXMLIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_XML_IDENTIFIERS, True, True)
          self.analysisresults.distinctTextIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIERS, True, True)
          self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIERS, True, True)
                
@@ -551,6 +557,8 @@ class DROIDAnalysis:
       #New functions thanks to Siegfried
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
          self.analysisresults.binaryidentifiers = self.getMethodIDResults(self.binaryIDs)
+      if self.xmlIDs is not None and len(self.xmlIDs) > 0:
+         self.analysisresults.xmlidentifiers = self.getMethodIDResults(self.xmlIDs)
       if self.textIDs is not None and len(self.textIDs) > 0:
          self.analysisresults.textidentifiers = self.getMethodIDResults(self.textIDs)
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
