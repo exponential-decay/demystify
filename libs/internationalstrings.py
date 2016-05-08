@@ -48,6 +48,9 @@ class AnalysisStringsEN:
    HEADING_NAMESPACE_SPECIFIC_STATISTICS = "Results Per Identifier Namespace"
    HEADING_NAMESPACE = "Namespace"
    HEADING_ERRORS = "File Processing Errors Encountered During Scan"
+   HEADING_XML_ID_COMPLETE = "Identifiers in Complete XML Namespace"
+   HEADING_TEXT_ID_COMPLETE = "Identifiers in Complete Text Namespace"
+   HEADING_FILENAME_ID_COMPLETE = "Identifiers in Complete Filename Namespace"
    #NEW SIEGFRIED STRINGS
       
    #This statistic may be obsoleted...

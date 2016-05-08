@@ -243,6 +243,12 @@ class DROIDAnalysisTextOutput:
          self.printFormattedText(self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency))
       ##########NS SPECIFIC OUTPUT####################
 
+      ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+      #if self.analysisresults.xml_identifiers is not None and len(self.analysisresults.xml_identifiers) > 0:
+      #if self.analysisresults.text_identifiers is not None and len(self.analysisresults.text_identifiers) > 0:
+      #if self.analysisresults.filename_identifiers is not None and len(self.analysisresults.filename_identifiers) > 0:
+      ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+
       if self.analysisresults.zerobytecount > 0:
          self.printFormattedText("\n")
          self.printFormattedText(self.__output_list__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.analysisresults.zerobytecount))

@@ -489,9 +489,9 @@ class DROIDAnalysis:
 
       if self.analysisresults.tooltype != 'droid':
          self.analysisresults.distinctOtherIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True)
-         self.analysisresults.distinctXMLIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_XML_IDENTIFIERS, True, True)
-         self.analysisresults.distinctTextIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_TEXT_IDENTIFIERS, True, True)
-         self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(AnalysisQueries.SELECT_COUNT_FILENAME_IDENTIFIERS, True, True)
+         self.analysisresults.distinctXMLIdentifiers = self.__querydb__(self.query.select_count_identifiers('XML'), True, True)
+         self.analysisresults.distinctTextIdentifiers = self.__querydb__(self.query.select_count_identifiers('Text'), True, True)
+         self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(self.query.select_count_identifiers('Filename'), True, True)
                
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
 

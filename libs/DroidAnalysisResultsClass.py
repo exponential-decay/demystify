@@ -50,6 +50,9 @@ class DROIDAnalysisResults:
    nsdatalist = None
    identificationgaps = None
    errorlist = None
+   xml_identifiers = None
+   text_identifiers = None
+   filename_identifiers = None
    #SF ONLY
 
    extmismatchCount = 0

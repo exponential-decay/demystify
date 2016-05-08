@@ -72,27 +72,17 @@
 
    #PRONOM and OTHERS Text identifiers as one result
    #PRONOM and OTHERS Text identifiers as one result
-   SELECT_COUNT_XML_IDENTIFIERS = """SELECT count(DISTINCT IDMETHOD)
-                                       FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
-                                       FROM IDRESULTS
-                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       AND (IDDATA.METHOD='XML'))"""
+   def select_count_identifiers(self, method):
+      #XML, Text, Filename
+      method_pattern = "{{ method }}"      
+      SELECT_METHOD_IDENTIFIER = """SELECT COUNT(DISTINCT IDMETHOD)
+                                    FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
+                                    FROM IDRESULTS
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                    AND (IDDATA.METHOD='{{ method }}'))"""
+      return SELECT_METHOD_IDENTIFIER.replace(method_pattern, method)
 
-   SELECT_COUNT_TEXT_IDENTIFIERS = """SELECT count(DISTINCT IDMETHOD)
-                                       FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
-                                       FROM IDRESULTS
-                                       JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       AND (IDDATA.METHOD='Text'))"""
-
-   #PRONOM and OTHERS Filename identifiers as one result
-   SELECT_COUNT_FILENAME_IDENTIFIERS = """SELECT COUNT(DISTINCT IDMETHOD)
-                                             FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD
-                                             FROM IDRESULTS
-                                             JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                             JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                             AND (IDDATA.METHOD='Filename'))"""
 
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
                                        FROM FILEDATA  
@@ -227,7 +217,6 @@
       query = SELECT_NAMESPACE_AND_IDS + "\n" + list  
       if priority != None:
          query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
-
       return query
 
    #IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
