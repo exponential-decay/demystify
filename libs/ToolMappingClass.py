@@ -59,7 +59,8 @@
       'mime' : 'MIME_TYPE',
       'format' : 'FORMAT_NAME',
       'version' : 'FORMAT_VERSION',                   #no version in tika or freedesktop ids
-      'extension mismatch' : 'EXTENSION_MISMATCH'
+      'extension mismatch' : 'EXTENSION_MISMATCH',
+      'warning' : 'WARNING'   
       
       #-----------------UNMAPPED FIELDS BETWEEN TRAD. DROID AND SIEGFRIED--------------------#
       #'STATUS' : 'STATUS',                                                                  #

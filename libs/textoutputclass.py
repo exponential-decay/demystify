@@ -244,9 +244,15 @@ class DROIDAnalysisTextOutput:
       ##########NS SPECIFIC OUTPUT####################
 
       ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
-      #if self.analysisresults.xml_identifiers is not None and len(self.analysisresults.xml_identifiers) > 0:
-      #if self.analysisresults.text_identifiers is not None and len(self.analysisresults.text_identifiers) > 0:
-      #if self.analysisresults.filename_identifiers is not None and len(self.analysisresults.filename_identifiers) > 0:
+      if self.analysisresults.xml_identifiers is not None and len(self.analysisresults.xml_identifiers) > 0:
+         self.__output_list_title__(self.STRINGS.HEADING_XML_ID_COMPLETE)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.xml_identifiers)) 
+      if self.analysisresults.text_identifiers is not None and len(self.analysisresults.text_identifiers) > 0:
+         self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID_COMPLETE)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.text_identifiers)) 
+      if self.analysisresults.filename_identifiers is not None and len(self.analysisresults.filename_identifiers) > 0:
+         self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID_COMPLETE)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.filename_identifiers)) 
       ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
 
       if self.analysisresults.zerobytecount > 0:

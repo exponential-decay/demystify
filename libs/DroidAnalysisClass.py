@@ -493,6 +493,10 @@ class DROIDAnalysis:
          self.analysisresults.distinctTextIdentifiers = self.__querydb__(self.query.select_count_identifiers('Text'), True, True)
          self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(self.query.select_count_identifiers('Filename'), True, True)
                
+         self.analysisresults.xml_identifiers = self.__querydb__(self.query.select_frequency_identifier_types('XML'))
+         self.analysisresults.text_identifiers = self.__querydb__(self.query.select_frequency_identifier_types('Text'))
+         self.analysisresults.filename_identifiers = self.__querydb__(self.query.select_frequency_identifier_types('Filename'))
+
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
 
       self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_RANGE)

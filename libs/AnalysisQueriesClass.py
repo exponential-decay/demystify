@@ -83,6 +83,28 @@
                                     AND (IDDATA.METHOD='{{ method }}'))"""
       return SELECT_METHOD_IDENTIFIER.replace(method_pattern, method)
 
+   def select_frequency_identifier_types(self, method):
+      #treating new identifer capabilities as first class citizens
+      #%match on filename%    %xml match%    %text match%
+      identifier_pattern = "{{ identifier }}"
+      identifier_text = ''
+
+      method = method.lower()
+      if method == 'xml':
+         identifier_text = '%xml match%'
+      elif method == 'text':
+         identifier_text = '%text match%'
+      elif method == 'filename':
+         identifier_text = '%match on filename%'
+
+      SELECT_IDENTIFIER_COUNT = """SELECT "ns:" || NSDATA.NS_NAME || " " || IDDATA.ID, count(IDDATA.ID) as TOTAL
+                                    FROM IDDATA
+                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
+                                    WHERE IDDATA.BASIS LIKE '{{ identifier }}' OR IDDATA.WARNING LIKE '{{ identifier }}'
+                                    GROUP BY NSDATA.NS_NAME, IDDATA.iD
+                                    ORDER BY TOTAL DESC"""
+
+      return SELECT_IDENTIFIER_COUNT.replace(identifier_pattern, identifier_text)
 
    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
                                        FROM FILEDATA  
