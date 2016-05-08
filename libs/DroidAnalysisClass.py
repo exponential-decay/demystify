@@ -636,7 +636,7 @@ class DROIDAnalysis:
       return self.analysisresults   
    
    def openDROIDDB(self, dbfilename):
-      self.filename = dbfilename.rstrip('.db')   
+      self.analysisresults.filename = dbfilename.rstrip('.db')   
       self.conn = sqlite3.connect(dbfilename)
       self.conn.text_factory = str		#encoded as ascii, not unicode / return ascii
       self.cursor = self.conn.cursor()

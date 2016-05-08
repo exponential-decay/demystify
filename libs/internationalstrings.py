@@ -2,7 +2,8 @@
  
 class AnalysisStringsEN:
  
-   REPORT_TITLE = "DROID Analysis Results"
+   REPORT_TITLE_DR = "DROID Analysis Results"
+   REPORT_TITLE_SF = "Siegfried Analysis Results"
    REPORT_SUMMARY = "Summary Statistics" 
    REPORT_VERSION = "Analysis Version"
    REPORT_FILE = "Analysis File"

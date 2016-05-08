@@ -115,7 +115,11 @@ class DROIDAnalysisTextOutput:
       return offs[0] + ", " + offs[1] + " e.g. " + offs[2] + " filesize: " + str(offs[3]) + ", " + str(offs[4]) + " bytes"
 
    def generateTEXT(self):   
-      self.printFormattedText(self.STRINGS.REPORT_TITLE)
+      if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText(self.STRINGS.REPORT_TITLE_SF)
+      else:
+         self.printFormattedText(self.STRINGS.REPORT_TITLE_DR)
+
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
       self.printFormattedText(self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename)
       self.printFormattedText(self.STRINGS.REPORT_TOOL + ": " + self.analysisresults.tooltype)
