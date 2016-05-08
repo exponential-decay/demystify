@@ -37,22 +37,13 @@ class DROIDAnalysisTextOutput:
       return self.textoutput
 
    #namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
-   def __frequencyoutput__(self, itemlist, zeros=False, namespace=False):         
+   def __frequencyoutput__(self, itemlist, zeros=False):         
       val = ''
       ns = None
       if type(itemlist) is not list:
          sys.stderr.write("LOG: Not sending a list to a function wanting a list." + "\n")
       else:
          for item in itemlist:
-            if namespace == True: 
-               if ns is None:
-                  ns = str(item[0])
-               else:
-                  if ns != str(item[0]):
-                     val = val.strip(', ') + "\n\n"
-                     ns = str(item[0])
-               val = val + 'ns:' + str(ns) + " "
-               item = (item[1], item[2])
             if zeros == True:
                val = val + str(item[0]) + ", "
             else:
@@ -233,9 +224,18 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.frequencyOfAllExtensions)) 
 
+
+
+
       if self.analysisresults.mimetypeFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
+
+
+
+
+
+
 
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
