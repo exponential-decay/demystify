@@ -249,12 +249,14 @@ class DROIDAnalysis:
             
       container_bin = []
       binary_bin = []
-      text = []
-      filename = []
-      extension = []
-      none = []
+      xml_bin = []
+      text_bin = []
+      filename_bin = []
+      extension_bin = []
+      none_bin = []
       
       binaryidrows = []    #and containers
+      xmlidrows = []
       textidrows = []
       filenameidrows = []
       
@@ -278,68 +280,79 @@ class DROIDAnalysis:
             if idno not in container_bin and idno not in binary_bin:
                binary_bin.append(idno)
                binaryidrows.append((idno, idrow))
+
+      for id in list(method_list):
+         type, idno, idrow, ns = self.__getsplit__(id)
+         if type == 'xml':
+            if idno not in container_bin and idno not in binary_bin and idno not in xml_bin:
+               xml_bin.append(idno)   
+               xmlidrows.append((idno, idrow))
                            
       for id in list(method_list):
          type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'text':
-            if idno not in container_bin and idno not in binary_bin and idno not in text:
-               text.append(idno)   
+            if idno not in container_bin and idno not in binary_bin and idno not in xml_bin \
+               and idno not in text_bin:
+               text_bin.append(idno)   
                textidrows.append((idno, idrow))
 
       for id in list(method_list):
          type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'filename':
-            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename:
-               filename.append(idno)
+            if idno not in container_bin and idno not in binary_bin and idno not in xml_bin \
+               and idno not in text_bin and idno not in filename_bin:
+               filename_bin.append(idno)
                filenameidrows.append((idno, idrow))
    
       for id in list(method_list):
          type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'extension':
-            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension:
-               extension.append(idno)       
+            if idno not in container_bin and idno not in binary_bin and idno not in xml_bin \
+               and idno not in text_bin and idno not in filename_bin and idno not in extension_bin:
+               extension_bin.append(idno)       
 
       for id in list(method_list):
          type, idno, idrow, ns = self.__getsplit__(id)
          if type == 'none':
-            if idno not in container_bin and idno not in binary_bin and idno not in text and idno not in filename and idno not in extension and idno not in none:
-               none.append(idno)      
+            if idno not in container_bin and idno not in binary_bin and idno not in xml_bin \
+               and idno not in text_bin and idno not in filename_bin and idno not in extension_bin and idno not in none_bin:
+               none_bin.append(idno)      
    
       self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
       
       self.analysisresults.unidentifiedfilecount = self.analysisresults.filecount - self.analysisresults.identifiedfilecount           
-      self.analysisresults.extensionIDOnlyCount = len(extension)
+      self.analysisresults.extensionIDOnlyCount = len(extension_bin)
       
-      self.extensionIDonly = extension
-      self.noids = none
+      self.extensionIDonly = extension_bin
+      self.noids = none_bin
 
       self.binaryIDs = binaryidrows
       self.textIDs = textidrows
       self.filenameIDs = filenameidrows
 
-      self.analysisresults.textidfilecount = len(text) 
-      self.analysisresults.filenameidfilecount = len(filename) 
+      self.analysisresults.textidfilecount = len(text_bin) 
+      self.analysisresults.filenameidfilecount = len(filename_bin) 
       
       self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
 
       #ID Method frequencylist can be created here also
       #e.g. [('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
       #self.analysisresults.idmethodFrequency
-      list1 = ('None', len(none))
+      list1 = ('None', len(none_bin))
       list2 = ('Container', len(container_bin))
       list3 = ('Signature', len(binary_bin))
-      list4 = ('Extension', len(extension))
+      list4 = ('Extension', len(extension_bin))
 
       list_of_lists = [list1, list2, list3, list4]
       if tooltype != 'droid':
-         list5 = ('Filename', len(filename))
-         list6 = ('Text', len(text))
+         list5 = ('Filename', len(filename_bin))
+         list6 = ('Text', len(text_bin))
          list_of_lists.append(list5)
          list_of_lists.append(list6)
 
       list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
       self.analysisresults.idmethodFrequency = list_of_lists
-      self.analysisresults.zeroidcount = len(none)
+      self.analysisresults.zeroidcount = len(none_bin)
 
    def getMethodIDResults(self, methodids, fmt_version=False):
       #TODO: Fine line between formatting, and not formatting in this function
@@ -380,10 +393,7 @@ class DROIDAnalysis:
       for c in countlist:
          final_countlist.append((c[0],c[1]))
 
-      if self.priority_ns_id is None:
-         return sorted(final_countlist)
-      else:
-         return final_countlist
+      return final_countlist
 
    def __prioritysort__(self, method_list):
       #sort into two sets then combine
@@ -394,6 +404,7 @@ class DROIDAnalysis:
             l1.append(m)
          else:
             l2.append(m)
+         l1.sort(reverse=False)
          l2.sort(reverse=True)
       return l1 + l2
 
