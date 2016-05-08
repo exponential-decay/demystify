@@ -414,51 +414,80 @@ class DROIDAnalysis:
       return l1 + l2
 
    def __analysebasis__(self):
-      basislist_bof = []
-      basislist_eof = []
+
+      #########['id','basis','filesize','filename','offset']##########
+      boftup = [None,'basis','filename','filesize',0]
+      eoftup = [None,'basis','filename','filesize',0]
+      #########['id','basis','filesize','filename','offset']##########
+
       basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS) 
+
       for idrow in basis:
          val = idrow[0].split(';')
          filesize = int(idrow[3])
-         for x in val:
-            if 'byte match' in x:
-               length = 0
-               value = x.strip().replace('byte match at ', '')
-               offset = value.split(',',1)[0]
-               if '[[[' in offset:
-                  #offset might look like: byte match at [[[0 4]] [[30 19]]] (signature 1/2)
-                  #highest match is at 30 bytes, for 19 bytes...
-                  splitvals = offset.replace('[[[','').replace('[[','')
-                  splitvals = splitvals.replace(']]]','').replace(']]','')
-                  tmp = splitvals.split(' ',4)
-                  if len(tmp) > 3:
-                     offset = int(tmp[2])
-                     length = int(tmp[3])
+         filename = idrow[2]
+         fileid = idrow[1]
+         for match in val:
+            if 'byte match' in match:   
+               if '[[[' in match:
+                  offs, length = self.__handlesquares__(match)
                else:
-                  offset = int(offset)
-                  length = int(value.replace(',','').split(' ',2)[1])
-               offlen = offset+length
-               basislist_bof.append((offlen, idrow))
-               basislist_eof.append(((filesize-offlen), idrow))
+                  offs, length = self.__handlenosquares__(match)
+               bof, eof, filesize = self.__getoffs__(offs, int(length), int(filesize))
 
-      basislist_bof.sort(key=lambda tup: tup[0], reverse=True)
-      basislist_eof.sort(key=lambda tup: tup[0], reverse=False)
-      
-      top_bof = basislist_bof[0]
-      idval_bof = top_bof[1][1]
-      fname_bof = top_bof[1][2]
-      matchdetails_bof = top_bof[1][0]
-      size_bof = str(top_bof[1][3])
+               if bof != 0 and boftup[4] < bof:
+                  boftup[0] = fileid
+                  boftup[1] = match.strip()
+                  boftup[2] = filename
+                  boftup[3] = filesize
+                  boftup[4] = bof
 
-      top_eof = basislist_eof[0]           
-      idval_eof = top_eof[1][1]
-      fname_eof = top_eof[1][2]
-      matchdetails_eof = top_eof[1][0]  
-      size_eof = str(top_eof[1][3])
-    
-      distance_bof = "(" + str(top_bof[0]) + ") " + idval_bof + ", " + matchdetails_bof + " e.g. " + fname_bof + " " + size_bof + " bytes"
-      distance_eof = "(" + str(top_eof[0]) + ") " + idval_eof + ", " + matchdetails_eof + " e.g. " + fname_eof + " " + size_eof + " bytes"
-      return distance_bof, distance_eof
+               if eof != None and eoftup[4] < eof:
+                  eoftup[0] = fileid
+                  eoftup[1] = match.strip()
+                  eoftup[2] = filename
+                  eoftup[3] = filesize
+                  eoftup[4] = eof
+
+      if boftup[0] == None:
+         boftup = None
+      if eoftup[0] == None:
+         eoftup = None
+
+      return boftup, eoftup
+
+   def __getoffs__(self, basis, length, filesize):
+      if length == 1:
+         pos = int(basis[0])
+         pos_len = int(basis[1])
+         bof = pos + pos_len
+         eof = filesize - pos
+         return bof, None, filesize
+      else:
+         bof = 0
+         eof = 0
+         for x in range(length):
+            tmppos = basis[x*2]
+            tmplen = basis[(x*2)+1] 
+            tmpbof = int(tmppos) + int(tmplen)
+            tmpeof = filesize - int(tmppos)
+            if tmpbof < tmpeof:
+               bof = tmpbof
+            elif tmpeof < tmpbof:
+               eof = tmpeof
+         return bof, eof, filesize
+
+   def __handlesquares__(self, basis):
+      basis = basis.replace('byte match at', '').strip()
+      no_sequences = (basis.count('[['))*2      
+      basis = (basis.replace('[','')).replace(']','').replace(' ',',')
+      return basis.split(',',no_sequences)[:no_sequences], (no_sequences/2)
+
+   def __handlenosquares__(self, basis):
+      basis = basis.replace('byte match at', '').strip()
+      basis = basis.replace('(',',(')
+      basis = basis.replace(' ','').split(',',2)[:2]
+      return basis, 1
 
    def queryDB(self):
 
@@ -568,7 +597,7 @@ class DROIDAnalysis:
       if self.filenameIDs is not None and len(self.filenameIDs) > 0:
          self.analysisresults.filenameidentifiers = self.getMethodIDResults(self.filenameIDs)
       if self.analysisresults.tooltype != 'droid':
-         self.analysisresults.bof_distance, self.analysisresults.eof_distance = None, None
+         self.analysisresults.bof_distance, self.analysisresults.eof_distance = self.__analysebasis__()
          self.analysisresults.errorlist = self.__querydb__(AnalysisQueries.SELECT_FREQUENCY_ERRORS)
       #we need namespace data - ann NS queries can be generic
       #ns count earlier on in this function can be left as-is

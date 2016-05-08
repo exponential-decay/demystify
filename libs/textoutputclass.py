@@ -109,6 +109,11 @@ class DROIDAnalysisTextOutput:
          
       return output.strip("\n")
 
+   def generateOffsetText(self, offsettext):
+      #########['id','basis','filename','filesize','offset']##########
+      offs = offsettext
+      return offs[0] + ", " + offs[1] + " e.g. " + offs[2] + " filesize: " + str(offs[3]) + ", " + str(offs[4]) + " bytes"
+
    def generateTEXT(self):   
       self.printFormattedText(self.STRINGS.REPORT_TITLE)
       self.printFormattedText(self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__())
@@ -118,10 +123,10 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.STRINGS.NAMESPACES + ": " + str(self.analysisresults.namespacecount))
 
       if self.analysisresults.bof_distance is not None:
-         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_BOF + ": " + str(self.analysisresults.bof_distance))
+         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_BOF + ": " + self.generateOffsetText(self.analysisresults.bof_distance))
 
       if self.analysisresults.bof_distance is not None:
-         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_EOF + ": " + str(self.analysisresults.eof_distance))
+         self.printFormattedText(self.STRINGS.SUMMARY_DISTANCE_EOF + ": " + self.generateOffsetText(self.analysisresults.eof_distance))
       
       self.printFormattedText("")
       
