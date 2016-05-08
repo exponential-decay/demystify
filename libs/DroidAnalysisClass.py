@@ -363,8 +363,8 @@ class DROIDAnalysis:
       #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
       text = ''            
-      methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))
-            
+      methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))      
+
       for id in methodresults:
          ns_id = id[5]
          name = id[2]
@@ -377,11 +377,11 @@ class DROIDAnalysis:
             basis = "[" + basis + "]"
          else:
             basis = ''
-         #('pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
-         idval = "ns:" + id[0] + " " + id[1] + name + basis
+         #('ns:pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
+         idval = id[0] + id[1] + name + basis
          if fmt_version == True:
             #we're creating a less detailed statistic for summary purposes
-            idval = "ns:" + id[0] + " " + id[1] + name + id[4]
+            idval = id[0] + id[1] + name + id[4]
          countlist.append((idval, ns_id))  
     
       #counter returns dict
@@ -516,7 +516,7 @@ class DROIDAnalysis:
          combined_list = []   #namespace + id
          from collections import Counter
          for entry in test:
-            entry = 'ns:' + ' '.join(entry)
+            entry = ' '.join(entry)
             combined_list.append(entry) 
          sorted_list = Counter(elem for elem in combined_list).most_common()
          self.analysisresults.extensionOnlyIDFrequency = sorted_list

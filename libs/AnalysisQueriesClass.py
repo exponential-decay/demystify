@@ -224,7 +224,7 @@
          where = where + str(i[1]) + ", "
       list = list + where.strip(", ") + ")"
       
-      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID
+      SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID      
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
@@ -259,7 +259,7 @@
       SELECT_PATHS = """SELECT FILEDATA.FILE_PATH
                         FROM FILEDATA"""
 
-      SELECT_NAMESPACE_AND_IDS = """SELECT NSDATA.NS_NAME, IDDATA.ID
+      SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || " ", IDDATA.ID
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
