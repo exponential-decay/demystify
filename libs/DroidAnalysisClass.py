@@ -228,6 +228,9 @@ class DROIDAnalysis:
 
    def multiplecount(self, nscount):    
       return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)         
+      #print self.query.count_multiple_ids(nscount)        
+      #sys.exit(1) 
+      #return 0
 
    def multipleIDList(self, nscount):       
       return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 
@@ -615,7 +618,7 @@ class DROIDAnalysis:
             nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(self.query.get_ns_multiple_ids(nsid, self.analysisresults.namespacecount), True, True)
             nsdatalist.append(nsdict)
          self.analysisresults.nsdatalist = nsdatalist
-         
+
          #get nsgap count
          idslist = []
          for ns in self.namespacedata:

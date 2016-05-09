@@ -190,6 +190,7 @@
                   FROM IDRESULTS
                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                  WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
                   GROUP BY FILEDATA.FILE_ID
                   ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
                   WHERE FREQUENCY > """
@@ -317,7 +318,7 @@
                                           JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                           WHERE IDDATA.NS_ID="""
                                           
-      SELECT_NAMESPACE_BINARY_IDS2 = """AND IDDATA.METHOD='Binary' or IDDATA.METHOD='Container'
+      SELECT_NAMESPACE_BINARY_IDS2 = """AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
                                           GROUP BY FILEDATA.FILE_ID
                                           ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
                                           WHERE FREQUENCY >"""
@@ -330,8 +331,9 @@
    def get_ns_methods(self, id, binary=True, method=False):      
       AND_NS = "WHERE NS_ID=" + str(id)
 
-      COUNT_IDS_NS = """SELECT COUNT(*)
-                        FROM IDDATA
+      COUNT_IDS_NS = """SELECT COUNT(DISTINCT IDRESULTS.FILE_ID)
+                        FROM IDRESULTS
+                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                         """
                         
       COUNT_IDS_METHODS = "AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')"
