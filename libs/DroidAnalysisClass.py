@@ -227,10 +227,7 @@ class DROIDAnalysis:
       self.analysisresults.badDirNames = dirreport
 
    def multiplecount(self, nscount):    
-      return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)         
-      #print self.query.count_multiple_ids(nscount)        
-      #sys.exit(1) 
-      #return 0
+      return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)
 
    def multipleIDList(self, nscount):       
       return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 

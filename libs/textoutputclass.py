@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import DroidAnalysisClass
 from internationalstrings import AnalysisStringsEN as IN_EN
@@ -238,18 +240,9 @@ class DROIDAnalysisTextOutput:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.frequencyOfAllExtensions)) 
 
-
-
-
       if self.analysisresults.mimetypeFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
-
-
-
-
-
-
 
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
