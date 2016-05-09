@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import DroidAnalysisClass
 from internationalstrings import AnalysisStringsEN as IN_EN
@@ -75,13 +77,20 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<!DOCTYPE html>")
       self.printFormattedText("<html lang='en'>")
       self.printFormattedText("<head>")
-      self.printFormattedText("<title>" + self.STRINGS.REPORT_TITLE + "</title>")
+      if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText("<title>" + self.STRINGS.REPORT_TITLE_SF + "</title>")
+      else:
+         self.printFormattedText("<title>" + self.STRINGS.REPORT_TITLE_DR + "</title>")
       self.printFormattedText("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>")
       self.printFormattedText("</head>")
    
       self.printFormattedText("<body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>")
-   
-      self.printFormattedText("<h1>" + self.STRINGS.REPORT_TITLE + "</h1>")
+
+      if self.analysisresults.tooltype != 'droid':   
+         self.printFormattedText("<h1>" + self.STRINGS.REPORT_TITLE_SF + "</h1>")
+      else:
+         self.printFormattedText("<h1>" + self.STRINGS.REPORT_TITLE_DR + "</h1>")
+
       self.printFormattedText("<b>" + self.STRINGS.REPORT_VERSION + ": </b>" + self.analysisresults.__version__())
       self.__htmlnewline__() 
       self.printFormattedText("<b>" + self.STRINGS.REPORT_FILE + ": </b>" + self.analysisresults.filename)
@@ -126,7 +135,7 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
-      if self.analysisresults.sigIDPUIDList is not None:
+      if self.analysisresults.signatureidentifiers is not None:
 
          #Signature identified PUIDs in collection (signature and container)
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
@@ -135,16 +144,22 @@ class DROIDAnalysisHTMLOutput:
       
          self.printFormattedText('<table>')
          self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th>')
-         for puid in self.analysisresults.sigIDPUIDList:
-            if puid[2] != 'no value':
-               new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
-            else:
-               new_x = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + '</td></tr>'
-            self.printFormattedText(new_x)
+         import re         
+         #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
+         for puid in self.analysisresults.signatureidentifiers:
+            #markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
+            #(x-)?fmt\/[0-9]+
+            patt = re.compile('(x-)?fmt\/[0-9]+')
+            p = re.search(patt, puid[0]).span()
+            print puid[0][p[0]:p[1]]
+            #markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + puid[0] + '">' + puid[0] + '</a></td><td>' + puid[1] + " " + puid[2] + '</td></tr>'
+            #self.printFormattedText(markup)
          self.printFormattedText('</table>')
 
          self.__htmlnewline__(2)  
          self.printFormattedText("<hr/>")
+
+      sys.exit(1)
 
       if self.analysisresults.sigIDPUIDFrequency is not None:
          #Signature ID PUIDs
