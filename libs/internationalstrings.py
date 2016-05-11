@@ -114,6 +114,8 @@ class AnalysisStringsEN:
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
    
+   COLUMN_HEADER_VALUES_NAMESPACE = "Namespace"
+   COLUMN_HEADER_VALUES_ID = "ID"
    COLUMN_HEADER_VALUES_FORMAT = "Format Name"
    COLUMN_HEADER_VALUES_COUNT = "Count"
    COLUMN_HEADER_VALUES_YEAR = "Year"

@@ -71,6 +71,23 @@ class DROIDAnalysisHTMLOutput:
    def printHTMLResults(self):
       self.generateHTML()
       return self.htmloutput
+
+   def splitidresults(self, puid):
+      identifier = puid[0].rsplit('(',1)[0]
+      namespace = puid[0].split(' ', 1)[0]  
+      patt = re.compile('(x-)?fmt\/[0-9]+')
+      p = re.search(patt, identifier)
+      if p is not None:
+         p = p.span()      
+         identifier = identifier[p[0]:p[1]]
+      else:   
+         identifier = identifier.replace(namespace, '').strip()
+         identifier = identifier.split(',',1)[0]    
+      count = puid[0].rsplit('(',1)[1].replace(')','')
+      formatname = puid[0].replace(namespace, '').replace('(' + count + ')','').replace(identifier + ", ",'').strip(', ')      
+      if formatname == '':
+         formatname = identifier
+      return namespace, identifier, formatname, count
    
    def generateHTML(self):
    
@@ -143,21 +160,18 @@ class DROIDAnalysisHTMLOutput:
          self.__htmlnewline__() 
       
          self.printFormattedText('<table>')
-         self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')
+         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')
                
          #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
          for puid in self.analysisresults.signatureidentifiers:
             #(x-)?fmt\/[0-9]+
-            identifier = puid[0].rsplit('(',1)[0]
-            count = puid[0].rsplit('(',1)[1].replace(')','')
-            patt = re.compile('(x-)?fmt\/[0-9]+')
-            p = re.search(patt, identifier)
-            if p is not None:
-               p = p.span()
-               markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + identifier[p[0]:p[1]] + '">' + identifier[p[0]:p[1]] + '</a></td><td>' + identifier + '</td><td style="text-align:center">' + str(count) + '</td></tr>'
+            namespace, identifier, formatname, count = self.splitidresults(puid)
+            if "fmt/" in identifier:
+               markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + identifier + '">' + identifier + '</a></td>'
             else:
-               idtext = identifier.split(',',1)[0].replace('ns:tika', '').replace('ns:freedesktop.org','').strip()
-               markup = '<tr><td style="width: 150px;">' + idtext + '</td><td>' + identifier + '</td><td style="text-align:center">' + str(count) + '</td></tr>'
+               markup = '<tr><td style="width: 100px;">' + identifier + '</td>'
+               
+            markup = markup + '<td style="width: 150px;">' + namespace + '</td><td>' + formatname + '</td><td style="text-align:center">' + str(count) + '</td></tr>'
             self.printFormattedText(markup)
          self.printFormattedText('</table>')
 
@@ -186,6 +200,7 @@ class DROIDAnalysisHTMLOutput:
          self.__htmlnewline__() 
          self.printFormattedText("<hr/>")
 
+      
       if self.analysisresults.dateFrequency is not None:
          #Date Ranges
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
