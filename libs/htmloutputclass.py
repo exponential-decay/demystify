@@ -219,6 +219,8 @@ class DROIDAnalysisHTMLOutput:
             #(x-)?fmt\/[0-9]+
             namespace, identifier, formatname, count = self.splitidresults(puid)
             countlist.append((identifier, int(count)))
+            
+            
             if "fmt/" in identifier:
                markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + identifier + '">' + identifier + '</a></td>'
             else:
