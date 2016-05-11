@@ -119,6 +119,7 @@ class AnalysisStringsEN:
    COLUMN_HEADER_VALUES_FORMAT = "Format Name"
    COLUMN_HEADER_VALUES_COUNT = "Count"
    COLUMN_HEADER_VALUES_YEAR = "Year"
+   COLUMN_HEADER_VALUES_YEAR = "Volume"
    
    FNAME_CHECK_ASCII = "contains, characters outside of ASCII range"
    FNAME_CHECK_PERIOD = "has a period ('.') as its last character"

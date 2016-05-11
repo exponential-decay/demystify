@@ -120,6 +120,15 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")   
       '''
    
+   def __outputmeter__(self, value, minval, maxval):
+      return '<td><meter style="width: 300px;" value="' + str(value).strip() + '" min="' + str(min) + '" max="' + str(maxval) + '">test</meter></td>'
+
+   def __generateOffsetText__(self, offsettext):
+      #########['id','basis','filename','filesize','offset']##########
+      offs = offsettext
+      if offs != None:
+         return "<code>" + offs[0] + ", " + offs[1] + " e.g. " + offs[2] + " filesize: " + str(offs[3]) + ", " + str(offs[4]) + " bytes" + "</code>"
+
    def identifierchart(self, countlist, reverse_list=True):     
       countlist.sort(key=lambda tup: tup[1], reverse=reverse_list)            
       #Signature ID PUIDs
@@ -127,22 +136,43 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
       self.__htmlnewline__()
       self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+      #http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm <- link to reinstate somewhere
+      self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</th>') 
       for sig in countlist:
-         self.printFormattedText('<tr><td style="width: 100px;">')
+         self.printFormattedText('<tr><td style="width: 220px;">')
          if "fmt/" in sig[0]:
             self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
          else:
             self.printFormattedText(sig[0])
-         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')        
+         self.printFormattedText('</td><td style="width: 100px;">' + str(sig[1]).strip() + '</td>')
+         self.printFormattedText(self.__outputmeter__(sig[1], 0, self.analysisresults.filecount))        
          self.printFormattedText('</tr>')        
       self.printFormattedText('</table>')
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")   
+
+   def signature_id_listing(self, idlist):
+      #Signature identified PUIDs in collection (signature and container)
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
+      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTIFIED))
+      self.__htmlnewline__() 
+      self.printFormattedText('<table>')
+      self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')               
+      #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
+      #Tuple object: (namespace, identifier, formatname, int(count))
+      #Can sort using Lambda on count as required... unlikely at first
+      for i in idlist:
+         if "fmt/" in i[1]:
+            markup = '<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + i[1] + '">' + i[1] + '</a></td>'
+         else:
+            markup = '<tr><td style="width: 100px;">' + i[1] + '</td>'               
+         markup = markup + '<td style="width: 150px;">' + i[0] + '</td><td>' + i[2] + '</td><td style="text-align:center">' + str(i[3]) + '</td></tr>'
+         self.printFormattedText(markup)
+      self.printFormattedText('</table>')
+      self.__htmlnewline__(2)  
+      self.printFormattedText("<hr/>")
    
    def generateHTML(self):
-   
       self.printFormattedText("<!DOCTYPE html>")
       self.printFormattedText("<html lang='en'>")
       self.printFormattedText("<head>")
@@ -163,7 +193,18 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<b>" + self.STRINGS.REPORT_VERSION + ": </b>" + self.analysisresults.__version__())
       self.__htmlnewline__() 
       self.printFormattedText("<b>" + self.STRINGS.REPORT_FILE + ": </b>" + self.analysisresults.filename)
+      self.__htmlnewline__() 
+      self.printFormattedText("<b>" + self.STRINGS.REPORT_TOOL + ": </b>" + self.analysisresults.tooltype)
       self.__htmlnewline__(2) 
+      self.printFormattedText("<b>" + self.STRINGS.NAMESPACES + ": </b>" + str(self.analysisresults.namespacecount))      
+      self.__htmlnewline__() 
+      if self.analysisresults.bof_distance is not None:
+         self.__htmlnewline__()
+         self.printFormattedText("<b>" + self.STRINGS.SUMMARY_DISTANCE_BOF + ": </b>" + self.__generateOffsetText__(self.analysisresults.bof_distance))
+      if self.analysisresults.eof_distance is not None:
+         self.__htmlnewline__() 
+         self.printFormattedText("<b>" + self.STRINGS.SUMMARY_DISTANCE_EOF + ": </b>" + self.__generateOffsetText__(self.analysisresults.eof_distance))
+      self.__htmlnewline__() 
 
       self.printFormattedText("<h2>" + self.STRINGS.REPORT_SUMMARY + "</h2>")
 
@@ -176,9 +217,22 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_IDENTIFIED_FILES, self.STRINGS.SUMMARY_IDENTIFIED_FILES, self.analysisresults.identifiedfilecount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_MULTIPLE, self.STRINGS.SUMMARY_MULTIPLE, self.analysisresults.multipleidentificationcount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIDENTIFIED, self.STRINGS.SUMMARY_UNIDENTIFIED, self.analysisresults.unidentifiedfilecount))
+
+      if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_XML_ID, self.analysisresults.xmlidfilecount))
+         self.printFormattedText(self.__make_list_item__("alt text two", self.STRINGS.SUMMARY_TEXT_ID, self.analysisresults.textidfilecount))
+         self.printFormattedText(self.__make_list_item__("alt text three", self.STRINGS.SUMMARY_FILENAME_ID, self.analysisresults.filenameidfilecount))
+
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_ID, self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_MISMATCH, self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ID_PUID_COUNT, self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
+
+      if self.analysisresults.tooltype != 'droid':
+         self.printFormattedText(self.__make_list_item__("alt text four", self.STRINGS.SUMMARY_OTHER_ID_COUNT, self.analysisresults.distinctOtherIdentifiers))
+         self.printFormattedText(self.__make_list_item__("alt text five", self.STRINGS.SUMMARY_XML_ID_COUNT, self.analysisresults.distinctXMLIdentifiers))
+         self.printFormattedText(self.__make_list_item__("alt text six", self.STRINGS.SUMMARY_TEXT_ID_COUNT, self.analysisresults.distinctTextIdentifiers))
+         self.printFormattedText(self.__make_list_item__("alt text seven", self.STRINGS.SUMMARY_FILENAME_ID_COUNT, self.analysisresults.distinctFilenameIdentifiers))
+
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIQUE_EXTENSIONS, self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS, self.analysisresults.distinctextensioncount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ZERO_BYTE, self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount))
 
@@ -188,6 +242,10 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_MULTIPLE_SPACES, self.STRINGS.SUMMARY_MULTIPLE_SPACES, len(self.analysisresults.multiplespacelist)))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
+
+      if self.analysisresults.identificationgaps is not None:
+         self.printFormattedText(self.__make_list_item__("alt text eight", self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
+
       self.printFormattedText("</ul>")
       self.__htmlnewline__() 
       self.printFormattedText("<hr/>")
@@ -204,39 +262,46 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
+      signature_id_list = []      
       if self.analysisresults.signatureidentifiers is not None:
          countlist = []
 
-         #Signature identified PUIDs in collection (signature and container)
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTIFIED))
-         self.__htmlnewline__() 
-      
-         self.printFormattedText('<table>')
-         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')               
-         #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
          for puid in self.analysisresults.signatureidentifiers:
             #(x-)?fmt\/[0-9]+
             namespace, identifier, formatname, count = self.splitidresults(puid)
             countlist.append((identifier, int(count)))
-            
-            
-            if "fmt/" in identifier:
-               markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + identifier + '">' + identifier + '</a></td>'
-            else:
-               markup = '<tr><td style="width: 100px;">' + identifier + '</td>'               
-            markup = markup + '<td style="width: 150px;">' + namespace + '</td><td>' + formatname + '</td><td style="text-align:center">' + str(count) + '</td></tr>'
-            self.printFormattedText(markup)
-         self.printFormattedText('</table>')
-         self.__htmlnewline__(2)  
-         self.printFormattedText("<hr/>")
-
+            signature_id_list.append((namespace, identifier, formatname, int(count)))
          self.identifierchart(countlist)
             
-            
-            
-            
-            
+      if self.analysisresults.dateFrequency is not None:
+         #Date Ranges
+         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
+         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
+         self.__htmlnewline__()
+         self.printFormattedText('<table>')
+         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+         for dates in self.analysisresults.dateFrequency:
+            self.printFormattedText('<tr><td style="width: 100px;">')
+                    
+            if self.wiki is True:
+               self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + str(dates[0]) + '">' + str(dates[0]) + '</a>')
+            else:
+               self.printFormattedText('<b>' + str(dates[0]) + '</b>')
+               
+            self.printFormattedText('</td><td>' + str(dates[1]).strip() + '</td>')
+    
+            #Unused Meter Code...
+            self.printFormattedText(self.__outputmeter__(dates[1], 0, self.analysisresults.filecount))
+            self.printFormattedText('</tr>')
+           
+         self.printFormattedText('</table>')
+         self.__htmlnewline__() 
+         self.printFormattedText("<hr/>")
+      
+      #Output charts first... most visual, immediate summary, next stats      
+      if len(signature_id_list) > 0:
+         self.signature_id_listing(signature_id_list)
+
       '''
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
@@ -258,31 +323,6 @@ class DROIDAnalysisHTMLOutput:
       #sys.exit(1)
 
       '''
-      if self.analysisresults.dateFrequency is not None:
-         #Date Ranges
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
-         self.__htmlnewline__()
-         self.printFormattedText('<table>')
-         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
-         for dates in self.analysisresults.dateFrequency:
-            self.printFormattedText('<tr><td style="width: 100px;">')
-                    
-            if self.wiki is True:
-               self.printFormattedText('<a target="_blank" href="https://en.wikipedia.org/wiki/' + str(dates[0]) + '">' + str(dates[0]) + '</a>')
-            else:
-               self.printFormattedText('<b>' + str(dates[0]) + '</b>')
-               
-            self.printFormattedText('</td><td>' + str(dates[1]).strip() + '</td>')
-    
-            #Unused Meter Code...
-            self.printFormattedText('<td><meter style="width: 300px;" value="' + str(dates[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
-            self.printFormattedText('</tr>')
-           
-         self.printFormattedText('</table>')
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
-
       if self.analysisresults.idmethodFrequency is not None:
          #ID Method Frequency
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
