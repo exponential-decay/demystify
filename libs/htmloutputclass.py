@@ -88,6 +88,58 @@ class DROIDAnalysisHTMLOutput:
       if formatname == '':
          formatname = identifier
       return namespace, identifier, formatname, count
+
+   def outputidentifiergraphs(self, idlist):
+   
+      #if idlist is not None:
+         
+      #for x in idlist:
+      #   print x
+   
+      return ''
+      
+      '''
+      #Signature ID PUIDs
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
+      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
+      self.__htmlnewline__()
+      self.printFormattedText('<table>')
+      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+      for sig in self.analysisresults.sigIDPUIDFrequency:
+         self.printFormattedText('<tr><td style="width: 100px;">')
+         self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
+         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
+ 
+         #Unused Meter Code...
+         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
+        
+         self.printFormattedText('</tr>')
+        
+      self.printFormattedText('</table>')
+      self.__htmlnewline__() 
+      self.printFormattedText("<hr/>")   
+      '''
+   
+   def identifierchart(self, countlist, reverse_list=True):     
+      countlist.sort(key=lambda tup: tup[1], reverse=reverse_list)            
+      #Signature ID PUIDs
+      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
+      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
+      self.__htmlnewline__()
+      self.printFormattedText('<table>')
+      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
+      for sig in countlist:
+         self.printFormattedText('<tr><td style="width: 100px;">')
+         if "fmt/" in sig[0]:
+            self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
+         else:
+            self.printFormattedText(sig[0])
+         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
+         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')        
+         self.printFormattedText('</tr>')        
+      self.printFormattedText('</table>')
+      self.__htmlnewline__() 
+      self.printFormattedText("<hr/>")   
    
    def generateHTML(self):
    
@@ -153,6 +205,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       if self.analysisresults.signatureidentifiers is not None:
+         countlist = []
 
          #Signature identified PUIDs in collection (signature and container)
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
@@ -160,47 +213,49 @@ class DROIDAnalysisHTMLOutput:
          self.__htmlnewline__() 
       
          self.printFormattedText('<table>')
-         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')
-               
+         self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')               
          #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
          for puid in self.analysisresults.signatureidentifiers:
             #(x-)?fmt\/[0-9]+
             namespace, identifier, formatname, count = self.splitidresults(puid)
+            countlist.append((identifier, int(count)))
             if "fmt/" in identifier:
                markup = '<tr><td style="width: 100px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + identifier + '">' + identifier + '</a></td>'
             else:
-               markup = '<tr><td style="width: 100px;">' + identifier + '</td>'
-               
+               markup = '<tr><td style="width: 100px;">' + identifier + '</td>'               
             markup = markup + '<td style="width: 150px;">' + namespace + '</td><td>' + formatname + '</td><td style="text-align:center">' + str(count) + '</td></tr>'
             self.printFormattedText(markup)
          self.printFormattedText('</table>')
-
          self.__htmlnewline__(2)  
          self.printFormattedText("<hr/>")
-      
-      '''
-      if self.analysisresults.sigIDPUIDFrequency is not None:
-         #Signature ID PUIDs
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
-         self.__htmlnewline__()
-         self.printFormattedText('<table>')
-         self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
-         for sig in self.analysisresults.sigIDPUIDFrequency:
-            self.printFormattedText('<tr><td style="width: 100px;">')
-            self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
-            self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
-    
-            #Unused Meter Code...
-            self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
-           
-            self.printFormattedText('</tr>')
-           
-         self.printFormattedText('</table>')
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
 
+         self.identifierchart(countlist)
+            
+            
+            
+            
+            
+      '''
+      if self.analysisresults.binaryidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))
+      if self.analysisresults.xmlidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.xmlidentifiers))
+      if self.analysisresults.textidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.textidentifiers))
+      if self.analysisresults.filenameidentifiers is not None:
+         self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
+         self.printFormattedText(self.__aggregatelists__(self.analysisresults.filenameidentifiers))
+      '''
       
+      #if self.analysisresults.binaryidentifiers is not None:
+      #   self.outputidentifiergraphs(self.analysisresults.binaryidentifiers)
+      
+      #sys.exit(1)
+
+      '''
       if self.analysisresults.dateFrequency is not None:
          #Date Ranges
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
