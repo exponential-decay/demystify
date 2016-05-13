@@ -173,7 +173,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(description))
       self.__htmlnewline__()
 
-   def __outputtable__(self, listing, heading, description):
+   def __outputtable__(self, listing, heading, description, maxcolumns=5, pixels="160", count=True):
       self.__outputheading__(heading, description)
       length = len(listing)
       rows = int(length/5) 
@@ -181,16 +181,22 @@ class DROIDAnalysisHTMLOutput:
          rows = rows + 1
       rowno = 0
       colno = 0
-      maxcolumns = 5
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
+         if count == False:
+            if item[1] == '':
+               string = str(item[0]) + ", " + "Format name not set"
+            else:
+               string = str(item[0]) + ", " + str(item[1])
+         else:
+            string = str(item[0]) + "(" + str(item[1]) + ")" 
          if colno < maxcolumns:
-            self.printFormattedText("<td width='160px'><code>" + str(item[0]) + "(" + str(item[1]) + ")" + "</code></td>")
+            self.printFormattedText("<td width='" + pixels + "'><code>" + string + "</code></td>")
             colno = colno + 1
          else:
             rowno = rowno + 1
             self.printFormattedText("</tr><tr>")
-            self.printFormattedText("<td width='160px'><code>" + str(item[0]) + "(" + str(item[1]) + ")" + "</code></td>")
+            self.printFormattedText("<td width='" + pixels + "'><code>" + string + "</code></td>")
             colno = 1   
       self.printFormattedText("</tr></table>")
       self.__htmlnewline__()
@@ -347,15 +353,16 @@ class DROIDAnalysisHTMLOutput:
          #ID Method Frequency
          self.__outputtable__(self.analysisresults.idmethodFrequency, self.STRINGS.HEADING_ID_METHOD, self.STRINGS.HEADING_DESC_ID_METHOD)
 
-      '''
+      
 
       if self.analysisresults.extensionOnlyIDList is not None:
-         if len(self.analysisresults.extensionOnlyIDList) > 0:
-            #Extension Only ID
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_EXTENSION_ONLY) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_EXTENSION_ONLY))
-            self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
-         
+         #Extension Only ID : TODO: Consider usefulness... 
+         #self.__outputheading__(self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY)
+         #self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
+         self.__outputtable__(self.analysisresults.extensionOnlyIDList, self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY, 2, "400", False)
+
+      '''
+   
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:
             #Extension Only Identification
