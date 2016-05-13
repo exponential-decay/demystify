@@ -189,7 +189,7 @@ class DROIDAnalysisHTMLOutput:
             else:
                string = str(item[0]) + ", " + str(item[1])
          else:
-            string = str(item[0]) + "(" + str(item[1]) + ")" 
+            string = str(item[0]) + " (" + str(item[1]) + ")" 
          if colno < maxcolumns:
             self.printFormattedText("<td width='" + pixels + "'><code>" + string + "</code></td>")
             colno = colno + 1
@@ -357,18 +357,16 @@ class DROIDAnalysisHTMLOutput:
 
       if self.analysisresults.extensionOnlyIDList is not None:
          #Extension Only ID : TODO: Consider usefulness... 
-         #self.__outputheading__(self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY)
-         #self.__keyvalue_output__(self.analysisresults.extensionOnlyIDList)
          self.__outputtable__(self.analysisresults.extensionOnlyIDList, self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY, 2, "400", False)
 
-      '''
+      
    
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:
             #Extension Only Identification
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY))
-            self.__keyvalue_output__(self.analysisresults.extensionOnlyIDFrequency)
+            self.__outputtable__(self.analysisresults.extensionOnlyIDFrequency, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, 1, "800")
+
+      '''
 
       if self.analysisresults.uniqueExtensionsInCollectionList is not None:
          #Unique Extensions Identified
