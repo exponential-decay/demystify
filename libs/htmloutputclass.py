@@ -381,22 +381,19 @@ class DROIDAnalysisHTMLOutput:
          #Unique Extensions Identified
          self.__outputtable__(self.analysisresults.uniqueExtensionsInCollectionList, self.STRINGS.HEADING_UNIQUE_EXTENSIONS, self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS, False)
 
-      
       if self.analysisresults.multipleIDList is not None:
          if len(self.analysisresults.multipleIDList) > 0:
             #Files with multiple identifications, signature only
             self.__outputtable__(self.analysisresults.multipleIDList, self.STRINGS.HEADING_LIST_MULTIPLE, self.STRINGS.HEADING_DESC_LIST_MULTIPLE, False, 1, "800")
-            
-      
-         
-      '''
+                  
       if self.analysisresults.mimetypeFrequency is not None:      
          #Mimetype Frequency
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
-         self.__keyvalue_output__(self.analysisresults.mimetypeFrequency)
-
-      '''
+         mimes = self.analysisresults.mimetypeFrequency
+         for m in list(mimes):
+            if m[0] == '':
+               mimes.remove(m)
+         self.__outputtable__(mimes, self.STRINGS.HEADING_FREQUENCY_MIME, self.STRINGS.HEADING_DESC_FREQUENCY_MIME, True, 2, "400")
+      
       '''
 
       if self.analysisresults.filesWithNoIDList is not None:

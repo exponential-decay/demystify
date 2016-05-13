@@ -118,7 +118,7 @@
                                        GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""	
 
    #select the gamut of MIMEs in the accession/extract, not counts
-   SELECT_MIME_RANGE = """SELECT DISTINCT IDDATA.MIME_TYPE AS total 
+   SELECT_MIME_RANGE = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total 
                                        FROM IDRESULTS 
                                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                        WHERE (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none')

@@ -242,7 +242,11 @@ class DROIDAnalysisTextOutput:
 
       if self.analysisresults.mimetypeFrequency is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
-         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency, True))
+         mimes = self.analysisresults.mimetypeFrequency
+         for m in mimes:
+            if m[0] == '':
+               mimes.remove(m)
+         self.printFormattedText(self.__frequencyoutput__(self.analysisresults.mimetypeFrequency))
 
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
