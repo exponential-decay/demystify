@@ -52,6 +52,10 @@ class AnalysisStringsEN:
    HEADING_XML_ID_COMPLETE = "Identifiers in Complete XML Namespace"
    HEADING_TEXT_ID_COMPLETE = "Identifiers in Complete Text Namespace"
    HEADING_FILENAME_ID_COMPLETE = "Identifiers in Complete Filename Namespace"
+
+   #BELOW ITEMS MAY BE OBSOLETE...
+   HEADING_NO_ID = "Files With No Identification"   
+   HEADING_DESC_NO_ID = "List of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e. there is no identification information in the DROID database)"
    #NEW SIEGFRIED STRINGS
       
    #This statistic may be obsoleted...
@@ -69,7 +73,6 @@ class AnalysisStringsEN:
    HEADING_FREQUENCY_EXTENSIONS_ALL = "Frequency of All Extensions"
    HEADING_FREQUENCY_MIME = "MIME Type (Internet Media Type) Frequency"
    HEADING_LIST_ZERO_BYTES = "Zero-byte files in Accession/Extract" 
-   HEADING_NO_ID = "Files With No Identification"
    HEADING_ARCHIVE_FORMATS = "Archive File Types in Accession/Extract"
    HEADING_IDENTICAL_CONTENT = "Files With Identical Content (Checksum Value)" 
    HEADING_TROUBLESOME_FILENAMES = "Identifying Non-ASCII and System File Names" 
@@ -105,7 +108,6 @@ class AnalysisStringsEN:
    HEADING_DESC_FREQUENCY_EXTENSIONS_ALL = "Lists the gamut of file extensions alongside how many times they appear in accession/extract in descending order. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest."
    HEADING_DESC_FREQUENCY_MIME = "Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. A MIME Type is an identification used by internet browsers to determine how a browser will represent a file on the internet by displaying, playing or prompting the user to download the object."
    HEADING_DESC_LIST_ZERO_BYTES = "This is a list of files with no payload. Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size." 
-   HEADING_DESC_NO_ID = "List of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e. there is no identification information in the DROID database)"
    HEADING_DESC_ARCHIVE_FORMATS = "Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after."
    HEADING_DESC_IDENTICAL_CONTENT = "This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received." 
    HEADING_DESC_TROUBLESOME_FILENAMES = "Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"    

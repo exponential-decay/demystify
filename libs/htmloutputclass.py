@@ -393,21 +393,6 @@ class DROIDAnalysisHTMLOutput:
             if m[0] == '':
                mimes.remove(m)
          self.__outputtable__(mimes, self.STRINGS.HEADING_FREQUENCY_MIME, self.STRINGS.HEADING_DESC_FREQUENCY_MIME, True, 2, "400")
-      
-      '''
-
-      if self.analysisresults.filesWithNoIDList is not None:
-         if len(self.analysisresults.filesWithNoIDList) > 0:
-            #Zero Identification
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_NO_ID) + str(self.analysisresults.zeroidcount) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_NO_ID))
-            self.__htmlnewline__() 
-            self.printFormattedText("<code>")
-            self.printFormattedText(self.analysisresults.filesWithNoIDList)
-            self.printFormattedText("</code>")
-            self.printFormattedText("<hr/>")
-
-      '''
 
       if self.analysisresults.zerobytelist is not None:
          if len(self.analysisresults.zerobytelist):
