@@ -174,6 +174,8 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__()
 
    def __outputtable__(self, listing, heading, description, count=True, maxcolumns=5, pixels="160"):
+      pixels = str(pixels)
+      newline = True
       self.__outputheading__(heading, description)
       length = len(listing)
       rows = int(length/5) 
@@ -183,7 +185,10 @@ class DROIDAnalysisHTMLOutput:
       colno = 0
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
-         if len(item) == 1:
+         if type(item) is str:
+            string = item + "</br></br>"
+            newline = False
+         elif len(item) == 1:
             string = str(item[0])
          elif count == False:
             if item[1] == '':
@@ -201,7 +206,8 @@ class DROIDAnalysisHTMLOutput:
             self.printFormattedText("<td width='" + pixels + "'><code>" + string + "</code></td>")
             colno = 1   
       self.printFormattedText("</tr></table>")
-      self.__htmlnewline__()
+      if newline == True:
+         self.__htmlnewline__()
       self.printFormattedText("<hr/>")
 
    def generateHTML(self):
@@ -375,20 +381,13 @@ class DROIDAnalysisHTMLOutput:
          #Unique Extensions Identified
          self.__outputtable__(self.analysisresults.uniqueExtensionsInCollectionList, self.STRINGS.HEADING_UNIQUE_EXTENSIONS, self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS, False)
 
-      '''
+      
       if self.analysisresults.multipleIDList is not None:
          if len(self.analysisresults.multipleIDList) > 0:
-            #Files with multiple identifications
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_MULTIPLE) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_MULTIPLE))
-            self.__htmlnewline__()
-            self.printFormattedText("<code>")
-            self.printFormattedText(self.analysisresults.multipleIDList)
-            self.printFormattedText("</code>")
-            self.__htmlnewline__() 
-            self.printFormattedText("<hr/>")
-
-      '''
+            #Files with multiple identifications, signature only
+            self.__outputtable__(self.analysisresults.multipleIDList, self.STRINGS.HEADING_LIST_MULTIPLE, self.STRINGS.HEADING_DESC_LIST_MULTIPLE, False, 1, "800")
+            
+      
          
       '''
       if self.analysisresults.mimetypeFrequency is not None:      
