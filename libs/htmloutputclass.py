@@ -178,6 +178,7 @@ class DROIDAnalysisHTMLOutput:
       
    def __outputtable__(self, listing, heading, description):
       self.__outputheading__(heading, description)
+      self.__htmlnewline__()  
       length = len(listing)
       rows = int(length/5) 
       if length % 5 > 0:
@@ -185,11 +186,18 @@ class DROIDAnalysisHTMLOutput:
       rowno = 0
       colno = 0
       maxcolumns = 5
+      self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
-         rowno = rowno + 1
-         sys.stderr.write(str(item) + \n)
-         if rowno
-   
+         if colno < maxcolumns:
+            self.printFormattedText("<td width='160px'><code>" + str(item[0]) + "(" + str(item[1]) + ")" + "</code></td>")
+            colno = colno + 1
+         else:
+            rowno = rowno + 1
+            self.printFormattedText("</tr><tr>")
+            self.printFormattedText("<td width='160px'><code>" + str(item[0]) + "(" + str(item[1]) + ")" + "</code></td>")
+            colno = 1   
+      self.printFormattedText("</tr></table>")
+
    def generateHTML(self):
       self.printFormattedText("<!DOCTYPE html>")
       self.printFormattedText("<html lang='en'>")
