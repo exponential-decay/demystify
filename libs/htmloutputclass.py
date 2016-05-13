@@ -342,16 +342,12 @@ class DROIDAnalysisHTMLOutput:
       
       #sys.exit(1)
 
-      '''
+      
       if self.analysisresults.idmethodFrequency is not None:
          #ID Method Frequency
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ID_METHOD) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ID_METHOD))
-         self.__htmlnewline__() 
-         for method in self.analysisresults.idmethodFrequency:
-            self.printFormattedText(str(method[0]) + ", " + str(method[1]) + '</br>')
-         self.__htmlnewline__() 
-         self.printFormattedText("<hr/>")
+         self.__outputtable__(self.analysisresults.idmethodFrequency, self.STRINGS.HEADING_ID_METHOD, self.STRINGS.HEADING_DESC_ID_METHOD)
+
+      '''
 
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:
