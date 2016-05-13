@@ -132,9 +132,7 @@ class DROIDAnalysisHTMLOutput:
    def identifierchart(self, countlist, reverse_list=True):     
       countlist.sort(key=lambda tup: tup[1], reverse=reverse_list)            
       #Signature ID PUIDs
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
-      self.__htmlnewline__()
+      self.__outputheading__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED, self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED)
       self.printFormattedText('<table>')
       #http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm <- link to reinstate somewhere
       self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</th>') 
@@ -153,9 +151,7 @@ class DROIDAnalysisHTMLOutput:
 
    def signature_id_listing(self, idlist):
       #Signature identified PUIDs in collection (signature and container)
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTIFIED) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTIFIED))
-      self.__htmlnewline__() 
+      self.__outputheading__(self.STRINGS.HEADING_IDENTIFIED, self.STRINGS.HEADING_DESC_IDENTIFIED)
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')               
       #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
@@ -175,10 +171,10 @@ class DROIDAnalysisHTMLOutput:
    def __outputheading__(self, heading, description):
       self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
       self.printFormattedText(self.__make_summary__(description))
-      
+      self.__htmlnewline__()
+
    def __outputtable__(self, listing, heading, description):
       self.__outputheading__(heading, description)
-      self.__htmlnewline__()  
       length = len(listing)
       rows = int(length/5) 
       if length % 5 > 0:
@@ -197,6 +193,8 @@ class DROIDAnalysisHTMLOutput:
             self.printFormattedText("<td width='160px'><code>" + str(item[0]) + "(" + str(item[1]) + ")" + "</code></td>")
             colno = 1   
       self.printFormattedText("</tr></table>")
+      self.__htmlnewline__()
+      self.printFormattedText("<hr/>")
 
    def generateHTML(self):
       self.printFormattedText("<!DOCTYPE html>")
@@ -277,9 +275,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<hr/>")
 
       #return the size of the collection
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_SIZE) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_SIZE))
-      self.__htmlnewline__() 
+      self.__outputheading__(self.STRINGS.HEADING_SIZE, self.STRINGS.HEADING_DESC_SIZE)
       
       #easier to reference from a var
       size = self.analysisresults.collectionsize
@@ -301,9 +297,7 @@ class DROIDAnalysisHTMLOutput:
             
       if self.analysisresults.dateFrequency is not None:
          #Date Ranges
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_DATE_RANGE) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_DATE_RANGE))
-         self.__htmlnewline__()
+         self.__outputheading__(self.STRINGS.HEADING_DATE_RANGE, self.STRINGS.HEADING_DESC_DATE_RANGE)
          self.printFormattedText('<table>')
          self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_YEAR + '</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
          for dates in self.analysisresults.dateFrequency:
@@ -401,8 +395,7 @@ class DROIDAnalysisHTMLOutput:
 
       
       if self.analysisresults.frequencyOfAllExtensions is not None: 
-         #Extension Frequency
-         
+         #Extension Frequency         
          self.__outputtable__(self.analysisresults.frequencyOfAllExtensions, self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL)
          
 
@@ -434,9 +427,7 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.zerobytelist is not None:
          if len(self.analysisresults.zerobytelist):
             #Zero Byte Objects
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
-            self.__htmlnewline__() 
+            self.__outputheading__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES)
             self.printFormattedText("<code>")
             self.printFormattedText(self.analysisresults.zerobytelist)
             self.printFormattedText("</code>")
@@ -445,50 +436,40 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.containertypeslist is not None:
          if len(self.analysisresults.containertypeslist) > 0:
             #archive file types
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_ARCHIVE_FORMATS) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS))
+            self.__outputheading__(self.STRINGS.HEADING_ARCHIVE_FORMATS, self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS) 
             self.__csv_output__(self.analysisresults.containertypeslist)
 
       if self.analysisresults.hashused is True:
          if self.analysisresults.duplicateHASHlisting is not None:
-            #Duplicate Content      
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_IDENTICAL_CONTENT) + "(" + str(self.analysisresults.totalHASHduplicates) + ")" + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT))
-            self.__htmlnewline__() 
+            #Duplicate Content    
+            self.__outputheading__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT)
             for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
                self.printFormattedText("<b>" + dupes['checksum'] + "</b> Count: " + dupes['count'] + "<br/><br/>")
                self.printFormattedText("<code>")
                for ex in dupes['examples']:
                   self.printFormattedText(ex + "<br/>")
                self.printFormattedText("</code>")
-               self.__htmlnewline__(2) 
+               self.__htmlnewline__() 
             self.printFormattedText("<hr/>")
 
       if self.analysisresults.badFileNames is not None:
          if len(self.analysisresults.badFileNames) > 0:
             #Troublesome Filenames
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES))
-            self.__htmlnewline__() 
+            self.__outputheading__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES, self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES) 
             for fnames in self.analysisresults.badFileNames:
                self.printFormattedText(fnames)
                self.__htmlnewline__(2) 
-            self.__htmlnewline__() 
             self.printFormattedText("<hr/>")
 
       if self.analysisresults.badDirNames is not None:
          if len(self.analysisresults.badDirNames) > 0:
             #Troublesome Filenames
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_TROUBLESOME_DIRNAMES) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES))
-            self.__htmlnewline__() 
+            self.__outputheading__(self.STRINGS.HEADING_TROUBLESOME_DIRNAMES, self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES)
             for fnames in self.analysisresults.badDirNames:
                self.printFormattedText(fnames)
                self.__htmlnewline__(2) 
-            self.__htmlnewline__() 
             self.printFormattedText("<hr/>")
-      
-      
-      self.__htmlnewline__(2) 
+            
+      self.__htmlnewline__() 
       self.printFormattedText("</body>")
       
