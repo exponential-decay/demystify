@@ -173,7 +173,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(description))
       self.__htmlnewline__()
 
-   def __outputtable__(self, listing, heading, description, maxcolumns=5, pixels="160", count=True):
+   def __outputtable__(self, listing, heading, description, count=True, maxcolumns=5, pixels="160"):
       self.__outputheading__(heading, description)
       length = len(listing)
       rows = int(length/5) 
@@ -183,7 +183,9 @@ class DROIDAnalysisHTMLOutput:
       colno = 0
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
-         if count == False:
+         if len(item) == 1:
+            string = str(item[0])
+         elif count == False:
             if item[1] == '':
                string = str(item[0]) + ", " + "Format name not set"
             else:
@@ -354,7 +356,7 @@ class DROIDAnalysisHTMLOutput:
 
       if self.analysisresults.extensionOnlyIDList is not None:
          #Extension Only ID : TODO: Consider usefulness... 
-         self.__outputtable__(self.analysisresults.extensionOnlyIDList, self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY, 2, "400", False)
+         self.__outputtable__(self.analysisresults.extensionOnlyIDList, self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY, False, 2, "400")
 
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:
@@ -363,27 +365,17 @@ class DROIDAnalysisHTMLOutput:
             for item in list(extlist):
                if 'UNKNOWN' in item[0] or 'unknown' in item[0]:
                   extlist.remove(item) 
-            self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, 1, "800")
+            self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 1, "800")
 
       if self.analysisresults.frequencyOfAllExtensions is not None: 
          #Extension Frequency         
          self.__outputtable__(self.analysisresults.frequencyOfAllExtensions, self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL)
 
-
-      '''
-
       if self.analysisresults.uniqueExtensionsInCollectionList is not None:
          #Unique Extensions Identified
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS))
-         self.__htmlnewline__()
-         extstr = ''
-         for ext in self.analysisresults.uniqueExtensionsInCollectionList:
-            extstr = extstr + ext[0] + ", "
-         self.printFormattedText(extstr.strip(", "))
-         self.__htmlnewline__(2) 
-         self.printFormattedText("<hr/>")
+         self.__outputtable__(self.analysisresults.uniqueExtensionsInCollectionList, self.STRINGS.HEADING_UNIQUE_EXTENSIONS, self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS, False)
 
+      '''
       if self.analysisresults.multipleIDList is not None:
          if len(self.analysisresults.multipleIDList) > 0:
             #Files with multiple identifications
