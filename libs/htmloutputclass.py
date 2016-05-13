@@ -171,6 +171,24 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText('</table>')
       self.__htmlnewline__(2)  
       self.printFormattedText("<hr/>")
+
+   def __outputheading__(self, heading, description):
+      self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
+      self.printFormattedText(self.__make_summary__(description))
+      
+   def __outputtable__(self, listing, heading, description):
+      self.__outputheading__(heading, description)
+      length = len(listing)
+      rows = int(length/5) 
+      if length % 5 > 0:
+         rows = rows + 1
+      rowno = 0
+      colno = 0
+      maxcolumns = 5
+      for item in listing:
+         rowno = rowno + 1
+         sys.stderr.write(str(item) + \n)
+         if rowno
    
    def generateHTML(self):
       self.printFormattedText("<!DOCTYPE html>")
@@ -371,28 +389,26 @@ class DROIDAnalysisHTMLOutput:
             self.__htmlnewline__() 
             self.printFormattedText("<hr/>")
 
+      '''
+
+      
       if self.analysisresults.frequencyOfAllExtensions is not None: 
          #Extension Frequency
-         self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL) + "</h2>")
-         self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL))
-         self.__keyvalue_output__(self.analysisresults.frequencyOfAllExtensions)
+         
+         self.__outputtable__(self.analysisresults.frequencyOfAllExtensions, self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL)
+         
 
+      
+      
+      '''
       if self.analysisresults.mimetypeFrequency is not None:      
          #Mimetype Frequency
          self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_MIME) + "</h2>")
          self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_MIME))
          self.__keyvalue_output__(self.analysisresults.mimetypeFrequency)
 
-      if self.analysisresults.zerobytelist is not None:
-         if len(self.analysisresults.zerobytelist):
-            #Zero Byte Objects
-            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
-            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
-            self.__htmlnewline__() 
-            self.printFormattedText("<code>")
-            self.printFormattedText(self.analysisresults.zerobytelist)
-            self.printFormattedText("</code>")
-            self.printFormattedText("<hr/>")
+      '''
+      '''
 
       if self.analysisresults.filesWithNoIDList is not None:
          if len(self.analysisresults.filesWithNoIDList) > 0:
@@ -402,6 +418,19 @@ class DROIDAnalysisHTMLOutput:
             self.__htmlnewline__() 
             self.printFormattedText("<code>")
             self.printFormattedText(self.analysisresults.filesWithNoIDList)
+            self.printFormattedText("</code>")
+            self.printFormattedText("<hr/>")
+
+      '''
+
+      if self.analysisresults.zerobytelist is not None:
+         if len(self.analysisresults.zerobytelist):
+            #Zero Byte Objects
+            self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_LIST_ZERO_BYTES) + str(self.analysisresults.zerobytecount) + "</h2>")
+            self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES))
+            self.__htmlnewline__() 
+            self.printFormattedText("<code>")
+            self.printFormattedText(self.analysisresults.zerobytelist)
             self.printFormattedText("</code>")
             self.printFormattedText("<hr/>")
 
@@ -450,7 +479,7 @@ class DROIDAnalysisHTMLOutput:
                self.__htmlnewline__(2) 
             self.__htmlnewline__() 
             self.printFormattedText("<hr/>")
-      '''
+      
       
       self.__htmlnewline__(2) 
       self.printFormattedText("</body>")
