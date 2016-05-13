@@ -347,24 +347,28 @@ class DROIDAnalysisHTMLOutput:
       #   self.outputidentifiergraphs(self.analysisresults.binaryidentifiers)
       
       #sys.exit(1)
-
       
       if self.analysisresults.idmethodFrequency is not None:
          #ID Method Frequency
          self.__outputtable__(self.analysisresults.idmethodFrequency, self.STRINGS.HEADING_ID_METHOD, self.STRINGS.HEADING_DESC_ID_METHOD)
 
-      
-
       if self.analysisresults.extensionOnlyIDList is not None:
          #Extension Only ID : TODO: Consider usefulness... 
          self.__outputtable__(self.analysisresults.extensionOnlyIDList, self.STRINGS.HEADING_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_EXTENSION_ONLY, 2, "400", False)
 
-      
-   
       if self.analysisresults.extensionOnlyIDList is not None:
          if len(self.analysisresults.extensionOnlyIDList) > 0:
             #Extension Only Identification
-            self.__outputtable__(self.analysisresults.extensionOnlyIDFrequency, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, 1, "800")
+            extlist = self.analysisresults.extensionOnlyIDFrequency
+            for item in list(extlist):
+               if 'UNKNOWN' in item[0] or 'unknown' in item[0]:
+                  extlist.remove(item) 
+            self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, 1, "800")
+
+      if self.analysisresults.frequencyOfAllExtensions is not None: 
+         #Extension Frequency         
+         self.__outputtable__(self.analysisresults.frequencyOfAllExtensions, self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL)
+
 
       '''
 
@@ -393,15 +397,7 @@ class DROIDAnalysisHTMLOutput:
             self.printFormattedText("<hr/>")
 
       '''
-
-      
-      if self.analysisresults.frequencyOfAllExtensions is not None: 
-         #Extension Frequency         
-         self.__outputtable__(self.analysisresults.frequencyOfAllExtensions, self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL)
          
-
-      
-      
       '''
       if self.analysisresults.mimetypeFrequency is not None:      
          #Mimetype Frequency
