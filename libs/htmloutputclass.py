@@ -137,6 +137,15 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2)  
       self.printFormattedText("<hr/>")
 
+   def __handleidspecificoutput__(self):
+      #handle output for other identifiers in the namespace
+      if self.analysisresults.xml_identifiers is not None and len(self.analysisresults.xml_identifiers) > 0:
+         self.__outputtable__(self.analysisresults.xml_identifiers, self.STRINGS.HEADING_XML_ID_COMPLETE, "xxx", True, 1, "800")
+      if self.analysisresults.text_identifiers is not None and len(self.analysisresults.text_identifiers) > 0:
+         self.__outputtable__(self.analysisresults.text_identifiers, self.STRINGS.HEADING_TEXT_ID_COMPLETE, "xxx", True, 1, "800")
+      if self.analysisresults.filename_identifiers is not None and len(self.analysisresults.filename_identifiers) > 0:
+         self.__outputtable__(self.analysisresults.filename_identifiers, self.STRINGS.HEADING_FILENAME_ID_COMPLETE, "xxx", True, 1, "800")
+
    def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
       #e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org', 
       #'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}   
@@ -385,7 +394,11 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
          self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, "xxx")
          self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency)
-      ##########NS SPECIFIC OUTPUT####################      self.__handlenamespacestats__
+      ##########NS SPECIFIC OUTPUT####################
+
+      ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+      self.__handleidspecificoutput__()
+      ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
 
       if self.analysisresults.zerobytelist is not None:
          if len(self.analysisresults.zerobytelist):
