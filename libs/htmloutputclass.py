@@ -173,7 +173,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_summary__(description))
       self.__htmlnewline__()
 
-   def __outputtable__(self, listing, heading, description, count=True, maxcolumns=5, pixels="160"):
+   def __outputtable__(self, listing, heading, description, count=True, maxcolumns=5, pixels="160", nonewline=False):
       pixels = str(pixels)
       newline = True
       self.__outputheading__(heading, description)
@@ -186,8 +186,11 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
          if type(item) is str:
-            string = item + "</br></br>"
-            newline = False
+            if nonewline == False:
+               string = item + "</br></br>"
+               newline = False
+            else:
+               string = item
          elif len(item) == 1:
             string = str(item[0])
          elif count == False:
@@ -397,17 +400,12 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.zerobytelist is not None:
          if len(self.analysisresults.zerobytelist):
             #Zero Byte Objects
-            self.__outputheading__(self.STRINGS.HEADING_LIST_ZERO_BYTES, self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES)
-            self.printFormattedText("<code>")
-            self.printFormattedText(self.analysisresults.zerobytelist)
-            self.printFormattedText("</code>")
-            self.printFormattedText("<hr/>")
+            self.__outputtable__(self.analysisresults.zerobytelist, self.STRINGS.HEADING_LIST_ZERO_BYTES, self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES, False, 1, "800", True)
 
       if self.analysisresults.containertypeslist is not None:
          if len(self.analysisresults.containertypeslist) > 0:
             #archive file types
-            self.__outputheading__(self.STRINGS.HEADING_ARCHIVE_FORMATS, self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS) 
-            self.__csv_output__(self.analysisresults.containertypeslist)
+            self.__outputtable__(self.analysisresults.containertypeslist, self.STRINGS.HEADING_ARCHIVE_FORMATS, self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS, False)
 
       if self.analysisresults.hashused is True:
          if self.analysisresults.duplicateHASHlisting is not None:
