@@ -88,37 +88,6 @@ class DROIDAnalysisHTMLOutput:
       if formatname == '':
          formatname = identifier
       return namespace, identifier, formatname, count
-
-   def outputidentifiergraphs(self, idlist):
-   
-      #if idlist is not None:
-         
-      #for x in idlist:
-      #   print x
-   
-      return ''
-      
-      '''
-      #Signature ID PUIDs
-      self.printFormattedText("<h2>" + self.__make_str__(self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED) + "</h2>")
-      self.printFormattedText(self.__make_summary__(self.STRINGS.HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED))
-      self.__htmlnewline__()
-      self.printFormattedText('<table>')
-      self.printFormattedText('<table><th style="text-align: left;"><a target="_blank" href="http://www.nationalarchives.gov.uk/aboutapps/pronom/puid.htm">PUID</a></th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>') 
-      for sig in self.analysisresults.sigIDPUIDFrequency:
-         self.printFormattedText('<tr><td style="width: 100px;">')
-         self.printFormattedText('<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/' + sig[0] + '">' + sig[0] + '</a>')
-         self.printFormattedText('</td><td>' + str(sig[1]).strip() + '</td>')
- 
-         #Unused Meter Code...
-         self.printFormattedText('<td><meter style="width: 300px;" value="' + str(sig[1]).strip() + '" min="0" max="' + str(self.analysisresults.filecount) + '">test</meter></td>')
-        
-         self.printFormattedText('</tr>')
-        
-      self.printFormattedText('</table>')
-      self.__htmlnewline__() 
-      self.printFormattedText("<hr/>")   
-      '''
    
    def __outputmeter__(self, value, minval, maxval):
       return '<td><meter style="width: 300px;" value="' + str(value).strip() + '" min="' + str(min) + '" max="' + str(maxval) + '">test</meter></td>'
@@ -168,6 +137,40 @@ class DROIDAnalysisHTMLOutput:
       self.__htmlnewline__(2)  
       self.printFormattedText("<hr/>")
 
+   def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
+      #e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org', 
+      #'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}   
+      ds = DroidAnalysisClass.DROIDAnalysis()
+      output = ''
+      for ns in nsdatalist:
+         signatureids = signaturefrequency
+         nstitle = ns[ds.NS_CONST_TITLE]
+         identified = ns[ds.NS_CONST_BINARY_COUNT]
+         text = ns[ds.NS_CONST_TEXT_COUNT]
+         filename = ns[ds.NS_CONST_FILENAME_COUNT]
+         ext = ns[ds.NS_CONST_EXTENSION_COUNT]
+         unidentified = self.analysisresults.filecount - identified
+         percent_not = ds.calculatePercent(self.analysisresults.filecount, unidentified)
+         percent_ok = ds.calculatePercent(self.analysisresults.filecount, identified)
+
+         self.printFormattedText(self.__make_list_item__("alt text one", "<b>" + self.STRINGS.HEADING_NAMESPACE + "</b>", "<i>" + nstitle + " (" + ns[ds.NS_CONST_DETAILS] + ")" + "</i>"))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_IDENTIFIED_FILES, str(identified)))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_MULTIPLE, str(ns[ds.NS_CONST_MULTIPLE_IDS])))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_UNIDENTIFIED, str(unidentified)))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_EXTENSION_ID, str(ext)))
+         #XML NEEDED HERE#         
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_TEXT_ID, str(text)))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_FILENAME_ID, str(filename)))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, str(percent_ok)))
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, str(percent_not)))
+         self.__htmlnewline__()
+
+         nslist = []         
+         for idrow in signatureids:
+            if idrow[0] == nstitle:
+               nslist.append(idrow[1:])
+         self.__outputtable__(nslist, None, None, True, 2, "400")
+
    def __outputheading__(self, heading, description):
       self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
       self.printFormattedText(self.__make_summary__(description))
@@ -176,7 +179,8 @@ class DROIDAnalysisHTMLOutput:
    def __outputtable__(self, listing, heading, description, count=True, maxcolumns=5, pixels="160", nonewline=False):
       pixels = str(pixels)
       newline = True
-      self.__outputheading__(heading, description)
+      if heading != None and description != None:
+         self.__outputheading__(heading, description)
       length = len(listing)
       rows = int(length/5) 
       if length % 5 > 0:
@@ -338,27 +342,7 @@ class DROIDAnalysisHTMLOutput:
       #Output charts first... most visual, immediate summary, next stats      
       if len(signature_id_list) > 0:
          self.signature_id_listing(signature_id_list)
-
-      '''
-      if self.analysisresults.binaryidentifiers is not None:
-         self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))
-      if self.analysisresults.xmlidentifiers is not None:
-         self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.xmlidentifiers))
-      if self.analysisresults.textidentifiers is not None:
-         self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.textidentifiers))
-      if self.analysisresults.filenameidentifiers is not None:
-         self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.filenameidentifiers))
-      '''
-      
-      #if self.analysisresults.binaryidentifiers is not None:
-      #   self.outputidentifiergraphs(self.analysisresults.binaryidentifiers)
-      
-      #sys.exit(1)
-      
+     
       if self.analysisresults.idmethodFrequency is not None:
          #ID Method Frequency
          self.__outputtable__(self.analysisresults.idmethodFrequency, self.STRINGS.HEADING_ID_METHOD, self.STRINGS.HEADING_DESC_ID_METHOD)
@@ -396,6 +380,12 @@ class DROIDAnalysisHTMLOutput:
             if m[0] == '':
                mimes.remove(m)
          self.__outputtable__(mimes, self.STRINGS.HEADING_FREQUENCY_MIME, self.STRINGS.HEADING_DESC_FREQUENCY_MIME, True, 2, "400")
+
+      ##########NS SPECIFIC OUTPUT####################
+      if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
+         self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, "xxx")
+         self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency)
+      ##########NS SPECIFIC OUTPUT####################      self.__handlenamespacestats__
 
       if self.analysisresults.zerobytelist is not None:
          if len(self.analysisresults.zerobytelist):
