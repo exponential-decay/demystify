@@ -86,6 +86,7 @@ class DROIDAnalysisTextOutput:
          signatureids = signaturefrequency
          nstitle = ns[ds.NS_CONST_TITLE]
          identified = ns[ds.NS_CONST_BINARY_COUNT]
+         xmlid = ns[ds.NS_CONST_XML_COUNT]
          text = ns[ds.NS_CONST_TEXT_COUNT]
          filename = ns[ds.NS_CONST_FILENAME_COUNT]
          ext = ns[ds.NS_CONST_EXTENSION_COUNT]
@@ -97,6 +98,7 @@ class DROIDAnalysisTextOutput:
          output = output + self.STRINGS.SUMMARY_MULTIPLE + ": " + str(ns[ds.NS_CONST_MULTIPLE_IDS]) + "\n"
          output = output + self.STRINGS.SUMMARY_UNIDENTIFIED + ": " + str(unidentified) + "\n"
          output = output + self.STRINGS.SUMMARY_EXTENSION_ID + ": " + str(ext) + "\n"
+         output = output + self.STRINGS.SUMMARY_XML_ID + ": " + str(xmlid) + "\n"
          output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
          output = output + self.STRINGS.SUMMARY_FILENAME_ID + ": " + str(filename) + "\n"
          output = output + self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED + ": " + str(percent_ok) + "\n"

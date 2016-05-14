@@ -155,6 +155,7 @@ class DROIDAnalysisHTMLOutput:
          signatureids = signaturefrequency
          nstitle = ns[ds.NS_CONST_TITLE]
          identified = ns[ds.NS_CONST_BINARY_COUNT]
+         xmlid = ns[ds.NS_CONST_XML_COUNT]
          text = ns[ds.NS_CONST_TEXT_COUNT]
          filename = ns[ds.NS_CONST_FILENAME_COUNT]
          ext = ns[ds.NS_CONST_EXTENSION_COUNT]
@@ -167,7 +168,7 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_MULTIPLE, str(ns[ds.NS_CONST_MULTIPLE_IDS])))
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_UNIDENTIFIED, str(unidentified)))
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_EXTENSION_ID, str(ext)))
-         #XML NEEDED HERE#         
+         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_XML_ID, str(xmlid)))         
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_TEXT_ID, str(text)))
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_FILENAME_ID, str(filename)))
          self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, str(percent_ok)))

@@ -26,6 +26,7 @@ class DROIDAnalysis:
    #somenamespaceconsts
    NS_CONST_TITLE = 'namespace title'
    NS_CONST_DETAILS = 'namespace details'
+   NS_CONST_XML_COUNT = 'xml method count'
    NS_CONST_TEXT_COUNT = 'text method count'
    NS_CONST_FILENAME_COUNT = 'filename method count'
    NS_CONST_EXTENSION_COUNT = 'extension method count'
@@ -611,6 +612,7 @@ class DROIDAnalysis:
             nsdict[self.NS_CONST_TITLE] = ns[1]
             nsdict[self.NS_CONST_DETAILS] = ns[2]
             nsdict[self.NS_CONST_BINARY_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid), True, True)
+            nsdict[self.NS_CONST_XML_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'XML'), True, True)
             nsdict[self.NS_CONST_TEXT_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Text'), True, True)
             nsdict[self.NS_CONST_FILENAME_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Filename'), True, True)
             nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(self.query.get_ns_methods(nsid, False, 'Extension'), True, True)
