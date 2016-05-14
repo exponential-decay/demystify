@@ -186,8 +186,6 @@ class DROIDAnalysisTextOutput:
          for ids in self.analysisresults.signatureidentifiers:
             self.printFormattedText(ids[0].rstrip(", "))
 
-      #sys.exit(1)
-
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
          self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))

@@ -180,6 +180,16 @@ class DROIDAnalysisHTMLOutput:
                nslist.append(idrow[1:])
          self.__outputtable__(nslist, None, None, True, 2, "400")
 
+   def outputaggregatelists(self):
+      if self.analysisresults.binaryidentifiers is not None:
+         self.__outputtable__(self.analysisresults.binaryidentifiers, self.STRINGS.HEADING_BINARY_ID, "xxx", True, 1, "800", False) 
+      if self.analysisresults.xmlidentifiers is not None:
+         self.__outputtable__(self.analysisresults.xmlidentifiers, self.STRINGS.HEADING_XML_ID, "xxx", True, 1, "800", False) 
+      if self.analysisresults.textidentifiers is not None:
+         self.__outputtable__(self.analysisresults.textidentifiers, self.STRINGS.HEADING_TEXT_ID, "xxx", True, 1, "800", False) 
+      if self.analysisresults.filenameidentifiers is not None:
+         self.__outputtable__(self.analysisresults.filenameidentifiers, self.STRINGS.HEADING_FILENAME_ID, "xxx", True, 1, "800", False) 
+
    def __outputheading__(self, heading, description):
       self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
       self.printFormattedText(self.__make_summary__(description))
@@ -351,7 +361,11 @@ class DROIDAnalysisHTMLOutput:
       #Output charts first... most visual, immediate summary, next stats      
       if len(signature_id_list) > 0:
          self.signature_id_listing(signature_id_list)
-     
+
+      ###MORE AGGREGATE LISTS PER IDENTIFIER###
+      self.outputaggregatelists()
+      ###MORE AGGREGATE LISTS PER IDENTIFIER###
+
       if self.analysisresults.idmethodFrequency is not None:
          #ID Method Frequency
          self.__outputtable__(self.analysisresults.idmethodFrequency, self.STRINGS.HEADING_ID_METHOD, self.STRINGS.HEADING_DESC_ID_METHOD)
