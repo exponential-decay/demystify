@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import division
 import argparse
 import sys
@@ -35,6 +34,7 @@ class DROIDAnalysis:
 
    #variables we need internally:
    extensionIDonly = None
+   binaryIDs = None
    noids = None
    xmlIDs = None
    textIDs = None
@@ -528,7 +528,9 @@ class DROIDAnalysis:
 
       self.analysisresults.distinctextensioncount = self.__querydb__(AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True)
 
-      self.analysisresults.mimetypeFrequency = self.__querydb__(AnalysisQueries.SELECT_MIME_RANGE)
+      #todo: consider merit of each identification bin 
+      mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
+      self.analysisresults.mimetypeFrequency = self.__querydb__(self.query.getmimes(mimeids))
       
       #NOTE: Must be calculated after we have total, and subset values
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)

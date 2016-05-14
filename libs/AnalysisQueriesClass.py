@@ -118,11 +118,22 @@
                                        GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""	
 
    #select the gamut of MIMEs in the accession/extract, not counts
-   SELECT_MIME_RANGE = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total 
-                                       FROM IDRESULTS 
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                       WHERE (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none')
-                                       GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
+   def getmimes(self, idids):
+      mimes = []
+      for ids in idids:
+         mimes.append(ids[1])
+
+      query1 = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total 
+                  FROM IDRESULTS 
+                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                  WHERE IDRESULTS.ID_ID IN """
+
+      query2 = """AND (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none' and IDDATA.MIME_TYPE!='')
+                  GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
+
+      listing = "(" + ', '.join(mimes) + ")"
+      query = query1 + listing + query2
+      return query
 
    SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
                                     FROM IDRESULTS
