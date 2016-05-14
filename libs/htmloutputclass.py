@@ -440,6 +440,9 @@ class DROIDAnalysisHTMLOutput:
                self.printFormattedText(fnames)
                self.__htmlnewline__(2) 
             self.printFormattedText("<hr/>")
+
+      if self.analysisresults.errorlist is not None:
+         self.__outputtable__(self.analysisresults.errorlist, self.STRINGS.HEADING_ERRORS, "xxx", True, 1, "800")
             
       self.__htmlnewline__() 
       self.printFormattedText("</body>")
