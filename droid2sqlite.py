@@ -7,6 +7,7 @@ from libs.IdentifyExportClass import IdentifyExport
 from libs.GenerateBaselineDBClass import GenerateBaselineDB
 from libs.DROIDLoaderClass import DROIDLoader
 from libs.SFLoaderClass import SFLoader
+from libs.FidoLoaderClass import FidoLoader
 
 def identifyinput(export):
    id = IdentifyExport()
@@ -17,6 +18,8 @@ def identifyinput(export):
       return handleDROIDCSV(export, True)
    elif type == id.SFTYPE:
       return handleSFYAML(export)
+   elif type == id.FIDOTYPE:
+      return handleFIDOCSV(export)
    elif type == id.UNKTYPE:
       sys.stderr.write("Unknown export type." + "\n")	
       return None
@@ -36,6 +39,17 @@ def handleSFYAML(sfexport):
    loader.sfDBSetup(sfexport, basedb.getcursor())
    basedb.closedb()
    return basedb.dbname
+
+def handleFIDOCSV(fidoexport):
+   #global basedb
+   #basedb = GenerateBaselineDB(fidoexport)
+   basedb = None   
+   loader = FidoLoader(basedb)
+   loader.fidoDBSetup(fidoexport, None)
+   #loader.fidoDBSetup(fidoexport, basedb.getcursor())
+   #basedb.closedb()
+   #return basedb.dbname
+   
 
 def main():
 

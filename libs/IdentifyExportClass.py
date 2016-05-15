@@ -1,4 +1,5 @@
 import sys
+import re
 
 class IdentifyExport:
 
@@ -10,6 +11,7 @@ class IdentifyExport:
    DROIDSHA256TYPE = "droid_md5"
    DROIDNOHASH  = "droid_nohash"
    DROIDTYPEBOM = 'droid_BOM'
+   FIDOTYPE = 'fido'
    UNKTYPE = "unknown"
 
    SFTYPE = "siegfried"
@@ -34,6 +36,8 @@ class IdentifyExport:
             '"HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME",' +
             '"FORMAT_VERSION"')
 
+   fido_re = "^(OK|KO),[0-9]+,(fmt|x-fmt)\/[0-9]{1,4},"
+   
    sf_orig = ('---' + '\x0A' + 'siegfried   :')
 
    #UTF8 with BOM
@@ -55,12 +59,15 @@ class IdentifyExport:
          or droid_magic.strip() == self.droid_sha256 \
          or droid_magic.strip() == self.droid_nohash:
          return self.DROIDTYPE
-      if droid_magic.strip() == self.droid_utf8_md5 \
+      elif droid_magic.strip() == self.droid_utf8_md5 \
          or droid_magic.strip() == self.droid_utf8_sha1 \
          or droid_magic.strip() == self.droid_utf8_sha256 \
          or droid_magic.strip() == self.droid_utf8_nohash:
          return self.DROIDTYPEBOM
-      if self.sf_orig in sf_magic.strip():
+      elif self.sf_orig in sf_magic.strip():
          return self.SFTYPE
+      elif re.search(re.compile(self.fido_re), droid_magic) is not None:
+         return self.FIDOTYPE
       else:
          return self.UNKTYPE
+
