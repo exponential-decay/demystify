@@ -140,11 +140,11 @@ class DROIDAnalysisHTMLOutput:
    def __handleidspecificoutput__(self):
       #handle output for other identifiers in the namespace
       if self.analysisresults.xml_identifiers is not None and len(self.analysisresults.xml_identifiers) > 0:
-         self.__outputtable__(self.analysisresults.xml_identifiers, self.STRINGS.HEADING_XML_ID_COMPLETE, "xxx", True, 1, "800")
+         self.__outputtable__(self.analysisresults.xml_identifiers, self.STRINGS.HEADING_XML_ID_COMPLETE, self.STRINGS.HEADING_DESC_XML_ID_COMPLETE, True, 1, "800")
       if self.analysisresults.text_identifiers is not None and len(self.analysisresults.text_identifiers) > 0:
-         self.__outputtable__(self.analysisresults.text_identifiers, self.STRINGS.HEADING_TEXT_ID_COMPLETE, "xxx", True, 1, "800")
+         self.__outputtable__(self.analysisresults.text_identifiers, self.STRINGS.HEADING_TEXT_ID_COMPLETE, self.STRINGS.HEADING_DESC_TEXT_ID_COMPLETE, True, 1, "800")
       if self.analysisresults.filename_identifiers is not None and len(self.analysisresults.filename_identifiers) > 0:
-         self.__outputtable__(self.analysisresults.filename_identifiers, self.STRINGS.HEADING_FILENAME_ID_COMPLETE, "xxx", True, 1, "800")
+         self.__outputtable__(self.analysisresults.filename_identifiers, self.STRINGS.HEADING_FILENAME_ID_COMPLETE, self.STRINGS.HEADING_DESC_FILENAME_ID_COMPLETE, True, 1, "800")
 
    def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
       #e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org', 
@@ -163,16 +163,19 @@ class DROIDAnalysisHTMLOutput:
          percent_not = ds.calculatePercent(self.analysisresults.filecount, unidentified)
          percent_ok = ds.calculatePercent(self.analysisresults.filecount, identified)
 
-         self.printFormattedText(self.__make_list_item__("alt text one", "<b>" + self.STRINGS.HEADING_NAMESPACE + "</b>", "<i>" + nstitle + " (" + ns[ds.NS_CONST_DETAILS] + ")" + "</i>"))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_IDENTIFIED_FILES, str(identified)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_MULTIPLE, str(ns[ds.NS_CONST_MULTIPLE_IDS])))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_UNIDENTIFIED, str(unidentified)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_EXTENSION_ID, str(ext)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_XML_ID, str(xmlid)))         
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_TEXT_ID, str(text)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_FILENAME_ID, str(filename)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, str(percent_ok)))
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, str(percent_not)))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.HEADING_DESC_NAMESPACE, "<b>" + self.STRINGS.HEADING_NAMESPACE + "</b>", "<i>" + nstitle + " (" + ns[ds.NS_CONST_DETAILS] + ")" + "</i>"))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_IDENTIFIED_FILES, self.STRINGS.SUMMARY_IDENTIFIED_FILES, str(identified)))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_MULTIPLE, self.STRINGS.SUMMARY_MULTIPLE, str(ns[ds.NS_CONST_MULTIPLE_IDS])))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIDENTIFIED, self.STRINGS.SUMMARY_UNIDENTIFIED, str(unidentified)))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_ID, self.STRINGS.SUMMARY_EXTENSION_ID, str(ext)))
+
+         if self.analysisresults.tooltype != 'droid':
+            self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_XML_ID, self.STRINGS.SUMMARY_XML_ID, str(xmlid)))         
+            self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_TEXT_ID, self.STRINGS.SUMMARY_TEXT_ID, str(text)))
+            self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_FILENAME_ID, self.STRINGS.SUMMARY_FILENAME_ID, str(filename)))
+
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, str(percent_ok)))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, str(percent_not)))
          self.__htmlnewline__()
 
          nslist = []         
@@ -183,13 +186,13 @@ class DROIDAnalysisHTMLOutput:
 
    def outputaggregatelists(self):
       if self.analysisresults.binaryidentifiers is not None:
-         self.__outputtable__(self.analysisresults.binaryidentifiers, self.STRINGS.HEADING_BINARY_ID, "xxx", True, 1, "800", False) 
+         self.__outputtable__(self.analysisresults.binaryidentifiers, self.STRINGS.HEADING_BINARY_ID, self.STRINGS.HEADING_DESC_BINARY_ID, True, 1, "800", False) 
       if self.analysisresults.xmlidentifiers is not None:
-         self.__outputtable__(self.analysisresults.xmlidentifiers, self.STRINGS.HEADING_XML_ID, "xxx", True, 1, "800", False) 
+         self.__outputtable__(self.analysisresults.xmlidentifiers, self.STRINGS.HEADING_XML_ID, self.STRINGS.HEADING_DESC_XML_ID, True, 1, "800", False) 
       if self.analysisresults.textidentifiers is not None:
-         self.__outputtable__(self.analysisresults.textidentifiers, self.STRINGS.HEADING_TEXT_ID, "xxx", True, 1, "800", False) 
+         self.__outputtable__(self.analysisresults.textidentifiers, self.STRINGS.HEADING_TEXT_ID, self.STRINGS.HEADING_DESC_TEXT_ID, True, 1, "800", False) 
       if self.analysisresults.filenameidentifiers is not None:
-         self.__outputtable__(self.analysisresults.filenameidentifiers, self.STRINGS.HEADING_FILENAME_ID, "xxx", True, 1, "800", False) 
+         self.__outputtable__(self.analysisresults.filenameidentifiers, self.STRINGS.HEADING_FILENAME_ID, self.STRINGS.HEADING_DESC_FILENAME_ID, True, 1, "800", False) 
 
    def __outputheading__(self, heading, description):
       self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
@@ -284,19 +287,19 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIDENTIFIED, self.STRINGS.SUMMARY_UNIDENTIFIED, self.analysisresults.unidentifiedfilecount))
 
       if self.analysisresults.tooltype != 'droid':
-         self.printFormattedText(self.__make_list_item__("alt text one", self.STRINGS.SUMMARY_XML_ID, self.analysisresults.xmlidfilecount))
-         self.printFormattedText(self.__make_list_item__("alt text two", self.STRINGS.SUMMARY_TEXT_ID, self.analysisresults.textidfilecount))
-         self.printFormattedText(self.__make_list_item__("alt text three", self.STRINGS.SUMMARY_FILENAME_ID, self.analysisresults.filenameidfilecount))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_XML_ID, self.STRINGS.SUMMARY_XML_ID, self.analysisresults.xmlidfilecount))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_TEXT_ID, self.STRINGS.SUMMARY_TEXT_ID, self.analysisresults.textidfilecount))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_FILENAME_ID, self.STRINGS.SUMMARY_FILENAME_ID, self.analysisresults.filenameidfilecount))
 
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_ID, self.STRINGS.SUMMARY_EXTENSION_ID, self.analysisresults.extensionIDOnlyCount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_EXTENSION_MISMATCH, self.STRINGS.SUMMARY_EXTENSION_MISMATCH, self.analysisresults.extmismatchCount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ID_PUID_COUNT, self.STRINGS.SUMMARY_ID_PUID_COUNT, self.analysisresults.distinctSignaturePuidcount))
 
       if self.analysisresults.tooltype != 'droid':
-         self.printFormattedText(self.__make_list_item__("alt text four", self.STRINGS.SUMMARY_OTHER_ID_COUNT, self.analysisresults.distinctOtherIdentifiers))
-         self.printFormattedText(self.__make_list_item__("alt text five", self.STRINGS.SUMMARY_XML_ID_COUNT, self.analysisresults.distinctXMLIdentifiers))
-         self.printFormattedText(self.__make_list_item__("alt text six", self.STRINGS.SUMMARY_TEXT_ID_COUNT, self.analysisresults.distinctTextIdentifiers))
-         self.printFormattedText(self.__make_list_item__("alt text seven", self.STRINGS.SUMMARY_FILENAME_ID_COUNT, self.analysisresults.distinctFilenameIdentifiers))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_OTHER_ID_COUNT, self.STRINGS.SUMMARY_OTHER_ID_COUNT, self.analysisresults.distinctOtherIdentifiers))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_XML_ID_COUNT, self.STRINGS.SUMMARY_XML_ID_COUNT, self.analysisresults.distinctXMLIdentifiers))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_TEXT_ID_COUNT, self.STRINGS.SUMMARY_TEXT_ID_COUNT, self.analysisresults.distinctTextIdentifiers))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_FILENAME_ID_COUNT, self.STRINGS.SUMMARY_FILENAME_ID_COUNT, self.analysisresults.distinctFilenameIdentifiers))
 
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_UNIQUE_EXTENSIONS, self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS, self.analysisresults.distinctextensioncount))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_ZERO_BYTE, self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount))
@@ -309,7 +312,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
       if self.analysisresults.identificationgaps is not None:
-         self.printFormattedText(self.__make_list_item__("alt text eight", self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
+         self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_GAPS_COVERED, self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
 
       self.printFormattedText("</ul>")
       self.__htmlnewline__() 
@@ -407,7 +410,7 @@ class DROIDAnalysisHTMLOutput:
 
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
-         self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, "xxx")
+         self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, self.STRINGS.HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS)
          self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency)
       ##########NS SPECIFIC OUTPUT####################
 
@@ -457,7 +460,7 @@ class DROIDAnalysisHTMLOutput:
             self.printFormattedText("<hr/>")
 
       if self.analysisresults.errorlist is not None:
-         self.__outputtable__(self.analysisresults.errorlist, self.STRINGS.HEADING_ERRORS, "xxx", True, 1, "800")
+         self.__outputtable__(self.analysisresults.errorlist, self.STRINGS.HEADING_ERRORS, self.STRINGS.HEADING_DESC_ERRORS, True, 1, "800")
             
       self.__htmlnewline__() 
       self.printFormattedText("</body>")

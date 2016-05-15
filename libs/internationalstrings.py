@@ -32,26 +32,52 @@ class AnalysisStringsEN:
 
    #NEW SIEGFRIED STRINGS
    SUMMARY_XML_ID = "Total XML ID Only Count"
+   SUMMARY_DESC_XML_ID = "xxx"   
+
    SUMMARY_TEXT_ID = "Total Text ID Only Count"
+   SUMMARY_DESC_TEXT_ID = "xxx"
+
    SUMMARY_FILENAME_ID = "Total Filename ID Only Count"
+   SUMMARY_DESC_FILENAME_ID = "xxx"
+
    SUMMARY_OTHER_ID_COUNT = "Total Other Discrete (Non-PUID) File Format Signature Identifiers in the Accession/Extract"
+   SUMMARY_DESC_OTHER_ID_COUNT = "xxx"
+
    SUMMARY_XML_ID_COUNT = "Total XML Based Identification Identifiers in the Accession/Extract"
+   SUMMARY_DESC_XML_ID_COUNT = "xxx"
+
    SUMMARY_TEXT_ID_COUNT = "Total Text Based Identification Identifiers in the Accession/Extract"
+   SUMMARY_DESC_TEXT_ID_COUNT = "xxx"
+
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
+   SUMMARY_DESC_FILENAME_ID_COUNT = "xxx"
+
    SUMMARY_DISTANCE_BOF = "Max Distance Scanned from Beginning of File"
    SUMMARY_DISTANCE_EOF = "Max Distance Scanned from End of File"
    SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Based on Signature)"
+   SUMMARY_DESC_GAPS_COVERED = "xxx"
+
    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
+   HEADING_DESC_BINARY_ID = "xxx"
+
    HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in Accession/Extract"
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
    HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"
+
    HEADING_NAMESPACE_SPECIFIC_STATISTICS = "Results Per Identifier Namespace"
+   HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS = "xxx"
+
    HEADING_NAMESPACE = "Namespace"
+   HEADING_DESC_NAMESPACE = 'xxx'
+
    HEADING_ERRORS = "File Processing Errors Encountered During Scan"
+   HEADING_DESC_ERRORS = "xxx"
+
    HEADING_XML_ID_COMPLETE = "Identifiers in Complete XML Namespace"
    HEADING_TEXT_ID_COMPLETE = "Identifiers in Complete Text Namespace"
    HEADING_FILENAME_ID_COMPLETE = "Identifiers in Complete Filename Namespace"
+   HEADING_DESC_FILENAME_ID_COMPLETE = "xxx"
 
    #BELOW ITEMS MAY BE OBSOLETE...
    HEADING_NO_ID = "Files With No Identification"   

@@ -98,9 +98,12 @@ class DROIDAnalysisTextOutput:
          output = output + self.STRINGS.SUMMARY_MULTIPLE + ": " + str(ns[ds.NS_CONST_MULTIPLE_IDS]) + "\n"
          output = output + self.STRINGS.SUMMARY_UNIDENTIFIED + ": " + str(unidentified) + "\n"
          output = output + self.STRINGS.SUMMARY_EXTENSION_ID + ": " + str(ext) + "\n"
-         output = output + self.STRINGS.SUMMARY_XML_ID + ": " + str(xmlid) + "\n"
-         output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
-         output = output + self.STRINGS.SUMMARY_FILENAME_ID + ": " + str(filename) + "\n"
+
+         if self.analysisresults.tooltype != 'droid':
+            output = output + self.STRINGS.SUMMARY_XML_ID + ": " + str(xmlid) + "\n"
+            output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
+            output = output + self.STRINGS.SUMMARY_FILENAME_ID + ": " + str(filename) + "\n"
+
          output = output + self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED + ": " + str(percent_ok) + "\n"
          output = output + self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED + ": " + str(percent_not) + "\n"
          output = output + "\n"
