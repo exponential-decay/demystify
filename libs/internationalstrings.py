@@ -81,7 +81,10 @@ class AnalysisStringsEN:
 
    #BELOW ITEMS MAY BE OBSOLETE...
    HEADING_NO_ID = "Files With No Identification"   
-   HEADING_DESC_NO_ID = "List of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e. there is no identification information in the DROID database)"
+   HEADING_DESC_NO_ID = ("List of files identified only by the file extension alone (e.g. there are no "
+                         "verifiable file format signatures in the file, only the file extension is provided). "
+                         "This number may represent files not identified at all (i.e. there is no identification "
+                         "information in the DROID database)")
    #NEW SIEGFRIED STRINGS
       
    #This statistic may be obsoleted...
@@ -105,39 +108,147 @@ class AnalysisStringsEN:
    HEADING_TROUBLESOME_DIRNAMES = "Identifying Non-ASCII and System Directory Names" 
 
    SUMMARY_DESC_TOTAL_FILES = "Number of digital files in the accession/extract." 
-   SUMMARY_DESC_ARCHIVE_FILES = "The total number of archive files in the accession/extract overall. Archive files are objects that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after." 
-   SUMMARY_DESC_INSIDE_ARCHIVES = "An aggregate total number of all files inside archive files." 
-   SUMMARY_DESC_DIRECTORIES = "A directory is a folder in the accession/extract delineating a file system hierarchy. Total directories is the total number of directories in the accession/extract overall." 
-   SUMMARY_DESC_UNIQUE_DIRNAMES = "This is used to determine the number of duplicate directory (folder) names." 
-   SUMMARY_DESC_IDENTIFIED_FILES = "The number of files that are identified based on a file format signature. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form."
-   SUMMARY_DESC_MULTIPLE = "This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats."
-   SUMMARY_DESC_UNIDENTIFIED = "This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database)." 
-   SUMMARY_DESC_EXTENSION_ID = "Files that can only be identified by their extension (e.g. \".doc\" might be a Microsoft Word file, \".mp3\" might be an audio file) This is a sub-set of the \"Total unidentified files\"."
-   SUMMARY_DESC_EXTENSION_MISMATCH = "This is the total number of cases where the extension used does not match with the file signature." 
-   SUMMARY_DESC_ID_PUID_COUNT = "The total discrete file format signature identifiers in the accession/extract are used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom."
-   SUMMARY_DESC_UNIQUE_EXTENSIONS = "The total number of unique file extensions identified in the accession/extract. The total unique extensions across the accession/extract are another statistic we can use to identify the diversity/complexity of the accession/extract."
-   SUMMARY_DESC_ZERO_BYTE = "Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size." 
-   SUMMARY_DESC_IDENTICAL_FILES = "Total number of files across the accession/extract that are identical byte-for-byte."
-   SUMMARY_DESC_MULTIPLE_SPACES = "Number of filenames that contain more than one space in a row, these filenames may cause some problems with some systems and may require pre-conditioning."
-   SUMMARY_DESC_PERCENTAGE_IDENTIFIED = "Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly."
-   SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED = "Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract."
    
-   HEADING_DESC_SIZE = "The size of the accession/extract is represented using two values, bytes (a byte equals eight binary bits) from the DROID export and conversion from bytes into megabytes for understanding the size of larger accessions/extracts. We will use this statistic to understand how much storage is required for this accession/extract when ingested."
-   HEADING_DESC_IDENTIFIED = "A list of PUID values and format names to provide a clear picture of diversity/complexity of the accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom." 
-   HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED = "Visualization is used to provide a clear description of the distribution of file formats across the accession/extract. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom. Count and visualization of how many times each format is represented in the accession/extract, in a descending list from most frequent to least."
-   HEADING_DESC_DATE_RANGE = "Count and visualization giving a clear illustration of the distribution of file modification dates across the accession/extract. The list is in descending order based on the number of files last modified on any given year. Too small or too recent a date range may indicate file transfer errors depending on the source of files."
-   HEADING_DESC_EXTENSION_ONLY = "A list of the PUID and format name of each format of one or more files where DROID has tried to offer suggestions as to potential file format by utilizing the file extension where a file has not been matched by file format signature."
-   HEADING_DESC_ID_METHOD = "Lists in descending order the types of identification DROID used for each file, indicating the reliability of each identification, with Container/Signature being the more concrete forms of identification and extension being a less certain way to identify a format. The file format signature is a string in binary (or hexadecimal (HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able to match specific elements of a file format's structure." 
-   HEADING_DESC_FREQUENCY_EXTENSION_ONLY = "A count of the files associated with possible PUIDs where DROID has tried to offer suggestions as to potential file format by utilizing the file extension where a file format signature has not matched a file." 
-   HEADING_DESC_UNIQUE_EXTENSIONS = "Lists all the file extensions found in all the files in the accession/extract. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest."
-   HEADING_DESC_LIST_MULTIPLE = "List of files with an uncertain file format identification. These files will almost certainly need to be investigated independently to understand their preservation risks. Where possible file format signatures will be created to ensure that the same types of object are identified in future."
-   HEADING_DESC_FREQUENCY_EXTENSIONS_ALL = "Lists the gamut of file extensions alongside how many times they appear in accession/extract in descending order. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest."
-   HEADING_DESC_FREQUENCY_MIME = "Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. A MIME Type is an identification used by internet browsers to determine how a browser will represent a file on the internet by displaying, playing or prompting the user to download the object."
-   HEADING_DESC_LIST_ZERO_BYTES = "This is a list of files with no payload. Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size." 
-   HEADING_DESC_ARCHIVE_FORMATS = "Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after."
-   HEADING_DESC_IDENTICAL_CONTENT = "This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received." 
-   HEADING_DESC_TROUBLESOME_FILENAMES = "Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"    
-   HEADING_DESC_TROUBLESOME_DIRNAMES = "Lists drectory names that may cause issues across different systems and applications. These could be directory names that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Directory names identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"    
+   SUMMARY_DESC_ARCHIVE_FILES = ("The total number of archive files in the accession/extract overall. Archive "
+                                 "files are objects that wrap together one or more files such as Zip files, GZIP files, "
+                                 "and TAR files. Knowing an accession/extract contains these objects is important as a "
+                                 "single archive file may contain many hundreds of other files that also need to be preserved "
+                                 "and looked after.")
+                                 
+   SUMMARY_DESC_INSIDE_ARCHIVES = "An aggregate total number of all files inside archive files." 
+   
+   SUMMARY_DESC_DIRECTORIES = ("A directory is a folder in the accession/extract delineating a file system hierarchy. "
+                               "Total directories is the total number of directories in the accession/extract overall.")
+   
+   SUMMARY_DESC_UNIQUE_DIRNAMES = "This is used to determine the number of duplicate directory (folder) names." 
+   
+   SUMMARY_DESC_IDENTIFIED_FILES = ("The number of files that are identified based on a file format signature. "
+                                    "The file format signature is a string in binary (or hexadecimal (HEX)) that "
+                                    "uniquely identifies a file format. Note: A signature is a more mature form of "
+                                    "a magic number that can be read across the file. A basic magic number is a unique "
+                                    "section at the beginning of a file that can be seen when the file is looked at "
+                                    "with an x-ray machine (the innards of a file is examined). This number could be "
+                                    "in binary (that is numerical) or ASCII (readable text) form.")
+   
+   SUMMARY_DESC_MULTIPLE = ("This is the total number of files with uncertain file format identification. "
+                            "DROID will help to identify the number of potential formats.")
+   
+   SUMMARY_DESC_UNIDENTIFIED = ("This is the number of files identified only by the file extension alone "
+                                "(e.g. there are no verifiable file format signatures in the file, only the file "
+                                "extension is provided). This number may represent files not identified at all "
+                                "(i.e.. there is no identification information in the DROID database).")
+   
+   SUMMARY_DESC_EXTENSION_ID = ("Files that can only be identified by their extension (e.g. \".doc\" might be a Microsoft Word "
+                                "file, \".mp3\" might be an audio file) This is a sub-set of the \"Total unidentified files\".")
+   
+   SUMMARY_DESC_EXTENSION_MISMATCH = "This is the total number of cases where the extension used does not match with the file signature." 
+   
+   SUMMARY_DESC_ID_PUID_COUNT = ("The total discrete file format signature identifiers in the accession/extract are "
+                                 "used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique "
+                                 "Identifier. PRONOM is a web-based technical registry to support digital preservation "
+                                 "services, developed by The National Archives of the United Kingdom.")
+   
+   SUMMARY_DESC_UNIQUE_EXTENSIONS = ("The total number of unique file extensions identified in the accession/extract. "
+                                     "The total unique extensions across the accession/extract are another statistic we "
+                                     "can use to identify the diversity/complexity of the accession/extract.")
+   
+   SUMMARY_DESC_ZERO_BYTE = ("Zero byte files have no binary content. They may have been created with the intention of turning "
+                             "into a record, e.g. a document, but they may also be indicative of a process that has corrupted "
+                             "the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size.")
+   
+   SUMMARY_DESC_IDENTICAL_FILES = "Total number of files across the accession/extract that are identical byte-for-byte."
+   
+   SUMMARY_DESC_MULTIPLE_SPACES = ("Number of filenames that contain more than one space in a row, these filenames may cause "
+                                   "some problems with some systems and may require pre-conditioning.")
+   
+   SUMMARY_DESC_PERCENTAGE_IDENTIFIED = ("Percentage of files with formats that are positively identified by DROID, pending other processes "
+                                         "such as format validation, this percentage may be indicative of how much of the accession/extract will "
+                                         "need little or no intervention to ingest cleanly.")
+   
+   SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED = ("Percentage of files with formats that were not able to be identified by DROID, which could be due to a "
+                                           "signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch "
+                                           "or another reason. This percentage is indicative of how much work will be involved in processing the "
+                                           "accession/extract.")
+   
+   HEADING_DESC_SIZE = ("The size of the accession/extract is represented using two values, bytes (a byte equals eight binary bits) "
+                        "from the DROID export and conversion from bytes into megabytes for understanding the size of larger "
+                        "accessions/extracts. We will use this statistic to understand how much storage is required for this "
+                        "accession/extract when ingested.")
+   
+   HEADING_DESC_IDENTIFIED = ("A list of PUID values and format names to provide a clear picture of diversity/complexity of the "
+                              "accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical "
+                              "registry to support digital preservation services, developed by The National Archives of the United Kingdom.")
+   
+   HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED = ("Visualization is used to provide a clear description of the distribution of file formats "
+                                              "across the accession/extract. The file format signature is a string in binary (or hexadecimal "
+                                              "(HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. "
+                                              "PRONOM is a web-based technical registry to support digital preservation services, developed by "
+                                              "The National Archives of the United Kingdom. Count and visualization of how many times each format "
+                                              "is represented in the accession/extract, in a descending list from most frequent to least.")
+   
+   HEADING_DESC_DATE_RANGE = ("Count and visualization giving a clear illustration of the distribution of file modification dates across the "
+                              "accession/extract. The list is in descending order based on the number of files last modified on any given year. "
+                              "Too small or too recent a date range may indicate file transfer errors depending on the source of files.")
+   
+   HEADING_DESC_EXTENSION_ONLY = ("A list of the PUID and format name of each format of one or more files where DROID has tried to offer "
+                                  "suggestions as to potential file format by utilizing the file extension where a file has not been matched "
+                                  "by file format signature.")
+   
+   HEADING_DESC_ID_METHOD = ("Lists in descending order the types of identification DROID used for each file, indicating the reliability "
+                             "of each identification, with Container/Signature being the more concrete forms of identification and extension "
+                             "being a less certain way to identify a format. The file format signature is a string in binary (or hexadecimal "
+                             "(HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able "
+                             "to match specific elements of a file format's structure.")
+   
+   HEADING_DESC_FREQUENCY_EXTENSION_ONLY = ("A count of the files associated with possible PUIDs where DROID has tried to offer suggestions as "
+                                            "to potential file format by utilizing the file extension where a file format signature has not "
+                                            "matched a file.")
+   
+   HEADING_DESC_UNIQUE_EXTENSIONS = ("Lists all the file extensions found in all the files in the accession/extract. This information can be "
+                                     "used to identify the diversity/complexity of the accession/extract, but also to identify the consistency "
+                                     "with which extensions may have been used in the accession/extract and may indicate how much work may be "
+                                     "needed to correct inconsistencies to create a clean ingest.")
+   
+   HEADING_DESC_LIST_MULTIPLE = ("List of files with an uncertain file format identification. These files will almost certainly need to be "
+                                 "investigated independently to understand their preservation risks. Where possible file format signatures "
+                                 "will be created to ensure that the same types of object are identified in future.")
+   
+   HEADING_DESC_FREQUENCY_EXTENSIONS_ALL = ("Lists the gamut of file extensions alongside how many times they appear in accession/extract "
+                                            "in descending order. This information can be used to identify the diversity/complexity of the "
+                                            "accession/extract, but also to identify the consistency with which extensions may have been "
+                                            "used in the accession/extract and may indicate how much work may be needed to correct "
+                                            "inconsistencies to create a clean ingest.")
+   
+   HEADING_DESC_FREQUENCY_MIME = ("Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. "
+                                  "A MIME Type is an identification used by internet browsers to determine how a browser will represent a file "
+                                  "on the internet by displaying, playing or prompting the user to download the object.")
+   
+   HEADING_DESC_LIST_ZERO_BYTES = ("This is a list of files with no payload. Zero byte files have no binary content. They may have been created "
+                                   "with the intention of turning into a record, e.g. a document, but they may also be indicative of a process "
+                                   "that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but "
+                                   "will have zero size.")
+   
+   HEADING_DESC_ARCHIVE_FORMATS = ("Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. "
+                                   "Knowing an accession/extract contains these objects is important as a single archive file may contain many "
+                                   "hundreds of other files that also need to be preserved and looked after.")
+   
+   HEADING_DESC_IDENTICAL_CONTENT = ("This is a list of files that are identical byte for byte. Count: is the number of instances of a "
+                                     "particular checksum value that are found across the accession/extract. Filepath is listed to help "
+                                     "with locating the object and to help appraisal decisions if the purpose of the duplicate can be "
+                                     "ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that "
+                                     "is what was received.")
+   
+   HEADING_DESC_TROUBLESOME_FILENAMES = ("Lists filenames that may cause issues across different systems and applications. These could "
+                                         "be filenames that include UTF-8 characters such as macrons, or incidences of filenames with "
+                                         "multiple space characters following one after the other. Filenames identified will also include "
+                                         "those for which there is an explicit recommendation against from "
+                                         "<a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>")
+   
+   HEADING_DESC_TROUBLESOME_DIRNAMES = ("Lists drectory names that may cause issues across different systems and applications. These "
+                                        "could be directory names that include UTF-8 characters such as macrons, or incidences of "
+                                        "filenames with multiple space characters following one after the other. Directory names identified "
+                                        "will also include those for which there is an explicit recommendation against from "
+                                        "<a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>")
 
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
