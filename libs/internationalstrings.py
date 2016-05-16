@@ -22,7 +22,13 @@ class AnalysisStringsEN:
    SUMMARY_UNIDENTIFIED = "Total Unidentified Files" 
    SUMMARY_EXTENSION_ID = "Total Extension ID Only Count"
    SUMMARY_EXTENSION_MISMATCH = "Total Extension Mismatches" 
+   
    SUMMARY_ID_PUID_COUNT = "Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract"
+   SUMMARY_DESC_ID_PUID_COUNT = ("The total discrete file format signature identifiers in the accession/extract are "
+                                 "used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique "
+                                 "Identifier. PRONOM is a web-based technical registry to support digital preservation "
+                                 "services, developed by The National Archives of the United Kingdom.")
+   
    SUMMARY_UNIQUE_EXTENSIONS = "Total Unique Extensions Across Accession/Extract"
    SUMMARY_ZERO_BYTE = "Total Zero-byte Files in Accession/Extract" 
    SUMMARY_IDENTICAL_FILES = "Total Files with Identical Content (Checksum Value)"
@@ -31,53 +37,120 @@ class AnalysisStringsEN:
    SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
 
    #NEW SIEGFRIED STRINGS
+   XML_DETAILS = ("Freedesktop's XML matching mechanism will match features of an XML document once the "
+                  "identifying mechanism has established the file it is looking at is an XML file. Features may include "
+                  "XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional "
+                  "file format signature matching techniques. More details on Freedesktop's "
+                  "mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>")
+
+   FILENAME_DETAILS = ("Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). "
+                       "A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. "
+                       "The mechanism works a lot like a filename extension match but can pick up more varied "
+                       "types that might not be encoded in the PRONOM database. More details on Freedesktop's "
+                       "mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>")
+
    SUMMARY_XML_ID = "Total XML ID Only Count"
-   SUMMARY_DESC_XML_ID = "xxx"   
+   SUMMARY_DESC_XML_ID = "Total files identified using an XML matching mechanism. " + XML_DETAILS  
 
    SUMMARY_TEXT_ID = "Total Text ID Only Count"
-   SUMMARY_DESC_TEXT_ID = "xxx"
+   SUMMARY_DESC_TEXT_ID = "Total files identified using a Text matching/Text encoding matching methanism. "
 
    SUMMARY_FILENAME_ID = "Total Filename ID Only Count"
-   SUMMARY_DESC_FILENAME_ID = "xxx"
+   SUMMARY_DESC_FILENAME_ID = "Total files identified using a Filename matching mechanism. " + FILENAME_DETAILS
 
-   SUMMARY_OTHER_ID_COUNT = "Total Other Discrete (Non-PUID) File Format Signature Identifiers in the Accession/Extract"
-   SUMMARY_DESC_OTHER_ID_COUNT = "xxx"
+   SUMMARY_OTHER_ID_COUNT = "Total Discrete Other (Non-PUID) File Format Signature Identifiers in the Accession/Extract"
+   SUMMARY_DESC_OTHER_ID_COUNT = ("The total discrete file format signature identifiers in the accession/extract are "
+                                  "used to help identify its diversity/complexity. Non-PUID identifiers are any that "
+                                  "aren't specified within the PRONOM namespace, for example, Freedesktop.org. Using "
+                                  "alternative namespaces can help us to identify ways of filling gaps within the PRONOM "
+                                  "namespace.")
 
    SUMMARY_XML_ID_COUNT = "Total XML Based Identification Identifiers in the Accession/Extract"
-   SUMMARY_DESC_XML_ID_COUNT = "xxx"
+   SUMMARY_DESC_XML_ID_COUNT = ("The total XML identifiers in the Accession/Exratact are used to help identify its "
+                                "diversity/complexity. XML identifiers are returned for files that have first been "
+                                "identified as XML, but have then had other features identified such as the XML's "
+                                "namespace which is often used to uniquely identify elements within the XML document.")
 
    SUMMARY_TEXT_ID_COUNT = "Total Text Based Identification Identifiers in the Accession/Extract"
-   SUMMARY_DESC_TEXT_ID_COUNT = "xxx"
+   SUMMARY_DESC_TEXT_ID_COUNT = ("The total Text identifiers in the Accession/Exratact are used to help identify its "
+                                 "diversity/complexity. Text identifiers are returned for files where their encoding "
+                                 "can be regocognised not to be binary.")
 
    SUMMARY_FILENAME_ID_COUNT = "Total Filename Based Identification Identifiers in the Accession/Extract"
-   SUMMARY_DESC_FILENAME_ID_COUNT = "xxx"
+   SUMMARY_DESC_FILENAME_ID_COUNT = ("The total Filename identifiers in the Accession/Exratact are used to help identify its "
+                                     "diversity/complexity. Filename identifiers may be returned where the filename extension "
+                                     "is recognised, e.g. *.MP3, or the filename itself is recognised as being a common pattern, "
+                                     "e.g. 'README*'.")
 
    SUMMARY_DISTANCE_BOF = "Max Distance Scanned from Beginning of File"
    SUMMARY_DISTANCE_EOF = "Max Distance Scanned from End of File"
    SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Based on Signature)"
-   SUMMARY_DESC_GAPS_COVERED = "xxx"
+   SUMMARY_DESC_GAPS_COVERED = ("Count of all the files that have zero identification results across all "
+                                "namespaces utilizing binary and container file format signatures. As such "
+                                "this statisticate may indicate an immediate priority for digital preservation "
+                                "researchers, and therfore may be indicative of the amount of work needed to "
+                                "understand an accession/extract.")
 
    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
-   HEADING_DESC_BINARY_ID = "xxx"
+   HEADING_DESC_BINARY_ID = ("Listing of format identification, namespace, count, and match basis for files "
+                             "identified using file format signatures. Some tools can report what the basis "
+                             "or rationale was for returning an identification - this is reported to demonstrate "
+                             "the diversity/complexity of an accession/extract and to provide clues for similar "
+                             "files in the accession/extract where there is zero identification.")
 
    HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in Accession/Extract"
+   HEADING_DESC_XML_ID = ("Listing of format identification, namespace, count, and match basis for files "
+                          "identified using XML based identification. Some tools can report what the basis "
+                          "or rationale was for returning an identification - this is reported to demonstrate "
+                          "the diversity/complexity of an accession/extract and to provide clues for similar "
+                          "files in the accession/extract where there is zero identification.")
+   
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
+   HEADING_DESC_TEXT_ID = ("Listing of format identification, namespace, count, and match basis for files "
+                          "identified using Text based identification. Some tools can report what the basis "
+                          "or rationale was for returning an identification - this is reported to demonstrate "
+                          "the diversity/complexity of an accession/extract and to provide clues for similar "
+                          "files in the accession/extract where there is zero identification.")
+   
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
-   HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"
-
+   HEADING_DESC_FILENAME_ID = ("Listing of format identification, namespace, count, and match basis for files "
+                              "identified using Filename based identification. Some tools can report what the basis "
+                              "or rationale was for returning an identification - this is reported to demonstrate "
+                              "the diversity/complexity of an accession/extract and to provide clues for similar "
+                              "files in the accession/extract where there is zero identification.")
+   
    HEADING_NAMESPACE_SPECIFIC_STATISTICS = "Results Per Identifier Namespace"
-   HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS = "xxx"
+   HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS = ("Namespace describes an identifier used by any specific tool. Format identification "
+                                                 "tools such as Siegfried can include multiple identifiers, e.g. PRONOM (and) Freedesktop.org's "
+                                                 "MIME identification. Tools may also include subsets of an identification mechanism that will "
+                                                 "also be indicated by use of a different namespace, for example, a set of PRONOM identifiers for "
+                                                 "recognising types of audio visual file, exclusively.")
 
    HEADING_NAMESPACE = "Namespace"
-   HEADING_DESC_NAMESPACE = 'xxx'
-
+   HEADING_DESC_NAMESPACE = ("The namespace that we're reporting on and the specific details associated with it. "
+                             "e.g. a PRONOM namespace with details of the signature file version used.")
+   
    HEADING_ERRORS = "File Processing Errors Encountered During Scan"
-   HEADING_DESC_ERRORS = "xxx"
+   HEADING_DESC_ERRORS = ("Tools like Siegfried may report on file processing errors during a scan. "
+                          "A processing error may indicate a file with no payload (zero-byte file) or another "
+                          "problem that might be important ot understand as it may affect its access and preservation.")
 
-   HEADING_XML_ID_COMPLETE = "Identifiers in Complete XML Namespace"
-   HEADING_TEXT_ID_COMPLETE = "Identifiers in Complete Text Namespace"
-   HEADING_FILENAME_ID_COMPLETE = "Identifiers in Complete Filename Namespace"
-   HEADING_DESC_FILENAME_ID_COMPLETE = "xxx"
+   ACROSS_NAMESPACE_BOILERPLACE = ("Some sources of file format identification offer alternatives to file format "
+                                   "signatures. Tools like Siegfried can also provide alternative techniques too. "
+                                   "These techniques output identifiers within the framework set out by DROID and "
+                                   "Siegfried, as oppesed the Linux tool File. ")
+                          
+   HEADING_XML_ID_COMPLETE = "XML Based Identifiers Across Namespaces"
+   HEADING_DESC_XML_ID_COMPLETE = ACROSS_NAMESPACE_BOILERPLACE + ("This listing presents a count of identification "
+                                    "results from scanning files using Freedesktop's MIME XML matching mechanism. ") + XML_DETAILS
+   
+   HEADING_TEXT_ID_COMPLETE = "Text Based Identifiers Across Namespaces"
+   HEADING_DESC_TEXT_ID_COMPLETE = ACROSS_NAMESPACE_BOILERPLACE + ("This listing presents a count of identification "
+                                    "results from scanning files using a Text matching/Text Encoding matching mechanism. ")
+   
+   HEADING_FILENAME_ID_COMPLETE = "Filename Based Identifiers Across Namespaces"   
+   HEADING_DESC_FILENAME_ID_COMPLETE = ACROSS_NAMESPACE_BOILERPLACE + ("This listing presents a count of identification "
+                                          "results from scanning files using Freedesktop's MIME Filename matching mechanism. ") + FILENAME_DETAILS
 
    #BELOW ITEMS MAY BE OBSOLETE...
    HEADING_NO_ID = "Files With No Identification"   
@@ -138,16 +211,11 @@ class AnalysisStringsEN:
                                 "extension is provided). This number may represent files not identified at all "
                                 "(i.e.. there is no identification information in the DROID database).")
    
-   SUMMARY_DESC_EXTENSION_ID = ("Files that can only be identified by their extension (e.g. \".doc\" might be a Microsoft Word "
-                                "file, \".mp3\" might be an audio file) This is a sub-set of the \"Total unidentified files\".")
+   SUMMARY_DESC_EXTENSION_ID = ("Files that can only be identified by their extension (e.g. \".DOC\" might be a Microsoft Word "
+                                "file, \".MP3\" might be an audio file) This is a sub-set of the \"Total unidentified files\".")
    
    SUMMARY_DESC_EXTENSION_MISMATCH = "This is the total number of cases where the extension used does not match with the file signature." 
-   
-   SUMMARY_DESC_ID_PUID_COUNT = ("The total discrete file format signature identifiers in the accession/extract are "
-                                 "used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique "
-                                 "Identifier. PRONOM is a web-based technical registry to support digital preservation "
-                                 "services, developed by The National Archives of the United Kingdom.")
-   
+      
    SUMMARY_DESC_UNIQUE_EXTENSIONS = ("The total number of unique file extensions identified in the accession/extract. "
                                      "The total unique extensions across the accession/extract are another statistic we "
                                      "can use to identify the diversity/complexity of the accession/extract.")
