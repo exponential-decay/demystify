@@ -364,6 +364,10 @@ class DROIDAnalysis:
       #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
       text = ''            
+      
+      if fmt_version is True:
+         sys.stderr.write("\n\n" + self.query.query_from_idrows(methodids, self.priority_ns_id) + "\n\n")
+      
       methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))      
       for id in methodresults:
          '''
@@ -548,7 +552,17 @@ class DROIDAnalysis:
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
          
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
+      
+      
+      
+      
+      
       self.analysisresults.signatureidentifiedfrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
+      
+      
+      
+      
+      
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
       
       #most complicated way to retrieve extension only PUIDs

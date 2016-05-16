@@ -178,6 +178,8 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, str(percent_not)))
          self.__htmlnewline__()
 
+         sys.stderr.write(str(signatureids))
+
          nslist = []         
          for idrow in signatureids:
             if idrow[0] == nstitle:
@@ -343,6 +345,13 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.signatureidentifiers is not None:
          countlist = []
 
+
+
+         sys.stderr.write(str(self.analysisresults.signatureidentifiers))
+
+
+
+
          for puid in self.analysisresults.signatureidentifiers:
             #(x-)?fmt\/[0-9]+
             namespace, identifier, formatname, count = self.splitidresults(puid)
@@ -423,11 +432,25 @@ class DROIDAnalysisHTMLOutput:
                mimes.remove(m)
          self.__outputtable__(mimes, self.STRINGS.HEADING_FREQUENCY_MIME, self.STRINGS.HEADING_DESC_FREQUENCY_MIME, True, 2, "400")
 
+
+
+
+
+
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
          self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, self.STRINGS.HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS)
          self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency)
       ##########NS SPECIFIC OUTPUT####################
+
+
+
+
+
+
+
+
+
 
       ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
       self.__handleidspecificoutput__()

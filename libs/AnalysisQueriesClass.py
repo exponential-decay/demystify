@@ -236,7 +236,7 @@
          where = where + str(i[1]) + ", "
       list = list + where.strip(", ") + ")"
       
-      SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID, COUNT(IDDATA.ID)      
+      SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID, COUNT(IDDATA.ID) AS TOTAL
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
@@ -246,12 +246,17 @@
                        CASE IDDATA.NS_ID
                           WHEN '{{ ns_id }}' THEN 1
                           ELSE 2
-                       END"""       
+                       END"""  
+
+      GROUP_TOTAL = """GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
+     
       #print list
       SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS 
       query = SELECT_NAMESPACE_AND_IDS + "\n" + list  
       if priority != None:
          query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
+      else:
+         query = query + GROUP_TOTAL
       return query
 
    def query_from_idrows_(self, idlist, priority=None):         
