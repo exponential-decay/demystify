@@ -177,9 +177,6 @@ class DROIDAnalysisHTMLOutput:
          self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, str(percent_ok)))
          self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, str(percent_not)))
          self.__htmlnewline__()
-
-         sys.stderr.write(str(signatureids))
-
          nslist = []         
          for idrow in signatureids:
             if idrow[0] == nstitle:
@@ -344,13 +341,6 @@ class DROIDAnalysisHTMLOutput:
       signature_id_list = []      
       if self.analysisresults.signatureidentifiers is not None:
          countlist = []
-
-
-
-         sys.stderr.write(str(self.analysisresults.signatureidentifiers))
-
-
-
 
          for puid in self.analysisresults.signatureidentifiers:
             #(x-)?fmt\/[0-9]+
