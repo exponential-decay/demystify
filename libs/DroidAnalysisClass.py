@@ -363,11 +363,7 @@ class DROIDAnalysis:
    def getMethodIDResults(self, methodids, fmt_version=False):
       #TODO: Fine line between formatting, and not formatting in this function
       countlist = []
-      text = ''            
-      
-      if fmt_version is True:
-         sys.stderr.write("\n\n" + self.query.query_from_idrows(methodids, self.priority_ns_id) + "\n\n")
-      
+      text = ''                  
       methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))      
       for id in methodresults:
          '''
