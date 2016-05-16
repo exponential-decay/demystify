@@ -163,9 +163,10 @@ class AnalysisStringsEN:
                          "information in the DROID database)")
                          
    HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"
-   HEADING_DESC_IDENTIFIED = ("A list of PUID values and format names to provide a clear picture of diversity/complexity of the "
+   HEADING_DESC_IDENTIFIED = ("A list of ID values and format names to provide a clear picture of diversity/complexity of the "
                               "accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical "
-                              "registry to support digital preservation services, developed by The National Archives of the United Kingdom.")
+                              "registry to support digital preservation services, developed by The National Archives of the United Kingdom. "
+                              "Other identifiers listed may come from Freedesktop.org's MIMEInfo Database or Apache's Tika equivalent.")
    #NEW SIEGFRIED STRINGS
 
    HEADING_SIZE = "Size of the accession/extract"   
@@ -251,15 +252,17 @@ class AnalysisStringsEN:
                                               "across the accession/extract. The file format signature is a string in binary (or hexadecimal "
                                               "(HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. "
                                               "PRONOM is a web-based technical registry to support digital preservation services, developed by "
-                                              "The National Archives of the United Kingdom. Count and visualization of how many times each format "
+                                              "The National Archives of the United Kingdom."
+                                              "Other identifiers listed may come from Freedesktop.org's MIMEInfo Database or Apache's Tika equivalent. "
+                                              "Count and visualization of how many times each format "
                                               "is represented in the accession/extract, in a descending list from most frequent to least.")
    
    HEADING_DESC_DATE_RANGE = ("Count and visualization giving a clear illustration of the distribution of file modification dates across the "
                               "accession/extract. The list is in descending order based on the number of files last modified on any given year. "
                               "Too small or too recent a date range may indicate file transfer errors depending on the source of files.")
    
-   HEADING_DESC_EXTENSION_ONLY = ("A list of the PUID and format name of each format of one or more files where DROID has tried to offer "
-                                  "suggestions as to potential file format by utilizing the file extension where a file has not been matched "
+   HEADING_DESC_EXTENSION_ONLY = ("A list of the identifier and format name of each format of one or more files where the file format identification tool has "
+                                  "tried to offer suggestions as to potential file format by utilizing the file extension where a file has not been matched "
                                   "by file format signature.")
    
    HEADING_DESC_ID_METHOD = ("Lists in descending order the types of identification DROID used for each file, indicating the reliability "
@@ -268,8 +271,8 @@ class AnalysisStringsEN:
                              "(HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able "
                              "to match specific elements of a file format's structure." + COUNT_TEXT)
    
-   HEADING_DESC_FREQUENCY_EXTENSION_ONLY = ("A count of the files associated with possible PUIDs where DROID has tried to offer suggestions as "
-                                            "to potential file format by utilizing the file extension where a file format signature has not "
+   HEADING_DESC_FREQUENCY_EXTENSION_ONLY = ("A count of the files associated with possible identifiers where file format identification tool has tried to offer "
+                                            "suggestions as to potential file format by utilizing the file extension where a file format signature has not "
                                             "matched a file." + COUNT_TEXT)
    
    HEADING_DESC_UNIQUE_EXTENSIONS = ("Lists all the file extensions found in all the files in the accession/extract. This information can be "
