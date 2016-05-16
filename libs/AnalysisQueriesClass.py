@@ -256,6 +256,7 @@
       if priority != None:
          query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
       else:
+         #TODO: ONCE AGAIN MAY NEED TO PULL THIS QUERY APART - NEEDS TESTING FURTHER
          query = query + GROUP_TOTAL
       return query
 
