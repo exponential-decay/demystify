@@ -206,20 +206,19 @@ class DROIDAnalysisTextOutput:
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
          newlist = self.__removenamespaceid__(self.analysisresults.binaryidentifiers)
-         self.printFormattedText(self.__aggregatelists__(newlist))
-         
-         
-         
-         
+         self.printFormattedText(self.__aggregatelists__(newlist))         
       if self.analysisresults.xmlidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.xmlidentifiers))
+         newlist = self.__removenamespaceid__(self.analysisresults.xmlidentifiers)
+         self.printFormattedText(self.__aggregatelists__(newlist))
       if self.analysisresults.textidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.textidentifiers))
+         newlist = self.__removenamespaceid__(self.analysisresults.textidentifiers)
+         self.printFormattedText(self.__aggregatelists__(newlist))
       if self.analysisresults.filenameidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.filenameidentifiers))
+         newlist = self.__removenamespaceid__(self.analysisresults.filenameidentifiers)
+         self.printFormattedText(self.__aggregatelists__(newlist))
 
       if self.analysisresults.extensionIDOnlyCount > 0:
          if self.analysisresults.extensionOnlyIDList is not None:
