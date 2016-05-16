@@ -12,6 +12,8 @@ class AnalysisStringsEN:
    
    REPORT_MORE_INFORMATION = "More Detail:"
    
+   COUNT_TEXT = " Counts are shown for each entry in round () brackets."
+   
    SUMMARY_TOTAL_FILES = "Total Files" 
    SUMMARY_ARCHIVE_FILES = "Total Archive Files" 
    SUMMARY_INSIDE_ARCHIVES = "Total Files Inside Archive Files" 
@@ -96,35 +98,35 @@ class AnalysisStringsEN:
                              "identified using file format signatures. Some tools can report what the basis "
                              "or rationale was for returning an identification - this is reported to demonstrate "
                              "the diversity/complexity of an accession/extract and to provide clues for similar "
-                             "files in the accession/extract where there is zero identification.")
+                             "files in the accession/extract where there is zero identification." + COUNT_TEXT)
 
    HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in Accession/Extract"
    HEADING_DESC_XML_ID = ("Listing of format identification, namespace, count, and match basis for files "
                           "identified using XML based identification. Some tools can report what the basis "
                           "or rationale was for returning an identification - this is reported to demonstrate "
                           "the diversity/complexity of an accession/extract and to provide clues for similar "
-                          "files in the accession/extract where there is zero identification.")
+                          "files in the accession/extract where there is zero identification." + COUNT_TEXT)
    
    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
    HEADING_DESC_TEXT_ID = ("Listing of format identification, namespace, count, and match basis for files "
                           "identified using Text based identification. Some tools can report what the basis "
                           "or rationale was for returning an identification - this is reported to demonstrate "
                           "the diversity/complexity of an accession/extract and to provide clues for similar "
-                          "files in the accession/extract where there is zero identification.")
+                          "files in the accession/extract where there is zero identification." + COUNT_TEXT)
    
    HEADING_FILENAME_ID = "Aggregated Frequency of Filename Identifiers in Accession/Extract"
    HEADING_DESC_FILENAME_ID = ("Listing of format identification, namespace, count, and match basis for files "
                               "identified using Filename based identification. Some tools can report what the basis "
                               "or rationale was for returning an identification - this is reported to demonstrate "
                               "the diversity/complexity of an accession/extract and to provide clues for similar "
-                              "files in the accession/extract where there is zero identification.")
+                              "files in the accession/extract where there is zero identification." + COUNT_TEXT)
    
    HEADING_NAMESPACE_SPECIFIC_STATISTICS = "Results Per Identifier Namespace"
    HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS = ("Namespace describes an identifier used by any specific tool. Format identification "
                                                  "tools such as Siegfried can include multiple identifiers, e.g. PRONOM (and) Freedesktop.org's "
                                                  "MIME identification. Tools may also include subsets of an identification mechanism that will "
                                                  "also be indicated by use of a different namespace, for example, a set of PRONOM identifiers for "
-                                                 "recognising types of audio visual file, exclusively.")
+                                                 "recognising types of audio visual file, exclusively." + COUNT_TEXT)
 
    HEADING_NAMESPACE = "Namespace"
    HEADING_DESC_NAMESPACE = ("The namespace that we're reporting on and the specific details associated with it. "
@@ -133,7 +135,8 @@ class AnalysisStringsEN:
    HEADING_ERRORS = "File Processing Errors Encountered During Scan"
    HEADING_DESC_ERRORS = ("Tools like Siegfried may report on file processing errors during a scan. "
                           "A processing error may indicate a file with no payload (zero-byte file) or another "
-                          "problem that might be important ot understand as it may affect its access and preservation.")
+                          "problem that might be important ot understand as it may affect its access and preservation."
+                          + COUNT_TEXT)
 
    ACROSS_NAMESPACE_BOILERPLACE = ("Some sources of file format identification offer alternatives to file format "
                                    "signatures. Tools like Siegfried can also provide alternative techniques too. "
@@ -150,7 +153,7 @@ class AnalysisStringsEN:
    
    HEADING_FILENAME_ID_COMPLETE = "Filename Based Identifiers Across Namespaces"   
    HEADING_DESC_FILENAME_ID_COMPLETE = ACROSS_NAMESPACE_BOILERPLACE + ("This listing presents a count of identification "
-                                          "results from scanning files using Freedesktop's MIME Filename matching mechanism. ") + FILENAME_DETAILS
+                                          "results from scanning files using Freedesktop's MIME Filename matching mechanism. ") + FILENAME_DETAILS + COUNT_TEXT
 
    #BELOW ITEMS MAY BE OBSOLETE...
    HEADING_NO_ID = "Files With No Identification"   
@@ -159,12 +162,11 @@ class AnalysisStringsEN:
                          "This number may represent files not identified at all (i.e. there is no identification "
                          "information in the DROID database)")
                          
-   HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"                           
+   HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"
+   HEADING_DESC_IDENTIFIED = ("A list of PUID values and format names to provide a clear picture of diversity/complexity of the "
+                              "accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical "
+                              "registry to support digital preservation services, developed by The National Archives of the United Kingdom.")
    #NEW SIEGFRIED STRINGS
-      
-   #This statistic may be obsoleted...
-   HEADING_IDENTIFIED = "Identified File Formats in Accession/Extract" 
-   #This statistic may be obsoleted...
 
    HEADING_SIZE = "Size of the accession/extract"   
    HEADING_FREQUENCY_PUIDS_IDENTIFIED = "Frequency of File Format Signature Identified IDs"
@@ -244,11 +246,7 @@ class AnalysisStringsEN:
                         "from the DROID export and conversion from bytes into megabytes for understanding the size of larger "
                         "accessions/extracts. We will use this statistic to understand how much storage is required for this "
                         "accession/extract when ingested.")
-   
-   HEADING_DESC_IDENTIFIED = ("A list of PUID values and format names to provide a clear picture of diversity/complexity of the "
-                              "accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical "
-                              "registry to support digital preservation services, developed by The National Archives of the United Kingdom.")
-   
+      
    HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED = ("Visualization is used to provide a clear description of the distribution of file formats "
                                               "across the accession/extract. The file format signature is a string in binary (or hexadecimal "
                                               "(HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. "
@@ -268,11 +266,11 @@ class AnalysisStringsEN:
                              "of each identification, with Container/Signature being the more concrete forms of identification and extension "
                              "being a less certain way to identify a format. The file format signature is a string in binary (or hexadecimal "
                              "(HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able "
-                             "to match specific elements of a file format's structure.")
+                             "to match specific elements of a file format's structure." + COUNT_TEXT)
    
    HEADING_DESC_FREQUENCY_EXTENSION_ONLY = ("A count of the files associated with possible PUIDs where DROID has tried to offer suggestions as "
                                             "to potential file format by utilizing the file extension where a file format signature has not "
-                                            "matched a file.")
+                                            "matched a file." + COUNT_TEXT)
    
    HEADING_DESC_UNIQUE_EXTENSIONS = ("Lists all the file extensions found in all the files in the accession/extract. This information can be "
                                      "used to identify the diversity/complexity of the accession/extract, but also to identify the consistency "
@@ -287,11 +285,11 @@ class AnalysisStringsEN:
                                             "in descending order. This information can be used to identify the diversity/complexity of the "
                                             "accession/extract, but also to identify the consistency with which extensions may have been "
                                             "used in the accession/extract and may indicate how much work may be needed to correct "
-                                            "inconsistencies to create a clean ingest.")
+                                            "inconsistencies to create a clean ingest." + COUNT_TEXT)
    
    HEADING_DESC_FREQUENCY_MIME = ("Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. "
                                   "A MIME Type is an identification used by internet browsers to determine how a browser will represent a file "
-                                  "on the internet by displaying, playing or prompting the user to download the object.")
+                                  "on the internet by displaying, playing or prompting the user to download the object." + COUNT_TEXT)
    
    HEADING_DESC_LIST_ZERO_BYTES = ("This is a list of files with no payload. Zero byte files have no binary content. They may have been created "
                                    "with the intention of turning into a record, e.g. a document, but they may also be indicative of a process "

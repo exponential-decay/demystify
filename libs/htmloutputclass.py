@@ -120,7 +120,7 @@ class DROIDAnalysisHTMLOutput:
 
    def signature_id_listing(self, idlist):
       #Signature identified PUIDs in collection (signature and container)
-      self.__outputheading__(self.STRINGS.HEADING_IDENTIFIED, self.STRINGS.HEADING_DESC_IDENTIFIED)
+      self.__outputheading__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED, self.STRINGS.HEADING_DESC_IDENTIFIED)
       self.printFormattedText('<table>')
       self.printFormattedText('<table><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_ID + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_NAMESPACE + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_FORMAT + '</th><th style="text-align: left;">' + self.STRINGS.COLUMN_HEADER_VALUES_COUNT + '</th>')               
       #ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
@@ -280,9 +280,10 @@ class DROIDAnalysisHTMLOutput:
          self.__htmlnewline__()
          self.printFormattedText("<b>" + self.STRINGS.SUMMARY_DISTANCE_BOF + ": </b>" + self.__generateOffsetText__(self.analysisresults.bof_distance))
       if self.analysisresults.eof_distance is not None:
+         if self.analysisresults.bof_distance is not None:
+            self.__htmlnewline__() 
          self.__htmlnewline__() 
          self.printFormattedText("<b>" + self.STRINGS.SUMMARY_DISTANCE_EOF + ": </b>" + self.__generateOffsetText__(self.analysisresults.eof_distance))
-      self.__htmlnewline__() 
 
       self.printFormattedText("<h2>" + self.STRINGS.REPORT_SUMMARY + "</h2>")
 
@@ -397,7 +398,7 @@ class DROIDAnalysisHTMLOutput:
                   extlist.remove(item) 
             if self.analysisresults.tooltype != 'droid':
                #we have basis information so need a bigger table...
-               self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 1, "800")
+               self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 2, "400")
             else:
                self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 3, "275")
 
