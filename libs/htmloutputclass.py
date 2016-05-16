@@ -185,7 +185,7 @@ class DROIDAnalysisHTMLOutput:
 
    def __removenamespaceid__(self, oldlist):
       newlist = []
-      for item in self.analysisresults.binaryidentifiers:
+      for item in oldlist:
          newlist.append(str(item[0]))
       return newlist
       
