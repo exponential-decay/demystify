@@ -158,6 +158,8 @@ class AnalysisStringsEN:
                          "verifiable file format signatures in the file, only the file extension is provided). "
                          "This number may represent files not identified at all (i.e. there is no identification "
                          "information in the DROID database)")
+                         
+   HEADING_AGGREGATE_BINARY_IDENTIFIED = "Aggregated File Format Signature Identifiers in Accession/Extract"                           
    #NEW SIEGFRIED STRINGS
       
    #This statistic may be obsoleted...

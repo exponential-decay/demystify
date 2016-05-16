@@ -365,24 +365,34 @@ class DROIDAnalysis:
       countlist = []
       text = ''            
       methodresults = self.__querydb__(self.query.query_from_idrows(methodids, self.priority_ns_id))      
-
       for id in methodresults:
+         '''
+         0  'ns:' || NSDATA.NS_NAME || ' ', 
+         1  IDDATA.ID, 
+         2  IDDATA.FORMAT_NAME, 
+         3  IDDATA.BASIS, 
+         4  IDDATA.FORMAT_VERSION, 
+         5  IDDATA.NS_ID, 
+         6  COUNT(IDDATA.ID         
+         '''
          ns_id = id[5]
          name = id[2]
          if name == '':
             name = ", "
          else:
             name = ", " + name + ", "
+
          basis = id[3]
          if basis is not None:
             basis = "[" + basis + "]"
          else:
             basis = ''
-         #('ns:pronom', 'x-fmt/111', 'Plain Text File', 'text match ASCII')
-         idval = id[0] + id[1] + name + basis
-         if fmt_version == True:
+         
+         if fmt_version == False:
+            idval = id[0] + id[1] + name + id[4] + " " + basis + " (" + str(id[6]) + ")" #concatenate count
+         else:
             #we're creating a less detailed statistic for summary purposes
-            idval = id[0] + id[1] + name + id[4] + " (" + str(id[6]) + ")" #concatenate count
+            idval = id[0] + id[1] + name + id[4] + " (" + str(id[6]) + ")" #concatenate count                  
          countlist.append((idval, ns_id))  
     
       #counter returns dict

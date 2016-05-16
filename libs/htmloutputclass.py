@@ -184,15 +184,25 @@ class DROIDAnalysisHTMLOutput:
                nslist.append(idrow[1:])
          self.__outputtable__(nslist, None, None, True, 2, "400")
 
+   def __removenamespaceid__(self, oldlist):
+      newlist = []
+      for item in self.analysisresults.binaryidentifiers:
+         newlist.append(str(item[0]))
+      return newlist
+      
    def outputaggregatelists(self):
       if self.analysisresults.binaryidentifiers is not None:
-         self.__outputtable__(self.analysisresults.binaryidentifiers, self.STRINGS.HEADING_BINARY_ID, self.STRINGS.HEADING_DESC_BINARY_ID, True, 1, "800", False) 
+         newlist = self.__removenamespaceid__(self.analysisresults.binaryidentifiers)
+         self.__outputtable__(newlist, self.STRINGS.HEADING_BINARY_ID, self.STRINGS.HEADING_DESC_BINARY_ID, True, 1, "800", False) 
       if self.analysisresults.xmlidentifiers is not None:
-         self.__outputtable__(self.analysisresults.xmlidentifiers, self.STRINGS.HEADING_XML_ID, self.STRINGS.HEADING_DESC_XML_ID, True, 1, "800", False) 
+         newlist = self.__removenamespaceid__(self.analysisresults.xmlidentifiers)      
+         self.__outputtable__(newlist, self.STRINGS.HEADING_XML_ID, self.STRINGS.HEADING_DESC_XML_ID, True, 1, "800", False) 
       if self.analysisresults.textidentifiers is not None:
-         self.__outputtable__(self.analysisresults.textidentifiers, self.STRINGS.HEADING_TEXT_ID, self.STRINGS.HEADING_DESC_TEXT_ID, True, 1, "800", False) 
+         newlist = self.__removenamespaceid__(self.analysisresults.textidentifiers)      
+         self.__outputtable__(newlist, self.STRINGS.HEADING_TEXT_ID, self.STRINGS.HEADING_DESC_TEXT_ID, True, 1, "800", False) 
       if self.analysisresults.filenameidentifiers is not None:
-         self.__outputtable__(self.analysisresults.filenameidentifiers, self.STRINGS.HEADING_FILENAME_ID, self.STRINGS.HEADING_DESC_FILENAME_ID, True, 1, "800", False) 
+         newlist = self.__removenamespaceid__(self.analysisresults.filenameidentifiers)      
+         self.__outputtable__(newlist, self.STRINGS.HEADING_FILENAME_ID, self.STRINGS.HEADING_DESC_FILENAME_ID, True, 1, "800", False) 
 
    def __outputheading__(self, heading, description):
       self.printFormattedText("<h2>" + self.__make_str__(heading) + "</h2>")
@@ -324,7 +334,7 @@ class DROIDAnalysisHTMLOutput:
       #easier to reference from a var
       size = self.analysisresults.collectionsize
       
-      self.printFormattedText(str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
+      self.printFormattedText(str(float(size)) + " bytes | " + str(round(float(float(size)/(1048576)), 1)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
       self.__htmlnewline__(2) 
       self.printFormattedText("<hr/>")
 
@@ -385,7 +395,11 @@ class DROIDAnalysisHTMLOutput:
             for item in list(extlist):
                if 'UNKNOWN' in item[0] or 'unknown' in item[0]:
                   extlist.remove(item) 
-            self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 1, "800")
+            if self.analysisresults.tooltype != 'droid':
+               #we have basis information so need a bigger table...
+               self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 1, "800")
+            else:
+               self.__outputtable__(extlist, self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY, self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSION_ONLY, True, 3, "275")
 
       if self.analysisresults.frequencyOfAllExtensions is not None: 
          #Extension Frequency         

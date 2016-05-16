@@ -61,8 +61,11 @@ class DROIDAnalysisTextOutput:
       else:
          for item in itemlist:
             name = item[0]
-            count = "(" + str(item[1]) + ")"
-            outstr = outstr + name + " " + count + "\n"
+            if item[1] != None:
+               count = "(" + str(item[1]) + ")"
+               outstr = outstr + name + " " + count + "\n"
+            else:
+               outstr = outstr + name + "\n"
       return outstr.strip("\n")
       
    def getDateList(self):
@@ -120,6 +123,12 @@ class DROIDAnalysisTextOutput:
       offs = offsettext
       if offs != None:
          return offs[0] + ", " + offs[1] + " e.g. " + offs[2] + " filesize: " + str(offs[3]) + ", " + str(offs[4]) + " bytes"
+
+   def __removenamespaceid__(self, oldlist):
+      newlist = []
+      for item in self.analysisresults.binaryidentifiers:
+         newlist.append((str(item[0]), None))
+      return newlist
 
    def generateTEXT(self):   
       if self.analysisresults.tooltype != 'droid':
@@ -180,7 +189,7 @@ class DROIDAnalysisTextOutput:
 
       #return the size of the collection
       size = self.analysisresults.collectionsize #easier to reference from a var
-      self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(int(size)) + " bytes | " + str(int(size/(1048576))) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
+      self.printFormattedText(self.STRINGS.HEADING_SIZE + ": " + str(float(size)) + " bytes | " + str(round(float(float(size)/(1048576)), 1)) + " MiB/MB (Megabytes)") #MiB/MB = (2^1024)*2
 
       if self.analysisresults.signatureidentifiers is not None:
          #('ns:pronom x-fmt/266 GZIP Format, extension match gz; byte match at 0, 3', 1)
@@ -191,9 +200,17 @@ class DROIDAnalysisTextOutput:
          for ids in self.analysisresults.signatureidentifiers:
             self.printFormattedText(ids[0].rstrip(", "))
 
+
+
+
       if self.analysisresults.binaryidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
-         self.printFormattedText(self.__aggregatelists__(self.analysisresults.binaryidentifiers))
+         newlist = self.__removenamespaceid__(self.analysisresults.binaryidentifiers)
+         self.printFormattedText(self.__aggregatelists__(newlist))
+         
+         
+         
+         
       if self.analysisresults.xmlidentifiers is not None:
          self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
          self.printFormattedText(self.__aggregatelists__(self.analysisresults.xmlidentifiers))
