@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 import argparse
+import os
 import sys
 from libs.IdentifyExportClass import IdentifyExport
 from libs.GenerateBaselineDBClass import GenerateBaselineDB
@@ -21,7 +22,7 @@ def identifyinput(export):
    elif type == id.FIDOTYPE:
       return handleFIDOCSV(export)
    elif type == id.UNKTYPE:
-      sys.stderr.write("Unknown export type." + "\n")	
+      sys.stderr.write("Unknown export type.")	
       return None
 
 def handleDROIDCSV(droidcsv, BOM=False): 
@@ -67,7 +68,10 @@ def main():
    args = parser.parse_args()
    
    if args.export:
-      identifyinput(args.export)
+      if os.path.isfile(args.export):
+         identifyinput(args.export)
+      else:
+         sys.exit("Exiting: Not a file.")
    else:
       sys.exit(1)
 
