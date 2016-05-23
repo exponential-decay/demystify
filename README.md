@@ -8,7 +8,10 @@ and query the SQLite database, outputting results in a readable form useful for
 analysis by researchers and archivists within digital preservation departments
 in memory institutions. 
 
-See: http://www.openplanetsfoundation.org/blogs/2014-06-03-analysis-engine-droid-csv-export
+See: 
+
+http://www.openplanetsfoundation.org/blogs/2014-06-03-analysis-engine-droid-csv-export
+http://openpreservation.org/blog/2016/05/23/whats-in-a-namespace-the-marriage-of-droid-and-siegfried-analysis/
 
 There are three components to the tool:
 
