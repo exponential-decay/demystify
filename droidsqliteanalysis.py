@@ -61,14 +61,14 @@ def main():
    #	Usage: 	--csv [droid report]
 
    #	Handle command line arguments for the script
-   parser = argparse.ArgumentParser(description='Analyse DROID results stored in a SQLite DB')
+   parser = argparse.ArgumentParser(description='Analyse DROID and Siegfried results stored in a SQLite database')
    parser.add_argument('--export', '--droid', '--sf', '--exp', help='Optional: DROID or Siegfried export to read, and then analyse.', default=False)
-   parser.add_argument('--db', help='Optional: Single DROID sqlite db to read.', default=False)
+   parser.add_argument('--db', help='Optional: Single DROID or Siegfried sqlite db to read.', default=False)
    parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
-   parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
-   parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
-   parser.add_argument("--blacklist", help="Use configured blacklist.", action="store_true")
-   parser.add_argument("--dump", help="UNSTABLE: Export SQLITE DB as CSV.", default=False)
+   #parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
+   #parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
+   #parser.add_argument("--blacklist", help="Use configured blacklist.", action="store_true")
+   #parser.add_argument("--dump", help="UNSTABLE: Export SQLITE DB as CSV.", default=False)
 
    start_time = time.time()
 
@@ -80,19 +80,20 @@ def main():
    global args
    args = parser.parse_args()
    
-   blacklist = handleConfig(args.blacklist)
+   #if args.blacklist:
+   #   blacklist = handleConfig(args.blacklist)
    
    if args.export:
-      handleDROIDCSV(args.export, True, args.htm, args.rogues, args.heroes, blacklist)
+      handleDROIDCSV(args.export, True, args.htm)
       outputtime(start_time)
    if args.db:
-      analysisresults = handleDROIDDB(args.db, blacklist)
-      handleOutput(analysisresults, args.htm, args.rogues, args.heroes)
+      analysisresults = handleDROIDDB(args.db)
+      handleOutput(analysisresults, args.htm)
       outputtime(start_time)
-   if args.dump:
-      ex = ExportDBClass.ExportDB()
-      ex.exportDB(args.export)  
-      outputtime(start_time) 
+   #if args.dump:
+   #   ex = ExportDBClass.ExportDB()
+   #   ex.exportDB(args.export)  
+   #   outputtime(start_time) 
    else:
       sys.exit(1)
 
