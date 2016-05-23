@@ -89,7 +89,7 @@ def main():
    if args.db:
       if os.path.isfile(args.db):
          iddb = IdentifyDB()
-         if iddb.id_export(args.db) == iddb.SQLITE_DB:
+         if iddb.identify_export(args.db) == iddb.SQLITE_DB:
             analysisresults = handleDROIDDB(args.db)
             handleOutput(analysisresults, args.htm)
             outputtime(start_time)
