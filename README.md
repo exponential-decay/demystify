@@ -43,7 +43,7 @@ Combines the functions of droid2sqlite.py by calling droid2sqlite's primary
 class. Further, queries a DROID sqlite database of the schema generated in 
 droid2sqlite, and outputs the result to stdout. 
 
-Three arguments:
+Two primary arguments:
 
 * --export <input filename>
 
@@ -51,7 +51,14 @@ First creates a database like droid2sqlite then outputs a report.
 
 * --db <input filename>
 
-Outputs a report from a pre-existing sqlite database. 
+Outputs a report from a pre-existing sqlite database. **HTML** is output by default, and it's
+a good idea to pipe this to a file, e.g.:
+
+    python droidsqliteanalysis.py --db opf-with-text.db > my_html_file.htm
+    
+TXT can be output by using a --txt flag:
+
+    python droidsqliteanalysis.py --db opf-with-text.db --txt > my_txt_file.txt
 
 #### Rogues Gallery (v.0.2.0 only: https://github.com/exponential-decay/droid-sqlite-analysis/releases/tag/0.2.0)
 
