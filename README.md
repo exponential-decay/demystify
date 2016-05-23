@@ -1,9 +1,9 @@
-droid-sqlite-analysis
+droid/siegfried-sqlite-analysis
 =====================
 
-Engine for analysis of DROID CSV export files. The tool has three purposes, 
-break the DROID CSV export into its components and store them within a table in 
-a SQLite database; create additional columns to augment the output where useful;
+Engine for analysis of DROID CSV and Seigfried export files. The tool has three 
+purposes, break the export into its components and store them within a set of tables
+in a SQLite database; create additional columns to augment the output where useful;
 and query the SQLite database, outputting results in a readable form useful for
 analysis by researchers and archivists within digital preservation departments
 in memory institutions. 
@@ -17,9 +17,18 @@ There are three components to the tool:
 Places DROID CSV export data into an SQLite database with the same filename
 as the input. 
 
-Single argument: --csv <input filename>
+Single argument: --export <input filename>
 
-Augments DROID export data with two additional columns:
+Translates a the results of DROID and Siegfried into a static SQLite Database 
+structure. A drastic change to the original tool, there are now five tables:
+
+- DBMD - Database Metadata
+- FILEDATA - File manifest and filesystem metadata
+- IDDATA - Identification metadata
+- IDRESULTS - FILEDATA/IDRESULTS junction table
+- NSDATA - Namespace metadata, also secondary key (NS_ID) in IDDATA table
+
+Will also augment DROID or Siegfried export data with additional columns amongst others:
 
 URI_SCHEME: Separates the URI_SCHEME from the DROID URI column. This is to
 enable the identification of container objects found in the export specifically,
@@ -36,20 +45,17 @@ droid2sqlite, and outputs the result to stdout.
 
 Three arguments:
 
-* --csv <input filename>
+* --export <input filename>
 
-Equivalent functionalty to droid2sqlite. Outputs a sqlite database. 
+First creates a database like droid2sqlite then outputs a report. 
 
 * --db <input filename>
 
-Analyes a DROID sqlite database and outputs the results to stdout.
+Outputs a report from a pre-existing sqlite database. 
 
-* --csva <input filename>
+#### Rogues Gallery (v.0.2.0 only: https://github.com/exponential-decay/droid-sqlite-analysis/releases/tag/0.2.0)
 
-Wraps both --csv and --db into a single command. Useful for a one-off report. 
-Will naturally be slower to output results. 
-
-#### Rogues Gallery
+**N.B. This feature will return, but has been temporarily disabled in the current release to understand what a Rogues gallery needs to look like when using Siegfried.
 
 The following flags provide Rogue or Hero output:
 
@@ -78,14 +84,22 @@ descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unic
 
 ### Usage Notes
 
-Binary / Text / Filename stats are compiled with absolute agnosticism. A set() is created to filter filenames with identical methods. 
-We need to monitor how these results turn out, but for now, in the stats that use this method (non-namespace specific stats) we will find
-cases where a Tika binary match may outweight a PRONOM binary match based on how the set was ordered. 
+Summary/Aggregate Binary / Text / Filename identification statistics are output with the following priority:
+
+Namespace (e.g. PRONOM first [configurable])
+1. Binary and Container Identifiers
+2. XML Identifiers
+3. Text Identifiers
+4. Filename Identifiers
+5. Extension Identifiers
+
+We need to monitor how well this works. Namespace specific statistics are also output further down the report.
 
 ### TODO
 
-* Everything is stored in the DB as a string, understand potential for typing
-* Return more discrete values, ints, lists, etc. over formatted strings.
+* Additional typing of database fields
+* Improved container listing/handling e.g. maybe via URIs in SF output...
+* Improved 'directory' listing and handling.
 * Unit tests!
 
 ### License
