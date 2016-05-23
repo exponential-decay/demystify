@@ -55,7 +55,7 @@ Outputs a report from a pre-existing sqlite database.
 
 #### Rogues Gallery (v.0.2.0 only: https://github.com/exponential-decay/droid-sqlite-analysis/releases/tag/0.2.0)
 
-**N.B. This feature will return, but has been temporarily disabled in the current release to understand what a Rogues gallery needs to look like when using Siegfried.
+**N.B.** *This feature will return, but has been temporarily disabled in the current release to understand what a Rogues gallery needs to look like when using Siegfried.*
 
 The following flags provide Rogue or Hero output:
 
