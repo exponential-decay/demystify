@@ -201,7 +201,7 @@ class AnalysisStringsEN:
    SUMMARY_DESC_UNIQUE_DIRNAMES = "This is used to determine the number of duplicate directory (folder) names." 
    
    SUMMARY_DESC_IDENTIFIED_FILES = ("The number of files that are identified based on a file format signature. "
-                                    "The file format signature is a string in binary (or hexadecimal (HEX)) that "
+                                    "A file format signature is a string in binary (or hexadecimal (hex)) that "
                                     "uniquely identifies a file format. Note: A signature is a more mature form of "
                                     "a magic number that can be read across the file. A basic magic number is a unique "
                                     "section at the beginning of a file that can be seen when the file is looked at "
@@ -248,9 +248,9 @@ class AnalysisStringsEN:
                         "accessions/extracts. We will use this statistic to understand how much storage is required for this "
                         "accession/extract when ingested.")
       
-   HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED = ("Visualization is used to provide a clear description of the distribution of file formats "
-                                              "across the accession/extract. The file format signature is a string in binary (or hexadecimal "
-                                              "(HEX)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. "
+   HEADING_DESC_FREQUENCY_PUIDS_IDENTIFIED = ("A chart used to provide a clear visualization of the distribution of file formats "
+                                              "across the accession/extract. A file format signature is a string in binary (or hexadecimal "
+                                              "(hex)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. "
                                               "PRONOM is a web-based technical registry to support digital preservation services, developed by "
                                               "The National Archives of the United Kingdom."
                                               "Other identifiers listed may come from Freedesktop.org's MIMEInfo Database or Apache's Tika equivalent. "
@@ -267,8 +267,8 @@ class AnalysisStringsEN:
    
    HEADING_DESC_ID_METHOD = ("Lists in descending order the types of identification DROID used for each file, indicating the reliability "
                              "of each identification, with Container/Signature being the more concrete forms of identification and extension "
-                             "being a less certain way to identify a format. The file format signature is a string in binary (or hexadecimal "
-                             "(HEX)) that uniquely identifies a file format. Container identification takes this concept further by being able "
+                             "being a less certain way to identify a format. A file format signature is a string in binary (or hexadecimal "
+                             "(hex)) that uniquely identifies a file format. Container identification takes this concept further by being able "
                              "to match specific elements of a file format's structure." + COUNT_TEXT)
    
    HEADING_DESC_FREQUENCY_EXTENSION_ONLY = ("A count of the files associated with possible identifiers where file format identification tool has tried to offer "
