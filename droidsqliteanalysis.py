@@ -23,10 +23,10 @@ def handleConfig(blacklist):
       config.read(configfname)
    return config
 
-def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
-   if htmlout is True:
-      htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
-      sys.stdout.write(htmloutput.printHTMLResults())   
+def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
+   if txtout is True:
+      textoutput = DROIDAnalysisTextOutput(analysisresults)
+      sys.stdout.write(textoutput.printTextResults()) # Text class still uses print statements...  
    elif rogues is True:
       rogueoutput = rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
@@ -34,9 +34,9 @@ def handleOutput(analysisresults, htmlout=False, rogues=False, heroes=False):
       rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heroes)
       rogueoutput.printTextResults()      
    else:
-      textoutput = DROIDAnalysisTextOutput(analysisresults)
-      sys.stdout.write(textoutput.printTextResults()) # Text class still uses print statements... 
-
+      htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
+      sys.stdout.write(htmloutput.printHTMLResults())     
+   
 def handleDROIDDB(dbfilename, config=False):
    cfg = 'config.cfg'
    if os.path.exists(cfg) and os.path.isfile(cfg):
@@ -47,12 +47,12 @@ def handleDROIDDB(dbfilename, config=False):
    analysis.closeDROIDDB()
    return analysisresults
 
-def handleDROIDCSV(droidcsv, analyse=False, htmlout=False, rogues=False, heroes=False, blacklist=False):
+def handleDROIDCSV(droidcsv, analyse=False, txtout=False, rogues=False, heroes=False, blacklist=False):
    dbfilename = droid2sqlite.identifyinput(droidcsv)
    if dbfilename is not None:
       if analyse == True:
          analysisresults = handleDROIDDB(dbfilename, config, blacklist)
-         handleOutput(analysisresults, htmlout, rogues, heroes)
+         handleOutput(analysisresults, txtout, rogues, heroes)
 
 def outputtime(start_time):
    sys.stderr.write("--- %s seconds ---" % (time.time() - start_time) + "\n")
@@ -65,7 +65,7 @@ def main():
    parser = argparse.ArgumentParser(description='Analyse DROID and Siegfried results stored in a SQLite database')
    parser.add_argument('--export', '--droid', '--sf', '--exp', help='Optional: DROID or Siegfried export to read, and then analyse.', default=False)
    parser.add_argument('--db', help='Optional: Single DROID or Siegfried sqlite db to read.', default=False)
-   parser.add_argument("--htm", "--html", help="Output HTML instead of text.", action="store_true")
+   parser.add_argument("--txt", "--text", help="Output HTML instead of text.", action="store_true")
    #parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
    #parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
    #parser.add_argument("--blacklist", help="Use configured blacklist.", action="store_true")
@@ -91,7 +91,7 @@ def main():
          iddb = IdentifyDB()
          if iddb.identify_export(args.db) == iddb.SQLITE_DB:
             analysisresults = handleDROIDDB(args.db)
-            handleOutput(analysisresults, args.htm)
+            handleOutput(analysisresults, args.txt)
             outputtime(start_time)
          else:
             sys.exit("Exiting: Not a recognised SQLite file.")
