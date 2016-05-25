@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # we don't import YAML handler for this 
 # as no standard PYTHON handler library
+import re
 import sys
 import os.path
 import datetime
@@ -284,18 +285,37 @@ class SFYAMLHandler:
          row[self.FIELDYEAR] = self.getYear(year)
       return sfdata
 
+   def get_datestring_without_timezone(self, datestring):
+      newdate = False
+      if '+' in datestring:
+         #sf example: 2016-04-02T20:45:12+13:00
+         newdate = datestring.split('+', 1)[0]
+      else:
+         #sf example: 2016-04-02T20:45:12-04:00
+         newdate = datestring.rsplit('-', 1)[0]   
+      if newdate != False:
+         #validate the date format, else return exception
+         try:
+            newdate = int(datetime.datetime.strptime(newdate, '%Y-%m-%dT%H:%M:%S').year)       
+         #e.g. ValueError: unconverted data remains: -04:00       
+         except ValueError as e:        
+            err = "Problem in getYear function, likely due to timezone issues: " + str(e)
+            sys.stderr.write(err)  
+            newdate = False      
+      if newdate == False:
+         testyear = datestring.split('-')[0]
+         validyear = re.compile('^\d{4}$')
+         if len(testyear) == 4 and re.search(validyear, testyear) is not None:    #we should have a year
+            newdate = int(testyear)
+            sys.stderr.write("Treating timestamp as a string and setting it to: " + str(testyear))            
+      return newdate
+      
    def getYear(self, datestring):
-      #sf example: 2016-04-02T20:45:12+13:00
       dt = '1900'
-      datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)
-      try:
-         dt = int(datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S').year)
-      except ValueError as e:   #e.g. ValueError: unconverted data remains: -04:00         
-         err = "Problem in getYear function, likely due to timezone issues: " + str(e)
-         if len(datestring.split('-')[0]) == 4:
-            dt = datestring.split('-')[0]
-            err = err + "\n" + "Treating timestamp as a string and setting it to: " + str(dt)         
-         sys.stderr.write(err)
+      datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)      
+      datestring = self.get_datestring_without_timezone(datestring)
+      if datestring != False:
+         dt = datestring      
       return int(dt)
 
    def getContainers(self, id, filedict):
