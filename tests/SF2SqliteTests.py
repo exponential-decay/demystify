@@ -8,6 +8,7 @@ class SF2SqliteTests(TestCase):
 
    def setup(self):
       self.sfhandler = SFYAMLHandler()
+      sys.stderr.write("\n")
 
    def test_get_datestring_without_timezone(self):
       self.setup()
@@ -22,6 +23,8 @@ class SF2SqliteTests(TestCase):
       self.assertEqual(test3,2015)
       self.assertEqual(test4,False)
       self.assertEqual(test5,1999)
+      
+      sys.stderr.write("\n")
 
    def test_getYear(self):
       self.setup()
@@ -32,6 +35,8 @@ class SF2SqliteTests(TestCase):
       self.assertEqual(test1,2016)
       self.assertEqual(test2,2015)
       self.assertEqual(test3,'NULL')
+      
+      sys.stderr.write("\n")
       
 def main():
 	suite = TestLoader().loadTestsFromTestCase(SF2SqliteTests)

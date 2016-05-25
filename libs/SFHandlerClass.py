@@ -315,7 +315,7 @@ class SFYAMLHandler:
       datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)      
       datestring = self.get_datestring_without_timezone(datestring)
       if datestring != False:
-         dt = datestring      
+         dt = datestring  
       return dt
 
    def getContainers(self, id, filedict):
