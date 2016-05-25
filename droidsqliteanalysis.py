@@ -55,7 +55,7 @@ def handleDROIDCSV(droidcsv, analyse=False, txtout=False, rogues=False, heroes=F
          handleOutput(analysisresults, txtout, rogues, heroes)
 
 def outputtime(start_time):
-   sys.stderr.write("--- %s seconds ---" % (time.time() - start_time) + "\n")
+   sys.stderr.write("\n" + "--- %s seconds ---" % (time.time() - start_time) + "\n")
 
 def main():
 

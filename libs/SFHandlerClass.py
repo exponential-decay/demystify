@@ -308,15 +308,15 @@ class SFYAMLHandler:
          if len(testyear) == 4 and re.search(validyear, testyear) is not None:    #we should have a year
             newdate = int(testyear)
             sys.stderr.write("Treating timestamp as a string and setting it to: " + str(testyear))            
-      return newdate
+      return int(newdate)
       
    def getYear(self, datestring):
-      dt = '1900'
+      dt = 'NULL'    #SQL NULL
       datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)      
       datestring = self.get_datestring_without_timezone(datestring)
       if datestring != False:
          dt = datestring      
-      return int(dt)
+      return dt
 
    def getContainers(self, id, filedict):
       #only set as File if and only if it isn't a Container
