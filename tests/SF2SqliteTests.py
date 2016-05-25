@@ -31,7 +31,7 @@ class SF2SqliteTests(TestCase):
       
       self.assertEqual(test1,2016)
       self.assertEqual(test2,2015)
-      self.assertEqual(test3,1900)
+      self.assertEqual(test3,'NULL')
       
 def main():
 	suite = TestLoader().loadTestsFromTestCase(SF2SqliteTests)

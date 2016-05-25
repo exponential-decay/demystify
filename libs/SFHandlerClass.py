@@ -299,15 +299,15 @@ class SFYAMLHandler:
             newdate = int(datetime.datetime.strptime(newdate, '%Y-%m-%dT%H:%M:%S').year)       
          #e.g. ValueError: unconverted data remains: -04:00       
          except ValueError as e:        
-            err = "Problem in getYear function, likely due to timezone issues: " + str(e)
-            sys.stderr.write(err)  
+            errstr = "Problem in getYear function, likely due to timezone issues: " + str(e)
+            sys.stderr.write(errstr + "\n")  
             newdate = False      
       if newdate == False:
          testyear = datestring.split('-')[0]
          validyear = re.compile('^\d{4}$')
          if len(testyear) == 4 and re.search(validyear, testyear) is not None:    #we should have a year
             newdate = int(testyear)
-            sys.stderr.write("Treating timestamp as a string and setting it to: " + str(testyear))            
+            sys.stderr.write("Treating timestamp as a string and setting it to: " + str(testyear) + "\n")            
       return int(newdate)
       
    def getYear(self, datestring):
