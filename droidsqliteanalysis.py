@@ -51,7 +51,7 @@ def handleDROIDCSV(droidcsv, analyse=False, txtout=False, rogues=False, heroes=F
    dbfilename = droid2sqlite.identifyinput(droidcsv)
    if dbfilename is not None:
       if analyse == True:
-         analysisresults = handleDROIDDB(dbfilename, config, blacklist)
+         analysisresults = handleDROIDDB(dbfilename)
          handleOutput(analysisresults, txtout, rogues, heroes)
 
 def outputtime(start_time):
@@ -84,7 +84,7 @@ def main():
    #   blacklist = handleConfig(args.blacklist)
       
    if args.export:
-      handleDROIDCSV(args.export, True, args.htm)
+      handleDROIDCSV(args.export, True, args.txt)
       outputtime(start_time)
    if args.db:
       if os.path.isfile(args.db):
