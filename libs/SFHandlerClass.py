@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # we don't import YAML handler for this 
 # as no standard PYTHON handler library
+import sys
 import os.path
 import datetime
 import urllib
@@ -47,8 +48,7 @@ class SFYAMLHandler:
    byte_basis = 'byte match'
    container_basis_one = 'container match'
    container_basis_two = 'container name'
-   xml_basis = 'xml match'
-   
+   xml_basis = 'xml match'   
 
    PROCESSING_ERROR = -1
    filecount = 0
@@ -286,9 +286,17 @@ class SFYAMLHandler:
 
    def getYear(self, datestring):
       #sf example: 2016-04-02T20:45:12+13:00
+      dt = '1900'
       datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)
-      dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
-      return int(dt.year)
+      try:
+         dt = int(datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S').year)
+      except ValueError as e:   #e.g. ValueError: unconverted data remains: -04:00         
+         err = "Problem in getYear function, likely due to timezone issues: " + str(e)
+         if len(datestring.split('-')[0]) == 4:
+            dt = datestring.split('-')[0]
+            err = err + "\n" + "Treating timestamp as a string and setting it to: " + str(dt)         
+         sys.stderr.write(err)
+      return int(dt)
 
    def getContainers(self, id, filedict):
       #only set as File if and only if it isn't a Container
