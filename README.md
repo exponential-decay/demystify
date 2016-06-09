@@ -99,7 +99,8 @@ descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unic
 
 Summary/Aggregate Binary / Text / Filename identification statistics are output with the following priority:
 
-Namespace (e.g. PRONOM first [configurable])
+Namespace (e.g. ordered by PRONOM first [configurable])
+
 1. Binary and Container Identifiers
 2. XML Identifiers
 3. Text Identifiers
