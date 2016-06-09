@@ -1,17 +1,20 @@
 droid/siegfried-sqlite-analysis
 =====================
 
-Engine for analysis of DROID CSV and Seigfried export files. The tool has three 
+Engine for analysis of [DROID CSV](https://github.com/digital-preservation/droid)
+and [Seigfried](https://github.com/richardlehane/siegfried) export files. The tool has three 
 purposes, break the export into its components and store them within a set of tables
 in a SQLite database; create additional columns to augment the output where useful;
 and query the SQLite database, outputting results in a readable form useful for
 analysis by researchers and archivists within digital preservation departments
 in memory institutions. 
 
-See: 
+See the following blogs for more information: 
 
-http://www.openplanetsfoundation.org/blogs/2014-06-03-analysis-engine-droid-csv-export
-http://openpreservation.org/blog/2016/05/23/whats-in-a-namespace-the-marriage-of-droid-and-siegfried-analysis/
+* [2014-06-03] On the creation of this tool: http://www.openplanetsfoundation.org/blogs/2014-06-03-analysis-engine-droid-csv-export
+* [2015-08-25] On using the output of the tool to create a digital preservation rogues gallery: http://openpreservation.org/blog/2015/08/25/hero-or-villain-a-tool-to-create-a-digital-preservation-rogues-gallery/ 
+* [2016-05-23] On the integration of Siegfried output for consistent and repeatable reporting: http://openpreservation.org/blog/2016/05/23/whats-in-a-namespace-the-marriage-of-droid-and-siegfried-analysis/
+* [2016-05-24] On creating a multi-lingual dialect and exploring alternative identification methods: http://openpreservation.org/blog/2016/05/24/while-were-on-the-subject-a-few-more-points-of-interest-about-the-siegfrieddroid-analysis-tool/ 
 
 There are three components to the tool:
 
@@ -107,6 +110,7 @@ We need to monitor how well this works. Namespace specific statistics are also o
 
 ### TODO
 
+* Internationalizing archivist descriptions
 * Additional typing of database fields
 * Improved container listing/handling e.g. maybe via URIs in SF output...
 * Improved 'directory' listing and handling.
