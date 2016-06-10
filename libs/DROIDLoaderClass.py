@@ -24,7 +24,7 @@ class DROIDLoader:
    def insertfiledbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.FILEDATATABLE
       return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
-
+      
    def insertiddbstring(self, keys, values):
       insert = "INSERT INTO " + self.basedb.IDTABLE
       return insert + "(" + keys.strip(", ") + ") VALUES (" + values.strip(", ") + ");"
@@ -100,7 +100,7 @@ class DROIDLoader:
                      self.basedb.hashtype = "None"
                if key in ToolMapping.DROID_FILE_MAP:
                   filekeystring = filekeystring + ToolMapping.DROID_FILE_MAP[key] + ", "
-                  filevaluestring = filevaluestring + "'" + value + "', "
+                  filevaluestring = filevaluestring + '"' + value + '", '
                if MULTIPLE == False:
                   if key in ToolMapping.DROID_ID_MAP:
                      if key == 'EXTENSION_MISMATCH':
@@ -109,7 +109,7 @@ class DROIDLoader:
                         elif value == 'false':
                            value = "0"
                      idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
-                     idvaluestring = idvaluestring + "'" + value + "', "
+                     idvaluestring = idvaluestring + '"' + value + '", '
                else:
                   if MULTIPLE_DONE == False:
                      MULTIPLE_KEY_LIST, MULTIPLE_VALUE_LIST = self.populateIDTable(file[droidcsvhandler.DICT_FORMATS], METHOD, STATUS, MISMATCH)

@@ -68,7 +68,11 @@ class genericCSVHandler():
                   #note: don't need ID data. Ignoring multiple ID.
                   for i in range(columncount):
                      if i == FORMAT_COUNT:
-                        count = int(row[i])
+                        if row[i] != u'':
+                           count = int(row[i])
+                        else:
+                           count = 0
+
                         csv_dict[header_list[i]] = count
                         
                         #exception for multiple ids
