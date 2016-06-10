@@ -1,0 +1,367 @@
+Siegfried Analysis Results
+Analysis Version: 0.4.0
+Analysis File: opf-test-corpus-test-output/opf-test-corpus-sf-analysis
+Analysis Tool: siegfried: 1.5.0
+
+Namespaces Used: 3
+Max Distance Scanned from Beginning of File: x-fmt/240, byte match at [[[0 24]] [[93889 67]]] e.g. reviews.mdb filesize: 270336, 93956 bytes
+Max Distance Scanned from End of File: fmt/354, byte match at [[[0 8]] [[4942825 44]] [[4942883 79]]] (signature 1/2) e.g. 499039.pdf filesize: 5632355, 689472 bytes
+
+Total Files: 325
+Total Archive Files: 13
+Total Files Inside Archive Files: 1
+Total Directories: 51
+Total Unique Directory Names: 50
+Total Identified Files (Based on Signature): 271
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 54
+Total XML ID Only Count: 0
+Total Text ID Only Count: 8
+Total Filename ID Only Count: 0
+Total Extension ID Only Count: 3
+Total Extension Mismatches: 25
+Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 51
+Total Discrete Other (Non-PUID) File Format Signature Identifiers in the Accession/Extract: 30
+Total XML Based Identification Identifiers in the Accession/Extract: 0
+Total Text Based Identification Identifiers in the Accession/Extract: 5
+Total Filename Based Identification Identifiers in the Accession/Extract: 0
+Total Unique Extensions Across Accession/Extract: 59
+Total Zero-byte Files in Accession/Extract: 29
+Total Files with Identical Content (Checksum Value): 33
+Total Files with Multiple Contiguous Space Characters: 0
+Percentage of Accession/Extract Identified: 83.4
+Percentage of Accession/Extract Unidentified: 16.6
+Files Left Unidentified Across Multiple Identifiers (Based on Signature): 54
+Size of the accession/extract: 397567751.0 bytes | 379.2 MiB/MB (Megabytes)
+
+
+Aggregated File Format Signature Identifiers in Accession/Extract:
+ns:pronom fmt/101, Extensible Markup Language, 1.0 (7)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 (4)
+ns:pronom fmt/12, Portable Network Graphics, 1.1 (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 (2)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 (1)
+ns:pronom fmt/151, JPX (JPEG 2000 part 2),  (1)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 (11)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 (21)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 (33)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (7)
+ns:pronom fmt/196, Adobe InDesign Document, CS (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 (4)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 (15)
+ns:pronom fmt/291, OpenDocument Text, 1.2 (9)
+ns:pronom fmt/337, MJ2 (Motion JPEG 2000),  (1)
+ns:pronom fmt/353, Tagged Image File Format,  (2)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b (3)
+ns:pronom fmt/355, Rich Text Format, 1.9 (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 (1)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  (6)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 (6)
+ns:pronom fmt/41, Raw JPEG Stream,  (1)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (1)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 (2)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 (1)
+ns:pronom fmt/463, JPM (JPEG 2000 part 6),  (1)
+ns:pronom fmt/482, Apple iBook format,  (3)
+ns:pronom fmt/483, ePub format,  (3)
+ns:pronom fmt/485, Rocket Book eBook format,  (2)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 (1)
+ns:pronom fmt/518, Broad Band eBook, LRF (2)
+ns:pronom fmt/524, Microsoft Office Theme,  (1)
+ns:pronom fmt/583, Vector Markup Language,  (1)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 (3)
+ns:pronom fmt/610, ARJ File Format,  (1)
+ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a (3)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 (4)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 (1)
+ns:pronom x-fmt/121, Quattro Pro Spreadsheet, 1-4 (1)
+ns:pronom x-fmt/122, Quattro Pro Spreadsheet, 5 (3)
+ns:pronom x-fmt/238, Microsoft Access Database, 95 (1)
+ns:pronom x-fmt/239, Microsoft Access Database, 97 (1)
+ns:pronom x-fmt/240, Microsoft Access Database, 2000 (1)
+ns:pronom x-fmt/263, ZIP Format,  (12)
+ns:pronom x-fmt/266, GZIP Format,  (1)
+ns:pronom x-fmt/384, Quicktime,  (61)
+ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2 (1)
+ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),  (14)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (2)
+ns:tika text/html,  (1)
+ns:freedesktop.org text/x-tex, TeX document,  (1)
+ns:freedesktop.org image/jp2, JPEG-2000 image,  (1)
+
+
+Aggregated Frequency of File Format Signature Identifiers in Accession/Extract:
+ns:pronom fmt/101, Extensible Markup Language, 1.0 [extension match xml; byte match at 0, 19] (7)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[43110 12]]]] (4)
+ns:pronom fmt/12, Portable Network Graphics, 1.1 [extension match png; byte match at [[[0 16]] [[53 4]] [[61693 12]]] (signature 3/3)] (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [extension match ppt; container name PowerPoint Document with name only] (2)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[984 5]]]] (1)
+ns:pronom fmt/151, JPX (JPEG 2000 part 2),  [extension match jpf; byte match at 0, 23] (1)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[93718 5]]]] (11)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[21444 5]]]] (21)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[27483 5]]]] (33)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[207298 5]]]] (7)
+ns:pronom fmt/196, Adobe InDesign Document, CS [extension match indd; byte match at 0, 33] (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[24334 5]]]] (4)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[213335 7]]]] (15)
+ns:pronom fmt/291, OpenDocument Text, 1.2 [extension match odt; container name content.xml with byte match at [[[40 23]] [[1854 20]]]; name META-INF/manifest.xml with byte match at 149, 60] (9)
+ns:pronom fmt/337, MJ2 (Motion JPEG 2000),  [extension match mj2; byte match at 0, 24] (1)
+ns:pronom fmt/353, Tagged Image File Format,  [extension match tif; byte match at 0, 4 (signature 1/2)] (2)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[637 44]] [[695 79]]] (signature 1/2)] (3)
+ns:pronom fmt/355, Rich Text Format, 1.9 [extension match rtf; byte match at [[[0 32]] [[54 44]] [[5561 10]]]] (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [extension match doc; byte match at 0, 22] (1)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 2/2)] (6)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 [extension match doc; container name CompObj with byte match at 72, 20; name WordDocument with name only] (6)
+ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[1620610 2]]] (signature 1/2)] (1)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 379, 94 (signature 1/3)] (1)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[261590 2]]]] (2)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [extension match jpg; byte match at [[[0 14]] [[12948897 2]]]] (1)
+ns:pronom fmt/463, JPM (JPEG 2000 part 6),  [extension match jpm; byte match at 0, 23] (1)
+ns:pronom fmt/482, Apple iBook format,  [extension match ibooks; container name mimetype with byte match at 0, 24] (3)
+ns:pronom fmt/483, ePub format,  [extension match epub; container name mimetype with byte match at 0, 20] (3)
+ns:pronom fmt/485, Rocket Book eBook format,  [extension match rb; byte match at 0, 10] (2)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (1)
+ns:pronom fmt/518, Broad Band eBook, LRF [extension match lrf; byte match at 0, 8] (2)
+ns:pronom fmt/524, Microsoft Office Theme,  [container name [Content_Types].xml with byte match at 338, 76] (1)
+ns:pronom fmt/583, Vector Markup Language,  [extension match htm; byte match at 6, 39] (1)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (3)
+ns:pronom fmt/610, ARJ File Format,  [extension match arj; byte match at 0, 2] (1)
+ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a [extension match pdf; byte match at [[[0 8]] [[29674 44]] [[29726 73]]]] (3)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (4)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (1)
+ns:pronom x-fmt/121, Quattro Pro Spreadsheet, 1-4 [extension match wq1; byte match at [[[0 6]] [[18683 4]]]] (1)
+ns:pronom x-fmt/122, Quattro Pro Spreadsheet, 5 [extension match wq2; byte match at [[[0 6]] [[20664 4]]]] (3)
+ns:pronom x-fmt/238, Microsoft Access Database, 95 [extension match mdb; byte match at [[[0 24]] [[42830 45]]]] (1)
+ns:pronom x-fmt/239, Microsoft Access Database, 97 [extension match mdb; byte match at [[[0 24]] [[42872 45]]]] (1)
+ns:pronom x-fmt/240, Microsoft Access Database, 2000 [extension match mdb; byte match at [[[0 24]] [[93889 67]]]] (1)
+ns:pronom x-fmt/263, ZIP Format,  [byte match at [[[0 4]] [[168754 3]] [[168809 4]]]] (12)
+ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (1)
+ns:pronom x-fmt/384, Quicktime,  [extension match mov; byte match at 0, 12 (signature 8/11)] (61)
+ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2 [extension match tif; byte match at [[[0 4]] [[15520 12]]] (signature 4/4)] (1)
+ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),  [extension match jp2; byte match at 0, 23] (14)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wpd; byte match at 0, 12] (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[12672 8]] [[528153 20]]]] (2)
+ns:tika text/html,  [byte match at 526, 5 (signature 7/16)] (1)
+ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (1)
+ns:freedesktop.org image/jp2, JPEG-2000 image,  [byte match at 0, 5 (signature 1/3)] (1)
+
+
+Aggregated Frequency of Text Identifiers in Accession/Extract:
+ns:pronom fmt/101, Extensible Markup Language, 1.0 [extension match xml; byte match at 0, 19] (7)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[43110 12]]]] (4)
+ns:pronom fmt/12, Portable Network Graphics, 1.1 [extension match png; byte match at [[[0 16]] [[53 4]] [[61693 12]]] (signature 3/3)] (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [extension match ppt; container name PowerPoint Document with name only] (2)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[984 5]]]] (1)
+ns:pronom fmt/151, JPX (JPEG 2000 part 2),  [extension match jpf; byte match at 0, 23] (1)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[93718 5]]]] (11)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[21444 5]]]] (21)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[27483 5]]]] (33)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[207298 5]]]] (7)
+ns:pronom fmt/196, Adobe InDesign Document, CS [extension match indd; byte match at 0, 33] (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[24334 5]]]] (4)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[213335 7]]]] (15)
+ns:pronom fmt/291, OpenDocument Text, 1.2 [extension match odt; container name content.xml with byte match at [[[40 23]] [[1854 20]]]; name META-INF/manifest.xml with byte match at 149, 60] (9)
+ns:pronom fmt/337, MJ2 (Motion JPEG 2000),  [extension match mj2; byte match at 0, 24] (1)
+ns:pronom fmt/353, Tagged Image File Format,  [extension match tif; byte match at 0, 4 (signature 1/2)] (2)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[637 44]] [[695 79]]] (signature 1/2)] (3)
+ns:pronom fmt/355, Rich Text Format, 1.9 [extension match rtf; byte match at [[[0 32]] [[54 44]] [[5561 10]]]] (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [extension match doc; byte match at 0, 22] (1)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 2/2)] (6)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 [extension match doc; container name CompObj with byte match at 72, 20; name WordDocument with name only] (6)
+ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[1620610 2]]] (signature 1/2)] (1)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 379, 94 (signature 1/3)] (1)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[261590 2]]]] (2)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [extension match jpg; byte match at [[[0 14]] [[12948897 2]]]] (1)
+ns:pronom fmt/463, JPM (JPEG 2000 part 6),  [extension match jpm; byte match at 0, 23] (1)
+ns:pronom fmt/482, Apple iBook format,  [extension match ibooks; container name mimetype with byte match at 0, 24] (3)
+ns:pronom fmt/483, ePub format,  [extension match epub; container name mimetype with byte match at 0, 20] (3)
+ns:pronom fmt/485, Rocket Book eBook format,  [extension match rb; byte match at 0, 10] (2)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (1)
+ns:pronom fmt/518, Broad Band eBook, LRF [extension match lrf; byte match at 0, 8] (2)
+ns:pronom fmt/524, Microsoft Office Theme,  [container name [Content_Types].xml with byte match at 338, 76] (1)
+ns:pronom fmt/583, Vector Markup Language,  [extension match htm; byte match at 6, 39] (1)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (3)
+ns:pronom fmt/610, ARJ File Format,  [extension match arj; byte match at 0, 2] (1)
+ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a [extension match pdf; byte match at [[[0 8]] [[29674 44]] [[29726 73]]]] (3)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (4)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (1)
+ns:pronom x-fmt/121, Quattro Pro Spreadsheet, 1-4 [extension match wq1; byte match at [[[0 6]] [[18683 4]]]] (1)
+ns:pronom x-fmt/122, Quattro Pro Spreadsheet, 5 [extension match wq2; byte match at [[[0 6]] [[20664 4]]]] (3)
+ns:pronom x-fmt/238, Microsoft Access Database, 95 [extension match mdb; byte match at [[[0 24]] [[42830 45]]]] (1)
+ns:pronom x-fmt/239, Microsoft Access Database, 97 [extension match mdb; byte match at [[[0 24]] [[42872 45]]]] (1)
+ns:pronom x-fmt/240, Microsoft Access Database, 2000 [extension match mdb; byte match at [[[0 24]] [[93889 67]]]] (1)
+ns:pronom x-fmt/263, ZIP Format,  [byte match at [[[0 4]] [[168754 3]] [[168809 4]]]] (12)
+ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (1)
+ns:pronom x-fmt/384, Quicktime,  [extension match mov; byte match at 0, 12 (signature 8/11)] (61)
+ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2 [extension match tif; byte match at [[[0 4]] [[15520 12]]] (signature 4/4)] (1)
+ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),  [extension match jp2; byte match at 0, 23] (14)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wpd; byte match at 0, 12] (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[12672 8]] [[528153 20]]]] (2)
+ns:tika text/html,  [byte match at 526, 5 (signature 7/16)] (1)
+ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (1)
+ns:freedesktop.org image/jp2, JPEG-2000 image,  [byte match at 0, 5 (signature 1/3)] (1)
+
+
+Extension Only Identification in the Accession/Extract:
+application/pdf, Portable Document Format
+application/pdf, PDF document
+application/x-adobe-indesign, Adobe InDesign document
+application/octet-stream, 
+application/x-mobipocket-ebook, 
+application/vnd.palm, 
+application/x-ruby, Ruby script
+video/mj2, 
+video/jpm, 
+application/vnd.lotus-1-2-3, Lotus 1-2-3 spreadsheet
+application/vnd.wordperfect, 
+application/x-msaccess, 
+application/msword, Microsoft Word Document
+application/msword, Word document
+x-fmt/100, AutoCAD Script
+application/x-mimearchive, MHTML web archive
+
+
+Date Range of Items in the Accession/Extract:
+2014 (325)
+
+
+Identification Method Frequency:
+Signature (240), None (43), Container (31), Text (8), Extension (3), Filename (0), XML (0)
+
+
+Frequency of Extension Only Identification In Accession/Extract:
+ns:tika  application/x-msaccess (3), ns:tika  application/octet-stream (2), ns:tika  application/x-mobipocket-ebook (2), ns:tika  application/vnd.palm (2), ns:freedesktop.org  UNKNOWN (2), ns:tika  UNKNOWN (2), ns:freedesktop.org  application/x-ruby (2), ns:pronom  x-fmt/100 (2), ns:tika  application/pdf (1), ns:pronom  UNKNOWN (1), ns:freedesktop.org  application/pdf (1), ns:freedesktop.org  application/vnd.lotus-1-2-3 (1), ns:tika  application/vnd.wordperfect (1), ns:tika  application/x-adobe-indesign (1), ns:tika  video/mj2 (1), ns:freedesktop.org  application/x-mimearchive (1), ns:freedesktop.org  application/msword (1), ns:tika  application/msword (1), ns:tika  video/jpm (1)
+
+
+Unique Extensions Identified Across All Objects (ID and non-ID):
+pdf, indd, rtf, jpg, azw3, epub, fb2, htmlz, lit, lrf, mobi, opf, pdb, pmlz, rb, snb, txt, txtz, zip, iba, ibooks, png, md, ARJ, ), }, mj2, j2c, jp2, jpf, jpm, tif, cdd, xml, mmp, nmind, opml, WK1, WK3, WQ1, WQ2, xls, odt, WPD, mdb, DOC, xhtml, ppt, MAP, doc, STG, SCR, STA, docx, pages, mht, htm, mov
+
+
+Frequency of All Extensions:
+pdf (99), mov (61), jp2 (12), odt (9), doc (7), MAP (5), png (5), WK1 (4), jpg (4), ppt (4), rtf (4), xml (4), WQ2 (3), epub (3), iba (3), ibooks (3), jpf (3), mdb (3), tif (3), txt (3), xls (3), SCR (2), STA (2), STG (2), azw3 (2), fb2 (2), htmlz (2), lit (2), lrf (2), md (2), mobi (2), pdb (2), pmlz (2), rb (2), snb (2), txtz (2), zip (2), } (2), ) (1), ARJ (1), DOC (1), WK3 (1), WPD (1), WQ1 (1), cdd (1), docx (1), htm (1), indd (1), j2c (1), jpm (1), mht (1), mj2 (1), mmp (1), nmind (1), opf (1), opml (1), pages (1), xhtml (1)
+
+
+MIME Type (Internet Media Type) Frequency:
+application/pdf (98), video/quicktime (61), image/jp2 (15), application/zip (12), application/vnd.oasis.opendocument.text (9), application/msword (8), application/xml (8), image/png (5), text/plain (5), application/rtf (4), application/vnd.lotus-1-2-3 (4), application/vnd.ms-powerpoint (4), image/jpeg (4), application/epub+zip (3), application/vnd.ms-excel (3), application/x-ibooks+zip (3), image/tiff (3), application/lotus123 (1), application/vnd.ms-officetheme (1), application/vnd.openxmlformats-officedocument.wordprocessingml.document (1), application/vnd.wordperfect (1), application/x-gzip (1), image/jpm (1), image/jpx (1), text/html (1), text/x-tex (1), video/mj2 (1)
+
+
+Results Per Identifier Namespace:
+Namespace: pronom (DROID_SignatureFile_V82.xml; container-signature-20150327.xml)
+Total Identified Files (Based on Signature): 268
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 57
+Total Extension ID Only Count: 2
+Total XML ID Only Count: 0
+Total Text ID Only Count: 5
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 82.5
+Percentage of Accession/Extract Unidentified: 17.5
+
+Frequency of File Format Signature Identified IDs
+x-fmt/384 (61), fmt/18 (33), fmt/17 (21), fmt/276 (15), x-fmt/392 (14), x-fmt/263 (12), fmt/16 (11), fmt/291 (9), fmt/101 (7), fmt/19 (7), fmt/396 (6), fmt/40 (6), fmt/11 (4), fmt/20 (4), x-fmt/114 (4), fmt/354 (3), fmt/482 (3), fmt/483 (3), fmt/61 (3), fmt/95 (3), x-fmt/122 (3), fmt/126 (2), fmt/353 (2), fmt/43 (2), fmt/485 (2), fmt/518 (2), x-fmt/88 (2), fmt/12 (1), fmt/15 (1), fmt/151 (1), fmt/196 (1), fmt/337 (1), fmt/355 (1), fmt/38 (1), fmt/41 (1), fmt/412 (1), fmt/44 (1), fmt/463 (1), fmt/50 (1), fmt/524 (1), fmt/583 (1), fmt/609 (1), fmt/610 (1), x-fmt/115 (1), x-fmt/121 (1), x-fmt/238 (1), x-fmt/239 (1), x-fmt/240 (1), x-fmt/266 (1), x-fmt/387 (1), x-fmt/44 (1)
+
+Namespace: tika (tika-mimetypes.xml)
+Total Identified Files (Based on Signature): 233
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 92
+Total Extension ID Only Count: 15
+Total XML ID Only Count: 0
+Total Text ID Only Count: 10
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 71.7
+Percentage of Accession/Extract Unidentified: 28.3
+
+Frequency of File Format Signature Identified IDs
+application/x-123 (9), application/vnd.ms-powerpoint (4), application/vnd.ms-excel (3), application/x-gzip (1), application/x-tika-ooxml (1)
+
+Namespace: freedesktop.org (freedesktop.org.xml)
+Total Identified Files (Based on Signature): 257
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 68
+Total Extension ID Only Count: 6
+Total XML ID Only Count: 0
+Total Text ID Only Count: 10
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 79.1
+Percentage of Accession/Extract Unidentified: 20.9
+
+Frequency of File Format Signature Identified IDs
+application/pdf (196), video/quicktime (122), application/zip (31), application/vnd.oasis.opendocument.text (18), image/jp2 (18), application/msword (14), image/png (10), application/xml (9), image/jpeg (8), application/x-ole-storage (7), application/epub+zip (6), image/tiff (6), application/vnd.lotus-1-2-3 (4), application/x-mobipocket-ebook (4), application/vnd.ms-access (3), text/html (3), application/vnd.openxmlformats-officedocument.wordprocessingml.document (2), application/x-aportisdoc (2), application/x-fictionbook+xml (2), application/xhtml+xml (2), application/gzip (1), application/vnd.wordperfect (1), application/x-arj (1), text/x-opml+xml (1), text/x-tex (1)
+
+
+XML Based Identifiers Across Namespaces:
+ns:freedesktop.org application/x-fictionbook+xml (2), ns:freedesktop.org application/xhtml+xml (1), ns:tika application/xhtml+xml (1), ns:tika text/html (1)
+
+
+Text Based Identifiers Across Namespaces:
+ns:pronom x-fmt/111 (5), ns:tika text/plain (5), ns:freedesktop.org application/rtf (4), ns:tika application/rtf (4), ns:freedesktop.org text/plain (3), ns:freedesktop.org text/markdown (2), ns:freedesktop.org application/xml (1), ns:tika application/xml (1)
+
+
+Filename Based Identifiers Across Namespaces:
+ns:freedesktop.org application/rtf (4), ns:tika application/rtf (4), ns:freedesktop.org text/plain (3), ns:tika application/x-msaccess (3), ns:tika text/plain (3), ns:freedesktop.org application/x-ruby (2), ns:freedesktop.org application/x-trash (2), ns:freedesktop.org text/markdown (2), ns:tika application/octet-stream (2), ns:tika application/vnd.palm (2), ns:tika application/x-mobipocket-ebook (2), ns:freedesktop.org application/msword (1), ns:freedesktop.org application/pdf (1), ns:freedesktop.org application/vnd.lotus-1-2-3 (1), ns:freedesktop.org application/x-mimearchive (1), ns:freedesktop.org application/xml (1), ns:tika application/msword (1), ns:tika application/pdf (1), ns:tika application/vnd.wordperfect (1), ns:tika application/x-adobe-indesign (1), ns:tika application/xml (1), ns:tika video/jpm (1), ns:tika video/mj2 (1)
+
+
+Zero-byte files in Accession/Extract: 29
+format-corpus/filesys-trials/a-bad-name/characters/!
+format-corpus/filesys-trials/a-bad-name/characters/#
+format-corpus/filesys-trials/a-bad-name/characters/$
+format-corpus/filesys-trials/a-bad-name/characters/%
+format-corpus/filesys-trials/a-bad-name/characters/
+format-corpus/filesys-trials/a-bad-name/characters/(
+format-corpus/filesys-trials/a-bad-name/characters/()
+format-corpus/filesys-trials/a-bad-name/characters/(.)
+format-corpus/filesys-trials/a-bad-name/characters/)
+format-corpus/filesys-trials/a-bad-name/characters/+
+format-corpus/filesys-trials/a-bad-name/characters/-
+format-corpus/filesys-trials/a-bad-name/characters/;
+format-corpus/filesys-trials/a-bad-name/characters/=
+format-corpus/filesys-trials/a-bad-name/characters/@
+format-corpus/filesys-trials/a-bad-name/characters/[
+format-corpus/filesys-trials/a-bad-name/characters/[]
+format-corpus/filesys-trials/a-bad-name/characters/]
+format-corpus/filesys-trials/a-bad-name/characters/^
+format-corpus/filesys-trials/a-bad-name/characters/_
+format-corpus/filesys-trials/a-bad-name/characters/`
+format-corpus/filesys-trials/a-bad-name/characters/{
+format-corpus/filesys-trials/a-bad-name/characters/{ (2).}
+format-corpus/filesys-trials/a-bad-name/characters/{.}
+format-corpus/filesys-trials/a-bad-name/characters/{}
+format-corpus/filesys-trials/a-bad-name/characters/}
+format-corpus/filesys-trials/a-bad-name/characters/~
+format-corpus/filesys-trials/a-bad-name/characters/Â£
+format-corpus/filesys-trials/a-bad-name/characters/Â¬
+format-corpus/filesys-trials/empty/null
+
+
+Archive File Types in Accession/Extract:
+htmlz, pmlz, txtz, zip, iba, nmind, pages
+
+
+Files With Identical Content (Checksum Value): 33
+Checksum: da39a3ee5e6b4b0d3255bfef95601890afd80709
+Count: 29
+Example: format-corpus/filesys-trials/a-bad-name/characters/
+
+Checksum: 3611abfafc52dfd56482101f7d26858a451a4f58
+Count: 2
+Example: format-corpus/jp2k-formats/balloon.jp2
+
+Checksum: e12dbf403f935a77ff0b045d97767788c62ff24d
+Count: 2
+Example: format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.txt
+
+
+Identifying Non-ASCII and System File Names:
+File: [ contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
+File: Â£ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+
+
+File Processing Errors Encountered During Scan:
+empty source (29)

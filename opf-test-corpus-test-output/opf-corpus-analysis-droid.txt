@@ -1,0 +1,236 @@
+DROID Analysis Results
+Analysis Version: 0.4.0
+Analysis File: opf-test-corpus-test-output/opf-test-corpus-droid-analysis
+Analysis Tool: droid
+
+Namespaces Used: 1
+
+Total Files: 324
+Total Archive Files: 13
+Total Files Inside Archive Files: 0
+Total Directories: 75
+Total Unique Directory Names: 0
+Total Identified Files (Based on Signature): 270
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 54
+Total Extension ID Only Count: 5
+Total Extension Mismatches: 0
+Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 52
+Total Unique Extensions Across Accession/Extract: 58
+Total Zero-byte Files in Accession/Extract: 29
+Total Files with Identical Content (Checksum Value): 33
+Total Files with Multiple Contiguous Space Characters: 0
+Percentage of Accession/Extract Identified: 83.3
+Percentage of Accession/Extract Unidentified: 16.7
+Files Left Unidentified Across Multiple Identifiers (Based on Signature): 129
+Size of the accession/extract: 397568483.0 bytes | 379.2 MiB/MB (Megabytes)
+
+
+Aggregated File Format Signature Identifiers in Accession/Extract:
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (2)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 (1)
+ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),  (14)
+ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2 (1)
+ns:pronom x-fmt/384, Quicktime,  (61)
+ns:pronom x-fmt/266, GZIP Format,  (1)
+ns:pronom x-fmt/263, ZIP Format,  (12)
+ns:pronom x-fmt/240, Microsoft Access Database, 2000 (1)
+ns:pronom x-fmt/239, Microsoft Access Database, 97 (1)
+ns:pronom x-fmt/238, Microsoft Access Database, 95 (1)
+ns:pronom x-fmt/122, Quattro Pro Spreadsheet for DOS, 5 (3)
+ns:pronom x-fmt/121, Quattro Pro Spreadsheet for DOS, 1-4 (1)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 (1)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 (4)
+ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a (3)
+ns:pronom fmt/867, Microsoft Reader eBook,  (2)
+ns:pronom fmt/610, ARJ File Format,  (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 (3)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 (1)
+ns:pronom fmt/583, Vector Markup Language,  (1)
+ns:pronom fmt/524, Microsoft Office Theme,  (1)
+ns:pronom fmt/518, Broad Band eBook, LRF (2)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 (1)
+ns:pronom fmt/485, Rocket Book eBook format,  (2)
+ns:pronom fmt/483, ePub format,  (3)
+ns:pronom fmt/482, Apple iBook format,  (3)
+ns:pronom fmt/463, JPM (JPEG 2000 part 6),  (1)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 (1)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 (2)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (1)
+ns:pronom fmt/41, Raw JPEG Stream,  (1)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 (6)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  (6)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 (1)
+ns:pronom fmt/355, Rich Text Format, 1.9 (1)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b (3)
+ns:pronom fmt/353, Tagged Image File Format,  (2)
+ns:pronom fmt/337, MJ2 (Motion JPEG 2000),  (1)
+ns:pronom fmt/291, OpenDocument Text, 1.2 (9)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 (15)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 (4)
+ns:pronom fmt/196, Adobe InDesign Document, CS (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (7)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 (33)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 (21)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 (11)
+ns:pronom fmt/151, JPX (JPEG 2000 part 2),  (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 (2)
+ns:pronom fmt/12, Portable Network Graphics, 1.1 (1)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 (4)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 (7)
+
+
+Aggregated Frequency of File Format Signature Identifiers in Accession/Extract:
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0  (2)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0  (1)
+ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),   (14)
+ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2  (1)
+ns:pronom x-fmt/384, Quicktime,   (61)
+ns:pronom x-fmt/266, GZIP Format,   (1)
+ns:pronom x-fmt/263, ZIP Format,   (12)
+ns:pronom x-fmt/240, Microsoft Access Database, 2000  (1)
+ns:pronom x-fmt/239, Microsoft Access Database, 97  (1)
+ns:pronom x-fmt/238, Microsoft Access Database, 95  (1)
+ns:pronom x-fmt/122, Quattro Pro Spreadsheet for DOS, 5  (3)
+ns:pronom x-fmt/121, Quattro Pro Spreadsheet for DOS, 1-4  (1)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0  (1)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0  (4)
+ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a  (3)
+ns:pronom fmt/867, Microsoft Reader eBook,   (2)
+ns:pronom fmt/610, ARJ File Format,   (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8  (3)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003  (1)
+ns:pronom fmt/583, Vector Markup Language,   (1)
+ns:pronom fmt/524, Microsoft Office Theme,   (1)
+ns:pronom fmt/518, Broad Band eBook, LRF  (2)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6  (1)
+ns:pronom fmt/485, Rocket Book eBook format,   (2)
+ns:pronom fmt/483, ePub format,   (3)
+ns:pronom fmt/482, Apple iBook format,   (3)
+ns:pronom fmt/463, JPM (JPEG 2000 part 6),   (1)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02  (1)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01  (2)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards  (1)
+ns:pronom fmt/41, Raw JPEG Stream,   (1)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003  (6)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,   (6)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0  (1)
+ns:pronom fmt/355, Rich Text Format, 1.9  (1)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b  (3)
+ns:pronom fmt/353, Tagged Image File Format,   (2)
+ns:pronom fmt/337, MJ2 (Motion JPEG 2000),   (1)
+ns:pronom fmt/291, OpenDocument Text, 1.2  (9)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7  (15)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6  (4)
+ns:pronom fmt/196, Adobe InDesign Document, CS  (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5  (7)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4  (33)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3  (21)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2  (11)
+ns:pronom fmt/151, JPX (JPEG 2000 part 2),   (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1  (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003  (2)
+ns:pronom fmt/12, Portable Network Graphics, 1.1  (1)
+ns:pronom fmt/11, Portable Network Graphics, 1.0  (4)
+ns:pronom fmt/101, Extensible Markup Language, 1.0  (7)
+
+
+Extension Only Identification in the Accession/Extract:
+x-fmt/111, Plain Text File
+x-fmt/100, AutoCAD Script
+
+
+Date Range of Items in the Accession/Extract:
+2014 (324)
+
+
+Identification Method Frequency:
+Signature (241), None (124), Container (29), Extension (5)
+
+
+Frequency of Extension Only Identification In Accession/Extract:
+ns:pronom  x-fmt/111 (3), ns:pronom  x-fmt/100 (2)
+
+
+Unique Extensions Identified Across All Objects (ID and non-ID):
+mov, txt, htm, xml, mht, png, jpg, pages, rtf, docx, pdf, epub, odt, stg, scr, sta, doc, map, ppt, tif, xhtml, mdb, xls, wpd, wq2, wq1, wk3, wk1, nmind, opml, md, mmp, cdd, jp2, jpf, j2c, jpm, mj2, ), }, arj, ibooks, iba, azw3, fb2, htmlz, lit, lrf, mobi, pdb, pmlz, rb, snb, txtz, zip, opf, indd
+
+
+Frequency of All Extensions:
+pdf (98), mov (61), jp2 (12), odt (9), doc (8), map (5), png (5), jpg (4), ppt (4), rtf (4), wk1 (4), xml (4), epub (3), iba (3), ibooks (3), jpf (3), mdb (3), tif (3), txt (3), wq2 (3), xls (3), azw3 (2), fb2 (2), htmlz (2), lit (2), lrf (2), md (2), mobi (2), pdb (2), pmlz (2), rb (2), scr (2), snb (2), sta (2), stg (2), txtz (2), zip (2), } (2), ) (1), arj (1), cdd (1), docx (1), htm (1), indd (1), j2c (1), jpm (1), mht (1), mj2 (1), mmp (1), nmind (1), opf (1), opml (1), pages (1), wk3 (1), wpd (1), wq1 (1), xhtml (1)
+
+
+MIME Type (Internet Media Type) Frequency:
+application/pdf (98), video/quicktime (61), image/jp2 (14), application/zip (12), application/vnd.oasis.opendocument.text (9), application/msword (8), application/xml, text/xml (7), image/png (5), application/vnd.lotus-1-2-3, application/x-123 (4), application/vnd.ms-powerpoint (4), image/jpeg (4), application/epub+zip (3), application/vnd.ms-excel (3), application/x-ibooks+zip (3), image/tiff (3), application/rtf, text/rtf (2), application/lotus123, application/vnd.lotus-1-2-3 (1), application/vnd.ms-officetheme (1), application/vnd.openxmlformats-officedocument.wordprocessingml.document (1), application/vnd.wordperfect (1), application/x-gzip (1), image/jpm (1), image/jpx (1), video/mj2 (1)
+
+
+Results Per Identifier Namespace:
+Namespace: pronom (opf-test-corpus-test-output/opf-test-corpus-droid-analysis.csv)
+Total Identified Files (Based on Signature): 270
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 54
+Total Extension ID Only Count: 5
+Percentage of Accession/Extract Identified: 83.3
+Percentage of Accession/Extract Unidentified: 16.7
+
+Frequency of File Format Signature Identified IDs
+x-fmt/384 (61), fmt/18 (33), fmt/17 (21), fmt/276 (15), x-fmt/392 (14), x-fmt/263 (12), fmt/16 (11), fmt/291 (9), fmt/101 (7), fmt/19 (7), fmt/396 (6), fmt/40 (6), fmt/11 (4), fmt/20 (4), x-fmt/114 (4), fmt/354 (3), fmt/482 (3), fmt/483 (3), fmt/61 (3), fmt/95 (3), x-fmt/122 (3), fmt/126 (2), fmt/353 (2), fmt/43 (2), fmt/485 (2), fmt/518 (2), fmt/867 (2), x-fmt/88 (2), fmt/12 (1), fmt/15 (1), fmt/151 (1), fmt/196 (1), fmt/337 (1), fmt/355 (1), fmt/38 (1), fmt/41 (1), fmt/412 (1), fmt/44 (1), fmt/463 (1), fmt/50 (1), fmt/524 (1), fmt/583 (1), fmt/609 (1), fmt/610 (1), x-fmt/115 (1), x-fmt/121 (1), x-fmt/238 (1), x-fmt/239 (1), x-fmt/240 (1), x-fmt/266 (1), x-fmt/387 (1), x-fmt/44 (1)
+
+
+Zero-byte files in Accession/Extract: 29
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\empty\null
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\#
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\$
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\%
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\'
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\()
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\(.)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\)
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\+
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\-
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\;
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\=
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\@
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\[]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\]
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\^
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\_
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\`
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{ (2).}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{.}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\{}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\}
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\~
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â£
+\\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\Â¬
+
+
+Archive File Types in Accession/Extract:
+pages, nmind, iba, htmlz, pmlz, txtz, zip
+
+
+Files With Identical Content (Checksum Value): 33
+Checksum: da39a3ee5e6b4b0d3255bfef95601890afd80709
+Count: 29
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\filesys-trials\a-bad-name\characters\!
+
+Checksum: 3611abfafc52dfd56482101f7d26858a451a4f58
+Count: 2
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\jp2k-formats\balloon.jp2
+
+Checksum: 9742c14948d5a41ae1bed96df11166f053488eed
+Count: 2
+Example: \\10.1.4.222\gda\archives-sample-files\opf-format-corpus\format-corpus\ebooks\calibre-0.8.57\Lorem Ipsum - Andrew Jackson.txt
+
+
+Identifying Non-ASCII and System File Names:
+File: [ contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
+File: Â£ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â

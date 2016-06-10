@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>Siegfried Analysis Results</title>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+</head>
+<body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>
+<h1>Siegfried Analysis Results</h1>
+<b>Analysis Version: </b>0.4.0
+</br>
+<b>Analysis File: </b>opf-test-corpus-test-output/opf-test-corpus-sf-analysis
+</br>
+<b>Analysis Tool: </b>siegfried: 1.5.0
+</br>
+</br>
+<b>Namespaces Used: </b>3
+</br>
+</br>
+<b>Max Distance Scanned from Beginning of File: </b><code>x-fmt/240, byte match at [[[0 24]] [[93889 67]]] e.g. reviews.mdb filesize: 270336, 93956 bytes</code>
+</br>
+</br>
+<b>Max Distance Scanned from End of File: </b><code>fmt/354, byte match at [[[0 8]] [[4942825 44]] [[4942883 79]]] (signature 1/2) e.g. 499039.pdf filesize: 5632355, 689472 bytes</code>
+<h2>Summary Statistics</h2>
+<ul>
+<li title="Number of digital files in the accession/extract.">Total Files: 325</li>
+<li title="The total number of archive files in the accession/extract overall. Archive files are objects that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after.">Total Archive Files: 13</li>
+<li title="An aggregate total number of all files inside archive files.">Total Files Inside Archive Files: 1</li>
+<li title="A directory is a folder in the accession/extract delineating a file system hierarchy. Total directories is the total number of directories in the accession/extract overall.">Total Directories: 51</li>
+<li title="This is used to determine the number of duplicate directory (folder) names.">Total Unique Directory Names: 50</li>
+<li title="The number of files that are identified based on a file format signature. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form.">Total Identified Files (Based on Signature): 271</li>
+<li title="This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats.">Total Multiple Identifications (Based on Signature): 0</li>
+<li title="This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database).">Total Unidentified Files: 54</li>
+<li title="Total files identified using an XML matching mechanism. Freedesktop's XML matching mechanism will match features of an XML document once the identifying mechanism has established the file it is looking at is an XML file. Features may include XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional file format signature matching techniques. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total XML ID Only Count: 0</li>
+<li title="Total files identified using a Text matching/Text encoding matching methanism. ">Total Text ID Only Count: 8</li>
+<li title="Total files identified using a Filename matching mechanism. Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. The mechanism works a lot like a filename extension match but can pick up more varied types that might not be encoded in the PRONOM database. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total Filename ID Only Count: 0</li>
+<li title="Files that can only be identified by their extension (e.g. ".DOC" might be a Microsoft Word file, ".MP3" might be an audio file) This is a sub-set of the "Total unidentified files".">Total Extension ID Only Count: 3</li>
+<li title="This is the total number of cases where the extension used does not match with the file signature.">Total Extension Mismatches: 25</li>
+<li title="The total discrete file format signature identifiers in the accession/extract are used to help identify its diversity/complexity. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom.">Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 51</li>
+<li title="The total discrete file format signature identifiers in the accession/extract are used to help identify its diversity/complexity. Non-PUID identifiers are any that aren't specified within the PRONOM namespace, for example, Freedesktop.org. Using alternative namespaces can help us to identify ways of filling gaps within the PRONOM namespace.">Total Discrete Other (Non-PUID) File Format Signature Identifiers in the Accession/Extract: 30</li>
+<li title="The total XML identifiers in the Accession/Exratact are used to help identify its diversity/complexity. XML identifiers are returned for files that have first been identified as XML, but have then had other features identified such as the XML's namespace which is often used to uniquely identify elements within the XML document.">Total XML Based Identification Identifiers in the Accession/Extract: 0</li>
+<li title="The total Text identifiers in the Accession/Exratact are used to help identify its diversity/complexity. Text identifiers are returned for files where their encoding can be regocognised not to be binary.">Total Text Based Identification Identifiers in the Accession/Extract: 5</li>
+<li title="The total Filename identifiers in the Accession/Exratact are used to help identify its diversity/complexity. Filename identifiers may be returned where the filename extension is recognised, e.g. *.MP3, or the filename itself is recognised as being a common pattern, e.g. 'README*'.">Total Filename Based Identification Identifiers in the Accession/Extract: 0</li>
+<li title="The total number of unique file extensions identified in the accession/extract. The total unique extensions across the accession/extract are another statistic we can use to identify the diversity/complexity of the accession/extract.">Total Unique Extensions Across Accession/Extract: 59</li>
+<li title="Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size.">Total Zero-byte Files in Accession/Extract: 29</li>
+<li title="Total number of files across the accession/extract that are identical byte-for-byte.">Total Files with Identical Content (Checksum Value): 33</li>
+<li title="Number of filenames that contain more than one space in a row, these filenames may cause some problems with some systems and may require pre-conditioning.">Total Files with Multiple Contiguous Space Characters: 0</li>
+<li title="Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly.">Percentage of Accession/Extract Identified: 83.4</li>
+<li title="Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract.">Percentage of Accession/Extract Unidentified: 16.6</li>
+<li title="Count of all the files that have zero identification results across all namespaces utilizing binary and container file format signatures. As such this statisticate may indicate an immediate priority for digital preservation researchers, and therfore may be indicative of the amount of work needed to understand an accession/extract.">Files Left Unidentified Across Multiple Identifiers (Based on Signature): 54</li>
+</ul>
+</br>
+<hr/>
+<h2>Size of the accession/extract: </h2>
+<details><summary>More Detail:</br></summary></br>The size of the accession/extract is represented using two values, bytes (a byte equals eight binary bits) from the DROID export and conversion from bytes into megabytes for understanding the size of larger accessions/extracts. We will use this statistic to understand how much storage is required for this accession/extract when ingested.</br></details>
+</br>
+397567751.0 bytes | 379.2 MiB/MB (Megabytes)
+</br>
+</br>
+<hr/>
+<h2>Frequency of File Format Signature Identified IDs: </h2>
+<details><summary>More Detail:</br></summary></br>A chart used to provide a clear visualization of the distribution of file formats across the accession/extract. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom.Other identifiers listed may come from Freedesktop.org's MIMEInfo Database or Apache's Tika equivalent. Count and visualization of how many times each format is represented in the accession/extract, in a descending list from most frequent to least.</br></details>
+</br>
+<table>
+<table><th style="text-align: left;">ID</th><th style="text-align: left;">Count</th><th style="text-align: left;">Volume</th>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/384">x-fmt/384</a>
+</td><td style="width: 100px;">61</td>
+<td><meter style="width: 300px;" value="61" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/18">fmt/18</a>
+</td><td style="width: 100px;">33</td>
+<td><meter style="width: 300px;" value="33" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/17">fmt/17</a>
+</td><td style="width: 100px;">21</td>
+<td><meter style="width: 300px;" value="21" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/276">fmt/276</a>
+</td><td style="width: 100px;">15</td>
+<td><meter style="width: 300px;" value="15" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/392">x-fmt/392</a>
+</td><td style="width: 100px;">14</td>
+<td><meter style="width: 300px;" value="14" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/263">x-fmt/263</a>
+</td><td style="width: 100px;">12</td>
+<td><meter style="width: 300px;" value="12" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/16">fmt/16</a>
+</td><td style="width: 100px;">11</td>
+<td><meter style="width: 300px;" value="11" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/291">fmt/291</a>
+</td><td style="width: 100px;">9</td>
+<td><meter style="width: 300px;" value="9" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/101">fmt/101</a>
+</td><td style="width: 100px;">7</td>
+<td><meter style="width: 300px;" value="7" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/19">fmt/19</a>
+</td><td style="width: 100px;">7</td>
+<td><meter style="width: 300px;" value="7" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/396">fmt/396</a>
+</td><td style="width: 100px;">6</td>
+<td><meter style="width: 300px;" value="6" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/40">fmt/40</a>
+</td><td style="width: 100px;">6</td>
+<td><meter style="width: 300px;" value="6" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/11">fmt/11</a>
+</td><td style="width: 100px;">4</td>
+<td><meter style="width: 300px;" value="4" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/20">fmt/20</a>
+</td><td style="width: 100px;">4</td>
+<td><meter style="width: 300px;" value="4" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/114">x-fmt/114</a>
+</td><td style="width: 100px;">4</td>
+<td><meter style="width: 300px;" value="4" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/354">fmt/354</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/482">fmt/482</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/483">fmt/483</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/61">fmt/61</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/95">fmt/95</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/122">x-fmt/122</a>
+</td><td style="width: 100px;">3</td>
+<td><meter style="width: 300px;" value="3" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/126">fmt/126</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/353">fmt/353</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/43">fmt/43</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/485">fmt/485</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/518">fmt/518</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/88">x-fmt/88</a>
+</td><td style="width: 100px;">2</td>
+<td><meter style="width: 300px;" value="2" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/12">fmt/12</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/15">fmt/15</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/151">fmt/151</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/196">fmt/196</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/337">fmt/337</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/355">fmt/355</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/38">fmt/38</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/41">fmt/41</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/412">fmt/412</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/44">fmt/44</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/463">fmt/463</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/50">fmt/50</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/524">fmt/524</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/583">fmt/583</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/609">fmt/609</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/610">fmt/610</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/115">x-fmt/115</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/121">x-fmt/121</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/238">x-fmt/238</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/239">x-fmt/239</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/240">x-fmt/240</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/266">x-fmt/266</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/387">x-fmt/387</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/44">x-fmt/44</a>
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+text/html
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+text/x-tex
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+<tr><td style="width: 220px;">
+image/jp2
+</td><td style="width: 100px;">1</td>
+<td><meter style="width: 300px;" value="1" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+</table>
+</br>
+<hr/>
+<h2>Date Range of Items in the Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>Count and visualization giving a clear illustration of the distribution of file modification dates across the accession/extract. The list is in descending order based on the number of files last modified on any given year. Too small or too recent a date range may indicate file transfer errors depending on the source of files.</br></details>
+</br>
+<table>
+<table><th style="text-align: left;">Volume</a></th><th style="text-align: left;">Count</th>
+<tr><td style="width: 100px;">
+<a target="_blank" href="https://en.wikipedia.org/wiki/2014">2014</a>
+</td><td>325</td>
+<td><meter style="width: 300px;" value="325" min="<built-in function min>" max="325">test</meter></td>
+</tr>
+</table>
+</br>
+<hr/>
+<h2>Aggregated File Format Signature Identifiers in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A list of ID values and format names to provide a clear picture of diversity/complexity of the accession/extract. PUID is an acronym for PRONOM Unique Identifier. PRONOM is a web-based technical registry to support digital preservation services, developed by The National Archives of the United Kingdom. Other identifiers listed may come from Freedesktop.org's MIMEInfo Database or Apache's Tika equivalent.</br></details>
+</br>
+<table>
+<table><th style="text-align: left;">ID</th><th style="text-align: left;">Namespace</th><th style="text-align: left;">Format Name</th><th style="text-align: left;">Count</th>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/101">fmt/101</a></td><td style="width: 150px;">ns:pronom</td><td>Extensible Markup Language, 1.0</td><td style="text-align:center">7</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/11">fmt/11</a></td><td style="width: 150px;">ns:pronom</td><td>Portable Network Graphics, 1.0</td><td style="text-align:center">4</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/12">fmt/12</a></td><td style="width: 150px;">ns:pronom</td><td>Portable Network Graphics, 1.1</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/126">fmt/126</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Powerpoint Presentation, 97-2003</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/15">fmt/15</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.1 - Portable Document Format, 1.1</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/151">fmt/151</a></td><td style="width: 150px;">ns:pronom</td><td>JPX (JPEG 2000 part 2)</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/16">fmt/16</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.2 - Portable Document Format, 1.2</td><td style="text-align:center">11</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/17">fmt/17</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.3 - Portable Document Format, 1.3</td><td style="text-align:center">21</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/18">fmt/18</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.4 - Portable Document Format, 1.4</td><td style="text-align:center">33</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/19">fmt/19</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.5 - Portable Document Format, 1.5</td><td style="text-align:center">7</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/196">fmt/196</a></td><td style="width: 150px;">ns:pronom</td><td>Adobe InDesign Document, CS</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/20">fmt/20</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.6 - Portable Document Format, 1.6</td><td style="text-align:center">4</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/276">fmt/276</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF 1.7 - Portable Document Format, 1.7</td><td style="text-align:center">15</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/291">fmt/291</a></td><td style="width: 150px;">ns:pronom</td><td>OpenDocument Text, 1.2</td><td style="text-align:center">9</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/337">fmt/337</a></td><td style="width: 150px;">ns:pronom</td><td>MJ2 (Motion JPEG 2000)</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/353">fmt/353</a></td><td style="width: 150px;">ns:pronom</td><td>Tagged Image File Format</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/354">fmt/354</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF/A - Portable Document Format, 1b</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/355">fmt/355</a></td><td style="width: 150px;">ns:pronom</td><td>Rich Text Format, 1.9</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/38">fmt/38</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Word for Windows Document, 2.0</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/396">fmt/396</a></td><td style="width: 150px;">ns:pronom</td><td>PocketMobi (Palm Resource) File</td><td style="text-align:center">6</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/40">fmt/40</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Word Document, 97-2003</td><td style="text-align:center">6</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/41">fmt/41</a></td><td style="width: 150px;">ns:pronom</td><td>Raw JPEG Stream</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/412">fmt/412</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Word for Windows, 2007 onwards</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/43">fmt/43</a></td><td style="width: 150px;">ns:pronom</td><td>JPEG File Interchange Format, 1.01</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/44">fmt/44</a></td><td style="width: 150px;">ns:pronom</td><td>JPEG File Interchange Format, 1.02</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/463">fmt/463</a></td><td style="width: 150px;">ns:pronom</td><td>JPM (JPEG 2000 part 6)</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/482">fmt/482</a></td><td style="width: 150px;">ns:pronom</td><td>Apple iBook format</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/483">fmt/483</a></td><td style="width: 150px;">ns:pronom</td><td>ePub format</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/485">fmt/485</a></td><td style="width: 150px;">ns:pronom</td><td>Rocket Book eBook format</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/50">fmt/50</a></td><td style="width: 150px;">ns:pronom</td><td>Rich Text Format, 1.5-1.6</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/518">fmt/518</a></td><td style="width: 150px;">ns:pronom</td><td>Broad Band eBook, LRF</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/524">fmt/524</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Office Theme</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/583">fmt/583</a></td><td style="width: 150px;">ns:pronom</td><td>Vector Markup Language</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/609">fmt/609</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Word (Generic), 6.0-2003</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/61">fmt/61</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Excel 97 Workbook (xls), 8</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/610">fmt/610</a></td><td style="width: 150px;">ns:pronom</td><td>ARJ File Format</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/fmt/95">fmt/95</a></td><td style="width: 150px;">ns:pronom</td><td>Acrobat PDF/A - Portable Document Format, 1a</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/114">x-fmt/114</a></td><td style="width: 150px;">ns:pronom</td><td>Lotus 1-2-3 Worksheet, 2.0</td><td style="text-align:center">4</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/115">x-fmt/115</a></td><td style="width: 150px;">ns:pronom</td><td>Lotus 1-2-3 Worksheet, 3.0</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/121">x-fmt/121</a></td><td style="width: 150px;">ns:pronom</td><td>Quattro Pro Spreadsheet, 1-4</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/122">x-fmt/122</a></td><td style="width: 150px;">ns:pronom</td><td>Quattro Pro Spreadsheet, 5</td><td style="text-align:center">3</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/238">x-fmt/238</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Access Database, 95</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/239">x-fmt/239</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Access Database, 97</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/240">x-fmt/240</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Access Database, 2000</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/263">x-fmt/263</a></td><td style="width: 150px;">ns:pronom</td><td>ZIP Format</td><td style="text-align:center">12</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/266">x-fmt/266</a></td><td style="width: 150px;">ns:pronom</td><td>GZIP Format</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/384">x-fmt/384</a></td><td style="width: 150px;">ns:pronom</td><td>Quicktime</td><td style="text-align:center">61</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/387">x-fmt/387</a></td><td style="width: 150px;">ns:pronom</td><td>Exchangeable Image File Format (Uncompressed), 2.2</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/392">x-fmt/392</a></td><td style="width: 150px;">ns:pronom</td><td>JP2 (JPEG 2000 part 1)</td><td style="text-align:center">14</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/44">x-fmt/44</a></td><td style="width: 150px;">ns:pronom</td><td>WordPerfect for MS-DOS/Windows Document, 6.0</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/x-fmt/88">x-fmt/88</a></td><td style="width: 150px;">ns:pronom</td><td>Microsoft Powerpoint Presentation, 4.0</td><td style="text-align:center">2</td></tr>
+<tr><td style="width: 100px;">text/html</td><td style="width: 150px;">ns:tika</td><td>text/html</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 100px;">text/x-tex</td><td style="width: 150px;">ns:freedesktop.org</td><td>TeX document</td><td style="text-align:center">1</td></tr>
+<tr><td style="width: 100px;">image/jp2</td><td style="width: 150px;">ns:freedesktop.org</td><td>JPEG-2000 image</td><td style="text-align:center">1</td></tr>
+</table>
+</br>
+</br>
+<hr/>
+<h2>Aggregated Frequency of File Format Signature Identifiers in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>Listing of format identification, namespace, count, and match basis for files identified using file format signatures. Some tools can report what the basis or rationale was for returning an identification - this is reported to demonstrate the diversity/complexity of an accession/extract and to provide clues for similar files in the accession/extract where there is zero identification. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>ns:pronom fmt/101, Extensible Markup Language, 1.0 [extension match xml; byte match at 0, 19] (7)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[43110 12]]]] (4)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/12, Portable Network Graphics, 1.1 [extension match png; byte match at [[[0 16]] [[53 4]] [[61693 12]]] (signature 3/3)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [extension match ppt; container name PowerPoint Document with name only] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[984 5]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/151, JPX (JPEG 2000 part 2),  [extension match jpf; byte match at 0, 23] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[93718 5]]]] (11)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[21444 5]]]] (21)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[27483 5]]]] (33)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[207298 5]]]] (7)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/196, Adobe InDesign Document, CS [extension match indd; byte match at 0, 33] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[24334 5]]]] (4)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[213335 7]]]] (15)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/291, OpenDocument Text, 1.2 [extension match odt; container name content.xml with byte match at [[[40 23]] [[1854 20]]]; name META-INF/manifest.xml with byte match at 149, 60] (9)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/337, MJ2 (Motion JPEG 2000),  [extension match mj2; byte match at 0, 24] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/353, Tagged Image File Format,  [extension match tif; byte match at 0, 4 (signature 1/2)] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[637 44]] [[695 79]]] (signature 1/2)] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/355, Rich Text Format, 1.9 [extension match rtf; byte match at [[[0 32]] [[54 44]] [[5561 10]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [extension match doc; byte match at 0, 22] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 2/2)] (6)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/40, Microsoft Word Document, 97-2003 [extension match doc; container name CompObj with byte match at 72, 20; name WordDocument with name only] (6)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[1620610 2]]] (signature 1/2)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 379, 94 (signature 1/3)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[261590 2]]]] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [extension match jpg; byte match at [[[0 14]] [[12948897 2]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/463, JPM (JPEG 2000 part 6),  [extension match jpm; byte match at 0, 23] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/482, Apple iBook format,  [extension match ibooks; container name mimetype with byte match at 0, 24] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/483, ePub format,  [extension match epub; container name mimetype with byte match at 0, 20] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/485, Rocket Book eBook format,  [extension match rb; byte match at 0, 10] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/518, Broad Band eBook, LRF [extension match lrf; byte match at 0, 8] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/524, Microsoft Office Theme,  [container name [Content_Types].xml with byte match at 338, 76] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/583, Vector Markup Language,  [extension match htm; byte match at 6, 39] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/610, ARJ File Format,  [extension match arj; byte match at 0, 2] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom fmt/95, Acrobat PDF/A - Portable Document Format, 1a [extension match pdf; byte match at [[[0 8]] [[29674 44]] [[29726 73]]]] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (4)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/121, Quattro Pro Spreadsheet, 1-4 [extension match wq1; byte match at [[[0 6]] [[18683 4]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/122, Quattro Pro Spreadsheet, 5 [extension match wq2; byte match at [[[0 6]] [[20664 4]]]] (3)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/238, Microsoft Access Database, 95 [extension match mdb; byte match at [[[0 24]] [[42830 45]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/239, Microsoft Access Database, 97 [extension match mdb; byte match at [[[0 24]] [[42872 45]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/240, Microsoft Access Database, 2000 [extension match mdb; byte match at [[[0 24]] [[93889 67]]]] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/263, ZIP Format,  [byte match at [[[0 4]] [[168754 3]] [[168809 4]]]] (12)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/384, Quicktime,  [extension match mov; byte match at 0, 12 (signature 8/11)] (61)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/387, Exchangeable Image File Format (Uncompressed), 2.2 [extension match tif; byte match at [[[0 4]] [[15520 12]]] (signature 4/4)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/392, JP2 (JPEG 2000 part 1),  [extension match jp2; byte match at 0, 23] (14)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wpd; byte match at 0, 12] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[12672 8]] [[528153 20]]]] (2)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:tika text/html,  [byte match at 526, 5 (signature 7/16)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org image/jp2, JPEG-2000 image,  [byte match at 0, 5 (signature 1/3)] (1)</br></br></code></td>
+</tr></table>
+<hr/>
+<h2>Aggregated Frequency of Text Identifiers in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>Listing of format identification, namespace, count, and match basis for files identified using Text based identification. Some tools can report what the basis or rationale was for returning an identification - this is reported to demonstrate the diversity/complexity of an accession/extract and to provide clues for similar files in the accession/extract where there is zero identification. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>ns:pronom x-fmt/111, Plain Text File,  [extension match txt; text match ASCII] (5)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/xml,  [extension match xml; text match ASCII] (1)</br></br></code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/rtf,  [extension match rtf; text match ASCII] (2)</br></br></code></td>
+</tr></table>
+<hr/>
+<h2>Identification Method Frequency: </h2>
+<details><summary>More Detail:</br></summary></br>Lists in descending order the types of identification DROID used for each file, indicating the reliability of each identification, with Container/Signature being the more concrete forms of identification and extension being a less certain way to identify a format. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. Container identification takes this concept further by being able to match specific elements of a file format's structure. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='160'><code>Signature (240)</code></td>
+<td width='160'><code>None (43)</code></td>
+<td width='160'><code>Container (31)</code></td>
+<td width='160'><code>Text (8)</code></td>
+<td width='160'><code>Extension (3)</code></td>
+</tr><tr>
+<td width='160'><code>Filename (0)</code></td>
+<td width='160'><code>XML (0)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Extension Only Identification in the Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A list of the identifier and format name of each format of one or more files where the file format identification tool has tried to offer suggestions as to potential file format by utilizing the file extension where a file has not been matched by file format signature.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>application/pdf, Portable Document Format</code></td>
+<td width='400'><code>application/pdf, PDF document</code></td>
+</tr><tr>
+<td width='400'><code>application/x-adobe-indesign, Adobe InDesign document</code></td>
+<td width='400'><code>application/octet-stream, Format name not set</code></td>
+</tr><tr>
+<td width='400'><code>application/x-mobipocket-ebook, Format name not set</code></td>
+<td width='400'><code>application/vnd.palm, Format name not set</code></td>
+</tr><tr>
+<td width='400'><code>application/x-ruby, Ruby script</code></td>
+<td width='400'><code>video/mj2, Format name not set</code></td>
+</tr><tr>
+<td width='400'><code>video/jpm, Format name not set</code></td>
+<td width='400'><code>application/vnd.lotus-1-2-3, Lotus 1-2-3 spreadsheet</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.wordperfect, Format name not set</code></td>
+<td width='400'><code>application/x-msaccess, Format name not set</code></td>
+</tr><tr>
+<td width='400'><code>application/msword, Microsoft Word Document</code></td>
+<td width='400'><code>application/msword, Word document</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/100, AutoCAD Script</code></td>
+<td width='400'><code>application/x-mimearchive, MHTML web archive</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Frequency of Extension Only Identification In Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>A count of the files associated with possible identifiers where file format identification tool has tried to offer suggestions as to potential file format by utilizing the file extension where a file format signature has not matched a file. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>ns:tika  application/x-msaccess (3)</code></td>
+<td width='400'><code>ns:tika  application/octet-stream (2)</code></td>
+</tr><tr>
+<td width='400'><code>ns:tika  application/x-mobipocket-ebook (2)</code></td>
+<td width='400'><code>ns:tika  application/vnd.palm (2)</code></td>
+</tr><tr>
+<td width='400'><code>ns:freedesktop.org  application/x-ruby (2)</code></td>
+<td width='400'><code>ns:pronom  x-fmt/100 (2)</code></td>
+</tr><tr>
+<td width='400'><code>ns:tika  application/pdf (1)</code></td>
+<td width='400'><code>ns:freedesktop.org  application/pdf (1)</code></td>
+</tr><tr>
+<td width='400'><code>ns:freedesktop.org  application/vnd.lotus-1-2-3 (1)</code></td>
+<td width='400'><code>ns:tika  application/vnd.wordperfect (1)</code></td>
+</tr><tr>
+<td width='400'><code>ns:tika  application/x-adobe-indesign (1)</code></td>
+<td width='400'><code>ns:tika  video/mj2 (1)</code></td>
+</tr><tr>
+<td width='400'><code>ns:freedesktop.org  application/x-mimearchive (1)</code></td>
+<td width='400'><code>ns:freedesktop.org  application/msword (1)</code></td>
+</tr><tr>
+<td width='400'><code>ns:tika  application/msword (1)</code></td>
+<td width='400'><code>ns:tika  video/jpm (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Frequency of All Extensions: </h2>
+<details><summary>More Detail:</br></summary></br>Lists the gamut of file extensions alongside how many times they appear in accession/extract in descending order. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='160'><code>pdf (99)</code></td>
+<td width='160'><code>mov (61)</code></td>
+<td width='160'><code>jp2 (12)</code></td>
+<td width='160'><code>odt (9)</code></td>
+<td width='160'><code>doc (7)</code></td>
+</tr><tr>
+<td width='160'><code>MAP (5)</code></td>
+<td width='160'><code>png (5)</code></td>
+<td width='160'><code>WK1 (4)</code></td>
+<td width='160'><code>jpg (4)</code></td>
+<td width='160'><code>ppt (4)</code></td>
+</tr><tr>
+<td width='160'><code>rtf (4)</code></td>
+<td width='160'><code>xml (4)</code></td>
+<td width='160'><code>WQ2 (3)</code></td>
+<td width='160'><code>epub (3)</code></td>
+<td width='160'><code>iba (3)</code></td>
+</tr><tr>
+<td width='160'><code>ibooks (3)</code></td>
+<td width='160'><code>jpf (3)</code></td>
+<td width='160'><code>mdb (3)</code></td>
+<td width='160'><code>tif (3)</code></td>
+<td width='160'><code>txt (3)</code></td>
+</tr><tr>
+<td width='160'><code>xls (3)</code></td>
+<td width='160'><code>SCR (2)</code></td>
+<td width='160'><code>STA (2)</code></td>
+<td width='160'><code>STG (2)</code></td>
+<td width='160'><code>azw3 (2)</code></td>
+</tr><tr>
+<td width='160'><code>fb2 (2)</code></td>
+<td width='160'><code>htmlz (2)</code></td>
+<td width='160'><code>lit (2)</code></td>
+<td width='160'><code>lrf (2)</code></td>
+<td width='160'><code>md (2)</code></td>
+</tr><tr>
+<td width='160'><code>mobi (2)</code></td>
+<td width='160'><code>pdb (2)</code></td>
+<td width='160'><code>pmlz (2)</code></td>
+<td width='160'><code>rb (2)</code></td>
+<td width='160'><code>snb (2)</code></td>
+</tr><tr>
+<td width='160'><code>txtz (2)</code></td>
+<td width='160'><code>zip (2)</code></td>
+<td width='160'><code>} (2)</code></td>
+<td width='160'><code>) (1)</code></td>
+<td width='160'><code>ARJ (1)</code></td>
+</tr><tr>
+<td width='160'><code>DOC (1)</code></td>
+<td width='160'><code>WK3 (1)</code></td>
+<td width='160'><code>WPD (1)</code></td>
+<td width='160'><code>WQ1 (1)</code></td>
+<td width='160'><code>cdd (1)</code></td>
+</tr><tr>
+<td width='160'><code>docx (1)</code></td>
+<td width='160'><code>htm (1)</code></td>
+<td width='160'><code>indd (1)</code></td>
+<td width='160'><code>j2c (1)</code></td>
+<td width='160'><code>jpm (1)</code></td>
+</tr><tr>
+<td width='160'><code>mht (1)</code></td>
+<td width='160'><code>mj2 (1)</code></td>
+<td width='160'><code>mmp (1)</code></td>
+<td width='160'><code>nmind (1)</code></td>
+<td width='160'><code>opf (1)</code></td>
+</tr><tr>
+<td width='160'><code>opml (1)</code></td>
+<td width='160'><code>pages (1)</code></td>
+<td width='160'><code>xhtml (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Unique Extensions Identified Across All Objects (ID and non-ID): </h2>
+<details><summary>More Detail:</br></summary></br>Lists all the file extensions found in all the files in the accession/extract. This information can be used to identify the diversity/complexity of the accession/extract, but also to identify the consistency with which extensions may have been used in the accession/extract and may indicate how much work may be needed to correct inconsistencies to create a clean ingest.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='160'><code>pdf</code></td>
+<td width='160'><code>indd</code></td>
+<td width='160'><code>rtf</code></td>
+<td width='160'><code>jpg</code></td>
+<td width='160'><code>azw3</code></td>
+</tr><tr>
+<td width='160'><code>epub</code></td>
+<td width='160'><code>fb2</code></td>
+<td width='160'><code>htmlz</code></td>
+<td width='160'><code>lit</code></td>
+<td width='160'><code>lrf</code></td>
+</tr><tr>
+<td width='160'><code>mobi</code></td>
+<td width='160'><code>opf</code></td>
+<td width='160'><code>pdb</code></td>
+<td width='160'><code>pmlz</code></td>
+<td width='160'><code>rb</code></td>
+</tr><tr>
+<td width='160'><code>snb</code></td>
+<td width='160'><code>txt</code></td>
+<td width='160'><code>txtz</code></td>
+<td width='160'><code>zip</code></td>
+<td width='160'><code>iba</code></td>
+</tr><tr>
+<td width='160'><code>ibooks</code></td>
+<td width='160'><code>png</code></td>
+<td width='160'><code>md</code></td>
+<td width='160'><code>ARJ</code></td>
+<td width='160'><code>)</code></td>
+</tr><tr>
+<td width='160'><code>}</code></td>
+<td width='160'><code>mj2</code></td>
+<td width='160'><code>j2c</code></td>
+<td width='160'><code>jp2</code></td>
+<td width='160'><code>jpf</code></td>
+</tr><tr>
+<td width='160'><code>jpm</code></td>
+<td width='160'><code>tif</code></td>
+<td width='160'><code>cdd</code></td>
+<td width='160'><code>xml</code></td>
+<td width='160'><code>mmp</code></td>
+</tr><tr>
+<td width='160'><code>nmind</code></td>
+<td width='160'><code>opml</code></td>
+<td width='160'><code>WK1</code></td>
+<td width='160'><code>WK3</code></td>
+<td width='160'><code>WQ1</code></td>
+</tr><tr>
+<td width='160'><code>WQ2</code></td>
+<td width='160'><code>xls</code></td>
+<td width='160'><code>odt</code></td>
+<td width='160'><code>WPD</code></td>
+<td width='160'><code>mdb</code></td>
+</tr><tr>
+<td width='160'><code>DOC</code></td>
+<td width='160'><code>xhtml</code></td>
+<td width='160'><code>ppt</code></td>
+<td width='160'><code>MAP</code></td>
+<td width='160'><code>doc</code></td>
+</tr><tr>
+<td width='160'><code>STG</code></td>
+<td width='160'><code>SCR</code></td>
+<td width='160'><code>STA</code></td>
+<td width='160'><code>docx</code></td>
+<td width='160'><code>pages</code></td>
+</tr><tr>
+<td width='160'><code>mht</code></td>
+<td width='160'><code>htm</code></td>
+<td width='160'><code>mov</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>MIME Type (Internet Media Type) Frequency: </h2>
+<details><summary>More Detail:</br></summary></br>Lists all the MIME Types alongside how many times they appear in the accession/extract in descending order. A MIME Type is an identification used by internet browsers to determine how a browser will represent a file on the internet by displaying, playing or prompting the user to download the object. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>application/pdf (98)</code></td>
+<td width='400'><code>video/quicktime (61)</code></td>
+</tr><tr>
+<td width='400'><code>image/jp2 (15)</code></td>
+<td width='400'><code>application/zip (12)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.oasis.opendocument.text (9)</code></td>
+<td width='400'><code>application/msword (8)</code></td>
+</tr><tr>
+<td width='400'><code>application/xml (8)</code></td>
+<td width='400'><code>image/png (5)</code></td>
+</tr><tr>
+<td width='400'><code>text/plain (5)</code></td>
+<td width='400'><code>application/rtf (4)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.lotus-1-2-3 (4)</code></td>
+<td width='400'><code>application/vnd.ms-powerpoint (4)</code></td>
+</tr><tr>
+<td width='400'><code>image/jpeg (4)</code></td>
+<td width='400'><code>application/epub+zip (3)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.ms-excel (3)</code></td>
+<td width='400'><code>application/x-ibooks+zip (3)</code></td>
+</tr><tr>
+<td width='400'><code>image/tiff (3)</code></td>
+<td width='400'><code>application/lotus123 (1)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.ms-officetheme (1)</code></td>
+<td width='400'><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document (1)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.wordperfect (1)</code></td>
+<td width='400'><code>application/x-gzip (1)</code></td>
+</tr><tr>
+<td width='400'><code>image/jpm (1)</code></td>
+<td width='400'><code>image/jpx (1)</code></td>
+</tr><tr>
+<td width='400'><code>text/html (1)</code></td>
+<td width='400'><code>text/x-tex (1)</code></td>
+</tr><tr>
+<td width='400'><code>video/mj2 (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Results Per Identifier Namespace: </h2>
+<details><summary>More Detail:</br></summary></br>Namespace describes an identifier used by any specific tool. Format identification tools such as Siegfried can include multiple identifiers, e.g. PRONOM (and) Freedesktop.org's MIME identification. Tools may also include subsets of an identification mechanism that will also be indicated by use of a different namespace, for example, a set of PRONOM identifiers for recognising types of audio visual file, exclusively. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<li title="The namespace that we're reporting on and the specific details associated with it. e.g. a PRONOM namespace with details of the signature file version used."><b>Namespace</b>: <i>pronom (DROID_SignatureFile_V82.xml; container-signature-20150327.xml)</i></li>
+<li title="The number of files that are identified based on a file format signature. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form.">Total Identified Files (Based on Signature): 268</li>
+<li title="This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats.">Total Multiple Identifications (Based on Signature): 0</li>
+<li title="This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database).">Total Unidentified Files: 57</li>
+<li title="Files that can only be identified by their extension (e.g. ".DOC" might be a Microsoft Word file, ".MP3" might be an audio file) This is a sub-set of the "Total unidentified files".">Total Extension ID Only Count: 2</li>
+<li title="Total files identified using an XML matching mechanism. Freedesktop's XML matching mechanism will match features of an XML document once the identifying mechanism has established the file it is looking at is an XML file. Features may include XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional file format signature matching techniques. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total XML ID Only Count: 0</li>
+<li title="Total files identified using a Text matching/Text encoding matching methanism. ">Total Text ID Only Count: 5</li>
+<li title="Total files identified using a Filename matching mechanism. Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. The mechanism works a lot like a filename extension match but can pick up more varied types that might not be encoded in the PRONOM database. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total Filename ID Only Count: 0</li>
+<li title="Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly.">Percentage of Accession/Extract Identified: 82.5</li>
+<li title="Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract.">Percentage of Accession/Extract Unidentified: 17.5</li>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>x-fmt/384 (61)</code></td>
+<td width='400'><code>fmt/18 (33)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/17 (21)</code></td>
+<td width='400'><code>fmt/276 (15)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/392 (14)</code></td>
+<td width='400'><code>x-fmt/263 (12)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/16 (11)</code></td>
+<td width='400'><code>fmt/291 (9)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/101 (7)</code></td>
+<td width='400'><code>fmt/19 (7)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/396 (6)</code></td>
+<td width='400'><code>fmt/40 (6)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/11 (4)</code></td>
+<td width='400'><code>fmt/20 (4)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/114 (4)</code></td>
+<td width='400'><code>fmt/354 (3)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/482 (3)</code></td>
+<td width='400'><code>fmt/483 (3)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/61 (3)</code></td>
+<td width='400'><code>fmt/95 (3)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/122 (3)</code></td>
+<td width='400'><code>fmt/126 (2)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/353 (2)</code></td>
+<td width='400'><code>fmt/43 (2)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/485 (2)</code></td>
+<td width='400'><code>fmt/518 (2)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/88 (2)</code></td>
+<td width='400'><code>fmt/12 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/15 (1)</code></td>
+<td width='400'><code>fmt/151 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/196 (1)</code></td>
+<td width='400'><code>fmt/337 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/355 (1)</code></td>
+<td width='400'><code>fmt/38 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/41 (1)</code></td>
+<td width='400'><code>fmt/412 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/44 (1)</code></td>
+<td width='400'><code>fmt/463 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/50 (1)</code></td>
+<td width='400'><code>fmt/524 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/583 (1)</code></td>
+<td width='400'><code>fmt/609 (1)</code></td>
+</tr><tr>
+<td width='400'><code>fmt/610 (1)</code></td>
+<td width='400'><code>x-fmt/115 (1)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/121 (1)</code></td>
+<td width='400'><code>x-fmt/238 (1)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/239 (1)</code></td>
+<td width='400'><code>x-fmt/240 (1)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/266 (1)</code></td>
+<td width='400'><code>x-fmt/387 (1)</code></td>
+</tr><tr>
+<td width='400'><code>x-fmt/44 (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<li title="The namespace that we're reporting on and the specific details associated with it. e.g. a PRONOM namespace with details of the signature file version used."><b>Namespace</b>: <i>tika (tika-mimetypes.xml)</i></li>
+<li title="The number of files that are identified based on a file format signature. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form.">Total Identified Files (Based on Signature): 233</li>
+<li title="This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats.">Total Multiple Identifications (Based on Signature): 0</li>
+<li title="This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database).">Total Unidentified Files: 92</li>
+<li title="Files that can only be identified by their extension (e.g. ".DOC" might be a Microsoft Word file, ".MP3" might be an audio file) This is a sub-set of the "Total unidentified files".">Total Extension ID Only Count: 15</li>
+<li title="Total files identified using an XML matching mechanism. Freedesktop's XML matching mechanism will match features of an XML document once the identifying mechanism has established the file it is looking at is an XML file. Features may include XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional file format signature matching techniques. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total XML ID Only Count: 0</li>
+<li title="Total files identified using a Text matching/Text encoding matching methanism. ">Total Text ID Only Count: 10</li>
+<li title="Total files identified using a Filename matching mechanism. Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. The mechanism works a lot like a filename extension match but can pick up more varied types that might not be encoded in the PRONOM database. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total Filename ID Only Count: 0</li>
+<li title="Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly.">Percentage of Accession/Extract Identified: 71.7</li>
+<li title="Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract.">Percentage of Accession/Extract Unidentified: 28.3</li>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>application/x-123 (9)</code></td>
+<td width='400'><code>application/vnd.ms-powerpoint (4)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.ms-excel (3)</code></td>
+<td width='400'><code>application/x-gzip (1)</code></td>
+</tr><tr>
+<td width='400'><code>application/x-tika-ooxml (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<li title="The namespace that we're reporting on and the specific details associated with it. e.g. a PRONOM namespace with details of the signature file version used."><b>Namespace</b>: <i>freedesktop.org (freedesktop.org.xml)</i></li>
+<li title="The number of files that are identified based on a file format signature. A file format signature is a string in binary (or hexadecimal (hex)) that uniquely identifies a file format. Note: A signature is a more mature form of a magic number that can be read across the file. A basic magic number is a unique section at the beginning of a file that can be seen when the file is looked at with an x-ray machine (the innards of a file is examined). This number could be in binary (that is numerical) or ASCII (readable text) form.">Total Identified Files (Based on Signature): 257</li>
+<li title="This is the total number of files with uncertain file format identification. DROID will help to identify the number of potential formats.">Total Multiple Identifications (Based on Signature): 0</li>
+<li title="This is the number of files identified only by the file extension alone (e.g. there are no verifiable file format signatures in the file, only the file extension is provided). This number may represent files not identified at all (i.e.. there is no identification information in the DROID database).">Total Unidentified Files: 68</li>
+<li title="Files that can only be identified by their extension (e.g. ".DOC" might be a Microsoft Word file, ".MP3" might be an audio file) This is a sub-set of the "Total unidentified files".">Total Extension ID Only Count: 6</li>
+<li title="Total files identified using an XML matching mechanism. Freedesktop's XML matching mechanism will match features of an XML document once the identifying mechanism has established the file it is looking at is an XML file. Features may include XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional file format signature matching techniques. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total XML ID Only Count: 0</li>
+<li title="Total files identified using a Text matching/Text encoding matching methanism. ">Total Text ID Only Count: 10</li>
+<li title="Total files identified using a Filename matching mechanism. Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. The mechanism works a lot like a filename extension match but can pick up more varied types that might not be encoded in the PRONOM database. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a>">Total Filename ID Only Count: 0</li>
+<li title="Percentage of files with formats that are positively identified by DROID, pending other processes such as format validation, this percentage may be indicative of how much of the accession/extract will need little or no intervention to ingest cleanly.">Percentage of Accession/Extract Identified: 79.1</li>
+<li title="Percentage of files with formats that were not able to be identified by DROID, which could be due to a signature not being in the PRONOM database yet, the file being corrupt, a signature and extension mismatch or another reason. This percentage is indicative of how much work will be involved in processing the accession/extract.">Percentage of Accession/Extract Unidentified: 20.9</li>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='400'><code>application/pdf (196)</code></td>
+<td width='400'><code>video/quicktime (122)</code></td>
+</tr><tr>
+<td width='400'><code>application/zip (31)</code></td>
+<td width='400'><code>application/vnd.oasis.opendocument.text (18)</code></td>
+</tr><tr>
+<td width='400'><code>image/jp2 (18)</code></td>
+<td width='400'><code>application/msword (14)</code></td>
+</tr><tr>
+<td width='400'><code>image/png (10)</code></td>
+<td width='400'><code>application/xml (9)</code></td>
+</tr><tr>
+<td width='400'><code>image/jpeg (8)</code></td>
+<td width='400'><code>application/x-ole-storage (7)</code></td>
+</tr><tr>
+<td width='400'><code>application/epub+zip (6)</code></td>
+<td width='400'><code>image/tiff (6)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.lotus-1-2-3 (4)</code></td>
+<td width='400'><code>application/x-mobipocket-ebook (4)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.ms-access (3)</code></td>
+<td width='400'><code>text/html (3)</code></td>
+</tr><tr>
+<td width='400'><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document (2)</code></td>
+<td width='400'><code>application/x-aportisdoc (2)</code></td>
+</tr><tr>
+<td width='400'><code>application/x-fictionbook+xml (2)</code></td>
+<td width='400'><code>application/xhtml+xml (2)</code></td>
+</tr><tr>
+<td width='400'><code>application/gzip (1)</code></td>
+<td width='400'><code>application/vnd.wordperfect (1)</code></td>
+</tr><tr>
+<td width='400'><code>application/x-arj (1)</code></td>
+<td width='400'><code>text/x-opml+xml (1)</code></td>
+</tr><tr>
+<td width='400'><code>text/x-tex (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>XML Based Identifiers Across Namespaces: </h2>
+<details><summary>More Detail:</br></summary></br>Some sources of file format identification offer alternatives to file format signatures. Tools like Siegfried can also provide alternative techniques too. These techniques output identifiers within the framework set out by DROID and Siegfried, as oppesed the Linux tool File. This listing presents a count of identification results from scanning files using Freedesktop's MIME XML matching mechanism. Freedesktop's XML matching mechanism will match features of an XML document once the identifying mechanism has established the file it is looking at is an XML file. Features may include XML namespace. This two pronged approach to identifying XML files may prove more rigorous than traditional file format signature matching techniques. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a></br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>ns:freedesktop.org application/x-fictionbook+xml (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/xhtml+xml (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/xhtml+xml (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika text/html (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Text Based Identifiers Across Namespaces: </h2>
+<details><summary>More Detail:</br></summary></br>Some sources of file format identification offer alternatives to file format signatures. Tools like Siegfried can also provide alternative techniques too. These techniques output identifiers within the framework set out by DROID and Siegfried, as oppesed the Linux tool File. This listing presents a count of identification results from scanning files using a Text matching/Text Encoding matching mechanism. </br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>ns:pronom x-fmt/111 (5)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika text/plain (5)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/rtf (4)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/rtf (4)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org text/plain (3)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org text/markdown (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/xml (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/xml (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Filename Based Identifiers Across Namespaces: </h2>
+<details><summary>More Detail:</br></summary></br>Some sources of file format identification offer alternatives to file format signatures. Tools like Siegfried can also provide alternative techniques too. These techniques output identifiers within the framework set out by DROID and Siegfried, as oppesed the Linux tool File. This listing presents a count of identification results from scanning files using Freedesktop's MIME Filename matching mechanism. Freedesktop's filename matching mechanism will match a filename pattern ('GLOB' pattern). A pattern maybe a filename, or a filename extension, e.g. README*, or *.MP3. The mechanism works a lot like a filename extension match but can pick up more varied types that might not be encoded in the PRONOM database. More details on Freedesktop's mechanisms can be found <a href='https://docs.oracle.com/cd/E26502_01/html/E28056/gmcas.html'>here.</a> Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>ns:freedesktop.org application/rtf (4)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/rtf (4)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org text/plain (3)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/x-msaccess (3)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika text/plain (3)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/x-ruby (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/x-trash (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org text/markdown (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/octet-stream (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/vnd.palm (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/x-mobipocket-ebook (2)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/msword (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/pdf (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/vnd.lotus-1-2-3 (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/x-mimearchive (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:freedesktop.org application/xml (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/msword (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/pdf (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/vnd.wordperfect (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/x-adobe-indesign (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika application/xml (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika video/jpm (1)</code></td>
+</tr><tr>
+<td width='800'><code>ns:tika video/mj2 (1)</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Zero-byte files in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>This is a list of files with no payload. Zero byte files have no binary content. They may have been created with the intention of turning into a record, e.g. a document, but they may also be indicative of a process that has corrupted the file such as a faulty extract. Zero-byte files may have a filename and extension but will have zero size.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/!</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/#</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/$</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/%</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/(</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/()</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/(.)</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/)</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/+</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/-</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/;</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/=</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/@</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/[</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/[]</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/]</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/^</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/_</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/`</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/{</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/{ (2).}</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/{.}</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/{}</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/}</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/~</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/Â£</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/a-bad-name/characters/Â¬</code></td>
+</tr><tr>
+<td width='800'><code>format-corpus/filesys-trials/empty/null</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Archive File Types in Accession/Extract: </h2>
+<details><summary>More Detail:</br></summary></br>Archive files are files that wrap together one or more files such as Zip files, GZIP files, and TAR files. Knowing an accession/extract contains these objects is important as a single archive file may contain many hundreds of other files that also need to be preserved and looked after.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='160'><code>htmlz</code></td>
+<td width='160'><code>pmlz</code></td>
+<td width='160'><code>txtz</code></td>
+<td width='160'><code>zip</code></td>
+<td width='160'><code>iba</code></td>
+</tr><tr>
+<td width='160'><code>nmind</code></td>
+<td width='160'><code>pages</code></td>
+</tr></table>
+</br>
+<hr/>
+<h2>Files With Identical Content (Checksum Value): </h2>
+<details><summary>More Detail:</br></summary></br>This is a list of files that are identical byte for byte. Count: is the number of instances of a particular checksum value that are found across the accession/extract. Filepath is listed to help with locating the object and to help appraisal decisions if the purpose of the duplicate can be ascertained. In the majority of cases if a duplicate is received it will be ingested as-is as that is what was received.</br></details>
+</br>
+<b>da39a3ee5e6b4b0d3255bfef95601890afd80709</b> Count: 29<br/><br/>
+<code>
+format-corpus/filesys-trials/a-bad-name/characters/<br/>
+format-corpus/filesys-trials/a-bad-name/characters/!<br/>
+format-corpus/filesys-trials/a-bad-name/characters/#<br/>
+format-corpus/filesys-trials/a-bad-name/characters/$<br/>
+format-corpus/filesys-trials/a-bad-name/characters/%<br/>
+format-corpus/filesys-trials/a-bad-name/characters/(<br/>
+format-corpus/filesys-trials/a-bad-name/characters/()<br/>
+format-corpus/filesys-trials/a-bad-name/characters/(.)<br/>
+format-corpus/filesys-trials/a-bad-name/characters/)<br/>
+format-corpus/filesys-trials/a-bad-name/characters/+<br/>
+format-corpus/filesys-trials/a-bad-name/characters/-<br/>
+format-corpus/filesys-trials/a-bad-name/characters/;<br/>
+format-corpus/filesys-trials/a-bad-name/characters/=<br/>
+format-corpus/filesys-trials/a-bad-name/characters/@<br/>
+format-corpus/filesys-trials/a-bad-name/characters/[<br/>
+format-corpus/filesys-trials/a-bad-name/characters/[]<br/>
+format-corpus/filesys-trials/a-bad-name/characters/]<br/>
+format-corpus/filesys-trials/a-bad-name/characters/^<br/>
+format-corpus/filesys-trials/a-bad-name/characters/_<br/>
+format-corpus/filesys-trials/a-bad-name/characters/`<br/>
+format-corpus/filesys-trials/a-bad-name/characters/{<br/>
+format-corpus/filesys-trials/a-bad-name/characters/{ (2).}<br/>
+format-corpus/filesys-trials/a-bad-name/characters/{.}<br/>
+format-corpus/filesys-trials/a-bad-name/characters/{}<br/>
+format-corpus/filesys-trials/a-bad-name/characters/}<br/>
+format-corpus/filesys-trials/a-bad-name/characters/~<br/>
+format-corpus/filesys-trials/a-bad-name/characters/Â£<br/>
+format-corpus/filesys-trials/a-bad-name/characters/Â¬<br/>
+format-corpus/filesys-trials/empty/null<br/>
+</code>
+</br>
+<b>3611abfafc52dfd56482101f7d26858a451a4f58</b> Count: 2<br/><br/>
+<code>
+format-corpus/jp2k-formats/balloon.jp2<br/>
+format-corpus/jp2k-test/byteCorruption/balloon_intact.jp2<br/>
+</code>
+</br>
+<b>e12dbf403f935a77ff0b045d97767788c62ff24d</b> Count: 2<br/><br/>
+<code>
+format-corpus/ebooks/calibre-0.8.57/Lorem Ipsum - Andrew Jackson.txt<br/>
+format-corpus/variations/lorem-ipsum.txt<br/>
+</code>
+</br>
+<hr/>
+<h2>Identifying Non-ASCII and System File Names: </h2>
+<details><summary>More Detail:</br></summary></br>Lists filenames that may cause issues across different systems and applications. These could be filenames that include UTF-8 characters such as macrons, or incidences of filenames with multiple space characters following one after the other. Filenames identified will also include those for which there is an explicit recommendation against from <a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a></br></details>
+</br>
+File: [ contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+
+</br>
+</br>
+File: [] contains, non-recommended character: 0x5b, LEFT SQUARE BRACKET: [
+
+</br>
+</br>
+File: ] contains, non-recommended character: 0x5d, RIGHT SQUARE BRACKET: ]
+
+</br>
+</br>
+File: Â£ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+
+</br>
+</br>
+File: Â¬ contains, characters outside of ASCII range: 0xc2, LATIN CAPITAL LETTER A WITH CIRCUMFLEX: Â
+
+</br>
+</br>
+<hr/>
+<h2>File Processing Errors Encountered During Scan: </h2>
+<details><summary>More Detail:</br></summary></br>Tools like Siegfried may report on file processing errors during a scan. A processing error may indicate a file with no payload (zero-byte file) or another problem that might be important ot understand as it may affect its access and preservation. Counts are shown for each entry in round () brackets.</br></details>
+</br>
+<table style='border-collapse: collapse; border-color: #222222'><tr>
+<td width='800'><code>empty source (29)</code></td>
+</tr></table>
+</br>
+<hr/>
+</br>
+</body>
