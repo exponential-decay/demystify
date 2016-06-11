@@ -15,6 +15,9 @@ class DROIDAnalysisResults:
    #tooltype
    tooltype = None
 
+   #blacklist
+   blacklist = False
+
    # Counts
    collectionsize = 0
    filecount = 0

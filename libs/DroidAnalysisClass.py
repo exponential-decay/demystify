@@ -8,9 +8,11 @@ import MsoftFnameAnalysis
 import RegexFnameAnalysis
 import DroidAnalysisResultsClass
 from AnalysisQueriesClass import AnalysisQueries
+from BlacklistQueriesClass import BlacklistQueries
 from urlparse import urlparse
 from lxml import etree, html
 from collections import Counter
+from HandleBlacklistClass import HandleBlacklist
 
 class DROIDAnalysis:
 
@@ -75,6 +77,7 @@ class DROIDAnalysis:
                elif "freedesktop" in sig_deets:
                   self.freedesktop_ns_id = ns_deets[0]            
             self.__get_ns_priority__(self.__readconfig__(config))
+         self.blacklist = blacklist
             
    def __get_ns_priority__(self, config):
       if config == False:
@@ -482,6 +485,13 @@ class DROIDAnalysis:
       basis = basis.replace(' ','').split(',',2)[:2]
       return basis, 1
 
+   def getblacklistresults(self):
+      bl = BlacklistQueries()
+      #HandleBlacklist.FILENAMES
+      #HandleBlacklist.IDS
+      #HandleBlacklist.DIRECTORIES
+      #HandleBlacklist.EXTENSIONS
+
    def queryDB(self):
 
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
@@ -528,19 +538,9 @@ class DROIDAnalysis:
       #NOTE: Must be calculated after we have total, and subset values
       self.analysisresults.identifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.identifiedfilecount)
       self.analysisresults.unidentifiedPercentage = self.calculatePercent(self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount)
-         
+
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
-      
-      
-      
-      
-      
-      self.analysisresults.signatureidentifiedfrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)      
-      
-      
-      
-      
-      
+      self.analysisresults.signatureidentifiedfrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)            
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
       
       #most complicated way to retrieve extension only PUIDs
@@ -634,6 +634,9 @@ class DROIDAnalysis:
             if counted[x] == self.analysisresults.namespacecount:
                noids.append(x)
          self.analysisresults.identificationgaps = len(noids)
+
+         #finally, get blacklist results
+         self.getblacklistresults()
          
       return self.analysisresults
    

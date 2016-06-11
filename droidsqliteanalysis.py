@@ -39,13 +39,19 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
    else:
       htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
       sys.stdout.write(htmloutput.printHTMLResults())     
-   
-def handleDROIDDB(dbfilename, blacklist, config=False):
+
+#function should go somewhere more appropriate in time   
+def getConfigInfo():
    cfg = 'config.cfg'
    if os.path.exists(cfg) and os.path.isfile(cfg):
       conf = ConfigParser.ConfigParser()
       conf.read(cfg)
-   analysis = DROIDAnalysis(dbfilename, conf)	
+   else:
+      conf = False
+   return conf
+
+def handleDROIDDB(dbfilename, blacklist, config=False):
+   analysis = DROIDAnalysis(dbfilename, getConfigInfo(), blacklist)	
    analysisresults = analysis.runanalysis()
    analysis.closeDROIDDB()
    return analysisresults
@@ -95,7 +101,7 @@ def main():
    if args.db:
       if os.path.isfile(args.db):
          iddb = IdentifyDB()
-         if iddb.identify_export(args.db) == iddb.SQLITE_DB:
+         if iddb.identify_export(args.db) == iddb.SQLITE_DB:   
             analysisresults = handleDROIDDB(args.db, blacklist)
             #handleOutput(analysisresults, args.txt)
             outputtime(start_time)
