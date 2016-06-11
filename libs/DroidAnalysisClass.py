@@ -54,11 +54,11 @@ class DROIDAnalysis:
    ID_NONE = 'NONE'
 
    def __init__(self, dbfilename=None, config=False, blacklist=False):
+      self.rogueids = False   #rework this when dealing with rogues again...
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
       if dbfilename!=None:
          self.openDROIDDB(dbfilename)
          self.query = AnalysisQueries()   
-         self.blacklist = self.__readblacklistconfig__(blacklist)
          self.analysisresults.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[0]
          self.analysisresults.namespacecount = self.__querydb__(self.query.SELECT_COUNT_NAMESPACES, True)[0]
          self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)      
@@ -107,24 +107,6 @@ class DROIDAnalysis:
                ns_out = None
                
       return ns_out
-
-   def __readblacklistconfig__(self, config):
-      configout = False
-      
-      self.blacklistpuids = False
-      self.blacklistzeros = False
-      
-      self.roguesduplicatechecksums = True
-      self.rogueids = False
-      
-      if config != False:
-         if config.has_section('rogues'):
-            if config.has_option('rogues', 'duplicatechecksums'):
-               self.roguesduplicatechecksums = config.get('rogues', 'duplicatechecksums').lower()
-            if config.has_option('rogues', 'ids'):
-               self.rogueids = config.get('rogues', 'ids').split(',')  
-
-      return configout
 
    ## DB self.cursor
    cursor = None
