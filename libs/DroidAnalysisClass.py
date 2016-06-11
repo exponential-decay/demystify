@@ -494,15 +494,15 @@ class DROIDAnalysis:
          ids = self.__querydb__(q4)
          if ids:
             for found in ids:
-               blacklist[found[0]] = (HandleBlacklist.IDS, found[2],found[1])
+               blacklist[found[0]] = (HandleBlacklist.IDS, found[2])
 
       if self.blacklist[HandleBlacklist.EXTENSIONS] != None:
-         q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])
+         q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])         
          extensions = self.__querydb__(q3)
          if extensions: 
             for found in extensions:
                if found[0] not in blacklist.keys():
-                  blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2], found[1])
+                  blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2])
 
       if self.blacklist[HandleBlacklist.FILENAMES] != None:
          q1 = bl.getfilenames(self.blacklist[HandleBlacklist.FILENAMES])
@@ -510,7 +510,7 @@ class DROIDAnalysis:
          if filenames:
             for found in filenames:
                if found[0] not in blacklist.keys():
-                  blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1], found[1])
+                  blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1])
 
       if self.blacklist[HandleBlacklist.DIRECTORIES] != None:
          q2 = bl.getdirnames(self.blacklist[HandleBlacklist.DIRECTORIES])
@@ -518,12 +518,24 @@ class DROIDAnalysis:
          if directories:
             for found in directories:
                if found[0] not in blacklist.keys():
-                  blacklist[found[0]] = (HandleBlacklist.DIRECTORIES, found[1], found[1])
+                  blacklist[found[0]] = (HandleBlacklist.DIRECTORIES, found[1])
 
       if not blacklist:
          blacklist = False
+      else:
+         newlist = []
+         for k,v in blacklist.iteritems():
+            newlist.append(v)
+         count = Counter(newlist)
+         newlist = []
+         for c,v in count.iteritems():
+            newlist.append(c + (v,))
+         newlist.sort(key=lambda tup: tup[len(tup)-1], reverse=True)
+         blacklist = newlist
+         for b in blacklist:
+            print b
 
-      print blacklist
+      #print blacklist
 
    def queryDB(self):
 
@@ -581,7 +593,6 @@ class DROIDAnalysis:
          extid = self.query.query_from_ids(self.extensionIDonly, 'Extension')
          test = self.__querydb__(extid)
          combined_list = []   #namespace + id
-         from collections import Counter
          for entry in test:
             entry = ' '.join(entry)
             combined_list.append(entry) 
