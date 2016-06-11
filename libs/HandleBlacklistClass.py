@@ -16,10 +16,10 @@ class HandleBlacklist:
    CFG_IDS = 'ids'
    CFG_EXT = 'fileextensions'
 
-   FILENAMES = 'file names'
-   IDS = 'ids'
-   DIRECTORIES = 'directories'
-   EXTENSIONS = 'extensions'
+   FILENAMES = 'FILENAMES'
+   IDS = 'IDS'
+   DIRECTORIES = 'DIRECTORIES'
+   EXTENSIONS = 'EXTENSIONS'
 
    def blacklist(self, config):
       #four section dictionary

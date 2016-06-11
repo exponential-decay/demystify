@@ -487,10 +487,43 @@ class DROIDAnalysis:
 
    def getblacklistresults(self):
       bl = BlacklistQueries()
-      #HandleBlacklist.FILENAMES
-      #HandleBlacklist.IDS
-      #HandleBlacklist.DIRECTORIES
-      #HandleBlacklist.EXTENSIONS
+      blacklist = {}
+
+      if self.blacklist[HandleBlacklist.IDS] != None:
+         q4 = bl.getids(self.blacklist[HandleBlacklist.IDS])
+         ids = self.__querydb__(q4)
+         if ids:
+            for found in ids:
+               blacklist[found[0]] = (HandleBlacklist.IDS, found[2],found[1])
+
+      if self.blacklist[HandleBlacklist.EXTENSIONS] != None:
+         q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])
+         extensions = self.__querydb__(q3)
+         if extensions: 
+            for found in extensions:
+               if found[0] not in blacklist.keys():
+                  blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2], found[1])
+
+      if self.blacklist[HandleBlacklist.FILENAMES] != None:
+         q1 = bl.getfilenames(self.blacklist[HandleBlacklist.FILENAMES])
+         filenames = self.__querydb__(q1)
+         if filenames:
+            for found in filenames:
+               if found[0] not in blacklist.keys():
+                  blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1], found[1])
+
+      if self.blacklist[HandleBlacklist.DIRECTORIES] != None:
+         q2 = bl.getdirnames(self.blacklist[HandleBlacklist.DIRECTORIES])
+         directories = self.__querydb__(q2)
+         if directories:
+            for found in directories:
+               if found[0] not in blacklist.keys():
+                  blacklist[found[0]] = (HandleBlacklist.DIRECTORIES, found[1], found[1])
+
+      if not blacklist:
+         blacklist = False
+
+      print blacklist
 
    def queryDB(self):
 
