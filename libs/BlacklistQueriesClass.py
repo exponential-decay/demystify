@@ -29,7 +29,7 @@ class BlacklistQueries:
       return extquery + newlist
 
    def getids(self, idlist):
-      idquery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, IDDATA.ID || ": " || IDDATA.FORMAT_NAME
+      idquery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, IDDATA.ID || ": " || IDDATA.FORMAT_NAME || " " || IDDATA.FORMAT_VERSION
                    FROM IDRESULTS
                    JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID

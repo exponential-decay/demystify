@@ -494,7 +494,7 @@ class DROIDAnalysis:
          ids = self.__querydb__(q4)
          if ids:
             for found in ids:
-               blacklist[found[0]] = (HandleBlacklist.IDS, found[2])
+               blacklist[found[0]] = (HandleBlacklist.IDS, found[2].strip())
 
       if self.blacklist[HandleBlacklist.EXTENSIONS] != None:
          q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])         
@@ -532,13 +532,18 @@ class DROIDAnalysis:
             newlist.append(c + (v,))
          newlist.sort(key=lambda tup: tup[len(tup)-1], reverse=True)
          blacklist = newlist
-         for b in blacklist:
-            print b
 
-      #print blacklist
+         for b in blacklist:
+            if b[0] == HandleBlacklist.DIRECTORIES:
+               self.analysisresults.directories.append((b[1],b[2])) 
+            if b[0] == HandleBlacklist.FILENAMES:
+               self.analysisresults.filenames.append((b[1],b[2]))
+            if b[0] == HandleBlacklist.EXTENSIONS:
+               self.analysisresults.exts.append((b[1],b[2]))
+            if b[0] == HandleBlacklist.IDS:
+               self.analysisresults.ids.append((b[1],b[2]))              
 
    def queryDB(self):
-
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
       if self.hashtype == "None":
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
