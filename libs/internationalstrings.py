@@ -86,7 +86,7 @@ class AnalysisStringsEN:
 
    SUMMARY_DISTANCE_BOF = "Max Distance Scanned from Beginning of File"
    SUMMARY_DISTANCE_EOF = "Max Distance Scanned from End of File"
-   SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Based on Signature)"
+   SUMMARY_GAPS_COVERED = "Files Left Unidentified Across Multiple Identifiers (Gaps Based on Signature)"
    SUMMARY_DESC_GAPS_COVERED = ("Count of all the files that have zero identification results across all "
                                 "namespaces utilizing binary and container file format signatures. As such "
                                 "this statisticate may indicate an immediate priority for digital preservation "
@@ -330,7 +330,8 @@ class AnalysisStringsEN:
                                identified as undesirable, e.g. system files; or file names that may need pre-conditioning
                                e.g. with the title 'Untitled Document'. Filename and directory searches are greedy and will
                                look for instances of the strings specified in the blacklist within filename and directory
-                               strings. ID e.g. PUID, and filename extension searches are understandably more precide."""
+                               strings using a wildcard search. IDs e.g. PUID identifiers, and filename extension searches 
+                               are understandably more precise."""
 
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
