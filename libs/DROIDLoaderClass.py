@@ -78,9 +78,9 @@ class DROIDLoader:
          STATUS = file['STATUS']
          MISMATCH = file['EXTENSION_MISMATCH']
          if MISMATCH == 'true':
-            MISMATCH = True
+            MISMATCH = "True"
          else:
-            MISMATCH = False
+            MISMATCH = "False"
 
          MULTIPLE = False
          if int(file['FORMAT_COUNT']) > 1:
@@ -105,9 +105,9 @@ class DROIDLoader:
                   if key in ToolMapping.DROID_ID_MAP:
                      if key == 'EXTENSION_MISMATCH':
                         if value == 'true':
-                           value = "1"
+                           value = "True"
                         elif value == 'false':
-                           value = "0"
+                           value = "False"
                      idkeystring = idkeystring + ToolMapping.DROID_ID_MAP[key] + ", "
                      idvaluestring = idvaluestring + '"' + value + '", '
                else:
