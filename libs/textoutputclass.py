@@ -313,6 +313,20 @@ class DROIDAnalysisTextOutput:
                # Already UTF-8 on way into here...
                self.printFormattedText(badnames, False)      
 
+      if self.analysisresults.blacklist is True:
+         if self.analysisresults.blacklist_ids:
+            self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_IDS)
+            self.printFormattedText(self.__aggregatelists__(self.analysisresults.blacklist_ids))
+         if self.analysisresults.blacklist_exts:
+            self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_EXTS)
+            self.printFormattedText(self.__aggregatelists__(self.analysisresults.blacklist_exts))
+         if self.analysisresults.blacklist_filenames:
+            self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_FILENAMES)
+            self.printFormattedText(self.__aggregatelists__(self.analysisresults.blacklist_filenames))
+         if self.analysisresults.blacklist_directories:
+            self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_DIRS)
+            self.printFormattedText(self.__aggregatelists__(self.analysisresults.blacklist_directories))
+
       if self.analysisresults.errorlist is not None:
          self.__output_list_title__(self.STRINGS.HEADING_ERRORS)
          self.printFormattedText(self.__frequencyoutput__(self.analysisresults.errorlist)) 
