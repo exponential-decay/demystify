@@ -4,6 +4,7 @@ from __future__ import division
 import argparse
 import os
 import sys
+import time
 from libs.IdentifyExportClass import IdentifyExport
 from libs.GenerateBaselineDBClass import GenerateBaselineDB
 from libs.DROIDLoaderClass import DROIDLoader
@@ -50,14 +51,18 @@ def handleFIDOCSV(fidoexport):
    #loader.fidoDBSetup(fidoexport, basedb.getcursor())
    #basedb.closedb()
    #return basedb.dbname
-   
 
+def outputtime(start_time):
+   sys.stderr.write("\n" + "--- %s seconds ---" % (time.time() - start_time) + "\n")
+   
 def main():
 
    #	Usage: 	--csv [droid report]
    #	Handle command line arguments for the script
    parser = argparse.ArgumentParser(description='Place DROID profiles into a SQLite DB')
    parser.add_argument('--export', '--droid', '--sf', help='Optional: Single tool export to read.')
+
+   start_time = time.time()
    
    if len(sys.argv)==1:
       parser.print_help()
@@ -70,6 +75,7 @@ def main():
    if args.export:
       if os.path.isfile(args.export):
          identifyinput(args.export)
+         outputtime(start_time)
       else:
          sys.exit("Exiting: Not a file.")
    else:
