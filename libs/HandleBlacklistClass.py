@@ -16,6 +16,16 @@ class HandleBlacklist:
    CFG_IDS = 'ids'
    CFG_EXT = 'fileextensions'
 
+   CFG_ROGUES = 'rogues'
+   ROGUE_DUPE = 'duplicatechecksums'
+   ROGUE_PRO = 'pronomonly'
+   ROGUE_BLACK = 'blacklist'
+   ROGUE_FNAMES = 'nonasciifilenames'
+   ROGUE_DIRS = 'nonasciidirs'
+   ROGUE_ZERO = 'zerobytefiles'
+   ROGUE_MULTI = 'multipleids'
+   ROGUE_EXT = 'extensionmismatches'
+
    FILENAMES = 'FILENAMES'
    IDS = 'IDS'
    DIRECTORIES = 'DIRECTORIES'

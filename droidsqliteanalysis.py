@@ -16,12 +16,16 @@ from libs.DroidAnalysisClass import DROIDAnalysis
 from libs.IdentifyDatabase import IdentifyDB
 from libs.HandleBlacklistClass import HandleBlacklist
 
+rogueconfig = False
+
 def handleConfig(blacklist):
    if os.path.isfile(blacklist):
       config = ConfigParser.RawConfigParser()
       config.read(blacklist)  #adds to config object in own right
       hbl = HandleBlacklist()
       blacklist = hbl.blacklist(config)
+      global rogueconfig
+      rogueconfig = config
    else: 
       blacklist = False
    return blacklist
@@ -31,10 +35,10 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
       textoutput = DROIDAnalysisTextOutput(analysisresults)
       sys.stdout.write(textoutput.printTextResults()) # Text class still uses print statements...  
    elif rogues is True:
-      rogueoutput = rogueoutputclass(analysisresults)
+      rogueoutput = rogueoutputclass(analysisresults, rogueconfig)
       rogueoutput.printTextResults()
    elif heroes is True:
-      rogueoutput = rogueoutputclass(analysisresults, heroes)
+      rogueoutput = rogueoutputclass(analysisresults, rogueconfig, heroes)
       rogueoutput.printTextResults()      
    else:
       htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
