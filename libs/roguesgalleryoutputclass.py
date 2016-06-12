@@ -37,6 +37,8 @@ class rogueoutputclass:
 
       self.rogueorhero(self.analysisresults.rogue_file_name_paths)
       self.rogueorhero(self.analysisresults.rogue_dir_name_paths)
+
+      self.rogueorhero(self.analysisresults.rogue_blacklist)
      
       #Sets make it impossible to duplicate output... Also dealing with paths not files
       #so the numbers will add up slightly strangely if we don't think about folders too...

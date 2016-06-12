@@ -57,7 +57,6 @@ class DROIDAnalysis:
    ID_NONE = 'NONE'
 
    def __init__(self, dbfilename=None, config=False, blacklist=False):
-      self.rogueids = False   #rework this when dealing with rogues again...
       self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
       if dbfilename!=None:
          self.openDROIDDB(dbfilename)
@@ -171,22 +170,6 @@ class DROIDAnalysis:
       else:
          self.analysisresults.zerobytelist = None   
       return self.analysisresults.zerobytecount
-
-   def listRogueIDs(self, idlist):        
-      searchlist = []            
-      for id in idlist:
-         result = self.__querydb__(self.query.count_id_instances(id), True, True)   
-         if result > 0:
-            searchlist.append(id)
-
-      rogueidpathlist = []
-      for id in searchlist:
-         result = self.__querydb__(self.query.search_id_instance_filepaths(id))        
-         for r in result:
-            rogueidpathlist.append(r[0])
-            
-      self.analysisresults.roguepuidlisting = rogueidpathlist      
-      return len(self.analysisresults.roguepuidlisting)
 
    def calculatePercent(self, total, subset):
       if total > 0:
@@ -536,6 +519,7 @@ class DROIDAnalysis:
       else:
          newlist = []
          for k,v in blacklist.iteritems():
+            self.analysisresults.rogue_blacklist.append(k)
             newlist.append(v)
          count = Counter(newlist)
          newlist = []
@@ -622,11 +606,6 @@ class DROIDAnalysis:
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
                         
-      #ROGUE QUERIES (relies on returning filepaths)
-      #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
-      if self.rogueids != False:
-         self.listRogueIDs(self.rogueids)
-
       #MORE WORK NEEDED ON ROGUES NOW... ACCURACY IS PARAMOUNT
       if len(self.extensionIDonly) > 0:
          extonly = self.query.query_from_ids(self.extensionIDonly)
@@ -706,6 +685,7 @@ class DROIDAnalysis:
             self.analysisresults.rogue_multiple_identification_list = self.multipleIDList(self.analysisresults.namespacecount)
 
          if self.rogueanalysis:
+
             rq = RogueQueries()
             self.analysisresults.rogue_all_paths = self.__querydb__(rq.SELECT_ALL_FILEPATHS, False, False, True)
             
@@ -719,7 +699,7 @@ class DROIDAnalysis:
             
             self.analysisresults.rogue_file_name_paths = self.__querydb__(rq.get_rogue_name_paths(self.rogue_names), False, False, True)
             self.analysisresults.rogue_dir_name_paths = self.__querydb__(rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True)
-
+           
       return self.analysisresults
    
    def runanalysis(self, rogueanalysis):
