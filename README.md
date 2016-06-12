@@ -66,7 +66,7 @@ TXT can be output by using a --txt flag:
 
     python droidsqliteanalysis.py --db opf-with-text.db --txt > my_txt_file.txt
 
-#### Rogues Gallery (v.0.2.0 only: https://github.com/exponential-decay/droid-sqlite-analysis/releases/tag/0.2.0)
+#### Rogues Gallery (v.0.2.0, v0.5.0+ : see [Releases...](https://github.com/exponential-decay/droid-sqlite-analysis/releases)
 
 **N.B.** *This feature will return, but has been temporarily disabled in the current release to understand what a Rogues gallery needs to look like when using Siegfried.*
 
