@@ -64,11 +64,9 @@ class rogueoutputclass:
          if self.analysisresults.multipleidentificationcount > 0:
             self.rogueorhero(self.analysisresults.rogue_multiple_identification_list)
 
-      import sys
       if self.analysisresults.pronom_ns_id != None and self.pro == 'true':
          self.rogueorhero(self.analysisresults.rogue_identified_pronom)
       else:
-         sys.stderr.write("xxxxxx")
          self.rogueorhero(self.analysisresults.rogue_identified_all)
 
       if self.fnames == 'true':
