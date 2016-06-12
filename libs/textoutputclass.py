@@ -244,10 +244,10 @@ class DROIDAnalysisTextOutput:
             output = output + item[0] + ", " 
          self.printFormattedText(output.strip(", "))
 
-      if self.analysisresults.multipleIDList is not None:
-         if len(self.analysisresults.multipleIDList) > 0:
+      if self.analysisresults.rogue_multiple_identification_list is not None:
+         if len(self.analysisresults.rogue_multiple_identification_list) > 0:
             self.__output_list_title__(self.STRINGS.HEADING_LIST_MULTIPLE)
-            self.printFormattedText(self.__itemlist__(self.analysisresults.multipleIDList))
+            self.printFormattedText(self.__itemlist__(self.analysisresults.rogue_multiple_identification_list))
 
       if self.analysisresults.frequencyOfAllExtensions is not None:
          self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)

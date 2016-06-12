@@ -9,6 +9,7 @@ import RegexFnameAnalysis
 import DroidAnalysisResultsClass
 from AnalysisQueriesClass import AnalysisQueries
 from BlacklistQueriesClass import BlacklistQueries
+from RoguesQueriesClass import RogueQueries
 from urlparse import urlparse
 from lxml import etree, html
 from collections import Counter
@@ -141,7 +142,9 @@ class DROIDAnalysis:
       self.analysisresults.totalHASHduplicates = 0
       for r in result:
          self.analysisresults.totalHASHduplicates = self.analysisresults.totalHASHduplicates + int(r[1])
-        
+      
+      roguepaths = []
+
       #result list([HASH, COUNT])           
       for r in result:               
          example = self.__querydb__(self.query.list_duplicate_paths(r[0]))
@@ -150,14 +153,16 @@ class DROIDAnalysis:
             pathlist.append(e[0])
             self.analysisresults.duplicatespathlist.append(e[0])   #create path only listing
 
+         roguepaths = roguepaths + pathlist
+
          duplicate_sum['checksum'] = str(r[0])
          duplicate_sum['count'] = str(r[1])
          duplicate_sum['examples'] = pathlist
          duplicatelist.append(duplicate_sum)
          duplicate_sum = {}
-                  
+
       self.analysisresults.duplicateHASHlisting = duplicatelist
-      return len(self.analysisresults.duplicateHASHlisting)
+      return roguepaths
 
    def listzerobytefiles(self):
       self.analysisresults.zerobytecount = self.__querydb__(AnalysisQueries.SELECT_COUNT_ZERO_BYTE_FILES, True, True)
@@ -193,6 +198,9 @@ class DROIDAnalysis:
       dirlist = self.__querydb__(AnalysisQueries.SELECT_DIRNAMES)
       
       charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
+
+      self.rogue_names = []
+      self.rogue_dirs = []
       
       namereport = []
       for d in namelist:
@@ -200,6 +208,7 @@ class DROIDAnalysis:
          checkedname = charcheck.completeFnameAnalysis(namestring).encode('utf-8')
          if checkedname != '':
             namereport.append(checkedname)
+            self.rogue_names.append(d[0])
 
       #TODO: Handle recursive paths better to avoid duplication
       dirreport = []
@@ -208,6 +217,7 @@ class DROIDAnalysis:
          checkedname = charcheck.completeFnameAnalysis(dirstring, True).encode('utf-8')
          if checkedname != '':
             dirreport.append(checkedname)
+            self.rogue_dirs.append(d[0])
 
       self.analysisresults.badFileNames = namereport
       self.analysisresults.badDirNames = dirreport
@@ -322,8 +332,6 @@ class DROIDAnalysis:
       self.analysisresults.textidfilecount = len(text_bin) 
       self.analysisresults.filenameidfilecount = len(filename_bin) 
       
-      self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
-
       #ID Method frequencylist can be created here also
       #e.g. [('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
       #self.analysisresults.idmethodFrequency
@@ -344,6 +352,9 @@ class DROIDAnalysis:
       list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
       self.analysisresults.idmethodFrequency = list_of_lists
       self.analysisresults.zeroidcount = len(none_bin)
+
+      #Rogues: Get All ids for All tools (need also a PRONOM only one later)
+      self.analysisresults.rogue_identified_all = container_bin + binary_bin + text_bin + xml_bin
 
    def getMethodIDResults(self, methodids, fmt_version=False):
       #TODO: Fine line between formatting, and not formatting in this function
@@ -559,7 +570,6 @@ class DROIDAnalysis:
 
       #not necessarily used in the output
       self.analysisresults.uniqueFileNames = self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True)
-      
       self.analysisresults.uniqueDirectoryNames = (self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True) - self.NONROOTBASEDIR)
       
       #------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#
@@ -592,7 +602,8 @@ class DROIDAnalysis:
       self.analysisresults.dateFrequency = self.__querydb__(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)      
       self.analysisresults.signatureidentifiedfrequency = self.__querydb__(AnalysisQueries.SELECT_BINARY_MATCH_COUNT)            
       self.analysisresults.extensionOnlyIDList = self.__querydb__(AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY)
-      
+      self.analysisresults.multipleidentificationcount = self.multiplecount(self.analysisresults.namespacecount)  
+    
       #most complicated way to retrieve extension only PUIDs
       if len(self.extensionIDonly) > 0:
          extid = self.query.query_from_ids(self.extensionIDonly, 'Extension')
@@ -610,15 +621,7 @@ class DROIDAnalysis:
                   
       #Additional useful queries...
       self.analysisresults.containertypeslist = self.__querydb__(AnalysisQueries.SELECT_CONTAINER_TYPES)
-            
-      #more complicated listings
-      if self.analysisresults.hashused is True:
-         self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]      
-      
-      #handle output of zero-byte files and filename analysis  
-      self.listzerobytefiles()      
-      self.msoftfnameanalysis()
-      
+                        
       #ROGUE QUERIES (relies on returning filepaths)
       #NB.Need a query where there is no PUID e.g. Rosetta validation procedure
       if self.rogueids != False:
@@ -631,11 +634,6 @@ class DROIDAnalysis:
       if len(self.noids) > 0:    #NOT THE SAME AS COMPLETELY UNIDENTIFIED
          none = self.query.query_from_ids(self.noids)
          nonerogues = self.__querydb__(none)
-
-      self.analysisresults.extmismatchList = self.__querydb__(AnalysisQueries.SELECT_EXTENSION_MISMATCHES) 
-
-      if self.analysisresults.multipleidentificationcount > 0:
-         self.analysisresults.multipleIDList = self.multipleIDList(self.analysisresults.namespacecount)
 
       #create a statistic for aggregated binary identification
       if self.binaryIDs is not None and len(self.binaryIDs) > 0:
@@ -684,14 +682,48 @@ class DROIDAnalysis:
                noids.append(x)
          self.analysisresults.identificationgaps = len(noids)
 
-         #finally, get blacklist results
+         #handle filename analysis  
+         self.msoftfnameanalysis()
+
+         ###################################################################################
+         ######BLACKLIST RESULTS: GET RESULTS SPECIFIC TO THE BLACKLIST FUNCTIONALITY#######
+         ###################################################################################
          if self.blacklist is not False:
             self.analysisresults.blacklist = True
             self.getblacklistresults()
-         
+
+         ###################################################################################
+         #ROGUES: Functions associated with Rogues - Nearly every QUERY that returns a PATH#
+         ###################################################################################
+
+         #need to run these regardless of choice to use rogues
+         self.listzerobytefiles()    #self.analysisresults.zerobytelist
+
+         if self.analysisresults.hashused is True:
+            self.analysisresults.rogue_duplicates = self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]  
+
+         if self.analysisresults.multipleidentificationcount > 0:
+            self.analysisresults.rogue_multiple_identification_list = self.multipleIDList(self.analysisresults.namespacecount)
+
+         if self.rogueanalysis:
+            rq = RogueQueries()
+            self.analysisresults.rogue_all_paths = self.__querydb__(rq.SELECT_ALL_FILEPATHS, False, False, True)
+            
+            self.analysisresults.rogue_extension_mismatches = self.__querydb__(rq.SELECT_EXTENSION_MISMATCHES, False, False, True) 
+
+            if self.pronom_ns_id != None:
+               self.analysisresults.pronom_ns_id = self.pronom_ns_id
+               self.analysisresults.rogue_identified_pronom = self.__querydb__(rq.get_pronom_identified_files(self.pronom_ns_id), False, False, True)
+            else:
+               self.analysisresults.rogue_identified_all = self.__querydb__(rq.get_all_non_ids(self.analysisresults.rogue_identified_all), False, False, True)
+            
+            self.analysisresults.rogue_file_name_paths = self.__querydb__(rq.get_rogue_name_paths(self.rogue_names), False, False, True)
+            self.analysisresults.rogue_dir_name_paths = self.__querydb__(rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True)
+
       return self.analysisresults
    
-   def runanalysis(self):
+   def runanalysis(self, rogueanalysis):
+      self.rogueanalysis = rogueanalysis
       analysisresults = self.queryDB()		# primary db query functions
       return self.analysisresults   
    

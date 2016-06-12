@@ -409,10 +409,10 @@ class DROIDAnalysisHTMLOutput:
          #Unique Extensions Identified
          self.__outputtable__(self.analysisresults.uniqueExtensionsInCollectionList, self.STRINGS.HEADING_UNIQUE_EXTENSIONS, self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS, False)
 
-      if self.analysisresults.multipleIDList is not None:
-         if len(self.analysisresults.multipleIDList) > 0:
+      if self.analysisresults.rogue_multiple_identification_list is not None:
+         if len(self.analysisresults.rogue_multiple_identification_list) > 0:
             #Files with multiple identifications, signature only
-            self.__outputtable__(self.analysisresults.multipleIDList, self.STRINGS.HEADING_LIST_MULTIPLE, self.STRINGS.HEADING_DESC_LIST_MULTIPLE, False, 1, "800")
+            self.__outputtable__(self.analysisresults.rogue_multiple_identification_list, self.STRINGS.HEADING_LIST_MULTIPLE, self.STRINGS.HEADING_DESC_LIST_MULTIPLE, False, 1, "800")
                   
       if self.analysisresults.mimetypeFrequency is not None:      
          #Mimetype Frequency

@@ -34,7 +34,7 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
       rogueoutput = rogueoutputclass(analysisresults)
       rogueoutput.printTextResults()
    elif heroes is True:
-      rogueoutput = roguesgalleryoutputclass.rogueoutputclass(analysisresults, heroes)
+      rogueoutput = rogueoutputclass(analysisresults, heroes)
       rogueoutput.printTextResults()      
    else:
       htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
@@ -50,9 +50,16 @@ def getConfigInfo():
       conf = False
    return conf
 
-def handleDROIDDB(dbfilename, blacklist, config=False):
-   analysis = DROIDAnalysis(dbfilename, getConfigInfo(), blacklist)	
-   analysisresults = analysis.runanalysis()
+def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
+   analysis = DROIDAnalysis(dbfilename, getConfigInfo(), blacklist)
+
+   #avoid unecessary processing with rogue path analyses	
+   rogueanalysis = False
+   if rogues != False or heroes != False:
+      rogueanalysis = True
+
+   #send rogue argument to analysis class
+   analysisresults = analysis.runanalysis(rogueanalysis)
    analysis.closeDROIDDB()
    return analysisresults
 
@@ -60,7 +67,7 @@ def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=Fa
    dbfilename = droid2sqlite.identifyinput(droidcsv)
    if dbfilename is not None:
       if analyse == True:
-         analysisresults = handleDROIDDB(dbfilename, blacklist)
+         analysisresults = handleDROIDDB(dbfilename, blacklist, rogues, heroes)
          handleOutput(analysisresults, txtout, rogues, heroes)
 
 def outputtime(start_time):
@@ -76,8 +83,8 @@ def main():
    parser.add_argument('--db', help='Optional: Single DROID or Siegfried sqlite db to read.', default=False)
    parser.add_argument("--txt", "--text", help="Output HTML instead of text.", action="store_true")
    parser.add_argument("--blacklist", help="Use configured blacklist.", action="store_true")
-   #parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
-   #parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
+   parser.add_argument("--rogues", "--rogue", help="Output 'Rogues Gallery' listing.", action="store_true")
+   parser.add_argument("--heroes", "--hero", help="Output 'Heroes Gallery' listing.", action="store_true")
 
    start_time = time.time()
 
@@ -96,14 +103,14 @@ def main():
       blacklist = False      
 
    if args.export:
-      handleDROIDCSV(args.export, True, args.txt, blacklist)
+      handleDROIDCSV(args.export, True, args.txt, blacklist, args.rogues, args.heroes)
       outputtime(start_time)
    if args.db:
       if os.path.isfile(args.db):
          iddb = IdentifyDB()
          if iddb.identify_export(args.db) == iddb.SQLITE_DB:   
-            analysisresults = handleDROIDDB(args.db, blacklist)
-            handleOutput(analysisresults, args.txt)
+            analysisresults = handleDROIDDB(args.db, blacklist, args.rogues, args.heroes)
+            handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
             outputtime(start_time)
          else:
             sys.exit("Exiting: Not a recognised SQLite file.")

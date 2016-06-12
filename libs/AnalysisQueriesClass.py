@@ -1,8 +1,8 @@
 ﻿class AnalysisQueries:
    
    SELECT_FILENAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
-   SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
-   
+   SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"   
+
    SELECT_HASH = "SELECT DBMD.HASH_TYPE FROM DBMD"
    SELECT_TOOL = "SELECT DBMD.TOOL_TYPE FROM DBMD"
    
@@ -165,12 +165,6 @@
                                        AND FILEDATA.EXT!=''
                                        GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
 
-   SELECT_EXTENSION_MISMATCHES = """SELECT FILEDATA.FILE_PATH
-                                    FROM IDRESULTS
-                                    JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                    AND (IDDATA.EXTENSION_MISMATCH='True')"""
-
    #MULTIPLE ID FOR FILES GREATER THAN ZERO BYTES
    SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH 
                                  FROM IDRESULTS 
@@ -195,22 +189,16 @@
                                  AND IDDATA.BASIS LIKE '%byte match%'"""
 
    def count_multiple_ids(self, nscount, paths=False):
-      count = 'SELECT count(FREQUENCY)' + "\n"
-      pathquery = 'SELECT PATH' + "\n"               
-      body = """FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
-                  FROM IDRESULTS
-                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                  WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
-                  GROUP BY FILEDATA.FILE_ID
-                  ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
-                  WHERE FREQUENCY > """
-      
-      query = ''
-      if paths == False:
-         query = count + body + str(nscount)
-      else:
-         query = pathquery + body + str(nscount)
+      body = """SELECT count(FREQUENCY)
+                FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
+                FROM IDRESULTS
+                JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
+                GROUP BY FILEDATA.FILE_ID
+                ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
+                WHERE FREQUENCY > """
+      query = body + str(nscount)
       return query
 
    def list_duplicate_paths(self, checksum):

@@ -63,7 +63,6 @@ class DROIDAnalysisResults:
    #SF ONLY
 
    extmismatchCount = 0
-   extmismatchList = 0
    
    unidentifiedPercentage = 0
    identifiedPercentage = 0
@@ -74,11 +73,9 @@ class DROIDAnalysisResults:
    dateFrequency = None
 
    extensionOnlyIDFrequency = 0
-   extensionOnlyIDfnameList = 0 
    
    #TODO: Turn lists into lists? Formatting at end..?
    uniqueExtensionsInCollectionList = None
-   multipleIDList = None
    frequencyOfAllExtensions = None
    
    idmethodFrequency = None
@@ -97,6 +94,8 @@ class DROIDAnalysisResults:
    duplicatefnamealtlisting = []
    
    containertypeslist = None
+
+   duplicatespathlist = []
    
    zerobytecount = 0
    zerobytelist = None
@@ -109,8 +108,16 @@ class DROIDAnalysisResults:
    totalHASHduplicates = None
 
    #rogues
-   duplicatespathlist = []
-         
+   rogue_pronom_ns_id = None
+   rogue_all_paths = None
+   rogue_duplicates = []
+   rogue_identified_all = []
+   rogue_identified_pronom = []
+   rogue_extension_mismatches = []  
+   rogue_multiple_identification_list = [] 
+   rogue_file_name_paths = []    #non-ascii file names   
+   rogue_dir_name_paths = []     #non-ascii dir names
+
    def __version__(self):
       analysis = DroidAnalysisClass.DROIDAnalysis()
       self.version = analysis.__version__()
