@@ -103,7 +103,7 @@ def main():
          iddb = IdentifyDB()
          if iddb.identify_export(args.db) == iddb.SQLITE_DB:   
             analysisresults = handleDROIDDB(args.db, blacklist)
-            #handleOutput(analysisresults, args.txt)
+            handleOutput(analysisresults, args.txt)
             outputtime(start_time)
          else:
             sys.exit("Exiting: Not a recognised SQLite file.")

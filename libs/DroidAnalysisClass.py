@@ -17,7 +17,7 @@ from HandleBlacklistClass import HandleBlacklist
 class DROIDAnalysis:
 
    def __version__(self):
-      self.analysisresults.__version_no__ = '0.4.0' #need something reasonable here...
+      self.analysisresults.__version_no__ = '0.5.0' #need something reasonable here...
       return self.analysisresults.__version_no__
 
    #we need this value because we extract basedirs for all folders, including
@@ -535,13 +535,13 @@ class DROIDAnalysis:
 
          for b in blacklist:
             if b[0] == HandleBlacklist.DIRECTORIES:
-               self.analysisresults.directories.append((b[1],b[2])) 
+               self.analysisresults.blacklist_directories.append((b[1],b[2])) 
             if b[0] == HandleBlacklist.FILENAMES:
-               self.analysisresults.filenames.append((b[1],b[2]))
+               self.analysisresults.blacklist_filenames.append((b[1],b[2]))
             if b[0] == HandleBlacklist.EXTENSIONS:
-               self.analysisresults.exts.append((b[1],b[2]))
+               self.analysisresults.blacklist_exts.append((b[1],b[2]))
             if b[0] == HandleBlacklist.IDS:
-               self.analysisresults.ids.append((b[1],b[2]))              
+               self.analysisresults.blacklist_ids.append((b[1],b[2]))              
 
    def queryDB(self):
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
@@ -685,7 +685,9 @@ class DROIDAnalysis:
          self.analysisresults.identificationgaps = len(noids)
 
          #finally, get blacklist results
-         self.getblacklistresults()
+         if self.blacklist is not False:
+            self.analysisresults.blacklist = True
+            self.getblacklistresults()
          
       return self.analysisresults
    

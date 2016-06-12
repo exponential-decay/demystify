@@ -17,10 +17,10 @@ class DROIDAnalysisResults:
 
    #blacklist
    blacklist = False
-   filenames = []
-   directories = []
-   ids = []
-   exts = []
+   blacklist_filenames = []
+   blacklist_directories = []
+   blacklist_ids = []
+   blacklist_exts = []
 
    # Counts
    collectionsize = 0

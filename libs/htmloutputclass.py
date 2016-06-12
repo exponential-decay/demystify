@@ -422,25 +422,11 @@ class DROIDAnalysisHTMLOutput:
                mimes.remove(m)
          self.__outputtable__(mimes, self.STRINGS.HEADING_FREQUENCY_MIME, self.STRINGS.HEADING_DESC_FREQUENCY_MIME, True, 2, "400")
 
-
-
-
-
-
       ##########NS SPECIFIC OUTPUT####################
       if self.analysisresults.signatureidentifiedfrequency is not None and self.analysisresults.nsdatalist is not None:
          self.__outputheading__(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS, self.STRINGS.HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS)
          self.__handlenamespacestats__(self.analysisresults.nsdatalist, self.analysisresults.signatureidentifiedfrequency)
       ##########NS SPECIFIC OUTPUT####################
-
-
-
-
-
-
-
-
-
 
       ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
       self.__handleidspecificoutput__()
@@ -486,6 +472,16 @@ class DROIDAnalysisHTMLOutput:
                self.printFormattedText(fnames)
                self.__htmlnewline__(2) 
             self.printFormattedText("<hr/>")
+
+      if self.analysisresults.blacklist is True:
+         if self.analysisresults.blacklist_ids:
+            self.__outputtable__(self.analysisresults.blacklist_ids, self.STRINGS.HEADING_BLACKLIST_IDS, self.STRINGS.HEADING_DESC_BLACKLIST, True, 1, "800")
+         if self.analysisresults.blacklist_exts:
+            self.__outputtable__(self.analysisresults.blacklist_exts, self.STRINGS.HEADING_BLACKLIST_EXTS, self.STRINGS.HEADING_DESC_BLACKLIST, True, 3, "260")  
+         if self.analysisresults.blacklist_filenames:
+            self.__outputtable__(self.analysisresults.blacklist_filenames, self.STRINGS.HEADING_BLACKLIST_FILENAMES, self.STRINGS.HEADING_DESC_BLACKLIST, True, 1, "800")  
+         if self.analysisresults.blacklist_directories:
+            self.__outputtable__(self.analysisresults.blacklist_directories, self.STRINGS.HEADING_BLACKLIST_DIRS, self.STRINGS.HEADING_DESC_BLACKLIST, True, 1, "800")  
 
       if self.analysisresults.errorlist is not None:
          self.__outputtable__(self.analysisresults.errorlist, self.STRINGS.HEADING_ERRORS, self.STRINGS.HEADING_DESC_ERRORS, True, 1, "800")

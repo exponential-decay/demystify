@@ -321,6 +321,17 @@ class AnalysisStringsEN:
                                         "will also include those for which there is an explicit recommendation against from "
                                         "<a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>")
 
+   HEADING_BLACKLIST_IDS = "Blacklist Identifiers found in Accession/Extract"
+   HEADING_BLACKLIST_EXTS = "Blacklist Filename Extensions found in Accession/Extract"
+   HEADING_BLACKLIST_DIRS = "Blacklist Directory Names found in Accession/Extract"
+   HEADING_BLACKLIST_FILENAMES = "Blacklist Filenames found in Accession/Extract"
+   HEADING_DESC_BLACKLIST = """Lists objects which are considered undesirable inside an accession/extract. 
+                               The blacklist is entirely configurable by user and may contain files that can be
+                               identified as undesirable, e.g. system files; or file names that may need pre-conditioning
+                               e.g. with the title 'Untitled Document'. Filename and directory searches are greedy and will
+                               look for instances of the strings specified in the blacklist within filename and directory
+                               strings. ID e.g. PUID, and filename extension searches are understandably more precide."""
+
    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
    
