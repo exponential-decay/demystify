@@ -540,7 +540,7 @@ class DROIDAnalysis:
 
    def queryDB(self):
       self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
-      if self.hashtype == "None":
+      if self.hashtype == "None" or self.hashtype == 'False':
          sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
          self.analysisresults.hashused = False
       else:

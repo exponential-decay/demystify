@@ -33,7 +33,7 @@ class SFYAMLHandler:
    #all files in report
    files = []
 
-   hashtype = False
+   hashtype = None
 
    hashes = ['md5', 'sha1', 'sha256', 'sha512', 'crc']
    fileheaders = ['filename', 'filesize', 'modified', 'errors', 'md5', 'sha1', 'sha256', 'sha512', 'crc']
