@@ -18,7 +18,7 @@ from HandleBlacklistClass import HandleBlacklist
 class DROIDAnalysis:
 
    def __version__(self):
-      self.analysisresults.__version_no__ = '0.5.0' #need something reasonable here...
+      self.analysisresults.__version_no__ = '0.5.1' #need something reasonable here...
       return self.analysisresults.__version_no__
 
    #we need this value because we extract basedirs for all folders, including
