@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 # we don't import YAML handler for this 
 # as no standard PYTHON handler library
-import re
-import sys
 import os.path
-import datetime
 import urllib
 import codecs
 from urlparse import urlparse, urljoin
+from PyDateHandler import PyDateHandler
 
 class SFYAMLHandler:
+
+   def __init__(self):
+      #date handler class   
+      self.pydate = PyDateHandler()
    
    sectioncount = 0
    identifiercount = 0
@@ -284,39 +286,9 @@ class SFYAMLHandler:
          year = row['modified']
          row[self.FIELDYEAR] = self.getYear(year)
       return sfdata
-
-   def get_datestring_without_timezone(self, datestring):
-      newdate = False
-      if '+' in datestring:
-         #sf example: 2016-04-02T20:45:12+13:00
-         newdate = datestring.split('+', 1)[0]
-      else:
-         #sf example: 2016-04-02T20:45:12-04:00
-         newdate = datestring.rsplit('-', 1)[0]   
-      if newdate != False:
-         #validate the date format, else return exception
-         try:
-            newdate = int(datetime.datetime.strptime(newdate, '%Y-%m-%dT%H:%M:%S').year)       
-         #e.g. ValueError: unconverted data remains: -04:00       
-         except ValueError as e:        
-            errstr = "Problem in getYear function, likely due to timezone issues: " + str(e)
-            sys.stderr.write(errstr + "\n")  
-            newdate = False      
-      if newdate == False:
-         testyear = datestring.split('-')[0]
-         validyear = re.compile('^\d{4}$')
-         if len(testyear) == 4 and re.search(validyear, testyear) is not None:    #we should have a year
-            newdate = int(testyear)
-            sys.stderr.write("Treating timestamp as a string and setting it to: " + str(testyear) + "\n")            
-      return int(newdate)
       
    def getYear(self, datestring):
-      dt = 'NULL'    #SQL NULL
-      datestring = datestring.replace('Z', '') #TODO: Handle 'Z' (Nato: Zulu) time (ZIPs only?)      
-      datestring = self.get_datestring_without_timezone(datestring)
-      if datestring != False:
-         dt = datestring  
-      return dt
+      return self.pydate.getYear(datestring)
 
    def getContainers(self, id, filedict):
       #only set as File if and only if it isn't a Container

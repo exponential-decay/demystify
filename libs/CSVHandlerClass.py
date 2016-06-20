@@ -1,7 +1,8 @@
-﻿import unicodecsv
+# -*- coding: utf-8 -*-
 import os.path
-import datetime
+import unicodecsv
 from urlparse import urlparse
+from PyDateHandler import PyDateHandler
 
 class genericCSVHandler():
 
@@ -112,6 +113,10 @@ class genericCSVHandler():
 
 class droidCSVHandler():
 
+   def __init__(self):
+      #date handler class   
+      self.pydate = PyDateHandler()
+
    #returns droidlist type
    def readDROIDCSV(self, droidcsvfname, BOM=False):
       csvhandler = genericCSVHandler(BOM)
@@ -131,10 +136,9 @@ class droidCSVHandler():
       for row in droidlist:
          row[u'URI_SCHEME'] = self.getURIScheme(row['URI'])
       return droidlist
-
+      
    def getYear(self, datestring):
-      dt = datetime.datetime.strptime(datestring.split('+', 1)[0], '%Y-%m-%dT%H:%M:%S')
-      return int(dt.year)
+      return self.pydate.getYear(datestring)
 
    def addYear(self, droidlist):
       for row in droidlist:
