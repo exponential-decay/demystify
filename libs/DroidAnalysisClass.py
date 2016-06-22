@@ -18,7 +18,7 @@ from HandleBlacklistClass import HandleBlacklist
 class DROIDAnalysis:
 
    def __version__(self):
-      self.analysisresults.__version_no__ = '0.5.1' #need something reasonable here...
+      self.analysisresults.__version_no__ = '0.5.2' #need something reasonable here...
       return self.analysisresults.__version_no__
 
    #we need this value because we extract basedirs for all folders, including
@@ -692,7 +692,7 @@ class DROIDAnalysis:
             self.analysisresults.rogue_extension_mismatches = self.__querydb__(rq.SELECT_EXTENSION_MISMATCHES, False, False, True) 
 
             if self.pronom_ns_id != None:
-               self.analysisresults.pronom_ns_id = self.pronom_ns_id
+               self.analysisresults.rogue_pronom_ns_id = self.pronom_ns_id
                self.analysisresults.rogue_identified_pronom = self.__querydb__(rq.get_pronom_identified_files(self.pronom_ns_id), False, False, True)
             else:
                self.analysisresults.rogue_identified_all = self.__querydb__(rq.get_all_non_ids(self.analysisresults.rogue_identified_all), False, False, True)

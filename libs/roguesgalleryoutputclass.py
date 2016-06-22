@@ -45,7 +45,8 @@ class rogueoutputclass:
             sys.stdout.write(x + "\n")
 
    def rogueorhero(self, pathlist):
-      if pathlist != False:
+      sys.stderr.write(str(self.roguelist) + "\n\n")
+      if pathlist != False and pathlist != None:
          self.roguelist = self.roguelist + pathlist
 
    def printTextResults(self):
@@ -64,7 +65,7 @@ class rogueoutputclass:
          if self.analysisresults.multipleidentificationcount > 0:
             self.rogueorhero(self.analysisresults.rogue_multiple_identification_list)
 
-      if self.analysisresults.pronom_ns_id != None and self.pro == 'true':
+      if self.analysisresults.rogue_pronom_ns_id != None and self.pro == 'true':
          self.rogueorhero(self.analysisresults.rogue_identified_pronom)
       else:
          self.rogueorhero(self.analysisresults.rogue_identified_all)
