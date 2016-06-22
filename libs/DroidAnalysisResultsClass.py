@@ -110,6 +110,7 @@ class DROIDAnalysisResults:
    #rogues
    rogue_pronom_ns_id = None
    rogue_all_paths = None
+   rogue_all_dirs = None
    rogue_blacklist = []
    rogue_duplicates = []
    rogue_identified_all = []

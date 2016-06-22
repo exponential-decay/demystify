@@ -221,6 +221,7 @@ class DROIDAnalysisHTMLOutput:
       colno = 0
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
+         item = str(item)
          if type(item) is str:
             if nonewline == False:
                string = item + "</br></br>"
@@ -445,7 +446,7 @@ class DROIDAnalysisHTMLOutput:
       if self.analysisresults.hashused is True:
          if self.analysisresults.duplicateHASHlisting is not None:
             #Duplicate Content    
-            self.__outputheading__(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT)
+            self.__outputheading__(self.STRINGS.HEADING_IDENTICAL_CONTENT + " (" + str(self.analysisresults.totalHASHduplicates) + ")", self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT + " (" + str(self.analysisresults.totalHASHduplicates) + ")")
             for dupes in self.analysisresults.duplicateHASHlisting:	#TODO: consider count next to HASH val
                self.printFormattedText("<b>" + dupes['checksum'] + "</b> Count: " + dupes['count'] + "<br/><br/>")
                self.printFormattedText("<code>")

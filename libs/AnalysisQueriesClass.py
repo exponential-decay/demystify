@@ -189,16 +189,30 @@
                                  AND IDDATA.BASIS LIKE '%byte match%'"""
 
    def count_multiple_ids(self, nscount, paths=False):
-      body = """SELECT count(FREQUENCY)
-                FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
-                FROM IDRESULTS
-                JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
-                GROUP BY FILEDATA.FILE_ID
-                ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
-                WHERE FREQUENCY > """
-      query = body + str(nscount)
+      #e.g. if nscount (number of namespaces) == 3, a multuple id has count > 3
+      query = ''
+      if paths == False:
+         body = """SELECT count(FREQUENCY)
+                   FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
+                   FROM IDRESULTS
+                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                   WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
+                   GROUP BY FILEDATA.FILE_ID
+                   ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
+                   WHERE FREQUENCY > """
+         query = body + str(nscount)
+      else:
+         body = """SELECT PATH
+                   FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
+                   FROM IDRESULTS
+                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                   WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
+                   GROUP BY FILEDATA.FILE_ID
+                   ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
+                   WHERE FREQUENCY > """
+         query = body + str(nscount)
       return query
 
    def list_duplicate_paths(self, checksum):

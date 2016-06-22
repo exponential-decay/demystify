@@ -18,7 +18,7 @@ from HandleBlacklistClass import HandleBlacklist
 class DROIDAnalysis:
 
    def __version__(self):
-      self.analysisresults.__version_no__ = '0.5.2' #need something reasonable here...
+      self.analysisresults.__version_no__ = '0.6.0' #need something reasonable here...
       return self.analysisresults.__version_no__
 
    #we need this value because we extract basedirs for all folders, including
@@ -208,8 +208,8 @@ class DROIDAnalysis:
    def multiplecount(self, nscount):    
       return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)
 
-   def multipleIDList(self, nscount):       
-      return self.__querydb__(self.query.count_multiple_ids(nscount, True), False, False, True) 
+   def multiple_id_paths(self, nscount, paths=True):
+      return self.__querydb__(self.query.count_multiple_ids(nscount, paths), False, False, True) 
 
    def __getsplit__(self, vals):
       idlist = vals.split(',', 3)
@@ -682,15 +682,20 @@ class DROIDAnalysis:
             self.analysisresults.rogue_duplicates = self.listDuplicateFilesFromHASH()      #expensive duplicate checking [default: ON]  
 
          if self.analysisresults.multipleidentificationcount > 0:
-            self.analysisresults.rogue_multiple_identification_list = self.multipleIDList(self.analysisresults.namespacecount)
+            self.analysisresults.rogue_multiple_identification_list = self.multiple_id_paths(self.analysisresults.namespacecount)
 
          if self.rogueanalysis:
 
             rq = RogueQueries()
             self.analysisresults.rogue_all_paths = self.__querydb__(rq.SELECT_ALL_FILEPATHS, False, False, True)
+            self.analysisresults.rogue_all_dirs = self.__querydb__(rq.SELECT_ALL_FOLDERS, False, False, True)
             
             self.analysisresults.rogue_extension_mismatches = self.__querydb__(rq.SELECT_EXTENSION_MISMATCHES, False, False, True) 
 
+            #NEED THIS FOR DROID TOOL ONLY?
+            if self.analysisresults.tooltype == 'droid':
+               self.pronom_ns_id = 1
+               
             if self.pronom_ns_id != None:
                self.analysisresults.rogue_pronom_ns_id = self.pronom_ns_id
                self.analysisresults.rogue_identified_pronom = self.__querydb__(rq.get_pronom_identified_files(self.pronom_ns_id), False, False, True)

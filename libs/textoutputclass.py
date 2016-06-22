@@ -18,7 +18,7 @@ class DROIDAnalysisTextOutput:
    def __itemlist__(self, list):
       output = ''
       for item in list:
-         output = output + item + "\n"
+         output = output + str(item) + "\n"
       return output.strip("\n")
          
    def __printNewline__(self):
