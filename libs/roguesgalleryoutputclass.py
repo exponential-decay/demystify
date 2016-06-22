@@ -96,8 +96,6 @@ class rogueoutputclass:
          foldercount = len(hfolders)
          filecount = len(hfiles)
          
-         sys.stderr.write(str(foldercount) + " " + str(filecount) + "\n\n")
-         
          self.outputlist(hset)
          sys.stderr.write("\n" + str(filecount) + " out of (" + str(number_allfiles)  + ") files output in rogues gallery.")
          sys.stderr.write("\n" + str(foldercount) + " out of (" + str(number_alldirs)  + ") directories output in rogues gallery." + "\n")
