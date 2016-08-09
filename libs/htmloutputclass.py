@@ -90,7 +90,7 @@ class DROIDAnalysisHTMLOutput:
       return namespace, identifier, formatname, count
    
    def __outputmeter__(self, value, minval, maxval):
-      return '<td><meter style="width: 300px;" value="' + str(value).strip() + '" min="' + str(min) + '" max="' + str(maxval) + '">test</meter></td>'
+      return '<td><meter style="width: 300px;" value="' + str(value).strip() + '" min="' + str(min) + '" max="' + str(maxval) + '">&nbsp;METER VISUALISATION AVAILABLE IN GOOGLE CHROME&nbsp;</meter></td>'
 
    def __generateOffsetText__(self, offsettext):
       #########['id','basis','filename','filesize','offset']##########
