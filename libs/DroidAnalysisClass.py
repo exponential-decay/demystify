@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import argparse
+import csv
 import sys
 import sqlite3
-import csv
+import argparse
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
 import DroidAnalysisResultsClass
@@ -13,12 +13,14 @@ from RoguesQueriesClass import RogueQueries
 from urlparse import urlparse
 from lxml import etree, html
 from collections import Counter
+from version import AnalysisVersion
 from HandleBlacklistClass import HandleBlacklist
 
 class DROIDAnalysis:
 
    def __version__(self):
-      self.analysisresults.__version_no__ = '0.6.0' #need something reasonable here...
+      v = AnalysisVersion()
+      self.analysisresults.__version_no__ = v.getVersion()
       return self.analysisresults.__version_no__
 
    #we need this value because we extract basedirs for all folders, including
