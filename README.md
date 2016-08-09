@@ -1,4 +1,4 @@
-droid-siegfried-sqlite-analysis-engine
+Analysis and reporting engine for digital preservation tools DROID and Siegfried
 =====================
 
 Working example [Siegfried]: [Siegfried Govdocs Select Results...](https://htmlpreview.github.io/?https://github.com/exponential-decay/digital-preservation-stage-boss-one/blob/master/identification-results/siegfried/sf-analysis-htm/sf-container-NOLIMIT.htm) <br/> 
