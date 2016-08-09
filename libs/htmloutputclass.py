@@ -221,7 +221,6 @@ class DROIDAnalysisHTMLOutput:
       colno = 0
       self.printFormattedText("<table style='border-collapse: collapse; border-color: #222222'><tr>")
       for item in listing:
-         item = str(item)
          if type(item) is str:
             if nonewline == False:
                string = item + "</br></br>"
