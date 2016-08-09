@@ -16,6 +16,8 @@ See the following blogs for more information:
 * [2016-05-23] On the integration of Siegfried output for consistent and repeatable reporting: http://openpreservation.org/blog/2016/05/23/whats-in-a-namespace-the-marriage-of-droid-and-siegfried-analysis/
 * [2016-05-24] On creating a multi-lingual dialect and exploring alternative identification methods: http://openpreservation.org/blog/2016/05/24/while-were-on-the-subject-a-few-more-points-of-interest-about-the-siegfrieddroid-analysis-tool/ 
 
+COPTR Link: http://coptr.digipres.org/DROID_sqlite_analysis 
+
 There are three components to the tool:
 
 #### droid2sqlite.py
@@ -67,8 +69,6 @@ TXT can be output by using a --txt flag:
     python droidsqliteanalysis.py --db opf-with-text.db --txt > my_txt_file.txt
 
 #### Rogues Gallery (v.0.2.0, v0.5.0+ : see [Releases...](https://github.com/exponential-decay/droid-sqlite-analysis/releases)
-
-**N.B.** *This feature will return, but has been temporarily disabled in the current release to understand what a Rogues gallery needs to look like when using Siegfried.*
 
 The following flags provide Rogue or Hero output:
 
