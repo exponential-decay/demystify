@@ -100,7 +100,7 @@ def main():
    global args
    args = parser.parse_args()
    
-   if args.blacklist:
+   if args.blacklist or args.rogues:
       args.blacklist = "blacklist.cfg"
       blacklist = handleConfig(args.blacklist)
    else:

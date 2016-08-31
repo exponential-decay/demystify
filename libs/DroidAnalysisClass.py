@@ -705,7 +705,9 @@ class DROIDAnalysis:
                self.analysisresults.rogue_identified_all = self.__querydb__(rq.get_all_non_ids(self.analysisresults.rogue_identified_all), False, False, True)
             
             self.analysisresults.rogue_file_name_paths = self.__querydb__(rq.get_rogue_name_paths(self.rogue_names), False, False, True)
-            self.analysisresults.rogue_dir_name_paths = self.__querydb__(rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True)
+
+            if len(self.rogue_dirs) > 0:
+               self.analysisresults.rogue_dir_name_paths = self.__querydb__(rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True)
            
       return self.analysisresults
    

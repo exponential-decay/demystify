@@ -56,11 +56,13 @@ class RogueQueries:
       query = PATHS + csv
       return query
 
-   def get_rogue_dir_paths(self, itemlist):
-      PATHS = """SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA
-                 WHERE DIR_NAME IN """           
-      csv = '","'.join(itemlist)
-      csv = '("' + csv + '")'
-      query = PATHS + csv
+   def get_rogue_dir_paths(self, itemlist): 
+      query = ""
+      if len(itemlist) > 0 :
+         PATHS = """SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA
+                    WHERE DIR_NAME IN """           
+         csv = '","'.join(itemlist)
+         csv = '("' + csv + '")'
+         query = PATHS + csv
       return query
 

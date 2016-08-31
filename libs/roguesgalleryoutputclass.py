@@ -21,23 +21,24 @@ class rogueoutputclass:
       self.handleconfig(config)
 
    def handleconfig(self, config):
-      if config.has_section(HandleBlacklist.CFG_ROGUES):
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE):
-            self.dupes = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO):
-            self.pro = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK):
-            self.black = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES):
-            self.fnames = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS):
-            self.dirs = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO):
-            self.zero = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI):
-            self.multi = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI).lower()
-         if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT):
-            self.ext = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT).lower()
+      if config != False:
+         if config.has_section(HandleBlacklist.CFG_ROGUES):
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE):
+               self.dupes = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO):
+               self.pro = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK):
+               self.black = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES):
+               self.fnames = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS):
+               self.dirs = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO):
+               self.zero = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI):
+               self.multi = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI).lower()
+            if config.has_option(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT):
+               self.ext = config.get(HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT).lower()
 
    def outputlist(self, pathlist):
       for x in pathlist:
