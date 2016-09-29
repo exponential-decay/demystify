@@ -9,12 +9,14 @@ import droid2sqlite
 import ConfigParser
 import libs.ExportDBClass
 import droid2sqlite
-from libs.htmloutputclass import DROIDAnalysisHTMLOutput
-from libs.textoutputclass import DROIDAnalysisTextOutput
-from libs.roguesgalleryoutputclass import rogueoutputclass
 from libs.DroidAnalysisClass import DROIDAnalysis
 from libs.IdentifyDatabase import IdentifyDB
 from libs.HandleBlacklistClass import HandleBlacklist
+
+#custom output handlers
+from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
+from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
+from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 
 rogueconfig = False
 

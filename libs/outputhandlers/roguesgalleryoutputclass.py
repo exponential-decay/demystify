@@ -1,4 +1,5 @@
 import sys
+sys.path.append(r'libs/')
 import DroidAnalysisClass
 from HandleBlacklistClass import HandleBlacklist
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-sys.path.append(r'libs/')
 import DroidAnalysisClass
 sys.path.append(r'i18n/')
 from internationalstrings import AnalysisStringsEN as IN_EN
