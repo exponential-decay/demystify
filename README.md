@@ -88,7 +88,7 @@ Signature or Container mechanisms by DROID's standards.
 
 More information can be found here: http://openpreservation.org/blog/2015/08/25/hero-or-villain-a-tool-to-create-a-digital-preservation-rogues-gallery/
 
-![Rogues Gallery Animation](https://raw.githubusercontent.com/ross-spencer/rs-misc-scripts/master/rogues-gallery.gif)
+![Rogues Gallery Animation](documentation/rogues-gallery.gif)
 
 #### MsoftFnameAnalysis.py
 
@@ -97,6 +97,26 @@ http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 
 Code contains copy of library from Cooper Hewitt to enable writing of plain text
 descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
+
+### Architecture
+
+The tool is easily modified to create your own output by using the Analysis Results class 
+as a further abstaction layer (API). 
+
+![Analysis Engine Architecture](documentation/analysis-engine-architecture.png)
+
+The recent re-factor resulted in more generic python data structures being returned
+from queries and less (if not zero) formatted output. This means a little more
+work has to be put into presentation of results, but it is more flexibile to what 
+you want to do. 
+
+### Design Decisions
+
+There are no dependencies associated with this tool other than what you download
+with the repository. This has been driven by my previous two working environments
+where installing Python was the first challenge... PIP and the ability to get hold
+of code dependencies another - especially on multiple user's machines where we want
+this tool to be successful. 
 
 ### Usage Notes
 
@@ -114,9 +134,9 @@ We need to monitor how well this works. Namespace specific statistics are also o
 
 ### TODO
 
-* Internationalizing archivist descriptions
+* Internationalizing archivist descriptions, [Translation Link](https://docs.google.com/spreadsheets/d/1dVsRsXgD9V2GarNHHpf6Tzhrfx99_MXt3LjSSDrNLOY/edit?usp=sharing)
 * Additional typing of database fields
-* Improved container listing/handling e.g. maybe via URIs in SF output...
+* Improved container listing/handling 
 * Improved 'directory' listing and handling.
 * Unit tests!
 
