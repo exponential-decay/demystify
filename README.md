@@ -142,7 +142,7 @@ We need to monitor how well this works. Namespace specific statistics are also o
 
 ### License
 
-Copyright (c) 2014 Ross Spencer
+Copyright (c) 2013 Ross Spencer
 
 This software is provided 'as-is', without any express or implied warranty. In 
 no event will the authors be held liable for any damages arising from the use of 
