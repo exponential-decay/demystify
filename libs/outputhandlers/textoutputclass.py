@@ -185,7 +185,7 @@ class DROIDAnalysisTextOutput:
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
-      if self.analysisresults.identificationgaps is not None:
+      if self.analysisresults.namespacecount > 1 and self.analysisresults.identificationgaps is not None:
          self.printFormattedText(self.__output_list__(self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
 
       #return the size of the collection

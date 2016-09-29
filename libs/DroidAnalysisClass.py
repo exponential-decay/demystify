@@ -651,17 +651,18 @@ class DROIDAnalysis:
          self.analysisresults.nsdatalist = nsdatalist
 
          #get nsgap count
-         idslist = []
-         for ns in self.namespacedata:
-            nsid = ns[0]
-            idslist = idslist + self.__querydb__(self.query.get_ns_gap_count_lists(nsid), False, False, True)
+         if self.analysisresults.namespacecount > 1:
+            idslist = []
+            for ns in self.namespacedata:
+               nsid = ns[0]
+               idslist = idslist + self.__querydb__(self.query.get_ns_gap_count_lists(nsid), False, False, True)
 
-         counted = dict(Counter(idslist))         
-         noids = []
-         for x in counted:
-            if counted[x] == self.analysisresults.namespacecount:
-               noids.append(x)
-         self.analysisresults.identificationgaps = len(noids)
+            counted = dict(Counter(idslist))         
+            noids = []
+            for x in counted:
+               if counted[x] == self.analysisresults.namespacecount:
+                  noids.append(x)
+            self.analysisresults.identificationgaps = len(noids)
 
          #handle filename analysis  
          self.msoftfnameanalysis()

@@ -323,7 +323,7 @@ class DROIDAnalysisHTMLOutput:
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, self.analysisresults.identifiedPercentage))
       self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, self.analysisresults.unidentifiedPercentage))
 
-      if self.analysisresults.identificationgaps is not None:
+      if self.analysisresults.namespacecount > 1 and self.analysisresults.identificationgaps is not None:
          self.printFormattedText(self.__make_list_item__(self.STRINGS.SUMMARY_DESC_GAPS_COVERED, self.STRINGS.SUMMARY_GAPS_COVERED, self.analysisresults.identificationgaps))
 
       self.printFormattedText("</ul>")
