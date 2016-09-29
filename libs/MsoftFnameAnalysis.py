@@ -4,6 +4,7 @@
 import sys
 sys.path.append(r'cooperhewitt/unicode/')
 import names
+sys.path.append(r'i18n/')
 from internationalstrings import AnalysisStringsEN as IN_EN
 
 class MsoftFnameAnalysis:

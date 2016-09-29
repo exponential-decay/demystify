@@ -2,6 +2,7 @@
 import re
 import sys
 import DroidAnalysisClass
+sys.path.append(r'i18n/')
 from internationalstrings import AnalysisStringsEN as IN_EN
 
 class DROIDAnalysisHTMLOutput:
