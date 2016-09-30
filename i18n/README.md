@@ -35,7 +35,7 @@ as the title here: https://github.com/exponential-decay/droid-siegfried-sqlite-a
 ###Reference report
 
 A useful reference report, with nearly all the fields available to be seen is
-this one here: https://htmlpreview.github.io/?https://github.com/andreakb/parallel-lines-workshop/blob/master/spencer/droid-siegfried-sqlite-analysis-demo/e1-analysis-report.htm
+this one here: [**Reference Report**](https://htmlpreview.github.io/?https://github.com/andreakb/parallel-lines-workshop/blob/master/spencer/droid-siegfried-sqlite-analysis-demo/e1-analysis-report.htm)
 
 ###License
 
