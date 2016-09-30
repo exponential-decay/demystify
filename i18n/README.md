@@ -16,7 +16,7 @@ across an organsation.
 We created the descriptions as a group of digital preservation experts and
 archivists at Archives New Zealand. I'd like to see them translated to other
 languages so that the type of information we talk about in digital preservation
-and the types of break-down we may want find a common language. 
+and the types of break-down we may in analyses, find a common language. 
 
 I want us to remove the jargon in how we talk about digital collections.
 
