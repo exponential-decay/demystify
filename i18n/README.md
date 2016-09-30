@@ -30,7 +30,7 @@ I haven't figured out a workflow for this yet, but if you'd like to let me and
 the community know you've started - maybe also open an issue with your language
 as the title here: https://github.com/exponential-decay/droid-siegfried-sqlite-analysis-engine/issues 
 
-[Translation Link](https://docs.google.com/spreadsheets/d/1dVsRsXgD9V2GarNHHpf6Tzhrfx99_MXt3LjSSDrNLOY/edit?usp=sharing)
+*Translation sheet:* [Translation Link](https://docs.google.com/spreadsheets/d/1dVsRsXgD9V2GarNHHpf6Tzhrfx99_MXt3LjSSDrNLOY/edit?usp=sharing)
 
 ###Reference report
 
