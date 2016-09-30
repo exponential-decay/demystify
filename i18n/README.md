@@ -1,4 +1,4 @@
-##A lingua franca for digital archivists...
+#A lingua franca for digital archivists...
 
 I talk a little about this here: http://openpreservation.org/blog/2016/05/24/while-were-on-the-subject-a-few-more-points-of-interest-about-the-siegfrieddroid-analysis-tool/  
 
@@ -11,7 +11,7 @@ specialists to use, the HTML output gives us a way to create a 'live'
 glossary of terms that can be used as a common basis for discussion
 across an organsation. 
 
-![Archivist Descriptions](../documentation/archivist-descriptions.png')
+![Archivist Descriptions]('../documentation/archivist-descriptions.png')
 
 We created the descriptions as a group of digital preservation experts and
 archivists at Archives New Zealand. I'd like to see them translated to other
