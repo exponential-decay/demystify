@@ -11,7 +11,7 @@ specialists to use, the HTML output gives us a way to create a 'live'
 glossary of terms that can be used as a common basis for discussion
 across an organsation. 
 
-![Archivist Descriptions]('../documentation/archivist-descriptions.png')
+![Archivist Descriptions](../documentation/archivist-descriptions.png)
 
 We created the descriptions as a group of digital preservation experts and
 archivists at Archives New Zealand. I'd like to see them translated to other
