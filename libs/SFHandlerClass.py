@@ -120,6 +120,8 @@ class SFYAMLHandler:
          elif line[0] != 'identifiers':
             self.header[line[0]] = line[1]
 
+
+
    def filesection(self, sfrecord):
       iddict = {}    # { nsname : {id : x, mime : x } }  
       filedict = {}
@@ -143,7 +145,7 @@ class SFYAMLHandler:
                         furi = self.addContainerURI(f, filedict, furi)                      
                filedict[self.FIELDURI] = furi
                filedict[self.FIELDURISCHEME] = self.geturischeme(furi)
-            if s[0] in self.hashes and self.hashtype == False:
+            if s[0] in self.hashes and self.hashtype is None:
                self.hashtype = s[0]
 
          if s[0] in self.iddata:         
