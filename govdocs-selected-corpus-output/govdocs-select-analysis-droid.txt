@@ -1,0 +1,1132 @@
+DROID Analysis Results
+Analysis Version: 0.6.4-BETA
+Analysis File: govdocs-select-corpus-droid-analysis
+Analysis Tool: droid
+
+Namespaces Used: 1
+
+Total Files: 26124
+Total Archive Files: 77
+Total Files Inside Archive Files: 0
+Total Directories: 4654
+Total Unique Directory Names: 4654
+Total Identified Files (Based on Signature): 18728
+Total Multiple Identifications (Based on Signature): 5
+Total Unidentified Files: 7396
+Total Extension ID Only Count: 1599
+Total Extension Mismatches: 1461
+Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 158
+Total Unique Extensions Across Accession/Extract: 61
+Total Zero-byte Files in Accession/Extract: 0
+Total Files with Identical Content (Checksum Value): 493
+Total Files with Multiple Contiguous Space Characters: 0
+Percentage of Accession/Extract Identified: 71.7
+Percentage of Accession/Extract Unidentified: 28.3
+Size of the accession/extract: 33772327760.0 bytes | 32207.8 MiB/MB (Megabytes)
+
+
+Aggregated File Format Signature Identifiers in Accession/Extract:
+ns:pronom x-fmt/92, Adobe Photoshop,  (2)
+ns:pronom x-fmt/91, Postscript, 1.0 (1)
+ns:pronom x-fmt/9, dBASE Database, III (711)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (41)
+ns:pronom x-fmt/8, dBASE Database, II (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0 (13)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0 (1)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0 (10)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003 (2)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 (17)
+ns:pronom x-fmt/429, Microsoft Web Archive,  (1)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,  (4)
+ns:pronom x-fmt/420, Windows Setup File,  (3)
+ns:pronom x-fmt/416, BinHex Binary Text,  (4)
+ns:pronom x-fmt/408, PostScript, 3.0 (40)
+ns:pronom x-fmt/406, PostScript, 2.0 (43)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1 (21)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2 (5)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1 (7)
+ns:pronom x-fmt/383, Flexible Image Transport System,  (28)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0 (1)
+ns:pronom x-fmt/280, XML Schema Definition,  (14)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0 (9)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0 (15)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,  (1)
+ns:pronom x-fmt/266, GZIP Format,  (45)
+ns:pronom x-fmt/263, ZIP Format,  (31)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002 (1)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,  (3)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,  (9)
+ns:pronom x-fmt/219, Internet Archive, 1.0 (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11 (7)
+ns:pronom x-fmt/119, Windows Metafile Image,  (1)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0 (2)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 (6)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 (7)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0 (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2 (2)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0 (13)
+ns:pronom fmt/969,  Rich Text Format, 0 (1)
+ns:pronom fmt/968, AppleSingle, 2 (10)
+ns:pronom fmt/96, Hypertext Markup Language,  (319)
+ns:pronom fmt/950, MIME Email, 1.0 (61)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0 (10)
+ns:pronom fmt/931, Mathcad Document, Binary (4)
+ns:pronom fmt/833, Open Inventor File Format, 2.x (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002 (2)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14 (2)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13 (1)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12 (3)
+ns:pronom fmt/724, Keyhole Markup Language (Container),  (3)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian (1)
+ns:pronom fmt/682, Thumbs DB file, XP (1)
+ns:pronom fmt/657, Open XML Paper Specification,  (1)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1 (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic (2)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007 (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X (9)
+ns:pronom fmt/611, LDAP Data Interchange Format,  (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 (114)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 (10)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95 (8)
+ns:pronom fmt/584, Windows Media Metafile,  (1)
+ns:pronom fmt/583, Vector Markup Language,  (55)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W (1)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S (11)
+ns:pronom fmt/561, Adobe Illustrator, 12.0 (4)
+ns:pronom fmt/560, Adobe Illustrator, 11.0 (5)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3 (10)
+ns:pronom fmt/559, Adobe Illustrator, 10.0 (8)
+ns:pronom fmt/558, Adobe Illustrator, 9.0 (15)
+ns:pronom fmt/557, Adobe Illustrator, 8.0 (5)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2 (9)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0 (2)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0 (4)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0 (4)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0 (1)
+ns:pronom fmt/53, Rich Text Format, 1.8 (18)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards (1)
+ns:pronom fmt/52, Rich Text Format, 1.7 (11)
+ns:pronom fmt/507, Adobe Flash, 10 (7)
+ns:pronom fmt/506, Adobe Flash, 9 (17)
+ns:pronom fmt/505, Adobe Flash, 8 (20)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2 (9)
+ns:pronom fmt/501, PostScript, 3.1 (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 (52)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards (1)
+ns:pronom fmt/473, Microsoft Office Owner File,  (4)
+ns:pronom fmt/468, ISO Disk Image File,  (1)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4 (27)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 (74)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 (26)
+ns:pronom fmt/423, Adobe Illustrator, 7.0 (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0 (5)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5 (6)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00 (10)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2 (2)
+ns:pronom fmt/417, Adobe Illustrator, 88 (1)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (24)
+ns:pronom fmt/41, Raw JPEG Stream,  (21)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 (367)
+ns:pronom fmt/4, Graphics Interchange Format, 89a (101)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  (1)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0 (2)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95 (63)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,  (4)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 (12)
+ns:pronom fmt/372, Earth Resource Satellite image header format,  (1)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0 (10)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b (19)
+ns:pronom fmt/353, Tagged Image File Format,  (12)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0 (1)
+ns:pronom fmt/34, AutoCAD Drawing, R14 (1)
+ns:pronom fmt/329, Shell Archive Format,  (6)
+ns:pronom fmt/328, EndNote Import File,  (1)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12 (2)
+ns:pronom fmt/3, Graphics Interchange Format, 87a (37)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,  (16)
+ns:pronom fmt/284, Gridded Binary, 1.0 (1)
+ns:pronom fmt/281, LaTeX (Subdocument),  (1)
+ns:pronom fmt/280, LaTeX (Master document),  (2)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 (185)
+ns:pronom fmt/244, Keyhole Markup Language (XML),  (22)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards (55)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards (18)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 (2309)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0 (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (2039)
+ns:pronom fmt/185, Prime OCR, 3.9 (1)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 (3882)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 (3529)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 (2215)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,  (4)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,  (22)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 (588)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,  (1)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0 (108)
+ns:pronom fmt/136, OpenDocument Text, 1.0 (2)
+ns:pronom fmt/133, Windows Media Video,  (6)
+ns:pronom fmt/132, Windows Media Audio,  (1)
+ns:pronom fmt/130, OpenOffice Impress, 1.0 (2)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 (255)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95 (1)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3 (38)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0 (22)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2 (26)
+ns:pronom fmt/116, Windows Bitmap, 3.0 (25)
+ns:pronom fmt/111, OLE2 Compound Document Format,  (50)
+ns:pronom fmt/110, Macromedia Flash, 7 (19)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 (48)
+ns:pronom fmt/109, Macromedia Flash, 6 (23)
+ns:pronom fmt/108, Macromedia Flash, 5 (10)
+ns:pronom fmt/107, Macromedia Flash, 4 (20)
+ns:pronom fmt/106, Macromedia Flash, 3 (7)
+ns:pronom fmt/104, Macromedia Flash, 1 (10)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0 (30)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 (177)
+ns:pronom fmt/100, Hypertext Markup Language, 4.01 (135)
+
+
+Aggregated Frequency of File Format Signature Identifiers in Accession/Extract:
+ns:pronom x-fmt/92, Adobe Photoshop,   (2)
+ns:pronom x-fmt/91, Postscript, 1.0  (1)
+ns:pronom x-fmt/9, dBASE Database, III  (711)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0  (41)
+ns:pronom x-fmt/8, dBASE Database, II  (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0  (13)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0  (1)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0  (10)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003  (2)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0  (17)
+ns:pronom x-fmt/429, Microsoft Web Archive,   (1)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,   (4)
+ns:pronom x-fmt/420, Windows Setup File,   (3)
+ns:pronom x-fmt/416, BinHex Binary Text,   (4)
+ns:pronom x-fmt/408, PostScript, 3.0  (40)
+ns:pronom x-fmt/406, PostScript, 2.0  (43)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1  (21)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2  (5)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1  (7)
+ns:pronom x-fmt/383, Flexible Image Transport System,   (28)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0  (1)
+ns:pronom x-fmt/280, XML Schema Definition,   (14)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0  (9)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0  (15)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,   (1)
+ns:pronom x-fmt/266, GZIP Format,   (45)
+ns:pronom x-fmt/263, ZIP Format,   (31)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002  (1)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,   (3)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,   (9)
+ns:pronom x-fmt/219, Internet Archive, 1.0  (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11  (7)
+ns:pronom x-fmt/119, Windows Metafile Image,   (1)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0  (2)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0  (6)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0  (7)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0  (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2  (2)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0  (13)
+ns:pronom fmt/969,  Rich Text Format, 0  (1)
+ns:pronom fmt/968, AppleSingle, 2  (10)
+ns:pronom fmt/96, Hypertext Markup Language,   (319)
+ns:pronom fmt/950, MIME Email, 1.0  (61)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0  (10)
+ns:pronom fmt/931, Mathcad Document, Binary  (4)
+ns:pronom fmt/833, Open Inventor File Format, 2.x  (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002  (2)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14  (2)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13  (1)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12  (3)
+ns:pronom fmt/724, Keyhole Markup Language (Container),   (3)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian  (1)
+ns:pronom fmt/682, Thumbs DB file, XP  (1)
+ns:pronom fmt/657, Open XML Paper Specification,   (1)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1  (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic  (2)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007  (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X  (9)
+ns:pronom fmt/611, LDAP Data Interchange Format,   (1)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8  (114)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003  (10)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95  (8)
+ns:pronom fmt/584, Windows Media Metafile,   (1)
+ns:pronom fmt/583, Vector Markup Language,   (55)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W  (1)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S  (11)
+ns:pronom fmt/561, Adobe Illustrator, 12.0  (4)
+ns:pronom fmt/560, Adobe Illustrator, 11.0  (5)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3  (10)
+ns:pronom fmt/559, Adobe Illustrator, 10.0  (8)
+ns:pronom fmt/558, Adobe Illustrator, 9.0  (15)
+ns:pronom fmt/557, Adobe Illustrator, 8.0  (5)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2  (9)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0  (2)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0  (4)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0  (4)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0  (1)
+ns:pronom fmt/53, Rich Text Format, 1.8  (18)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards  (1)
+ns:pronom fmt/52, Rich Text Format, 1.7  (11)
+ns:pronom fmt/507, Adobe Flash, 10  (7)
+ns:pronom fmt/506, Adobe Flash, 9  (17)
+ns:pronom fmt/505, Adobe Flash, 8  (20)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2  (9)
+ns:pronom fmt/501, PostScript, 3.1  (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6  (52)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards  (1)
+ns:pronom fmt/473, Microsoft Office Owner File,   (4)
+ns:pronom fmt/468, ISO Disk Image File,   (1)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4  (27)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02  (74)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01  (26)
+ns:pronom fmt/423, Adobe Illustrator, 7.0  (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0  (5)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5  (6)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00  (10)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2  (2)
+ns:pronom fmt/417, Adobe Illustrator, 88  (1)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards  (24)
+ns:pronom fmt/41, Raw JPEG Stream,   (21)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003  (367)
+ns:pronom fmt/4, Graphics Interchange Format, 89a  (101)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,   (1)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0  (2)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95  (63)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,   (4)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0  (12)
+ns:pronom fmt/372, Earth Resource Satellite image header format,   (1)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0  (10)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b  (19)
+ns:pronom fmt/353, Tagged Image File Format,   (12)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0  (1)
+ns:pronom fmt/34, AutoCAD Drawing, R14  (1)
+ns:pronom fmt/329, Shell Archive Format,   (6)
+ns:pronom fmt/328, EndNote Import File,   (1)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12  (2)
+ns:pronom fmt/3, Graphics Interchange Format, 87a  (37)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,   (16)
+ns:pronom fmt/284, Gridded Binary, 1.0  (1)
+ns:pronom fmt/281, LaTeX (Subdocument),   (1)
+ns:pronom fmt/280, LaTeX (Master document),   (2)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7  (185)
+ns:pronom fmt/244, Keyhole Markup Language (XML),   (22)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards  (55)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards  (18)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6  (2309)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0  (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5  (2039)
+ns:pronom fmt/185, Prime OCR, 3.9  (1)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4  (3882)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3  (3529)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2  (2215)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,   (4)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,   (22)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1  (588)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,   (1)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0  (108)
+ns:pronom fmt/136, OpenDocument Text, 1.0  (2)
+ns:pronom fmt/133, Windows Media Video,   (6)
+ns:pronom fmt/132, Windows Media Audio,   (1)
+ns:pronom fmt/130, OpenOffice Impress, 1.0  (2)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003  (255)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95  (1)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3  (38)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0  (22)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2  (26)
+ns:pronom fmt/116, Windows Bitmap, 3.0  (25)
+ns:pronom fmt/111, OLE2 Compound Document Format,   (50)
+ns:pronom fmt/110, Macromedia Flash, 7  (19)
+ns:pronom fmt/11, Portable Network Graphics, 1.0  (48)
+ns:pronom fmt/109, Macromedia Flash, 6  (23)
+ns:pronom fmt/108, Macromedia Flash, 5  (10)
+ns:pronom fmt/107, Macromedia Flash, 4  (20)
+ns:pronom fmt/106, Macromedia Flash, 3  (7)
+ns:pronom fmt/104, Macromedia Flash, 1  (10)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0  (30)
+ns:pronom fmt/101, Extensible Markup Language, 1.0  (177)
+ns:pronom fmt/100, Hypertext Markup Language, 4.01  (135)
+
+
+Extension Only Identification in the Accession/Extract:
+fmt/175, Microsoft Excel for Macintosh
+fmt/176, Microsoft Excel for Macintosh
+fmt/177, Microsoft Excel for Macintosh
+fmt/206, Structured Query Language Data
+fmt/59, Microsoft Excel 5.0/95 Workbook (xls)
+fmt/609, Microsoft Word (Generic)
+fmt/754, Microsoft Word Document (Password Protected)
+fmt/879, Fortran
+fmt/892, Compound WordPerfect for Windows Document
+x-fmt/111, Plain Text File
+x-fmt/131, Stationery for Mac OS X
+x-fmt/18, Comma Separated Values
+x-fmt/195, Standard Generalized Markup Language
+x-fmt/203, WordPerfect for Windows Document
+x-fmt/252, Microsoft Publisher
+x-fmt/253, Microsoft Publisher
+x-fmt/254, Microsoft Publisher
+x-fmt/255, Microsoft Publisher
+x-fmt/256, Microsoft Publisher
+x-fmt/257, Microsoft Publisher
+x-fmt/273, Microsoft Word for MS-DOS Document
+x-fmt/329, Interleaf Document
+x-fmt/42, Wordperfect Secondary File
+x-fmt/422, Java language source code file
+x-fmt/423, JavaScript file
+x-fmt/43, Wordperfect Secondary File
+x-fmt/62, Log File
+
+
+Date Range of Items in the Accession/Extract:
+2012 (26124)
+
+
+Identification Method Frequency:
+Signature (17801), None (10451), Extension (1599), Container (927)
+
+
+Frequency of Extension Only Identification In Accession/Extract:
+ns:pronom  x-fmt/111 (970), ns:pronom  x-fmt/62 (250), ns:pronom  x-fmt/18 (206), ns:pronom  fmt/206 (72), ns:pronom  x-fmt/422 (30), ns:pronom  x-fmt/195 (29), ns:pronom  fmt/892 (17), ns:pronom  x-fmt/256 (13), ns:pronom  x-fmt/257 (13), ns:pronom  x-fmt/254 (13), ns:pronom  x-fmt/255 (13), ns:pronom  x-fmt/252 (13), ns:pronom  x-fmt/253 (13), ns:pronom  x-fmt/203 (10), ns:pronom  fmt/879 (9), ns:pronom  fmt/609 (7), ns:pronom  x-fmt/131 (7), ns:pronom  x-fmt/273 (7), ns:pronom  fmt/754 (7), ns:pronom  x-fmt/42 (7), ns:pronom  x-fmt/43 (7), ns:pronom  x-fmt/329 (7), ns:pronom  x-fmt/423 (2), ns:pronom  fmt/176 (1), ns:pronom  fmt/177 (1), ns:pronom  fmt/175 (1), ns:pronom  fmt/59 (1)
+
+
+Unique Extensions Identified Across All Objects (ID and non-ID):
+123, bmp, chp, csv, data, dbase3, doc, docx, dwf, eps, exported, f, fits, fm, g3, gif, gls, gz, hlp, html, icns, ileaf, jar, java, jpg, js, kml, kmz, lnk, log, mac, odp, pdf, png, pps, ppt, pptx, ps, pst, pub, rtf, sgml, sql, squeak, swf, sys, tex, text, tmp, ttf, txt, unk, wk1, wk3, wp, xbm, xls, xlsx, xml, zip
+
+
+List of Files With Multiple Identifications:
+E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1831\272791.pdf
+E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_102\374355.rtf
+E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_102\374362.rtf
+E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_143\558860.html
+E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_83\908606.html
+
+
+Frequency of All Extensions:
+pdf (15093), html (1074), txt (1072), dbase3 (701), unk (502), doc (431), xml (263), log (254), ppt (217), csv (215), text (182), ps (173), gif (163), swf (151), jpg (140), eps (110), rtf (109), xls (101), sql (72), pps (60), kml (59), tmp (55), pptx (52), png (48), wp (48), hlp (44), sgml (35), java (30), kmz (30), docx (27), bmp (25), gz (25), xlsx (16), pub (15), fits (12), zip (12), ttf (11), dwf (10), f (10), fm (10), gls (10), xbm (8), sys (7), wk1 (7), wk3 (5), lnk (4), data (3), exported (3), jar (3), 123 (2), chp (2), g3 (2), js (2), mac (2), odp (2), tex (2), icns (1), ileaf (1), pst (1), squeak (1)
+
+
+MIME Type (Internet Media Type) Frequency:
+application/pdf (14901), application/msword (500), text/html (482), application/vnd.ms-powerpoint (297), application/xml, text/xml (177), application/postscript (171), application/vnd.ms-excel (162), image/jpeg (144), image/gif (138), application/x-shockwave-flash (133), application/rtf, text/rtf (106), message/rfc822 (61), application/vnd.openxmlformats-officedocument.presentationml.presentation (55), image/png (48), application/x-gzip (45), application/vnd.wordperfect (38), application/zip (31), application/xhtml+xml (30), application/fits, image/fits (28), image/bmp (25), application/vnd.openxmlformats-officedocument.wordprocessingml.document (24), application/vnd.openxmlformats-officedocument.spreadsheetml.sheet (18), application/xml (14), application/vnd.framemaker (12), image/tiff (12), application/applefile (10), application/dwf, application/x-dwf, drawing/x-dwf, image/vnd.dwf, image/x-dwf, model/vnd.dwf (10), image/vnd.dxf (10), model/vrml (10), application/vnd.lotus-1-2-3, application/x-123 (9), multipart/appledouble (9), image/x-xbitmap (7), application/lotus123, application/vnd.lotus-1-2-3 (6), application/x-sh, application/x-shar (6), video/x-ms-wmv (6), text/calendar (4), application/inf (3), application/vnd.google-earth.kmz (3), image/vnd.dwg (3), application/rtf,  text/rtf (2), application/vnd.oasis.opendocument.text (2), application/vnd.sun.xml.impress (2), image/vnd.adobe.photoshop (2), application/oxps (1), application/rtf (1), application/vnd.ms-powerpoint.presentation.macroEnabled.12 (1), application/vnd.ms-word.document.macroEnabled.12 (1), application/vnd.openxmlformats-officedocument.presentationml.slideshow (1), application/x-bzip2 (1), application/x-endnote-refer (1), application/x-internet-archive (1), audio/x-ms-wma (1), image/wmf (1), image/x-pict (1), message/rfc822, multipart/related (1)
+
+
+Results Per Identifier Namespace:
+Namespace: pronom (govdocs-select-corpus-droid-analysis.csv)
+Total Identified Files (Based on Signature): 18728
+Total Multiple Identifications (Based on Signature): 5
+Total Unidentified Files: 7396
+Total Extension ID Only Count: 1726
+Percentage of Accession/Extract Identified: 71.7
+Percentage of Accession/Extract Unidentified: 28.3
+
+Frequency of File Format Signature Identified IDs
+fmt/18 (3882), fmt/17 (3529), fmt/20 (2309), fmt/16 (2216), fmt/19 (2039), x-fmt/9 (711), fmt/15 (588), fmt/40 (367), fmt/96 (320), fmt/126 (255), fmt/276 (185), fmt/101 (177), fmt/100 (135), fmt/61 (114), fmt/14 (108), fmt/4 (101), fmt/44 (74), fmt/39 (63), fmt/950 (61), fmt/215 (55), fmt/583 (55), fmt/50 (52), fmt/111 (50), fmt/11 (48), x-fmt/266 (45), x-fmt/406 (43), x-fmt/88 (41), x-fmt/408 (40), fmt/124 (38), fmt/3 (37), x-fmt/263 (31), fmt/102 (30), x-fmt/383 (28), fmt/45 (27), fmt/122 (26), fmt/43 (26), fmt/116 (25), fmt/412 (24), fmt/109 (23), fmt/123 (22), fmt/157 (22), fmt/244 (22), x-fmt/394 (22), fmt/41 (21), fmt/107 (20), fmt/505 (20), fmt/110 (19), fmt/354 (19), fmt/214 (18), fmt/53 (18), fmt/506 (17), x-fmt/44 (17), fmt/288 (16), fmt/558 (15), fmt/99 (15), x-fmt/274 (15), x-fmt/280 (14), fmt/97 (13), x-fmt/65 (13), fmt/353 (12), fmt/38 (12), fmt/52 (11), fmt/57 (11), fmt/104 (10), fmt/108 (10), fmt/37 (10), fmt/42 (10), fmt/56 (10), fmt/609 (10), fmt/94 (10), fmt/968 (10), x-fmt/49 (10), fmt/503 (9), fmt/55 (9), fmt/62 (9), x-fmt/226 (9), x-fmt/275 (9), fmt/559 (8), fmt/59 (8), fmt/106 (7), fmt/507 (7), x-fmt/114 (7), x-fmt/207 (7), x-fmt/390 (7), fmt/133 (6), fmt/329 (6), fmt/420 (6), fmt/423 (6), x-fmt/115 (6), fmt/422 (5), fmt/557 (5), fmt/560 (5), x-fmt/391 (5), fmt/158 (4), fmt/388 (4), fmt/473 (4), fmt/534 (4), fmt/535 (4), fmt/561 (4), fmt/931 (4), x-fmt/416 (4), x-fmt/428 (4), fmt/724 (3), fmt/75 (3), x-fmt/235 (3), x-fmt/420 (3), fmt/130 (2), fmt/136 (2), fmt/280 (2), fmt/32 (2), fmt/390 (2), fmt/418 (2), fmt/537 (2), fmt/63 (2), fmt/77 (2), fmt/78 (2), fmt/833 (2), fmt/98 (2), x-fmt/117 (2), x-fmt/45 (2), x-fmt/92 (2), fmt/125 (1), fmt/132 (1), fmt/144 (1), fmt/185 (1), fmt/190 (1), fmt/281 (1), fmt/284 (1), fmt/328 (1), fmt/34 (1), fmt/341 (1), fmt/372 (1), fmt/396 (1), fmt/417 (1), fmt/468 (1), fmt/487 (1), fmt/501 (1), fmt/523 (1), fmt/533 (1), fmt/58 (1), fmt/584 (1), fmt/611 (1), fmt/629 (1), fmt/645 (1), fmt/657 (1), fmt/682 (1), fmt/688 (1), fmt/76 (1), fmt/969 (1), x-fmt/119 (1), x-fmt/219 (1), x-fmt/257 (1), x-fmt/268 (1), x-fmt/367 (1), x-fmt/429 (1), x-fmt/64 (1), x-fmt/8 (1), x-fmt/91 (1)
+
+
+Archive File Types in Accession/Extract:
+gz, html, kml, kmz, ps, unk, xml, zip
+
+
+Files With Identical Content (Checksum Value): 493
+Checksum: 10fd834bece6f67527d225bdde21a9b04528debd
+Count: 12
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2781\608759.pdf
+
+Checksum: a4e55e72e04cdd48e1fbf0fd075ae36fa83f4cf5
+Count: 12
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\MBOX_2\601346.pdf
+
+Checksum: eac1fccba4dd352656bfc2f0214dc10ce3a9a554
+Count: 12
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2827\782539.sql
+
+Checksum: e6a944edccdc089762daa5e5319bb999a24c4671
+Count: 11
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2743\604687.xml
+
+Checksum: 1701833149dacce7c3db102c20b4dc3c30d1ae2d
+Count: 8
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2858\745808.pdf
+
+Checksum: 74862d8e300ece9c495ca05ac2910907b0c38d90
+Count: 8
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_34\607237.rtf
+
+Checksum: 87ca043e443a54ca971dc659a2c7f942ecfbbeb3
+Count: 8
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_28\873832.log
+
+Checksum: bfe337cd4093152f265d6f278e091cf598181b06
+Count: 8
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2817\986041.pdf
+
+Checksum: 3a8ad3d5f6fc4090198ece4940a42b8597fc51f8
+Count: 7
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2668\598920.dbase3
+
+Checksum: 1bdceca4c53e4461e3fdd608b79c777add5a224f
+Count: 6
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2812\612841.xls
+
+Checksum: 304619b46dfbc9294b55a2c6cbc6a9d6e8c1b688
+Count: 6
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_34\689017.log
+
+Checksum: 42c5ad482987850d2cb81914917537f6bcfb24bc
+Count: 6
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\MAK_1\623791.sgml
+
+Checksum: acb3e4b2c1b0d74cf9727121cf42789b4d65f3f2
+Count: 6
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\MSO_1\594038.pdf
+
+Checksum: 0d91e09b8113d51ebd02e59ea4883ada0f7afa1c
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_39\653089.log
+
+Checksum: 2d363573c383719aa49d79bac4b49286096e34b7
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2843\615296.pdf
+
+Checksum: 4de9f36af510a7cba7be8d93c1c070070c495aa5
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2653\656121.xml
+
+Checksum: 75bd1bb3a1469da0305aa2e3fcced4bd6faecfad
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\ASM_2\637402.wk3
+
+Checksum: 951215a0a8a861acaf88aed0539ca2a14da49344
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2624\596046.pdf
+
+Checksum: c2901b61e0243ef543a2f891883c3dd3bd45cc97
+Count: 5
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2731\788487.xls
+
+Checksum: 15cd0ab3004b3c5a551a8ff36e053063740a1b3f
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2917\630842.pdf
+
+Checksum: 2bb14ccd2622ab79cdb3a23a6b4ba9bfb5807f78
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\FLD_1\628708.pdf
+
+Checksum: 35ed4d556592cfed64f7f4024437dec16463ff67
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2691\950957.pdf
+
+Checksum: 56c34ced4a9677dc1efd4b380108c4eed9a39fba
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_30\616107.log
+
+Checksum: 5cac34cdcdf7daff08e319ac3697921896208db3
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOCX_7\640372.html
+
+Checksum: 7b4cec02fd85949320cf7fa1b35688b20b3ed842
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_27\619490.log
+
+Checksum: 8e49964f58e5dbd2e9914bfb9a848fefb2dd1d23
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2945\639960.pdf
+
+Checksum: ab2225bf6755225ebc4d9d38de249c9dfe578f99
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_29\633261.log
+
+Checksum: ac3b28faa735bade551e3f25bedd8190363ee580
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2985\654885.dbase3
+
+Checksum: d4961ae8e3ce744d275fa908fe727c073a18421d
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\INFO_1\618442.pdf
+
+Checksum: fe642a20601c66846c0a2d49c06a08f775d2b1c2
+Count: 4
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2899\627164.sql
+
+Checksum: 2599df1357041fdc2ac5c68171c8ed624fc228aa
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_38\651217.log
+
+Checksum: 48ca1013678035b12c4cae634dca281760ff4756
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2618\914630.swf
+
+Checksum: 517db7deb38873027bb7a9243db83b28d8c15ca0
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_125\939452.log
+
+Checksum: 5232aece3240f190317c69bce128132832a92594
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2881\941408.sql
+
+Checksum: 7bb93946fff32e4a4c60aba0bb4331171735fef7
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2696\600543.pdf
+
+Checksum: 9b5eb320c81f8ffdec6fd894d6f77078b54e28f3
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2574\981077.pdf
+
+Checksum: 9bf20ebfa08ad3d00b9f38e53d0cedf509352519
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOCX_8\641559.docx
+
+Checksum: a1303b134c3b841751f669e6539553538d9f5134
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2736\799353.dbase3
+
+Checksum: a620ab7f53ad66cf6466173b96ff0fa7ee99787a
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2953\643888.pdf
+
+Checksum: a973615efa7bc775107a6b110b9673eeaa58c872
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2868\619495.lnk
+
+Checksum: c34d17f85135b5d447c55b10ab9982414687e23d
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2681\899237.pdf
+
+Checksum: c68a0fd7c1de9ee8a7fa3478ec716cb7135a5975
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2922\632391.pdf
+
+Checksum: cb74221f2930f0a93c2f291aa8f2bfd04906164e
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\EML_4\991768.pdf
+
+Checksum: d1f99c482dfe3366d66f36832856330374359654
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2961\979733.pdf
+
+Checksum: d48a5ba716f2124d05b0b85ec9788fead526eecd
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_151\627886.dbase3
+
+Checksum: e42987b409760d712a36719a9421e327bf9f575f
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2972\652166.pdf
+
+Checksum: f469b1705e821c82d9259174b86fe6fc62b6517b
+Count: 3
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_26\645022.log
+
+Checksum: 00b5b3cbd4700f337be18e93682404dca2bfec5e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_16\096379.csv
+
+Checksum: 015830c48d4fef54e0ac9cf25f25f69eab26cb03
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1483\283878.pdf
+
+Checksum: 03700258dcb070b19a24009c4b002fa833a01e1b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_126\647103.unk
+
+Checksum: 044e7191f5f5179cbef781412c32ae09e31ca380
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PS_15\425486.ps
+
+Checksum: 0534164f548878241ecc228ba31638f25e48bcba
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2697\600759.pdf
+
+Checksum: 05c19f01dded1ab1fa4e522d137edafa7b13d535
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2878\621261.pdf
+
+Checksum: 05f9c9aa9e29d06b7c1a0554a7365c15c1d88854
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2912\630542.pdf
+
+Checksum: 06a62be07d2186bf47d139d5af16b874ea5643de
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1617\292661.pdf
+
+Checksum: 0835b0ba27344f8eeaa080cea6331b286d1ddbc3
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_15\292813.ppt
+
+Checksum: 08678d19013f3dfdc43cb97c30dec66704101419
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2929\634806.pdf
+
+Checksum: 088b5bbe7882005de7a4b5624584edd3e3e3dbc1
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XML_16\553462.html
+
+Checksum: 10f34bd5d3154972553c8c2d7e6bb8397d0bdcbf
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_774\283705.pdf
+
+Checksum: 126d178247664d4ea8619197267083e48a4360ca
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HLP_5\304346.hlp
+
+Checksum: 13a3307882a8c97380f21bdc70b99b30d3fa01ed
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_94\194880.dbase3
+
+Checksum: 15397d8a7d6ddb99aefd4e135af6a4fe67d3c009
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_36\640937.log
+
+Checksum: 18124e7845181962b01fb7e1a4993ff12359e834
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TEXT_235\431017.txt
+
+Checksum: 18aa6f1292315fb903fcaf6d74d57288b0006f47
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_142\315496.dbase3
+
+Checksum: 1a9be6254fbe5fcd6bb79295a881328d3f830e54
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_35\634446.log
+
+Checksum: 1bd312cf2cee461be1bcfb4527adb34da2a2f5f4
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2720\602674.pdf
+
+Checksum: 1ca0279f9f734ee735649e61835ca6903e72c9c7
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_24\454304.csv
+
+Checksum: 1d3fad24e3d264ee5e8fa17501b8d9117fe62104
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_12\539925.csv
+
+Checksum: 1d80c08d85638762fa032ef7a9be370036bd80d3
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_106\411909.doc
+
+Checksum: 1e070ec9ed9f37260003bcc958ded977021958be
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_780\247565.pdf
+
+Checksum: 1f5791f56b6d5b4f1a31e32d8908f9e915bd54c3
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1458\497135.pdf
+
+Checksum: 20b317c9bc69bdfdc78aec6bcaef90272f7f7a6c
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2852\615977.pdf
+
+Checksum: 20edbb94383651e75a757f08de4b864e26740d49
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_7\259476.ppt
+
+Checksum: 23f4aa9b1878cbb615d8b1975789e64f8a595989
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_15\018434.ppt
+
+Checksum: 278b61ac5544ee3a523a879e7217e5db067e562b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\WP_1\175241.wp
+
+Checksum: 28d3f9ed6ce8ed567f8f94cf5c449463d4fa1d85
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TEXT_129\279655.txt
+
+Checksum: 2a65c93469858a6517d8d0f3f458d77ca42e3ca2
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TEXT_103\050408.rtf
+
+Checksum: 2b15ed39127e7ad8b40ffd638fdcb774f22901f8
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_123\462685.pdf
+
+Checksum: 2cabc60e3d50df228dfe0a01b7cfee2ecca6993a
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2735\603796.pdf
+
+Checksum: 304a2a31a607e09238d4b19a3513a460bb707a0f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOCX_2\017091.docx
+
+Checksum: 31bc7f798f5a274c4bc552fb64d7d125e5520a3f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_56\027845.dbase3
+
+Checksum: 321050c9a3725f5dbf36992c9321fab12994cb09
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_101\116121.txt
+
+Checksum: 3955e6e396598eaa8a7ceabf265630b117ebe434
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_22\061639.g3
+
+Checksum: 3ce3ded83073689ba8ce1f3c307d5e6c35767fac
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_46\253121.wp
+
+Checksum: 3e4cedf51a83889495c040d8706a7d17926ceade
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_94\256726.dbase3
+
+Checksum: 3e63a42c8d4b88439e83f05c271f480b080621c1
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_113\298562.dbase3
+
+Checksum: 3e6414b21562df3921beee7ac9362d09fc1dd785
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_41\481639.html
+
+Checksum: 3f08be1fac8829d4cd211eb4094c134fb03a9a4f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_28\467583.csv
+
+Checksum: 40a5e5d615e6d9c6e44f0ad0df0f73f5ab360f80
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_591\087546.pdf
+
+Checksum: 4459c92e60b3bba973a8e1974c2a5cc334b6e132
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_138\973796.doc
+
+Checksum: 4626899aeed974b2d0ac46bab9fe8c7483ee9d92
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_150\615845.pdf
+
+Checksum: 4d5103b74195d9f04f759c3e872e5311bcdc61e8
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PUB_1\894979.pub
+
+Checksum: 4e2bee26ab04987fc8c81f7d0975486389c3932a
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\KML_4\183352.html
+
+Checksum: 50915ed7bffd6789e28a00d9ebed96e87d8d3a4e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XML_24\564605.xml
+
+Checksum: 529d2f3b8d463a933557e95e89f15561c4844ab4
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_141\269681.dbase3
+
+Checksum: 55a8f50c5ad2fccf64f2f8114bfc9dea5c8ca2f5
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_23\481117.log
+
+Checksum: 57504d0b937f3db1826b3e91599730042fb79eb7
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1384\296645.pdf
+
+Checksum: 58c4895e0060828e45b945596cab2dfe93036f0f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2870\620108.pdf
+
+Checksum: 5924d6c3d631345c9b54e39b7d2ee861d23a6107
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1241\115638.pdf
+
+Checksum: 5e19d08b2affe8a87edb93149977bd9ad6560bca
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPS_7\369635.pps
+
+Checksum: 5f238ca61812866965e90d51e969b95741138e98
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\SWF_12\502798.swf
+
+Checksum: 5f40c9e92007e67552bead5d054b0d926c252163
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1398\201064.pdf
+
+Checksum: 6242293e86c3ede7cc95959fafad5c91c113296e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TMP_14\388738.tmp
+
+Checksum: 68ff7b5b0d3ddf246dc2ee74c19fd27d579ebd30
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_422\009297.pdf
+
+Checksum: 6b7880abc0a4ea8f7bdf7ca80922102ef6f5f08c
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2909\956476.pdf
+
+Checksum: 6c811b909103369b95d42cbf7d4842b296670e6f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_153\660166.pdf
+
+Checksum: 6d44634f9af84cd68498c5d65879a79998e58b81
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1360\273882.pdf
+
+Checksum: 729e26b08be1cf5b640c91347a631c05014824cd
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_94\196227.dbase3
+
+Checksum: 73b1d38de4fd7535039022f6f297a99652200d7f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_943\150562.pdf
+
+Checksum: 756715edf1ed16309853d6ce27262396b0875cc3
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\SWF_14\581061.swf
+
+Checksum: 75748712ab2bb9c74968d3070df208265bef1742
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1320\120852.pdf
+
+Checksum: 7619d79ce74281c71c7e57f869986708c3d4db68
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TMP_10\249416.tmp
+
+Checksum: 7ae24601b79f03218cd0fd3bc488d2a88a2e6991
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_37\650000.log
+
+Checksum: 7bc680a4bab72211cb05e3babb5ba71b8922ba82
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2914\630563.pdf
+
+Checksum: 7bee7cebefe3acfe75c68b4f5ba7acee49909869
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPT_47\542914.ppt
+
+Checksum: 7e7202864583a6afa2adcb45d90f22d56b24c03b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1965\325405.pdf
+
+Checksum: 890654d33ca63b34c8e834a1a09f3dfe98be08d7
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_49\803198.txt
+
+Checksum: 8b75d0638c60130c48add60b3949e9ba979e43ca
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2709\601606.pdf
+
+Checksum: 8da637ab9c1ce304d781572dd588137b080506a5
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2975\699266.pdf
+
+Checksum: 90aabfa312f3b8dfc573cbb7499b65f159e11493
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TMP_8\330112.tmp
+
+Checksum: 921ca840215baaf55e25af216b2fb267c34322d9
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_67\124558.doc
+
+Checksum: 939e5948ea0731e5560908c66fa1abd1f7395137
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2934\635563.dbase3
+
+Checksum: 93a7fa47c718e584e6ebf3612246fe9066f7bd4b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_12\021751.csv
+
+Checksum: 93b8812d8bb252ac28c0c4c22d228ef62080b883
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2983\654332.pdf
+
+Checksum: 93e4efc70df0ab10bbd57f18665a8a4facaa9d79
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2809\612701.pdf
+
+Checksum: 94d866feb74e6e1e452ed80429bc2ceddc110889
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2873\620673.pdf
+
+Checksum: 9e76bb5cf7c989611aeae7a13215133c4c337ba9
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_953\360008.pdf
+
+Checksum: a276ba1eb13e7657982f4ea2a86c8b3791aa3c05
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1945\318258.pdf
+
+Checksum: a5d88d19fad2acf335f4a9a53cf3ff112515908b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_662\308099.pdf
+
+Checksum: a616f0a24b2128b8a7ac13e6417be2850b02a8f4
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2964\649796.pdf
+
+Checksum: a6c2df1f64a5b49a1322dfbba81111c9975e95ed
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_112\491808.doc
+
+Checksum: a76bd9479843a9fd8fea28e8a05c163b69e9c6a9
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XML_19\356605.xml
+
+Checksum: aa152ac61839c65ef19e9e15181d0747491633e6
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2875\620969.pdf
+
+Checksum: ac16e1910611e2c284e26b00e6323885518738d2
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_877\287209.pdf
+
+Checksum: b014eb3c967b9af32f4325e89c6eb545b4eec0ed
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1274\762420.pdf
+
+Checksum: b0ff20c71571fddd7975f98b3d4ef89b6f146498
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1278\113610.pdf
+
+Checksum: b3a55215d001a8d7c728ed724c6379f40753a0dd
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2749\605064.pdf
+
+Checksum: b71c81c659fd3a2062b432071e1ce34aedaef547
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2981\654260.swf
+
+Checksum: bf7d0c9c248cd8febafba51cd44446f41812a3fd
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XML_7\562444.xml
+
+Checksum: bfc6911afcb01a0fb82dae4c6485c3b58db32444
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2658\598544.xls
+
+Checksum: bfc6f8f4a622e706d56b8dda344ad281312e259c
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2894\626693.pdf
+
+Checksum: c20c090c3ff31abbf9088e101c7dd52279258d0e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_336\366572.pdf
+
+Checksum: c3ac966f4ec8885ece88c935978c29a77c83e0a8
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_12\023430.csv
+
+Checksum: c3acf97b8b2ef94c85cc271c45100cf9a26afdf6
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2923\633275.pdf
+
+Checksum: c4c6630594f85526391f98f3114ceb82f5d86eb5
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\WP_1\229988.wp
+
+Checksum: c6afd20232a3c22259b53f867d2e6fb0b2728ac5
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_69\291137.txt
+
+Checksum: c7bb7523ca4adf72351332d611b3e7a4ac07b5cc
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\LOG_25\594808.log
+
+Checksum: cd58d002a33badb1bc7b1a103db6aff3c43fd0b7
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\SWF_10\589808.swf
+
+Checksum: d0a89a11e3f862b50aa5eb0b38de5ee1e7d6cd59
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\JPEG_1\627650.html
+
+Checksum: d3716640722b8e08c0a7bdddb9c2573648ed42b8
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_162\508651.zip
+
+Checksum: d480819a341878afb388ee75efd3841c32a3857b
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_140\268750.dbase3
+
+Checksum: d4884410ea0c9c8469ebc3c99bd768e61d982fe4
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2968\650578.pdf
+
+Checksum: d4ee71fd95c30c13682c5e80623898d3007b3ae6
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_88\359806.unk
+
+Checksum: d5d00b447e38f0b1683f30b9b256176fc3250f89
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PPTX_6\212651.pptx
+
+Checksum: d9c2eb23841b41a567317000d6bd22f90f17ea61
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2054\410800.pdf
+
+Checksum: dbc06732fe18b459c0aad01b8104becaa91f5089
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\HTML_26\450984.pdf
+
+Checksum: e06cc1dac42f32991ab45d44693e9a29c7c2cea9
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XBM_3\658123.html
+
+Checksum: e1cc7b8f45c676fc9556777a68013e5422bc5705
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\EPS_8\143546.eps
+
+Checksum: e762a7bfd9bd4ae2c6ec268a14b6a2751cd0a05a
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2726\604862.pdf
+
+Checksum: e8b6d8404ada3cc7e4f1fc66f7f04f906aa7e0a2
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2932\950328.pdf
+
+Checksum: eab3861556a9a626b26bb94653e3e11440658f00
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2807\612157.pdf
+
+Checksum: ed2652acd79ce8f7ee1fe340b65b3b41ad752e5e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_128\719067.pdf
+
+Checksum: ed5bd118a210a09f0f956fecdb521c2a941b906e
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2561\594100.pdf
+
+Checksum: eddda518f3326f49c690d5b073d063b7f836b677
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2613\636867.pdf
+
+Checksum: ef172e06a20342e794fb0409a5ed480ffa752cc3
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\CSV_12\214622.csv
+
+Checksum: f1a47208e70fcb69a79da813f9fc82a5b78eea41
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_138\881860.doc
+
+Checksum: f1d04aea62a32c19af004c07105ebf24d5a1d532
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\TXT_3\048811.html
+
+Checksum: f4022f36cfbe297deb4539b923baf01575de716f
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_69\045536.txt
+
+Checksum: f4a8f5a9481b616d231d82b7aa8b2a6ea02ba6c4
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1387\137281.pdf
+
+Checksum: f4bacc692155593521e76f07f8ac9bb58d2ac293
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\DOC_138\881859.doc
+
+Checksum: f548af876cc59c6cd03a7ca915134b69c38cf939
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XBM_1\679066.xbm
+
+Checksum: f5f4981944f6dd2bc2c3e37da73a15d7b693210c
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\XLS_86\079477.dbase3
+
+Checksum: f75742b2e02d90b252e68ae9f5b1a381f6be878a
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2766\606481.dbase3
+
+Checksum: f9bf06a2932c68591ff68225eaae230b9ba6ff58
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PNG_3\932136.png
+
+Checksum: fc48f4787b85f0d2a3b846a2072a09f8c39de6d8
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_1845\279417.pdf
+
+Checksum: fd42b92f8d4d18939fa94bd2c6cbc692f32b244c
+Count: 2
+Example: E:\archives-sample-files\govdocs_selected.tar\govdocs_selected\govdocs_selected\PDF_2401\517629.pdf

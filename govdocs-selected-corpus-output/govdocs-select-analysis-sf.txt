@@ -1,0 +1,1689 @@
+Siegfried Analysis Results
+Analysis Version: 0.6.4-BETA
+Analysis File: govdocs-select-corpus-sf-analysis
+Analysis Tool: siegfried: 1.6.5
+
+Namespaces Used: 3
+Max Distance Scanned from Beginning of File: fmt/157, byte match at [[[0 8]] [[397929 35]]] e.g. 571574.pdf filesize: 867434, 397964 bytes
+Max Distance Scanned from End of File: fmt/354, byte match at [[[0 8]] [[3287278 44]] [[3287336 79]]] (signature 1/2) e.g. 975126.pdf filesize: 4095553, 808217 bytes
+
+Total Files: 26124
+Total Archive Files: 68
+Total Files Inside Archive Files: 0
+Total Directories: 4652
+Total Unique Directory Names: 4651
+Total Identified Files (Based on Signature): 19509
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 6615
+Total XML ID Only Count: 5
+Total Text ID Only Count: 5764
+Total Filename ID Only Count: 0
+Total Extension ID Only Count: 703
+Total Extension Mismatches: 6199
+Total Discrete File Format Signature Identifiers (PUIDs) in the Accession/Extract: 157
+Total Discrete Other (Non-PUID) File Format Signature Identifiers in the Accession/Extract: 78
+Total XML Based Identification Identifiers in the Accession/Extract: 4
+Total Text Based Identification Identifiers in the Accession/Extract: 6
+Total Filename Based Identification Identifiers in the Accession/Extract: 0
+Total Unique Extensions Across Accession/Extract: 61
+Total Zero-byte Files in Accession/Extract: 0
+Total Files with Identical Content (Checksum Value): 493
+Total Files with Multiple Contiguous Space Characters: 0
+Percentage of Accession/Extract Identified: 74.7
+Percentage of Accession/Extract Unidentified: 25.3
+Files Left Unidentified Across Multiple Identifiers (Gaps Based on Signature): 6615
+Size of the accession/extract: 33772327760.0 bytes | 32207.8 MiB/MB (Megabytes)
+
+
+Aggregated File Format Signature Identifiers in Accession/Extract:
+ns:pronom fmt/100, Hypertext Markup Language, 4.01 (135)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 (177)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0 (30)
+ns:pronom fmt/104, Macromedia Flash, 1 (10)
+ns:pronom fmt/106, Macromedia Flash, 3 (7)
+ns:pronom fmt/107, Macromedia Flash, 4 (20)
+ns:pronom fmt/108, Macromedia Flash, 5 (10)
+ns:pronom fmt/109, Macromedia Flash, 6 (23)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 (48)
+ns:pronom fmt/110, Macromedia Flash, 7 (19)
+ns:pronom fmt/111, OLE2 Compound Document Format,  (50)
+ns:pronom fmt/116, Windows Bitmap, 3.0 (25)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2 (26)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0 (22)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3 (38)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95 (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 (255)
+ns:pronom fmt/130, OpenOffice Impress, 1.0 (2)
+ns:pronom fmt/132, Windows Media Audio,  (1)
+ns:pronom fmt/133, Windows Media Video,  (6)
+ns:pronom fmt/136, OpenDocument Text, 1.0 (2)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0 (108)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,  (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 (588)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,  (22)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,  (4)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 (2215)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 (3529)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 (3882)
+ns:pronom fmt/185, Prime OCR, 3.9 (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (2039)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0 (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 (2309)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards (18)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards (55)
+ns:pronom fmt/244, Keyhole Markup Language (XML),  (22)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 (185)
+ns:pronom fmt/280, LaTeX (Master document),  (2)
+ns:pronom fmt/281, LaTeX (Subdocument),  (1)
+ns:pronom fmt/284, Gridded Binary, 1.0 (1)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,  (16)
+ns:pronom fmt/3, Graphics Interchange Format, 87a (37)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12 (2)
+ns:pronom fmt/328, EndNote Import File,  (1)
+ns:pronom fmt/329, Shell Archive Format,  (6)
+ns:pronom fmt/34, AutoCAD Drawing, R14 (1)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0 (1)
+ns:pronom fmt/353, Tagged Image File Format,  (12)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b (19)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0 (10)
+ns:pronom fmt/372, Earth Resource Satellite image header format,  (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 (12)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,  (4)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95 (63)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0 (2)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  (1)
+ns:pronom fmt/4, Graphics Interchange Format, 89a (101)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 (367)
+ns:pronom fmt/41, Raw JPEG Stream,  (21)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (24)
+ns:pronom fmt/417, Adobe Illustrator, 88 (1)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2 (2)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00 (10)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5 (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0 (5)
+ns:pronom fmt/423, Adobe Illustrator, 7.0 (6)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 (26)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 (74)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4 (27)
+ns:pronom fmt/468, ISO Disk Image File,  (1)
+ns:pronom fmt/473, Microsoft Office Owner File,  (4)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 (52)
+ns:pronom fmt/501, PostScript, 3.1 (1)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2 (9)
+ns:pronom fmt/505, Adobe Flash, 8 (20)
+ns:pronom fmt/506, Adobe Flash, 9 (17)
+ns:pronom fmt/507, Adobe Flash, 10 (7)
+ns:pronom fmt/52, Rich Text Format, 1.7 (11)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards (1)
+ns:pronom fmt/53, Rich Text Format, 1.8 (18)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0 (1)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0 (4)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0 (4)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0 (2)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2 (9)
+ns:pronom fmt/557, Adobe Illustrator, 8.0 (5)
+ns:pronom fmt/558, Adobe Illustrator, 9.0 (15)
+ns:pronom fmt/559, Adobe Illustrator, 10.0 (8)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3 (10)
+ns:pronom fmt/560, Adobe Illustrator, 11.0 (5)
+ns:pronom fmt/561, Adobe Illustrator, 12.0 (4)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S (11)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W (1)
+ns:pronom fmt/583, Vector Markup Language,  (55)
+ns:pronom fmt/584, Windows Media Metafile,  (1)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95 (9)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 (10)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 (113)
+ns:pronom fmt/611, LDAP Data Interchange Format,  (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X (9)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007 (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic (2)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1 (1)
+ns:pronom fmt/657, Open XML Paper Specification,  (1)
+ns:pronom fmt/682, Thumbs DB file, XP (1)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian (1)
+ns:pronom fmt/724, Keyhole Markup Language (Container),  (11)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12 (3)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13 (1)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14 (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002 (2)
+ns:pronom fmt/833, Open Inventor File Format, 2.x (2)
+ns:pronom fmt/931, Mathcad Document, Binary (4)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0 (10)
+ns:pronom fmt/950, MIME Email, 1.0 (61)
+ns:pronom fmt/96, Hypertext Markup Language,  (319)
+ns:pronom fmt/968, AppleSingle, 2 (10)
+ns:pronom fmt/969, 	Rich Text Format, 0 (1)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0 (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2 (2)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0 (12)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 (7)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 (6)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0 (2)
+ns:pronom x-fmt/119, Windows Metafile Image,  (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11 (7)
+ns:pronom x-fmt/219, Internet Archive, 1.0 (1)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,  (9)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,  (3)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002 (1)
+ns:pronom x-fmt/263, ZIP Format,  (23)
+ns:pronom x-fmt/266, GZIP Format,  (45)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,  (1)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0 (15)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0 (9)
+ns:pronom x-fmt/280, XML Schema Definition,  (14)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0 (1)
+ns:pronom x-fmt/383, Flexible Image Transport System,  (28)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1 (7)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2 (5)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1 (22)
+ns:pronom x-fmt/406, PostScript, 2.0 (43)
+ns:pronom x-fmt/408, PostScript, 3.0 (40)
+ns:pronom x-fmt/416, BinHex Binary Text,  (4)
+ns:pronom x-fmt/420, Windows Setup File,  (3)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,  (4)
+ns:pronom x-fmt/429, Microsoft Web Archive,  (1)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 (17)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003 (2)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0 (10)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0 (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0 (13)
+ns:pronom x-fmt/8, dBASE Database, II (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (41)
+ns:pronom x-fmt/9, dBASE Database, III (711)
+ns:pronom x-fmt/92, Adobe Photoshop,  (2)
+ns:tika text/x-diff,  (19)
+ns:tika text/plain,  (89)
+ns:tika image/x-icon,  (1)
+ns:tika image/gif, Graphics Interchange Format,  (25)
+ns:tika application/xml,  (95)
+ns:tika application/x-shockwave-flash, Adobe Flash,  (14)
+ns:tika application/x-sh,  (27)
+ns:tika application/x-compress,  (5)
+ns:tika application/msword, Microsoft Word Document,  (12)
+ns:freedesktop.org text/x-uuencode, uuencoded file,  (1)
+ns:freedesktop.org text/x-tex, TeX document,  (24)
+ns:freedesktop.org text/x-rpm-spec, RPM spec file,  (1)
+ns:freedesktop.org text/x-python, Python script,  (1)
+ns:freedesktop.org text/x-patch, differences between files,  (12)
+ns:freedesktop.org text/x-mpsub, MPSub subtitles,  (3)
+ns:freedesktop.org text/x-modelica, Modelica model,  (20)
+ns:freedesktop.org text/x-matlab, MATLAB script/function,  (22)
+ns:freedesktop.org text/x-java, Java source code,  (16)
+ns:freedesktop.org text/x-csrc, C source code,  (5)
+ns:freedesktop.org text/html, HTML document,  (65)
+ns:freedesktop.org message/rfc822, email message,  (25)
+ns:freedesktop.org image/x-xfig, XFig image,  (5)
+ns:freedesktop.org image/x-applix-graphics, Applix Graphics image,  (2)
+ns:freedesktop.org image/fits, FITS document,  (3)
+ns:freedesktop.org audio/x-mod, Amiga SoundTracker audio,  (1)
+ns:freedesktop.org application/xslt+xml, XSLT stylesheet,  (3)
+ns:freedesktop.org application/x-tgif, TGIF document,  (6)
+ns:freedesktop.org application/x-subrip, SubRip subtitles,  (1)
+ns:freedesktop.org application/x-shellscript, shell script,  (11)
+ns:freedesktop.org application/x-php, PHP script,  (6)
+ns:freedesktop.org application/x-perl, Perl script,  (11)
+ns:freedesktop.org application/x-ole-storage, OLE2 compound document storage,  (2)
+ns:freedesktop.org application/x-iff, IFF file,  (4)
+ns:freedesktop.org application/x-frame, Adobe FrameMaker document,  (1)
+ns:freedesktop.org application/x-csh, C shell script,  (7)
+ns:freedesktop.org application/vnd.wordperfect, WordPerfect document,  (10)
+ns:freedesktop.org application/vnd.debian.binary-package, Debian package,  (1)
+ns:freedesktop.org application/postscript, PS document,  (36)
+ns:freedesktop.org application/pgp-keys, PGP keys,  (1)
+ns:freedesktop.org application/pdf, PDF document,  (144)
+ns:freedesktop.org application/mbox, mailbox file,  (45)
+
+
+Aggregated Frequency of File Format Signature Identifiers in Accession/Extract:
+ns:pronom fmt/100, Hypertext Markup Language, 4.01 [extension match html; byte match at 17, 44] (135)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 [byte match at 0, 19] (177)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0 [extension match html; byte match at [[[2 44]] [[125 42]] [[9950 7]] [[10006 8]]]] (30)
+ns:pronom fmt/104, Macromedia Flash, 1 [extension match swf; byte match at [[[0 4]] [[46147 2]]]] (10)
+ns:pronom fmt/106, Macromedia Flash, 3 [extension match swf; byte match at [[[0 4]] [[391710 2]]]] (7)
+ns:pronom fmt/107, Macromedia Flash, 4 [extension match swf; byte match at [[[0 4]] [[247714 2]]]] (20)
+ns:pronom fmt/108, Macromedia Flash, 5 [extension match swf; byte match at [[[0 4]] [[9843169 2]]]] (10)
+ns:pronom fmt/109, Macromedia Flash, 6 [extension match swf; byte match at 0, 4 (signature 2/2)] (23)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[29151 12]]]] (48)
+ns:pronom fmt/110, Macromedia Flash, 7 [extension match swf; byte match at [[[0 4]] [[4616 2]]] (signature 1/2)] (19)
+ns:pronom fmt/111, OLE2 Compound Document Format,  [byte match at 0, 30] (50)
+ns:pronom fmt/116, Windows Bitmap, 3.0 [extension match bmp; byte match at 0, 34] (25)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2 [byte match at 0, 24 (signature 1/2)] (26)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0 [byte match at 0, 24 (signature 1/2)] (22)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3 [extension match ps; byte match at 0, 24 (signature 1/3)] (38)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95 [extension match ppt; byte match at [[[0 30]] [[1153 38]] [[90471 48]]]] (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [container name PowerPoint Document with name only] (255)
+ns:pronom fmt/130, OpenOffice Impress, 1.0 [byte match at [[[0 69]] [[145535 461]]]] (2)
+ns:pronom fmt/132, Windows Media Audio,  [byte match at [[[0 30]] [[180 80]]]] (1)
+ns:pronom fmt/133, Windows Media Video,  [byte match at [[[0 30]] [[480 109]]]] (6)
+ns:pronom fmt/136, OpenDocument Text, 1.0 [container name content.xml with byte match at [[[40 23]] [[1351 20]]]; name META-INF/manifest.xml with byte match at 149, 60 (signature 1/2)] (2)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0 [extension match pdf; byte match at [[[0 8]] [[12344 5]]]] (108)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,  [extension match pdf; byte match at [[[0 5]] [[1294915 34]]]] (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[162527 5]]]] (588)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,  [extension match pdf; byte match at [[[0 8]] [[693357 35]]]] (22)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,  [extension match pdf; byte match at [[[0 8]] [[2664419 34]]] (signature 2/2)] (4)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[20797 5]]]] (2215)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[663232 5]]]] (3529)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[101179 5]]]] (3882)
+ns:pronom fmt/185, Prime OCR, 3.9 [byte match at 0, 10] (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[320157 5]]]] (2039)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[1003607 5]]]] (2309)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 676, 88 (signature 1/3)] (18)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 2590, 96 (signature 1/3)] (55)
+ns:pronom fmt/244, Keyhole Markup Language (XML),  [extension match kml; byte match at [[[0 19]] [[40 11]] [[51807 6]]]] (22)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[4970427 7]]]] (185)
+ns:pronom fmt/280, LaTeX (Master document),  [byte match at 797, 14] (2)
+ns:pronom fmt/281, LaTeX (Subdocument),  [byte match at 0, 9] (1)
+ns:pronom fmt/284, Gridded Binary, 1.0 [byte match at [[[0 8]] [[97820 4]]]] (1)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,  [byte match at 0, 25] (16)
+ns:pronom fmt/3, Graphics Interchange Format, 87a [extension match gif; byte match at [[[0 6]] [[5882 1]]]] (37)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12 [byte match at 0, 6] (2)
+ns:pronom fmt/328, EndNote Import File,  [byte match at [[[27 3]] [[1204 4]]] (signature 2/2)] (1)
+ns:pronom fmt/329, Shell Archive Format,  [byte match at 0, 25 (signature 2/2)] (6)
+ns:pronom fmt/34, AutoCAD Drawing, R14 [byte match at 0, 6] (1)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0 [byte match at 522, 6] (1)
+ns:pronom fmt/353, Tagged Image File Format,  [byte match at 0, 4 (signature 1/2)] (12)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[1484499 44]] [[1484557 79]]] (signature 1/2)] (19)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0 [byte match at 0, 22] (10)
+ns:pronom fmt/372, Earth Resource Satellite image header format,  [byte match at [[[0 19]] [[707 18]]]] (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [byte match at 0, 22] (12)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,  [byte match at [[[0 15]] [[16 11]] [[106605 13]]]] (4)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95 [container name CompObj with byte match at 70, 20; name WordDocument with name only] (63)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0 [byte match at [[[0 2]] [[23 5]] [[44 2]] [[50 36]] [[141 2]] [[1039 2]] [[4422 2]]]] (2)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 1/2)] (1)
+ns:pronom fmt/4, Graphics Interchange Format, 89a [extension match gif; byte match at [[[0 6]] [[1011 1]]]] (101)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with name only] (367)
+ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[63038 2]]] (signature 1/2)] (21)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 602, 94 (signature 1/3)] (24)
+ns:pronom fmt/417, Adobe Illustrator, 88 [byte match at 0, 59 (signature 1/3)] (1)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2 [byte match at 0, 406 (signature 4/4)] (2)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00 [extension match jpg; byte match at [[[0 14]] [[30925 2]]]] (10)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5 [byte match at 0, 487] (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0 [byte match at 0, 554] (5)
+ns:pronom fmt/423, Adobe Illustrator, 7.0 [byte match at 0, 789] (6)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[1139 2]]]] (26)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [byte match at [[[0 14]] [[131797 2]]]] (74)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4 [extension match rtf; byte match at 0, 11] (27)
+ns:pronom fmt/468, ISO Disk Image File,  [byte match at [[[32769 5]] [[34816 6]]]] (1)
+ns:pronom fmt/473, Microsoft Office Owner File,  [byte match at 0, 56 (signature 2/20)] (4)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards [container name [Content_Types].xml with byte match at 2849, 78] (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (52)
+ns:pronom fmt/501, PostScript, 3.1 [byte match at 0, 14] (1)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2 [byte match at 0, 8] (9)
+ns:pronom fmt/505, Adobe Flash, 8 [extension match swf; byte match at 0, 4 (signature 2/2)] (20)
+ns:pronom fmt/506, Adobe Flash, 9 [extension match swf; byte match at [[[0 4]] [[84181 2]]] (signature 1/2)] (17)
+ns:pronom fmt/507, Adobe Flash, 10 [extension match swf; byte match at 0, 4 (signature 2/2)] (7)
+ns:pronom fmt/52, Rich Text Format, 1.7 [extension match rtf; byte match at [[[0 19]] [[33 41]]]] (11)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards [container name [Content_Types].xml with byte match at 327, 68] (1)
+ns:pronom fmt/53, Rich Text Format, 1.8 [extension match rtf; byte match at [[[0 32]] [[53 41]] [[4210 10]]]] (18)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0 [byte match at 0, 16] (4)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0 [extension match fm; byte match at 0, 16] (4)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0 [byte match at 0, 16] (2)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2 [byte match at 0, 8] (9)
+ns:pronom fmt/557, Adobe Illustrator, 8.0 [byte match at 0, 722] (5)
+ns:pronom fmt/558, Adobe Illustrator, 9.0 [extension match pdf; byte match at [[[0 8]] [[1651 598]]]] (15)
+ns:pronom fmt/559, Adobe Illustrator, 10.0 [extension match pdf; byte match at [[[0 8]] [[1975 368]]]] (8)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3 [byte match at 0, 8] (10)
+ns:pronom fmt/560, Adobe Illustrator, 11.0 [extension match pdf; byte match at [[[0 8]] [[1424 373]]]] (5)
+ns:pronom fmt/561, Adobe Illustrator, 12.0 [extension match pdf; byte match at [[[0 8]] [[2867 356]]]] (4)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S [extension match xls; byte match at 0, 8] (11)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W [byte match at 0, 8] (1)
+ns:pronom fmt/583, Vector Markup Language,  [extension match html; byte match at 6, 39] (55)
+ns:pronom fmt/584, Windows Media Metafile,  [byte match at 0, 19] (1)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95 [extension match xls; container name Book with byte match at 0, 8] (9)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (10)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (113)
+ns:pronom fmt/611, LDAP Data Interchange Format,  [byte match at 0, 4] (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X [extension match xls; byte match at 512, 8] (9)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007 [container name [Content_Types].xml with byte match at 2692, 93] (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic [byte match at [[[2 17]] [[217 11]] [[15129915 8]]] (signature 1/2)] (2)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1 [extension match jpg; byte match at [[[0 16]] [[258 12]] [[4133891 2]]] (signature 2/2)] (1)
+ns:pronom fmt/657, Open XML Paper Specification,  [container name FixedDocumentSequence.fdseq with name only] (1)
+ns:pronom fmt/682, Thumbs DB file, XP [container name Catalog with byte match at 0, 7] (1)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian [byte match at 0, 7] (1)
+ns:pronom fmt/724, Keyhole Markup Language (Container),  [extension match kmz; container name doc.kml with byte match at 41, 10] (11)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12 [byte match at [[[2 25]] [[29 26]] [[285 11]] [[250737 8]]]] (3)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13 [byte match at [[[2 25]] [[29 26]] [[5132 11]] [[622804 8]]]] (1)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14 [byte match at [[[2 25]] [[29 26]] [[5214 11]] [[159314 8]]]] (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002 [byte match at [[[2 25]] [[29 26]] [[6017 11]] [[848330 8]]] (signature 1/2)] (2)
+ns:pronom fmt/833, Open Inventor File Format, 2.x [byte match at 0, 20] (2)
+ns:pronom fmt/931, Mathcad Document, Binary [byte match at 0, 6] (4)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0 [byte match at 0, 15] (10)
+ns:pronom fmt/950, MIME Email, 1.0 [byte match at [[[792 17]] [[756 4]] [[622 6]] [[578 6]] [[810 14]]]] (61)
+ns:pronom fmt/96, Hypertext Markup Language,  [extension match html; byte match at [[[0 5]] [[346 7]]] (signature 1/2)] (319)
+ns:pronom fmt/968, AppleSingle, 2 [byte match at 0, 8] (10)
+ns:pronom fmt/969, 	Rich Text Format, 0 [extension match rtf; byte match at 0, 10] (1)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0 [extension match html; byte match at 0, 44] (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2 [extension match html; byte match at 0, 43] (2)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0 [extension match html; byte match at 16, 44] (12)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (7)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (6)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0 [byte match at 0, 6] (2)
+ns:pronom x-fmt/119, Windows Metafile Image,  [byte match at 0, 26 (signature 1/2)] (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11 [extension match xbm; byte match at [[[0 57]] [[61 11]]]] (7)
+ns:pronom x-fmt/219, Internet Archive, 1.0 [byte match at [[[0 70]] [[85 56]]]] (1)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,  [byte match at [[[0 6]] [[95060277 10]]]] (9)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,  [byte match at 0, 104] (3)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002 [extension match pub; container name CompObj with byte match at 56, 18; name Contents with name only] (1)
+ns:pronom x-fmt/263, ZIP Format,  [extension match zip; container match with trigger and default extension] (23)
+ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (45)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,  [byte match at 0, 10] (1)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0 [extension match doc; byte match at 0, 117] (15)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0 [extension match doc; byte match at 0, 117] (9)
+ns:pronom x-fmt/280, XML Schema Definition,  [byte match at [[[0 19]] [[55449 12]]]] (14)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0 [byte match at 1, 16 (signature 2/2)] (1)
+ns:pronom x-fmt/383, Flexible Image Transport System,  [extension match fits; byte match at 0, 169] (28)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1 [extension match jpg; byte match at [[[0 16]] [[346 12]] [[384354 2]]] (signature 2/2)] (7)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2 [extension match jpg; byte match at [[[0 16]] [[372 12]] [[11062 2]]] (signature 1/2)] (5)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1 [extension match wp; byte match at 0, 16] (22)
+ns:pronom x-fmt/406, PostScript, 2.0 [byte match at 0, 14] (43)
+ns:pronom x-fmt/408, PostScript, 3.0 [extension match ps; byte match at 0, 14] (40)
+ns:pronom x-fmt/416, BinHex Binary Text,  [byte match at 0, 40] (4)
+ns:pronom x-fmt/420, Windows Setup File,  [byte match at 0, 39 (signature 2/3)] (3)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,  [extension match lnk; byte match at 0, 20] (4)
+ns:pronom x-fmt/429, Microsoft Web Archive,  [byte match at [[[0 56]] [[80 5]] [[119 13]] [[138 32]]]] (1)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wp; byte match at 0, 12] (17)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with byte match at 10, 1] (2)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0 [extension match dwf; byte match at 0, 12] (10)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0 [byte match at 0, 4] (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0 [byte match at 0, 4] (13)
+ns:pronom x-fmt/8, dBASE Database, II [byte match at 0, 20 (signature 1/2)] (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[1152 8]] [[30108 20]]]] (41)
+ns:pronom x-fmt/9, dBASE Database, III [byte match at 0, 44] (711)
+ns:pronom x-fmt/92, Adobe Photoshop,  [byte match at 0, 13] (2)
+ns:tika text/x-diff,  [byte match at 0, 5 (signature 1/5)] (19)
+ns:tika text/plain,  [byte match at 0, 2 (signature 4/8); text match ASCII; text match ASCII] (89)
+ns:tika image/x-icon,  [byte match at 0, 4 (signature 2/2)] (1)
+ns:tika image/gif, Graphics Interchange Format,  [extension match gif; byte match at 0, 6 (signature 2/2)] (25)
+ns:tika application/xml,  [extension match xml; byte match at 0, 4 (signature 3/5)] (95)
+ns:tika application/x-shockwave-flash, Adobe Flash,  [extension match swf; byte match at 0, 3 (signature 1/2)] (14)
+ns:tika application/x-sh,  [byte match at 0, 4 (signature 2/3); text match ASCII; text match ASCII] (27)
+ns:tika application/x-compress,  [byte match at 0, 2] (5)
+ns:tika application/msword, Microsoft Word Document,  [extension match doc; byte match at 0, 8 (signature 9/12); byte match at 0, 8 (signature 12/12)] (12)
+ns:freedesktop.org text/x-uuencode, uuencoded file,  [byte match at 0, 6] (1)
+ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (24)
+ns:freedesktop.org text/x-rpm-spec, RPM spec file,  [byte match at 0, 9 (signature 1/2)] (1)
+ns:freedesktop.org text/x-python, Python script,  [byte match at 3, 15 (signature 10/10)] (1)
+ns:freedesktop.org text/x-patch, differences between files,  [byte match at 0, 5 (signature 2/10)] (12)
+ns:freedesktop.org text/x-mpsub, MPSub subtitles,  [byte match at 0, 7] (3)
+ns:freedesktop.org text/x-modelica, Modelica model,  [byte match at 0, 8 (signature 2/5)] (20)
+ns:freedesktop.org text/x-matlab, MATLAB script/function,  [byte match at 0, 2 (signature 2/3)] (22)
+ns:freedesktop.org text/x-java, Java source code,  [extension match java; byte match at 0, 2 (signature 1/3)] (16)
+ns:freedesktop.org text/x-csrc, C source code,  [byte match at 0, 8 (signature 3/3)] (5)
+ns:freedesktop.org text/html, HTML document,  [extension match html; byte match at 158, 6 (signature 6/17); byte match at 171, 6 (signature 6/17)] (65)
+ns:freedesktop.org message/rfc822, email message,  [byte match at 0, 5 (signature 3/10)] (25)
+ns:freedesktop.org image/x-xfig, XFig image,  [byte match at 0, 4] (5)
+ns:freedesktop.org image/x-applix-graphics, Applix Graphics image,  [byte match at [[[0 6]] [[7 8]]]] (2)
+ns:freedesktop.org image/fits, FITS document,  [extension match fits; byte match at 0, 9] (3)
+ns:freedesktop.org audio/x-mod, Amiga SoundTracker audio,  [byte match at 0, 2 (signature 4/6)] (1)
+ns:freedesktop.org application/xslt+xml, XSLT stylesheet,  [byte match at 0, 15 (signature 1/3)] (3)
+ns:freedesktop.org application/x-tgif, TGIF document,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-subrip, SubRip subtitles,  [byte match at [[[0 1]] [[62 5]]]] (1)
+ns:freedesktop.org application/x-shellscript, shell script,  [byte match at 6, 7 (signature 5/11)] (11)
+ns:freedesktop.org application/x-php, PHP script,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-perl, Perl script,  [byte match at 6, 9 (signature 2/11)] (11)
+ns:freedesktop.org application/x-ole-storage, OLE2 compound document storage,  [byte match at 0, 4 (signature 2/2)] (2)
+ns:freedesktop.org application/x-iff, IFF file,  [byte match at 0, 4] (4)
+ns:freedesktop.org application/x-frame, Adobe FrameMaker document,  [byte match at 0, 6 (signature 7/7); byte match at 0, 10 (signature 1/7)] (1)
+ns:freedesktop.org application/x-csh, C shell script,  [byte match at 3, 8 (signature 2/4)] (7)
+ns:freedesktop.org application/vnd.wordperfect, WordPerfect document,  [extension match wp; byte match at 1, 3] (10)
+ns:freedesktop.org application/vnd.debian.binary-package, Debian package,  [byte match at [[[0 7]] [[8 6]]]] (1)
+ns:freedesktop.org application/postscript, PS document,  [byte match at 0, 2 (signature 2/2)] (36)
+ns:freedesktop.org application/pgp-keys, PGP keys,  [byte match at 0, 36 (signature 1/6)] (1)
+ns:freedesktop.org application/pdf, PDF document,  [extension match pdf; byte match at 128, 5] (144)
+ns:freedesktop.org application/mbox, mailbox file,  [byte match at 0, 5] (45)
+
+
+Aggregated Frequency of XML Identifiers in Accession/Extract:
+ns:pronom fmt/100, Hypertext Markup Language, 4.01 [extension match html; byte match at 17, 44] (135)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 [byte match at 0, 19] (177)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0 [extension match html; byte match at [[[2 44]] [[125 42]] [[9950 7]] [[10006 8]]]] (30)
+ns:pronom fmt/104, Macromedia Flash, 1 [extension match swf; byte match at [[[0 4]] [[46147 2]]]] (10)
+ns:pronom fmt/106, Macromedia Flash, 3 [extension match swf; byte match at [[[0 4]] [[391710 2]]]] (7)
+ns:pronom fmt/107, Macromedia Flash, 4 [extension match swf; byte match at [[[0 4]] [[247714 2]]]] (20)
+ns:pronom fmt/108, Macromedia Flash, 5 [extension match swf; byte match at [[[0 4]] [[9843169 2]]]] (10)
+ns:pronom fmt/109, Macromedia Flash, 6 [extension match swf; byte match at 0, 4 (signature 2/2)] (23)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[29151 12]]]] (48)
+ns:pronom fmt/110, Macromedia Flash, 7 [extension match swf; byte match at [[[0 4]] [[4616 2]]] (signature 1/2)] (19)
+ns:pronom fmt/111, OLE2 Compound Document Format,  [byte match at 0, 30] (50)
+ns:pronom fmt/116, Windows Bitmap, 3.0 [extension match bmp; byte match at 0, 34] (25)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2 [byte match at 0, 24 (signature 1/2)] (26)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0 [byte match at 0, 24 (signature 1/2)] (22)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3 [extension match ps; byte match at 0, 24 (signature 1/3)] (38)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95 [extension match ppt; byte match at [[[0 30]] [[1153 38]] [[90471 48]]]] (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [container name PowerPoint Document with name only] (255)
+ns:pronom fmt/130, OpenOffice Impress, 1.0 [byte match at [[[0 69]] [[145535 461]]]] (2)
+ns:pronom fmt/132, Windows Media Audio,  [byte match at [[[0 30]] [[180 80]]]] (1)
+ns:pronom fmt/133, Windows Media Video,  [byte match at [[[0 30]] [[480 109]]]] (6)
+ns:pronom fmt/136, OpenDocument Text, 1.0 [container name content.xml with byte match at [[[40 23]] [[1351 20]]]; name META-INF/manifest.xml with byte match at 149, 60 (signature 1/2)] (2)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0 [extension match pdf; byte match at [[[0 8]] [[12344 5]]]] (108)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,  [extension match pdf; byte match at [[[0 5]] [[1294915 34]]]] (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[162527 5]]]] (588)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,  [extension match pdf; byte match at [[[0 8]] [[693357 35]]]] (22)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,  [extension match pdf; byte match at [[[0 8]] [[2664419 34]]] (signature 2/2)] (4)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[20797 5]]]] (2215)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[663232 5]]]] (3529)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[101179 5]]]] (3882)
+ns:pronom fmt/185, Prime OCR, 3.9 [byte match at 0, 10] (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[320157 5]]]] (2039)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[1003607 5]]]] (2309)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 676, 88 (signature 1/3)] (18)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 2590, 96 (signature 1/3)] (55)
+ns:pronom fmt/244, Keyhole Markup Language (XML),  [extension match kml; byte match at [[[0 19]] [[40 11]] [[51807 6]]]] (22)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[4970427 7]]]] (185)
+ns:pronom fmt/280, LaTeX (Master document),  [byte match at 797, 14] (2)
+ns:pronom fmt/281, LaTeX (Subdocument),  [byte match at 0, 9] (1)
+ns:pronom fmt/284, Gridded Binary, 1.0 [byte match at [[[0 8]] [[97820 4]]]] (1)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,  [byte match at 0, 25] (16)
+ns:pronom fmt/3, Graphics Interchange Format, 87a [extension match gif; byte match at [[[0 6]] [[5882 1]]]] (37)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12 [byte match at 0, 6] (2)
+ns:pronom fmt/328, EndNote Import File,  [byte match at [[[27 3]] [[1204 4]]] (signature 2/2)] (1)
+ns:pronom fmt/329, Shell Archive Format,  [byte match at 0, 25 (signature 2/2)] (6)
+ns:pronom fmt/34, AutoCAD Drawing, R14 [byte match at 0, 6] (1)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0 [byte match at 522, 6] (1)
+ns:pronom fmt/353, Tagged Image File Format,  [byte match at 0, 4 (signature 1/2)] (12)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[1484499 44]] [[1484557 79]]] (signature 1/2)] (19)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0 [byte match at 0, 22] (10)
+ns:pronom fmt/372, Earth Resource Satellite image header format,  [byte match at [[[0 19]] [[707 18]]]] (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [byte match at 0, 22] (12)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,  [byte match at [[[0 15]] [[16 11]] [[106605 13]]]] (4)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95 [container name CompObj with byte match at 70, 20; name WordDocument with name only] (63)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0 [byte match at [[[0 2]] [[23 5]] [[44 2]] [[50 36]] [[141 2]] [[1039 2]] [[4422 2]]]] (2)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 1/2)] (1)
+ns:pronom fmt/4, Graphics Interchange Format, 89a [extension match gif; byte match at [[[0 6]] [[1011 1]]]] (101)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with name only] (367)
+ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[63038 2]]] (signature 1/2)] (21)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 602, 94 (signature 1/3)] (24)
+ns:pronom fmt/417, Adobe Illustrator, 88 [byte match at 0, 59 (signature 1/3)] (1)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2 [byte match at 0, 406 (signature 4/4)] (2)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00 [extension match jpg; byte match at [[[0 14]] [[30925 2]]]] (10)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5 [byte match at 0, 487] (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0 [byte match at 0, 554] (5)
+ns:pronom fmt/423, Adobe Illustrator, 7.0 [byte match at 0, 789] (6)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[1139 2]]]] (26)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [byte match at [[[0 14]] [[131797 2]]]] (74)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4 [extension match rtf; byte match at 0, 11] (27)
+ns:pronom fmt/468, ISO Disk Image File,  [byte match at [[[32769 5]] [[34816 6]]]] (1)
+ns:pronom fmt/473, Microsoft Office Owner File,  [byte match at 0, 56 (signature 2/20)] (4)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards [container name [Content_Types].xml with byte match at 2849, 78] (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (52)
+ns:pronom fmt/501, PostScript, 3.1 [byte match at 0, 14] (1)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2 [byte match at 0, 8] (9)
+ns:pronom fmt/505, Adobe Flash, 8 [extension match swf; byte match at 0, 4 (signature 2/2)] (20)
+ns:pronom fmt/506, Adobe Flash, 9 [extension match swf; byte match at [[[0 4]] [[84181 2]]] (signature 1/2)] (17)
+ns:pronom fmt/507, Adobe Flash, 10 [extension match swf; byte match at 0, 4 (signature 2/2)] (7)
+ns:pronom fmt/52, Rich Text Format, 1.7 [extension match rtf; byte match at [[[0 19]] [[33 41]]]] (11)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards [container name [Content_Types].xml with byte match at 327, 68] (1)
+ns:pronom fmt/53, Rich Text Format, 1.8 [extension match rtf; byte match at [[[0 32]] [[53 41]] [[4210 10]]]] (18)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0 [byte match at 0, 16] (4)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0 [extension match fm; byte match at 0, 16] (4)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0 [byte match at 0, 16] (2)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2 [byte match at 0, 8] (9)
+ns:pronom fmt/557, Adobe Illustrator, 8.0 [byte match at 0, 722] (5)
+ns:pronom fmt/558, Adobe Illustrator, 9.0 [extension match pdf; byte match at [[[0 8]] [[1651 598]]]] (15)
+ns:pronom fmt/559, Adobe Illustrator, 10.0 [extension match pdf; byte match at [[[0 8]] [[1975 368]]]] (8)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3 [byte match at 0, 8] (10)
+ns:pronom fmt/560, Adobe Illustrator, 11.0 [extension match pdf; byte match at [[[0 8]] [[1424 373]]]] (5)
+ns:pronom fmt/561, Adobe Illustrator, 12.0 [extension match pdf; byte match at [[[0 8]] [[2867 356]]]] (4)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S [extension match xls; byte match at 0, 8] (11)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W [byte match at 0, 8] (1)
+ns:pronom fmt/583, Vector Markup Language,  [extension match html; byte match at 6, 39] (55)
+ns:pronom fmt/584, Windows Media Metafile,  [byte match at 0, 19] (1)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95 [extension match xls; container name Book with byte match at 0, 8] (9)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (10)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (113)
+ns:pronom fmt/611, LDAP Data Interchange Format,  [byte match at 0, 4] (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X [extension match xls; byte match at 512, 8] (9)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007 [container name [Content_Types].xml with byte match at 2692, 93] (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic [byte match at [[[2 17]] [[217 11]] [[15129915 8]]] (signature 1/2)] (2)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1 [extension match jpg; byte match at [[[0 16]] [[258 12]] [[4133891 2]]] (signature 2/2)] (1)
+ns:pronom fmt/657, Open XML Paper Specification,  [container name FixedDocumentSequence.fdseq with name only] (1)
+ns:pronom fmt/682, Thumbs DB file, XP [container name Catalog with byte match at 0, 7] (1)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian [byte match at 0, 7] (1)
+ns:pronom fmt/724, Keyhole Markup Language (Container),  [extension match kmz; container name doc.kml with byte match at 41, 10] (11)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12 [byte match at [[[2 25]] [[29 26]] [[285 11]] [[250737 8]]]] (3)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13 [byte match at [[[2 25]] [[29 26]] [[5132 11]] [[622804 8]]]] (1)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14 [byte match at [[[2 25]] [[29 26]] [[5214 11]] [[159314 8]]]] (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002 [byte match at [[[2 25]] [[29 26]] [[6017 11]] [[848330 8]]] (signature 1/2)] (2)
+ns:pronom fmt/833, Open Inventor File Format, 2.x [byte match at 0, 20] (2)
+ns:pronom fmt/931, Mathcad Document, Binary [byte match at 0, 6] (4)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0 [byte match at 0, 15] (10)
+ns:pronom fmt/950, MIME Email, 1.0 [byte match at [[[792 17]] [[756 4]] [[622 6]] [[578 6]] [[810 14]]]] (61)
+ns:pronom fmt/96, Hypertext Markup Language,  [extension match html; byte match at [[[0 5]] [[346 7]]] (signature 1/2)] (319)
+ns:pronom fmt/968, AppleSingle, 2 [byte match at 0, 8] (10)
+ns:pronom fmt/969, 	Rich Text Format, 0 [extension match rtf; byte match at 0, 10] (1)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0 [extension match html; byte match at 0, 44] (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2 [extension match html; byte match at 0, 43] (2)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0 [extension match html; byte match at 16, 44] (12)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (7)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (6)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0 [byte match at 0, 6] (2)
+ns:pronom x-fmt/119, Windows Metafile Image,  [byte match at 0, 26 (signature 1/2)] (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11 [extension match xbm; byte match at [[[0 57]] [[61 11]]]] (7)
+ns:pronom x-fmt/219, Internet Archive, 1.0 [byte match at [[[0 70]] [[85 56]]]] (1)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,  [byte match at [[[0 6]] [[95060277 10]]]] (9)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,  [byte match at 0, 104] (3)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002 [extension match pub; container name CompObj with byte match at 56, 18; name Contents with name only] (1)
+ns:pronom x-fmt/263, ZIP Format,  [extension match zip; container match with trigger and default extension] (23)
+ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (45)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,  [byte match at 0, 10] (1)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0 [extension match doc; byte match at 0, 117] (15)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0 [extension match doc; byte match at 0, 117] (9)
+ns:pronom x-fmt/280, XML Schema Definition,  [byte match at [[[0 19]] [[55449 12]]]] (14)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0 [byte match at 1, 16 (signature 2/2)] (1)
+ns:pronom x-fmt/383, Flexible Image Transport System,  [extension match fits; byte match at 0, 169] (28)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1 [extension match jpg; byte match at [[[0 16]] [[346 12]] [[384354 2]]] (signature 2/2)] (7)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2 [extension match jpg; byte match at [[[0 16]] [[372 12]] [[11062 2]]] (signature 1/2)] (5)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1 [extension match wp; byte match at 0, 16] (22)
+ns:pronom x-fmt/406, PostScript, 2.0 [byte match at 0, 14] (43)
+ns:pronom x-fmt/408, PostScript, 3.0 [extension match ps; byte match at 0, 14] (40)
+ns:pronom x-fmt/416, BinHex Binary Text,  [byte match at 0, 40] (4)
+ns:pronom x-fmt/420, Windows Setup File,  [byte match at 0, 39 (signature 2/3)] (3)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,  [extension match lnk; byte match at 0, 20] (4)
+ns:pronom x-fmt/429, Microsoft Web Archive,  [byte match at [[[0 56]] [[80 5]] [[119 13]] [[138 32]]]] (1)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wp; byte match at 0, 12] (17)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with byte match at 10, 1] (2)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0 [extension match dwf; byte match at 0, 12] (10)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0 [byte match at 0, 4] (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0 [byte match at 0, 4] (13)
+ns:pronom x-fmt/8, dBASE Database, II [byte match at 0, 20 (signature 1/2)] (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[1152 8]] [[30108 20]]]] (41)
+ns:pronom x-fmt/9, dBASE Database, III [byte match at 0, 44] (711)
+ns:pronom x-fmt/92, Adobe Photoshop,  [byte match at 0, 13] (2)
+ns:tika text/x-diff,  [byte match at 0, 5 (signature 1/5)] (19)
+ns:tika text/plain,  [byte match at 0, 2 (signature 4/8); text match ASCII; text match ASCII] (89)
+ns:tika image/x-icon,  [byte match at 0, 4 (signature 2/2)] (1)
+ns:tika image/gif, Graphics Interchange Format,  [extension match gif; byte match at 0, 6 (signature 2/2)] (25)
+ns:tika application/xml,  [extension match xml; byte match at 0, 4 (signature 3/5)] (95)
+ns:tika application/x-shockwave-flash, Adobe Flash,  [extension match swf; byte match at 0, 3 (signature 1/2)] (14)
+ns:tika application/x-sh,  [byte match at 0, 4 (signature 2/3); text match ASCII; text match ASCII] (27)
+ns:tika application/x-compress,  [byte match at 0, 2] (5)
+ns:tika application/msword, Microsoft Word Document,  [extension match doc; byte match at 0, 8 (signature 9/12); byte match at 0, 8 (signature 12/12)] (12)
+ns:freedesktop.org text/x-uuencode, uuencoded file,  [byte match at 0, 6] (1)
+ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (24)
+ns:freedesktop.org text/x-rpm-spec, RPM spec file,  [byte match at 0, 9 (signature 1/2)] (1)
+ns:freedesktop.org text/x-python, Python script,  [byte match at 3, 15 (signature 10/10)] (1)
+ns:freedesktop.org text/x-patch, differences between files,  [byte match at 0, 5 (signature 2/10)] (12)
+ns:freedesktop.org text/x-mpsub, MPSub subtitles,  [byte match at 0, 7] (3)
+ns:freedesktop.org text/x-modelica, Modelica model,  [byte match at 0, 8 (signature 2/5)] (20)
+ns:freedesktop.org text/x-matlab, MATLAB script/function,  [byte match at 0, 2 (signature 2/3)] (22)
+ns:freedesktop.org text/x-java, Java source code,  [extension match java; byte match at 0, 2 (signature 1/3)] (16)
+ns:freedesktop.org text/x-csrc, C source code,  [byte match at 0, 8 (signature 3/3)] (5)
+ns:freedesktop.org text/html, HTML document,  [extension match html; byte match at 158, 6 (signature 6/17); byte match at 171, 6 (signature 6/17)] (65)
+ns:freedesktop.org message/rfc822, email message,  [byte match at 0, 5 (signature 3/10)] (25)
+ns:freedesktop.org image/x-xfig, XFig image,  [byte match at 0, 4] (5)
+ns:freedesktop.org image/x-applix-graphics, Applix Graphics image,  [byte match at [[[0 6]] [[7 8]]]] (2)
+ns:freedesktop.org image/fits, FITS document,  [extension match fits; byte match at 0, 9] (3)
+ns:freedesktop.org audio/x-mod, Amiga SoundTracker audio,  [byte match at 0, 2 (signature 4/6)] (1)
+ns:freedesktop.org application/xslt+xml, XSLT stylesheet,  [byte match at 0, 15 (signature 1/3)] (3)
+ns:freedesktop.org application/x-tgif, TGIF document,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-subrip, SubRip subtitles,  [byte match at [[[0 1]] [[62 5]]]] (1)
+ns:freedesktop.org application/x-shellscript, shell script,  [byte match at 6, 7 (signature 5/11)] (11)
+ns:freedesktop.org application/x-php, PHP script,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-perl, Perl script,  [byte match at 6, 9 (signature 2/11)] (11)
+ns:freedesktop.org application/x-ole-storage, OLE2 compound document storage,  [byte match at 0, 4 (signature 2/2)] (2)
+ns:freedesktop.org application/x-iff, IFF file,  [byte match at 0, 4] (4)
+ns:freedesktop.org application/x-frame, Adobe FrameMaker document,  [byte match at 0, 6 (signature 7/7); byte match at 0, 10 (signature 1/7)] (1)
+ns:freedesktop.org application/x-csh, C shell script,  [byte match at 3, 8 (signature 2/4)] (7)
+ns:freedesktop.org application/vnd.wordperfect, WordPerfect document,  [extension match wp; byte match at 1, 3] (10)
+ns:freedesktop.org application/vnd.debian.binary-package, Debian package,  [byte match at [[[0 7]] [[8 6]]]] (1)
+ns:freedesktop.org application/postscript, PS document,  [byte match at 0, 2 (signature 2/2)] (36)
+ns:freedesktop.org application/pgp-keys, PGP keys,  [byte match at 0, 36 (signature 1/6)] (1)
+ns:freedesktop.org application/pdf, PDF document,  [extension match pdf; byte match at 128, 5] (144)
+ns:freedesktop.org application/mbox, mailbox file,  [byte match at 0, 5] (45)
+
+
+Aggregated Frequency of Text Identifiers in Accession/Extract:
+ns:pronom fmt/100, Hypertext Markup Language, 4.01 [extension match html; byte match at 17, 44] (135)
+ns:pronom fmt/101, Extensible Markup Language, 1.0 [byte match at 0, 19] (177)
+ns:pronom fmt/102, Extensible Hypertext Markup Language, 1.0 [extension match html; byte match at [[[2 44]] [[125 42]] [[9950 7]] [[10006 8]]]] (30)
+ns:pronom fmt/104, Macromedia Flash, 1 [extension match swf; byte match at [[[0 4]] [[46147 2]]]] (10)
+ns:pronom fmt/106, Macromedia Flash, 3 [extension match swf; byte match at [[[0 4]] [[391710 2]]]] (7)
+ns:pronom fmt/107, Macromedia Flash, 4 [extension match swf; byte match at [[[0 4]] [[247714 2]]]] (20)
+ns:pronom fmt/108, Macromedia Flash, 5 [extension match swf; byte match at [[[0 4]] [[9843169 2]]]] (10)
+ns:pronom fmt/109, Macromedia Flash, 6 [extension match swf; byte match at 0, 4 (signature 2/2)] (23)
+ns:pronom fmt/11, Portable Network Graphics, 1.0 [extension match png; byte match at [[[0 16]] [[29151 12]]]] (48)
+ns:pronom fmt/110, Macromedia Flash, 7 [extension match swf; byte match at [[[0 4]] [[4616 2]]] (signature 1/2)] (19)
+ns:pronom fmt/111, OLE2 Compound Document Format,  [byte match at 0, 30] (50)
+ns:pronom fmt/116, Windows Bitmap, 3.0 [extension match bmp; byte match at 0, 34] (25)
+ns:pronom fmt/122, Encapsulated PostScript File Format, 1.2 [byte match at 0, 24 (signature 1/2)] (26)
+ns:pronom fmt/123, Encapsulated PostScript File Format, 2.0 [byte match at 0, 24 (signature 1/2)] (22)
+ns:pronom fmt/124, Encapsulated PostScript File Format, 3 [extension match ps; byte match at 0, 24 (signature 1/3)] (38)
+ns:pronom fmt/125, Microsoft Powerpoint Presentation, 95 [extension match ppt; byte match at [[[0 30]] [[1153 38]] [[90471 48]]]] (1)
+ns:pronom fmt/126, Microsoft Powerpoint Presentation, 97-2003 [container name PowerPoint Document with name only] (255)
+ns:pronom fmt/130, OpenOffice Impress, 1.0 [byte match at [[[0 69]] [[145535 461]]]] (2)
+ns:pronom fmt/132, Windows Media Audio,  [byte match at [[[0 30]] [[180 80]]]] (1)
+ns:pronom fmt/133, Windows Media Video,  [byte match at [[[0 30]] [[480 109]]]] (6)
+ns:pronom fmt/136, OpenDocument Text, 1.0 [container name content.xml with byte match at [[[40 23]] [[1351 20]]]; name META-INF/manifest.xml with byte match at 149, 60 (signature 1/2)] (2)
+ns:pronom fmt/14, Acrobat PDF 1.0 - Portable Document Format, 1.0 [extension match pdf; byte match at [[[0 8]] [[12344 5]]]] (108)
+ns:pronom fmt/144, Acrobat PDF/X - Portable Document Format - Exchange 1:1999,  [extension match pdf; byte match at [[[0 5]] [[1294915 34]]]] (1)
+ns:pronom fmt/15, Acrobat PDF 1.1 - Portable Document Format, 1.1 [extension match pdf; byte match at [[[0 8]] [[162527 5]]]] (588)
+ns:pronom fmt/157, Acrobat PDF/X - Portable Document Format - Exchange 1a:2001,  [extension match pdf; byte match at [[[0 8]] [[693357 35]]]] (22)
+ns:pronom fmt/158, Acrobat PDF/X - Portable Document Format - Exchange 3:2002,  [extension match pdf; byte match at [[[0 8]] [[2664419 34]]] (signature 2/2)] (4)
+ns:pronom fmt/16, Acrobat PDF 1.2 - Portable Document Format, 1.2 [extension match pdf; byte match at [[[0 8]] [[20797 5]]]] (2215)
+ns:pronom fmt/17, Acrobat PDF 1.3 - Portable Document Format, 1.3 [extension match pdf; byte match at [[[0 8]] [[663232 5]]]] (3529)
+ns:pronom fmt/18, Acrobat PDF 1.4 - Portable Document Format, 1.4 [extension match pdf; byte match at [[[0 8]] [[101179 5]]]] (3882)
+ns:pronom fmt/185, Prime OCR, 3.9 [byte match at 0, 10] (1)
+ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 [extension match pdf; byte match at [[[0 8]] [[320157 5]]]] (2039)
+ns:pronom fmt/190, Adobe FrameMaker Document, 5.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/20, Acrobat PDF 1.6 - Portable Document Format, 1.6 [extension match pdf; byte match at [[[0 8]] [[1003607 5]]]] (2309)
+ns:pronom fmt/214, Microsoft Excel for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 676, 88 (signature 1/3)] (18)
+ns:pronom fmt/215, Microsoft Powerpoint for Windows, 2007 onwards [container name [Content_Types].xml with byte match at 2590, 96 (signature 1/3)] (55)
+ns:pronom fmt/244, Keyhole Markup Language (XML),  [extension match kml; byte match at [[[0 19]] [[40 11]] [[51807 6]]]] (22)
+ns:pronom fmt/276, Acrobat PDF 1.7 - Portable Document Format, 1.7 [extension match pdf; byte match at [[[0 8]] [[4970427 7]]]] (185)
+ns:pronom fmt/280, LaTeX (Master document),  [byte match at 797, 14] (2)
+ns:pronom fmt/281, LaTeX (Subdocument),  [byte match at 0, 9] (1)
+ns:pronom fmt/284, Gridded Binary, 1.0 [byte match at [[[0 8]] [[97820 4]]]] (1)
+ns:pronom fmt/288, Microsoft Front Page Server Extension Configuration,  [byte match at 0, 25] (16)
+ns:pronom fmt/3, Graphics Interchange Format, 87a [extension match gif; byte match at [[[0 6]] [[5882 1]]]] (37)
+ns:pronom fmt/32, AutoCAD Drawing, R11/12 [byte match at 0, 6] (2)
+ns:pronom fmt/328, EndNote Import File,  [byte match at [[[27 3]] [[1204 4]]] (signature 2/2)] (1)
+ns:pronom fmt/329, Shell Archive Format,  [byte match at 0, 25 (signature 2/2)] (6)
+ns:pronom fmt/34, AutoCAD Drawing, R14 [byte match at 0, 6] (1)
+ns:pronom fmt/341, Macintosh PICT Image, 2.0 [byte match at 522, 6] (1)
+ns:pronom fmt/353, Tagged Image File Format,  [byte match at 0, 4 (signature 1/2)] (12)
+ns:pronom fmt/354, Acrobat PDF/A - Portable Document Format, 1b [extension match pdf; byte match at [[[0 8]] [[1484499 44]] [[1484557 79]]] (signature 1/2)] (19)
+ns:pronom fmt/37, Microsoft Word for Windows Document, 1.0 [byte match at 0, 22] (10)
+ns:pronom fmt/372, Earth Resource Satellite image header format,  [byte match at [[[0 19]] [[707 18]]]] (1)
+ns:pronom fmt/38, Microsoft Word for Windows Document, 2.0 [byte match at 0, 22] (12)
+ns:pronom fmt/388, Internet Calendar and Scheduling format,  [byte match at [[[0 15]] [[16 11]] [[106605 13]]]] (4)
+ns:pronom fmt/39, Microsoft Word Document, 6.0/95 [container name CompObj with byte match at 70, 20; name WordDocument with name only] (63)
+ns:pronom fmt/390, Log ASCII Standard Format, 2.0 [byte match at [[[0 2]] [[23 5]] [[44 2]] [[50 36]] [[141 2]] [[1039 2]] [[4422 2]]]] (2)
+ns:pronom fmt/396, PocketMobi (Palm Resource) File,  [byte match at 60, 8 (signature 1/2)] (1)
+ns:pronom fmt/4, Graphics Interchange Format, 89a [extension match gif; byte match at [[[0 6]] [[1011 1]]]] (101)
+ns:pronom fmt/40, Microsoft Word Document, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with name only] (367)
+ns:pronom fmt/41, Raw JPEG Stream,  [extension match jpg; byte match at [[[0 3]] [[63038 2]]] (signature 1/2)] (21)
+ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 602, 94 (signature 1/3)] (24)
+ns:pronom fmt/417, Adobe Illustrator, 88 [byte match at 0, 59 (signature 1/3)] (1)
+ns:pronom fmt/418, Adobe Illustrator, 3.0 / 3.2 [byte match at 0, 406 (signature 4/4)] (2)
+ns:pronom fmt/42, JPEG File Interchange Format, 1.00 [extension match jpg; byte match at [[[0 14]] [[30925 2]]]] (10)
+ns:pronom fmt/420, Adobe Illustrator, 5.0 / 5.5 [byte match at 0, 487] (6)
+ns:pronom fmt/422, Adobe Illustrator, 6.0 [byte match at 0, 554] (5)
+ns:pronom fmt/423, Adobe Illustrator, 7.0 [byte match at 0, 789] (6)
+ns:pronom fmt/43, JPEG File Interchange Format, 1.01 [extension match jpg; byte match at [[[0 14]] [[1139 2]]]] (26)
+ns:pronom fmt/44, JPEG File Interchange Format, 1.02 [byte match at [[[0 14]] [[131797 2]]]] (74)
+ns:pronom fmt/45, Rich Text Format, 1.0-1.4 [extension match rtf; byte match at 0, 11] (27)
+ns:pronom fmt/468, ISO Disk Image File,  [byte match at [[[32769 5]] [[34816 6]]]] (1)
+ns:pronom fmt/473, Microsoft Office Owner File,  [byte match at 0, 56 (signature 2/20)] (4)
+ns:pronom fmt/487, Macro Enabled Microsoft Powerpoint, 2007 Onwards [container name [Content_Types].xml with byte match at 2849, 78] (1)
+ns:pronom fmt/50, Rich Text Format, 1.5-1.6 [extension match rtf; byte match at 0, 19] (52)
+ns:pronom fmt/501, PostScript, 3.1 [byte match at 0, 14] (1)
+ns:pronom fmt/503, AppleDouble Resource Fork, 2 [byte match at 0, 8] (9)
+ns:pronom fmt/505, Adobe Flash, 8 [extension match swf; byte match at 0, 4 (signature 2/2)] (20)
+ns:pronom fmt/506, Adobe Flash, 9 [extension match swf; byte match at [[[0 4]] [[84181 2]]] (signature 1/2)] (17)
+ns:pronom fmt/507, Adobe Flash, 10 [extension match swf; byte match at 0, 4 (signature 2/2)] (7)
+ns:pronom fmt/52, Rich Text Format, 1.7 [extension match rtf; byte match at [[[0 19]] [[33 41]]]] (11)
+ns:pronom fmt/523, Macro enabled Microsoft Word Document OOXML, 2007 Onwards [container name [Content_Types].xml with byte match at 327, 68] (1)
+ns:pronom fmt/53, Rich Text Format, 1.8 [extension match rtf; byte match at [[[0 32]] [[53 41]] [[4210 10]]]] (18)
+ns:pronom fmt/533, Adobe FrameMaker Document, 2.0 [extension match fm; byte match at 0, 16] (1)
+ns:pronom fmt/534, Adobe FrameMaker Document, 3.0 [byte match at 0, 16] (4)
+ns:pronom fmt/535, Adobe FrameMaker Document, 4.0 [extension match fm; byte match at 0, 16] (4)
+ns:pronom fmt/537, Adobe FrameMaker Document, 6.0 [byte match at 0, 16] (2)
+ns:pronom fmt/55, Microsoft Excel 2.x Worksheet (xls), 2 [byte match at 0, 8] (9)
+ns:pronom fmt/557, Adobe Illustrator, 8.0 [byte match at 0, 722] (5)
+ns:pronom fmt/558, Adobe Illustrator, 9.0 [extension match pdf; byte match at [[[0 8]] [[1651 598]]]] (15)
+ns:pronom fmt/559, Adobe Illustrator, 10.0 [extension match pdf; byte match at [[[0 8]] [[1975 368]]]] (8)
+ns:pronom fmt/56, Microsoft Excel 3.0 Worksheet (xls), 3 [byte match at 0, 8] (10)
+ns:pronom fmt/560, Adobe Illustrator, 11.0 [extension match pdf; byte match at [[[0 8]] [[1424 373]]]] (5)
+ns:pronom fmt/561, Adobe Illustrator, 12.0 [extension match pdf; byte match at [[[0 8]] [[2867 356]]]] (4)
+ns:pronom fmt/57, Microsoft Excel 4.0 Worksheet (xls), 4S [extension match xls; byte match at 0, 8] (11)
+ns:pronom fmt/58, Microsoft Excel 4.0 Workbook (xls), 4W [byte match at 0, 8] (1)
+ns:pronom fmt/583, Vector Markup Language,  [extension match html; byte match at 6, 39] (55)
+ns:pronom fmt/584, Windows Media Metafile,  [byte match at 0, 19] (1)
+ns:pronom fmt/59, Microsoft Excel 5.0/95 Workbook (xls), 5/95 [extension match xls; container name Book with byte match at 0, 8] (9)
+ns:pronom fmt/609, Microsoft Word (Generic), 6.0-2003 [extension match doc; container name WordDocument with name only] (10)
+ns:pronom fmt/61, Microsoft Excel 97 Workbook (xls), 8 [extension match xls; container name Workbook with byte match at 0, 8 (signature 1/2)] (113)
+ns:pronom fmt/611, LDAP Data Interchange Format,  [byte match at 0, 4] (1)
+ns:pronom fmt/62, Microsoft Excel 2000-2003 Workbook (xls), 8X [extension match xls; byte match at 512, 8] (9)
+ns:pronom fmt/629, Microsoft PowerPoint Show, 2007 [container name [Content_Types].xml with byte match at 2692, 93] (1)
+ns:pronom fmt/63, Drawing Interchange File Format (ASCII), Generic [byte match at [[[2 17]] [[217 11]] [[15129915 8]]] (signature 1/2)] (2)
+ns:pronom fmt/645, Exchangeable Image File Format (Compressed), 2.2.1 [extension match jpg; byte match at [[[0 16]] [[258 12]] [[4133891 2]]] (signature 2/2)] (1)
+ns:pronom fmt/657, Open XML Paper Specification,  [container name FixedDocumentSequence.fdseq with name only] (1)
+ns:pronom fmt/682, Thumbs DB file, XP [container name Catalog with byte match at 0, 7] (1)
+ns:pronom fmt/688, Executable and Linkable Format, 32bit Little Endian [byte match at 0, 7] (1)
+ns:pronom fmt/724, Keyhole Markup Language (Container),  [extension match kmz; container name doc.kml with byte match at 41, 10] (11)
+ns:pronom fmt/75, Drawing Interchange File Format (ASCII), R11/12 [byte match at [[[2 25]] [[29 26]] [[285 11]] [[250737 8]]]] (3)
+ns:pronom fmt/76, Drawing Interchange File Format (ASCII), R13 [byte match at [[[2 25]] [[29 26]] [[5132 11]] [[622804 8]]]] (1)
+ns:pronom fmt/77, Drawing Interchange File Format (ASCII), R14 [byte match at [[[2 25]] [[29 26]] [[5214 11]] [[159314 8]]]] (2)
+ns:pronom fmt/78, Drawing Interchange File Format (ASCII), 2000-2002 [byte match at [[[2 25]] [[29 26]] [[6017 11]] [[848330 8]]] (signature 1/2)] (2)
+ns:pronom fmt/833, Open Inventor File Format, 2.x [byte match at 0, 20] (2)
+ns:pronom fmt/931, Mathcad Document, Binary [byte match at 0, 6] (4)
+ns:pronom fmt/94, Virtual Reality Modeling Language, 2.0 [byte match at 0, 15] (10)
+ns:pronom fmt/950, MIME Email, 1.0 [byte match at [[[792 17]] [[756 4]] [[622 6]] [[578 6]] [[810 14]]]] (61)
+ns:pronom fmt/96, Hypertext Markup Language,  [extension match html; byte match at [[[0 5]] [[346 7]]] (signature 1/2)] (319)
+ns:pronom fmt/968, AppleSingle, 2 [byte match at 0, 8] (10)
+ns:pronom fmt/969, 	Rich Text Format, 0 [extension match rtf; byte match at 0, 10] (1)
+ns:pronom fmt/97, Hypertext Markup Language, 2.0 [extension match html; byte match at 0, 44] (13)
+ns:pronom fmt/98, Hypertext Markup Language, 3.2 [extension match html; byte match at 0, 43] (2)
+ns:pronom fmt/99, Hypertext Markup Language, 4.0 [extension match html; byte match at 16, 44] (12)
+ns:pronom x-fmt/114, Lotus 1-2-3 Worksheet, 2.0 [extension match wk1; byte match at 0, 10] (7)
+ns:pronom x-fmt/115, Lotus 1-2-3 Worksheet, 3.0 [extension match wk3; byte match at 0, 8] (6)
+ns:pronom x-fmt/117, Lotus 1-2-3 Worksheet, 1.0 [byte match at 0, 6] (2)
+ns:pronom x-fmt/119, Windows Metafile Image,  [byte match at 0, 26 (signature 1/2)] (1)
+ns:pronom x-fmt/207, X-Windows Bitmap Image, X11 [extension match xbm; byte match at [[[0 57]] [[61 11]]]] (7)
+ns:pronom x-fmt/219, Internet Archive, 1.0 [byte match at [[[0 70]] [[85 56]]]] (1)
+ns:pronom x-fmt/226, ESRI Arc/Info Export File,  [byte match at [[[0 6]] [[95060277 10]]]] (9)
+ns:pronom x-fmt/235, ESRI Arc/View ShapeFile,  [byte match at 0, 104] (3)
+ns:pronom x-fmt/257, Microsoft Publisher, 2002 [extension match pub; container name CompObj with byte match at 56, 18; name Contents with name only] (1)
+ns:pronom x-fmt/263, ZIP Format,  [extension match zip; container match with trigger and default extension] (23)
+ns:pronom x-fmt/266, GZIP Format,  [byte match at 0, 3] (45)
+ns:pronom x-fmt/268, BZIP2 Compressed Archive,  [byte match at 0, 10] (1)
+ns:pronom x-fmt/274, Microsoft Word for MS-DOS Document, 4.0 [extension match doc; byte match at 0, 117] (15)
+ns:pronom x-fmt/275, Microsoft Word for MS-DOS Document, 5.0 [extension match doc; byte match at 0, 117] (9)
+ns:pronom x-fmt/280, XML Schema Definition,  [byte match at [[[0 19]] [[55449 12]]]] (14)
+ns:pronom x-fmt/367, Truevision TGA Bitmap, 1.0 [byte match at 1, 16 (signature 2/2)] (1)
+ns:pronom x-fmt/383, Flexible Image Transport System,  [extension match fits; byte match at 0, 169] (28)
+ns:pronom x-fmt/390, Exchangeable Image File Format (Compressed), 2.1 [extension match jpg; byte match at [[[0 16]] [[346 12]] [[384354 2]]] (signature 2/2)] (7)
+ns:pronom x-fmt/391, Exchangeable Image File Format (Compressed), 2.2 [extension match jpg; byte match at [[[0 16]] [[372 12]] [[11062 2]]] (signature 1/2)] (5)
+ns:pronom x-fmt/394, WordPerfect for MS-DOS/Windows Document, 5.1 [extension match wp; byte match at 0, 16] (22)
+ns:pronom x-fmt/406, PostScript, 2.0 [byte match at 0, 14] (43)
+ns:pronom x-fmt/408, PostScript, 3.0 [extension match ps; byte match at 0, 14] (40)
+ns:pronom x-fmt/416, BinHex Binary Text,  [byte match at 0, 40] (4)
+ns:pronom x-fmt/420, Windows Setup File,  [byte match at 0, 39 (signature 2/3)] (3)
+ns:pronom x-fmt/428, Microsoft Windows Shortcut,  [extension match lnk; byte match at 0, 20] (4)
+ns:pronom x-fmt/429, Microsoft Web Archive,  [byte match at [[[0 56]] [[80 5]] [[119 13]] [[138 32]]]] (1)
+ns:pronom x-fmt/44, WordPerfect for MS-DOS/Windows Document, 6.0 [extension match wp; byte match at 0, 12] (17)
+ns:pronom x-fmt/45, Microsoft Word Document Template, 97-2003 [container name CompObj with byte match at 77, 20; name WordDocument with byte match at 10, 1] (2)
+ns:pronom x-fmt/49, AutoCAD Design Web Format, 6.0 [extension match dwf; byte match at 0, 12] (10)
+ns:pronom x-fmt/64, Microsoft Word for Macintosh Document, 4.0 [byte match at 0, 4] (1)
+ns:pronom x-fmt/65, Microsoft Word for Macintosh Document, 5.0 [byte match at 0, 4] (13)
+ns:pronom x-fmt/8, dBASE Database, II [byte match at 0, 20 (signature 1/2)] (1)
+ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; byte match at [[[0 30]] [[1152 8]] [[30108 20]]]] (41)
+ns:pronom x-fmt/9, dBASE Database, III [byte match at 0, 44] (711)
+ns:pronom x-fmt/92, Adobe Photoshop,  [byte match at 0, 13] (2)
+ns:tika text/x-diff,  [byte match at 0, 5 (signature 1/5)] (19)
+ns:tika text/plain,  [byte match at 0, 2 (signature 4/8); text match ASCII; text match ASCII] (89)
+ns:tika image/x-icon,  [byte match at 0, 4 (signature 2/2)] (1)
+ns:tika image/gif, Graphics Interchange Format,  [extension match gif; byte match at 0, 6 (signature 2/2)] (25)
+ns:tika application/xml,  [extension match xml; byte match at 0, 4 (signature 3/5)] (95)
+ns:tika application/x-shockwave-flash, Adobe Flash,  [extension match swf; byte match at 0, 3 (signature 1/2)] (14)
+ns:tika application/x-sh,  [byte match at 0, 4 (signature 2/3); text match ASCII; text match ASCII] (27)
+ns:tika application/x-compress,  [byte match at 0, 2] (5)
+ns:tika application/msword, Microsoft Word Document,  [extension match doc; byte match at 0, 8 (signature 9/12); byte match at 0, 8 (signature 12/12)] (12)
+ns:freedesktop.org text/x-uuencode, uuencoded file,  [byte match at 0, 6] (1)
+ns:freedesktop.org text/x-tex, TeX document,  [byte match at 0, 1 (signature 1/2)] (24)
+ns:freedesktop.org text/x-rpm-spec, RPM spec file,  [byte match at 0, 9 (signature 1/2)] (1)
+ns:freedesktop.org text/x-python, Python script,  [byte match at 3, 15 (signature 10/10)] (1)
+ns:freedesktop.org text/x-patch, differences between files,  [byte match at 0, 5 (signature 2/10)] (12)
+ns:freedesktop.org text/x-mpsub, MPSub subtitles,  [byte match at 0, 7] (3)
+ns:freedesktop.org text/x-modelica, Modelica model,  [byte match at 0, 8 (signature 2/5)] (20)
+ns:freedesktop.org text/x-matlab, MATLAB script/function,  [byte match at 0, 2 (signature 2/3)] (22)
+ns:freedesktop.org text/x-java, Java source code,  [extension match java; byte match at 0, 2 (signature 1/3)] (16)
+ns:freedesktop.org text/x-csrc, C source code,  [byte match at 0, 8 (signature 3/3)] (5)
+ns:freedesktop.org text/html, HTML document,  [extension match html; byte match at 158, 6 (signature 6/17); byte match at 171, 6 (signature 6/17)] (65)
+ns:freedesktop.org message/rfc822, email message,  [byte match at 0, 5 (signature 3/10)] (25)
+ns:freedesktop.org image/x-xfig, XFig image,  [byte match at 0, 4] (5)
+ns:freedesktop.org image/x-applix-graphics, Applix Graphics image,  [byte match at [[[0 6]] [[7 8]]]] (2)
+ns:freedesktop.org image/fits, FITS document,  [extension match fits; byte match at 0, 9] (3)
+ns:freedesktop.org audio/x-mod, Amiga SoundTracker audio,  [byte match at 0, 2 (signature 4/6)] (1)
+ns:freedesktop.org application/xslt+xml, XSLT stylesheet,  [byte match at 0, 15 (signature 1/3)] (3)
+ns:freedesktop.org application/x-tgif, TGIF document,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-subrip, SubRip subtitles,  [byte match at [[[0 1]] [[62 5]]]] (1)
+ns:freedesktop.org application/x-shellscript, shell script,  [byte match at 6, 7 (signature 5/11)] (11)
+ns:freedesktop.org application/x-php, PHP script,  [byte match at 0, 5] (6)
+ns:freedesktop.org application/x-perl, Perl script,  [byte match at 6, 9 (signature 2/11)] (11)
+ns:freedesktop.org application/x-ole-storage, OLE2 compound document storage,  [byte match at 0, 4 (signature 2/2)] (2)
+ns:freedesktop.org application/x-iff, IFF file,  [byte match at 0, 4] (4)
+ns:freedesktop.org application/x-frame, Adobe FrameMaker document,  [byte match at 0, 6 (signature 7/7); byte match at 0, 10 (signature 1/7)] (1)
+ns:freedesktop.org application/x-csh, C shell script,  [byte match at 3, 8 (signature 2/4)] (7)
+ns:freedesktop.org application/vnd.wordperfect, WordPerfect document,  [extension match wp; byte match at 1, 3] (10)
+ns:freedesktop.org application/vnd.debian.binary-package, Debian package,  [byte match at [[[0 7]] [[8 6]]]] (1)
+ns:freedesktop.org application/postscript, PS document,  [byte match at 0, 2 (signature 2/2)] (36)
+ns:freedesktop.org application/pgp-keys, PGP keys,  [byte match at 0, 36 (signature 1/6)] (1)
+ns:freedesktop.org application/pdf, PDF document,  [extension match pdf; byte match at 128, 5] (144)
+ns:freedesktop.org application/mbox, mailbox file,  [byte match at 0, 5] (45)
+
+
+Extension Only Identification in the Accession/Extract:
+application/java-archive, 
+application/pdf, PDF document
+application/pdf, Portable Document Format
+application/postscript, PS document
+application/postscript, PostScript
+application/rtf, 
+application/rtf, RTF document
+application/sql, SQL code
+application/vnd.adobe.flash.movie, Shockwave Flash file
+application/vnd.framemaker, 
+application/vnd.google-earth.kml+xml, 
+application/vnd.google-earth.kml+xml, KML geographic data
+application/vnd.lotus-1-2-3, Lotus 1-2-3 spreadsheet
+application/vnd.ms-excel, Excel spreadsheet
+application/vnd.ms-excel, Microsoft Excel Spreadsheet
+application/vnd.ms-publisher, Microsoft Publisher document
+application/vnd.openxmlformats-officedocument.wordprocessingml.document, Office Open XML Document
+application/vnd.openxmlformats-officedocument.wordprocessingml.document, Word 2007 document
+application/winhlp, 
+application/winhlp, WinHelp help file
+application/x-font-ttf, 
+application/x-font-ttf, TrueType font
+application/x-java-archive, Java archive
+application/x-mspublisher, 
+application/x-shockwave-flash, Adobe Flash
+application/x-tex, 
+application/xml, 
+application/xml, XML document
+fmt/206, Structured Query Language Data
+fmt/879, Fortran
+image/fax-g3, CCITT G3 fax
+image/g3fax, 
+image/x-eps, EPS image
+image/x-xbitmap, 
+image/x-xbitmap, XBM image
+model/vnd.dwf, 
+text/csv, 
+text/csv, CSV document
+text/html, 
+text/html, HTML document
+text/sgml, 
+text/sgml, SGML document
+text/x-fortran, 
+text/x-fortran, Fortran source code
+text/x-java, Java source code
+text/x-log, application log
+text/x-tex, TeX document
+x-fmt/18, Comma Separated Values
+x-fmt/195, Standard Generalized Markup Language
+x-fmt/203, WordPerfect for Windows Document
+x-fmt/422, Java language source code file
+x-fmt/423, JavaScript file
+x-fmt/62, Log File
+
+
+Date Range of Items in the Accession/Extract:
+2012 (26124)
+
+
+Identification Method Frequency:
+Signature (18573), Text (5764), Container (936), Extension (703), None (143), XML (5), Filename (0)
+
+
+Frequency of Extension Only Identification In Accession/Extract:
+ns:pronom  UNKNOWN (469), ns:tika  text/html (347), ns:freedesktop.org  text/html (309), ns:pronom  x-fmt/62 (250), ns:pronom  x-fmt/18 (206), ns:freedesktop.org  text/csv (206), ns:tika  text/csv (205), ns:freedesktop.org  text/x-log (187), ns:tika  application/pdf (131), ns:freedesktop.org  application/xml (109), ns:freedesktop.org  application/rtf (107), ns:tika  application/postscript (103), ns:pronom  fmt/206 (72), ns:freedesktop.org  application/postscript (69), ns:freedesktop.org  application/sql (67), ns:freedesktop.org  application/winhlp (43), ns:tika  application/winhlp (42), ns:freedesktop.org  application/vnd.google-earth.kml+xml (32), ns:pronom  x-fmt/422 (30), ns:pronom  x-fmt/195 (29), ns:tika  application/vnd.google-earth.kml+xml (26), ns:tika  text/sgml (25), ns:freedesktop.org  text/sgml (25), ns:freedesktop.org  image/x-eps (22), ns:freedesktop.org  text/x-java (14), ns:tika  application/x-mspublisher (13), ns:freedesktop.org  application/vnd.ms-publisher (12), ns:freedesktop.org  application/vnd.ms-excel (12), ns:tika  application/x-font-ttf (11), ns:freedesktop.org  application/x-font-ttf (11), ns:tika  model/vnd.dwf (10), ns:tika  application/vnd.framemaker (10), ns:pronom  x-fmt/203 (10), ns:tika  text/x-fortran (9), ns:pronom  fmt/879 (9), ns:freedesktop.org  text/x-fortran (8), ns:freedesktop.org  image/x-xbitmap (7), ns:freedesktop.org  application/vnd.lotus-1-2-3 (7), ns:tika  application/xml (7), ns:freedesktop.org  application/pdf (7), ns:tika  image/x-xbitmap (7), ns:tika  application/x-shockwave-flash (4), ns:tika  UNKNOWN (4), ns:tika  application/rtf (3), ns:freedesktop.org  application/vnd.openxmlformats-officedocument.wordprocessingml.document (3), ns:freedesktop.org  application/x-java-archive (3), ns:tika  application/vnd.openxmlformats-officedocument.wordprocessingml.document (3), ns:tika  application/java-archive (3), ns:pronom  x-fmt/423 (2), ns:tika  image/g3fax (2), ns:tika  application/x-tex (2), ns:freedesktop.org  image/fax-g3 (2), ns:tika  application/vnd.ms-excel (1), ns:freedesktop.org  text/x-tex (1), ns:freedesktop.org  application/vnd.adobe.flash.movie (1)
+
+
+Unique Extensions Identified Across All Objects (ID and non-ID):
+123, bmp, chp, csv, data, dbase3, doc, docx, dwf, eps, exported, f, fits, fm, g3, gif, gls, gz, hlp, html, icns, ileaf, jar, java, jpg, js, kml, kmz, lnk, log, mac, odp, pdf, png, pps, ppt, pptx, ps, pst, pub, rtf, sgml, sql, squeak, swf, sys, tex, text, tmp, ttf, txt, unk, wk1, wk3, wp, xbm, xls, xlsx, xml, zip
+
+
+Frequency of All Extensions:
+pdf (15093), html (1074), txt (1072), dbase3 (701), unk (502), doc (431), xml (263), log (254), ppt (217), csv (215), text (182), ps (173), gif (163), swf (151), jpg (140), eps (110), rtf (109), xls (101), sql (72), pps (60), kml (59), tmp (55), pptx (52), png (48), wp (48), hlp (44), sgml (35), java (30), kmz (30), docx (27), bmp (25), gz (25), xlsx (16), pub (15), fits (12), zip (12), ttf (11), dwf (10), f (10), fm (10), gls (10), xbm (8), sys (7), wk1 (7), wk3 (5), lnk (4), data (3), exported (3), jar (3), 123 (2), chp (2), g3 (2), js (2), mac (2), odp (2), tex (2), icns (1), ileaf (1), pst (1), squeak (1)
+
+
+MIME Type (Internet Media Type) Frequency:
+application/pdf (15045), text/plain (5759), text/html (551), application/msword (512), application/xml (366), application/vnd.ms-powerpoint (297), application/postscript (206), image/gif (163), application/vnd.ms-excel (162), application/x-shockwave-flash (147), image/jpeg (144), application/rtf (109), message/rfc822 (87), application/vnd.openxmlformats-officedocument.presentationml.presentation (55), application/vnd.wordperfect (49), image/png (48), application/mbox (45), application/x-gzip (45), application/x-sh (33), application/xhtml+xml (30), application/fits (28), image/bmp (25), application/vnd.openxmlformats-officedocument.wordprocessingml.document (24), text/x-tex (24), application/zip (23), text/x-matlab (22), text/x-modelica (20), text/x-diff (19), application/vnd.openxmlformats-officedocument.spreadsheetml.sheet (18), text/x-java (16), text/x-java-source (14), application/vnd.framemaker (12), image/tiff (12), text/x-patch (12), application/vnd.google-earth.kmz (11), application/x-perl (11), application/x-shellscript (11), application/applefile (10), application/dwf (10), image/vnd.dxf (10), model/vrml (10), application/vnd.lotus-1-2-3 (9), multipart/appledouble (9), application/x-csh (7), image/x-xbitmap (7), application/lotus123 (6), application/x-php (6), application/x-tgif (6), video/x-ms-wmv (6), application/x-compress (5), image/x-xfig (5), text/x-csrc (5), application/x-iff (4), text/calendar (4), application/inf (3), application/xslt+xml (3), image/fits (3), image/vnd.dwg (3), text/x-mpsub (3), application/vnd.oasis.opendocument.text (2), application/vnd.sun.xml.impress (2), application/x-ole-storage (2), image/vnd.adobe.photoshop (2), image/x-applix-graphics (2), application/oxps (1), application/pgp-keys (1), application/vnd.debian.binary-package (1), application/vnd.ms-powerpoint.presentation.macroEnabled.12 (1), application/vnd.ms-word.document.macroEnabled.12 (1), application/vnd.openxmlformats-officedocument.presentationml.slideshow (1), application/x-bzip2 (1), application/x-endnote-refer (1), application/x-frame (1), application/x-internet-archive (1), application/x-subrip (1), audio/x-mod (1), audio/x-ms-wma (1), image/wmf (1), image/x-icon (1), image/x-pict (1), text/x-python (1), text/x-rpm-spec (1), text/x-uuencode (1)
+
+
+Results Per Identifier Namespace:
+Namespace: pronom (DROID_SignatureFile_V88.xml; container-signature-20160927.xml)
+Total Identified Files (Based on Signature): 18727
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 7397
+Total Extension ID Only Count: 608
+Total XML ID Only Count: 0
+Total Text ID Only Count: 5695
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 71.7
+Percentage of Accession/Extract Unidentified: 28.3
+
+Frequency of File Format Signature Identified IDs
+fmt/18 (3882), fmt/17 (3529), fmt/20 (2309), fmt/16 (2215), fmt/19 (2039), x-fmt/9 (711), fmt/15 (588), fmt/40 (367), fmt/96 (319), fmt/126 (255), fmt/276 (185), fmt/101 (177), fmt/100 (135), fmt/61 (113), fmt/14 (108), fmt/4 (101), fmt/44 (74), fmt/39 (63), fmt/950 (61), fmt/215 (55), fmt/583 (55), fmt/50 (52), fmt/111 (50), fmt/11 (48), x-fmt/266 (45), x-fmt/406 (43), x-fmt/88 (41), x-fmt/408 (40), fmt/124 (38), fmt/3 (37), fmt/102 (30), x-fmt/383 (28), fmt/45 (27), fmt/122 (26), fmt/43 (26), fmt/116 (25), fmt/412 (24), fmt/109 (23), x-fmt/263 (23), fmt/123 (22), fmt/157 (22), fmt/244 (22), x-fmt/394 (22), fmt/41 (21), fmt/107 (20), fmt/505 (20), fmt/110 (19), fmt/354 (19), fmt/214 (18), fmt/53 (18), fmt/506 (17), x-fmt/44 (17), fmt/288 (16), fmt/558 (15), x-fmt/274 (15), x-fmt/280 (14), fmt/97 (13), x-fmt/65 (13), fmt/353 (12), fmt/38 (12), fmt/99 (12), fmt/52 (11), fmt/57 (11), fmt/724 (11), fmt/104 (10), fmt/108 (10), fmt/37 (10), fmt/42 (10), fmt/56 (10), fmt/609 (10), fmt/94 (10), fmt/968 (10), x-fmt/49 (10), fmt/503 (9), fmt/55 (9), fmt/59 (9), fmt/62 (9), x-fmt/226 (9), x-fmt/275 (9), fmt/559 (8), fmt/106 (7), fmt/507 (7), x-fmt/114 (7), x-fmt/207 (7), x-fmt/390 (7), fmt/133 (6), fmt/329 (6), fmt/420 (6), fmt/423 (6), x-fmt/115 (6), fmt/422 (5), fmt/557 (5), fmt/560 (5), x-fmt/391 (5), fmt/158 (4), fmt/388 (4), fmt/473 (4), fmt/534 (4), fmt/535 (4), fmt/561 (4), fmt/931 (4), x-fmt/416 (4), x-fmt/428 (4), fmt/75 (3), x-fmt/235 (3), x-fmt/420 (3), fmt/130 (2), fmt/136 (2), fmt/280 (2), fmt/32 (2), fmt/390 (2), fmt/418 (2), fmt/537 (2), fmt/63 (2), fmt/77 (2), fmt/78 (2), fmt/833 (2), fmt/98 (2), x-fmt/117 (2), x-fmt/45 (2), x-fmt/92 (2), fmt/125 (1), fmt/132 (1), fmt/144 (1), fmt/185 (1), fmt/190 (1), fmt/281 (1), fmt/284 (1), fmt/328 (1), fmt/34 (1), fmt/341 (1), fmt/372 (1), fmt/396 (1), fmt/417 (1), fmt/468 (1), fmt/487 (1), fmt/501 (1), fmt/523 (1), fmt/533 (1), fmt/58 (1), fmt/584 (1), fmt/611 (1), fmt/629 (1), fmt/645 (1), fmt/657 (1), fmt/682 (1), fmt/688 (1), fmt/76 (1), fmt/969 (1), x-fmt/119 (1), x-fmt/219 (1), x-fmt/257 (1), x-fmt/268 (1), x-fmt/367 (1), x-fmt/429 (1), x-fmt/64 (1), x-fmt/8 (1)
+
+Namespace: tika (tika-mimetypes.xml)
+Total Identified Files (Based on Signature): 17439
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 8685
+Total Extension ID Only Count: 964
+Total XML ID Only Count: 539
+Total Text ID Only Count: 6193
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 66.8
+Percentage of Accession/Extract Unidentified: 33.2
+
+Frequency of File Format Signature Identified IDs
+application/vnd.ms-powerpoint (275), application/x-shockwave-flash (147), text/plain (102), application/vnd.ms-excel (100), application/x-gzip (45), application/x-tika-msoffice (40), application/x-sh (28), text/x-diff (19), application/x-123 (16), application/x-tika-ooxml (1), image/x-icon (1)
+
+Namespace: freedesktop.org (freedesktop.org.xml)
+Total Identified Files (Based on Signature): 18282
+Total Multiple Identifications (Based on Signature): 0
+Total Unidentified Files: 7842
+Total Extension ID Only Count: 1264
+Total XML ID Only Count: 170
+Total Text ID Only Count: 0
+Total Filename ID Only Count: 0
+Percentage of Accession/Extract Identified: 70.0
+Percentage of Accession/Extract Unidentified: 30.0
+
+Frequency of File Format Signature Identified IDs
+application/pdf (30051), application/msword (1090), text/html (669), application/x-ole-storage (446), application/xml (383), application/postscript (366), image/gif (326), image/jpeg (288), application/vnd.adobe.flash.movie (147), application/vnd.openxmlformats-officedocument.presentationml.presentation (104), image/png (96), image/x-eps (91), application/mbox (83), text/x-csrc (70), application/zip (61), message/rfc822 (59), image/bmp (50), application/vnd.wordperfect (49), application/vnd.openxmlformats-officedocument.wordprocessingml.document (48), application/gzip (45), image/fits (31), application/vnd.google-earth.kmz (30), text/x-patch (30), application/vnd.openxmlformats-officedocument.spreadsheetml.sheet (28), text/x-tex (26), application/x-shellscript (24), image/tiff (24), application/x-perl (22), text/x-matlab (22), application/vnd.google-earth.kml+xml (20), text/x-modelica (20), text/x-java (16), application/x-frame (13), application/x-compress (10), image/vnd.dxf (10), application/mac-binhex40 (8), image/x-tga (8), application/vnd.lotus-1-2-3 (7), application/vnd.ms-asf (7), application/x-csh (7), application/x-php (6), application/x-tgif (6), image/x-xfig (5), application/vnd.oasis.opendocument.text (4), application/x-iff (4), text/calendar (4), application/rss+xml (3), application/xslt+xml (3), text/x-mpsub (3), text/x-python (3), application/vnd.oasis.opendocument.presentation (2), application/x-bzip (2), image/vnd.adobe.photoshop (2), image/x-applix-graphics (2), application/pgp-keys (1), application/vnd.debian.binary-package (1), application/vnd.ms-publisher (1), application/x-executable (1), application/x-mobipocket-ebook (1), application/x-subrip (1), audio/x-mod (1), audio/x-ms-asx (1), image/vnd.microsoft.icon (1), image/x-wmf (1), text/x-ldif (1), text/x-rpm-spec (1), text/x-uuencode (1)
+
+
+XML Based Identifiers Across Namespaces:
+ns:tika text/html (531), ns:freedesktop.org application/xhtml+xml (164), ns:tika application/rss+xml (8), ns:freedesktop.org application/vnd.google-earth.kml+xml (6)
+
+
+Text Based Identifiers Across Namespaces:
+ns:tika text/plain (6061), ns:pronom x-fmt/111 (5695), ns:tika application/xml (115), ns:tika application/rtf (106), ns:tika text/x-java-source (30), ns:tika application/x-sh (18), ns:tika application/javascript (2)
+
+
+Filename Based Identifiers Across Namespaces:
+ns:tika text/plain (5698), ns:tika text/html (347), ns:freedesktop.org text/html (309), ns:freedesktop.org text/csv (206), ns:tika text/csv (205), ns:freedesktop.org text/x-log (187), ns:tika application/pdf (131), ns:freedesktop.org application/xml (109), ns:tika application/rtf (109), ns:freedesktop.org application/rtf (107), ns:tika application/postscript (103), ns:tika application/xml (99), ns:freedesktop.org application/postscript (69), ns:freedesktop.org application/sql (67), ns:freedesktop.org application/winhlp (43), ns:tika application/winhlp (42), ns:freedesktop.org application/vnd.google-earth.kml+xml (32), ns:tika text/x-java-source (30), ns:tika application/vnd.google-earth.kml+xml (26), ns:freedesktop.org text/sgml (25), ns:tika text/sgml (25), ns:freedesktop.org image/x-eps (22), ns:freedesktop.org text/x-java (14), ns:tika application/x-mspublisher (13), ns:freedesktop.org application/vnd.ms-excel (12), ns:freedesktop.org application/vnd.ms-publisher (12), ns:freedesktop.org application/x-font-ttf (11), ns:tika application/x-font-ttf (11), ns:tika application/vnd.framemaker (10), ns:tika model/vnd.dwf (10), ns:tika text/x-fortran (9), ns:freedesktop.org text/x-fortran (8), ns:freedesktop.org application/pdf (7), ns:freedesktop.org application/vnd.lotus-1-2-3 (7), ns:freedesktop.org image/x-xbitmap (7), ns:tika image/x-xbitmap (7), ns:tika application/x-shockwave-flash (4), ns:freedesktop.org application/vnd.openxmlformats-officedocument.wordprocessingml.document (3), ns:freedesktop.org application/x-java-archive (3), ns:tika application/java-archive (3), ns:tika application/vnd.openxmlformats-officedocument.wordprocessingml.document (3), ns:freedesktop.org image/fax-g3 (2), ns:tika application/javascript (2), ns:tika application/x-tex (2), ns:tika image/g3fax (2), ns:freedesktop.org application/vnd.adobe.flash.movie (1), ns:freedesktop.org text/x-tex (1), ns:tika application/vnd.ms-excel (1)
+
+
+Archive File Types in Accession/Extract:
+gz, html, kmz, ps, unk, xml, zip
+
+
+Files With Identical Content (Checksum Value): 493
+Checksum: 5b350ab9e08dd52407011379e95864f1
+Count: 12
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2827\782539.sql
+
+Checksum: d27d249973c5b5bfc71802a28a8a8b05
+Count: 12
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\MBOX_2\601346.pdf
+
+Checksum: f02d30a4c1c4e36470365d0e57972baf
+Count: 12
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2781\608759.pdf
+
+Checksum: 49d09e42405814cf7f4d2e6bba206311
+Count: 11
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2743\604687.xml
+
+Checksum: 3d6a51369ffb1597d0c3eedffcf859d0
+Count: 8
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_34\607237.rtf
+
+Checksum: 742e17580b99197399d24ceebf1b3ec5
+Count: 8
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_28\873832.log
+
+Checksum: 83421b366dfc82e44676a1e1bc0595e1
+Count: 8
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2817\986041.pdf
+
+Checksum: 9d4aa9491226b348ce494227764949cf
+Count: 8
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2858\745808.pdf
+
+Checksum: 5bdd5a855c8e2d09616005d256537501
+Count: 7
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2668\598920.dbase3
+
+Checksum: 116e1975128c4884121cbef7da90285f
+Count: 6
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2812\612841.xls
+
+Checksum: 1dcd467b20acf9135f64033fd9014273
+Count: 6
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_34\689017.log
+
+Checksum: 28e5191ae83f62cc7508aeb755f877fd
+Count: 6
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\MSO_1\594038.pdf
+
+Checksum: 3bd4be90b0e53630f88463785de1c7cb
+Count: 6
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\MAK_1\623791.sgml
+
+Checksum: 1bf5520b97a5e72b20c0a31a4cbdb46a
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\ASM_2\637402.wk3
+
+Checksum: 1faa2ef2729cdd2709fd26b0eac67cc7
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2843\615296.pdf
+
+Checksum: 6e2557872fc8b22b6386930020367707
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2653\656121.xml
+
+Checksum: 8399326f42f00298c49ab26dfd290486
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2731\788487.xls
+
+Checksum: e7c90499ada05ec00c6fc3496a7c795b
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_39\653089.log
+
+Checksum: fed694d5747d67e3553c1e0a9747d9e6
+Count: 5
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2624\596046.pdf
+
+Checksum: 18356c6d6bbeafc3e6a081d67f37821f
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_29\633261.log
+
+Checksum: 1996a848b82698228c91c335380996ee
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\FLD_1\628708.pdf
+
+Checksum: 1b83eb0e69974bdf6a1f658e83b21fe2
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\INFO_1\618442.pdf
+
+Checksum: 2f6dcc012bef41e138b7e61857f12e3b
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOCX_7\640372.html
+
+Checksum: 390c3275bc88bff3a72eda090e0e5fdf
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2917\630842.pdf
+
+Checksum: 3ca7dd24019000e60d41e2ba98c50b88
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2899\627164.sql
+
+Checksum: 7d4879020520132aceda79d902daafaf
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2945\639960.pdf
+
+Checksum: 846b501cb49714c38ef58ac5a1c7ba25
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_30\616107.log
+
+Checksum: c6169ec858994213c8d92370895fe86d
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2691\950957.pdf
+
+Checksum: cc96728b250abc0d2bece97ee65ea294
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_27\619490.log
+
+Checksum: f9b8ed61dee96f9738c5a9b53cbc6b69
+Count: 4
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2985\654885.dbase3
+
+Checksum: 0bef792dc7aa275cd9d733f31333a9bc
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_26\645022.log
+
+Checksum: 0e0e663d12c764e226bb68a222762887
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_125\939452.log
+
+Checksum: 0e47b1f76a9eafbd892095d5bd5f9ded
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2868\619495.lnk
+
+Checksum: 110595d1babbe56a5e51951fa7c18070
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2961\979733.pdf
+
+Checksum: 161f7d265a7e9b8d18e06a1007104df6
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2618\914630.swf
+
+Checksum: 1a1a93f055e50847ea8e6a0488450693
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\EML_4\991768.pdf
+
+Checksum: 4154afa671a1425037f46c06d2d11dc8
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2881\941408.sql
+
+Checksum: 641c6e4cd92c844f19d51e3dcf475516
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2696\600543.pdf
+
+Checksum: 721ffe6dde387ab33534cdba48464670
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2681\899237.pdf
+
+Checksum: 80ff03e91674282019211a104e20b6f8
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2736\799353.dbase3
+
+Checksum: 91eec12fb997509e220a07a0992df1f0
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2953\643888.pdf
+
+Checksum: 93255a7281df099ed8be23118a4a4c02
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOCX_8\641559.docx
+
+Checksum: 9337c45218b0eb9ab6988f158fd898ff
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2972\652166.pdf
+
+Checksum: 93bff95d8f01e3c907f83f7ab36b71bc
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2574\981077.pdf
+
+Checksum: 9f999229f65440246c2399b7d49783e9
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_38\651217.log
+
+Checksum: d9b1f5f2f1efb12ca1bda2c309c38635
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HTML_151\627886.dbase3
+
+Checksum: db47cd423608f2f80a32169d26fe0aa2
+Count: 3
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2922\632391.pdf
+
+Checksum: 01f330368abbd0ac9e68b1523c030ed6
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_22\061639.g3
+
+Checksum: 03f85f535aa72e0a6bcfe3c40104c033
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_12\539925.csv
+
+Checksum: 0503dd187245d572d94b56cbe353ca21
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PNG_3\932136.png
+
+Checksum: 05b78d5322e0b40a0132ad681aa86137
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPS_7\369635.pps
+
+Checksum: 06243bc9dbc04762e6591d28142f91c2
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_12\214622.csv
+
+Checksum: 06a7f5e10cbc4c5f0e8d79f39683bf7a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TEXT_103\050408.rtf
+
+Checksum: 07282c6ad931ff3711d052534f6ca078
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_780\247565.pdf
+
+Checksum: 076ad740e81d6ac76142b60814840d3a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_140\268750.dbase3
+
+Checksum: 099e9bb6700e856d2d7a4ce15a071418
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_69\291137.txt
+
+Checksum: 0a23e0c2d4309f8f9e47026d96db4f23
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HLP_5\304346.hlp
+
+Checksum: 0ba49d6b58e4ddaaa6d134a04faabc56
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_25\594808.log
+
+Checksum: 0bf5eec735bd04133ddd3cf9c87027cb
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1483\283878.pdf
+
+Checksum: 0c16eb54f2ce4bb6a8f9e53710e7636a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPTX_6\212651.pptx
+
+Checksum: 0ced512c3a6de6d4bd2ce1066d1eaf7d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2809\612701.pdf
+
+Checksum: 0d71bd43d617e0893a73ee0ab5626a17
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_47\542914.ppt
+
+Checksum: 1470725c97520d4822cdd456da8a10f8
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1845\279417.pdf
+
+Checksum: 16bb5c2516cd81b9e41bf990b00a6f7d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2054\410800.pdf
+
+Checksum: 192aeb09039e30cad34f78e5d1ca2f5d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1398\201064.pdf
+
+Checksum: 1b235f5a85ec02e07eec6a4aaf17ca50
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_142\315496.dbase3
+
+Checksum: 2102f6b4841223f672a9fa3ba182bf65
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_23\481117.log
+
+Checksum: 274f32f59fad1547530c3f70f28d9ae2
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1387\137281.pdf
+
+Checksum: 286103e6a58295e98cabbc67f07b58af
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_12\021751.csv
+
+Checksum: 29892a1c4478de10abd70f92ac751e2d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_422\009297.pdf
+
+Checksum: 2cfb954f41986b5b6e7efed239aa329b
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2983\654332.pdf
+
+Checksum: 2e3deff602e420b70aa187d36ce8cd72
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_15\292813.ppt
+
+Checksum: 319b178703d94b2437aa29157001fee5
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\JPEG_1\627650.html
+
+Checksum: 32fac9cb7898f1bd0d2a34fdff5a480e
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2561\594100.pdf
+
+Checksum: 33306489e50bb2ad62f520919a9a9de9
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2968\650578.pdf
+
+Checksum: 36a720ffd56f44ea9a9750bb5f83241f
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2934\635563.dbase3
+
+Checksum: 3b6bb885979e46cc2626ad0fdb19beae
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_15\018434.ppt
+
+Checksum: 3bd563cbf90aca29da58638d40944182
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2720\602674.pdf
+
+Checksum: 3fe080819b7a006da9349ebec5c15b00
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HTML_123\462685.pdf
+
+Checksum: 408c324b7ff6077d3db72d59374a9c5f
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2964\649796.pdf
+
+Checksum: 409797a408147f598bfe2e4dd43d1edb
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2932\950328.pdf
+
+Checksum: 4217bba71d1eef338b4757f77e95581e
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1241\115638.pdf
+
+Checksum: 489fa1ff7344aac1143cec96c8b49b2c
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2975\699266.pdf
+
+Checksum: 49df673cad66e6cd42a68887f0303906
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_591\087546.pdf
+
+Checksum: 4b3edb42827bf0ea680cd93bb387895c
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_35\634446.log
+
+Checksum: 4bd811b328509b2f52d3ba381431c875
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2749\605064.pdf
+
+Checksum: 4bfe25d02fdaaac379e5afebd3e9e318
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2697\600759.pdf
+
+Checksum: 4f403710624b7bda77fca7f19784637a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\SWF_12\502798.swf
+
+Checksum: 50807146c413823b64679d234d6257a0
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_24\454304.csv
+
+Checksum: 50ce9674286c99bd96b4f8af80e54da2
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TXT_3\048811.html
+
+Checksum: 5234e7da964e8342ba8c270ac530070a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PS_15\425486.ps
+
+Checksum: 52517a9f40bb76016a3187ad94f0716f
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2658\598544.xls
+
+Checksum: 557f68af6a9f467328674478f8d0f19b
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2870\620108.pdf
+
+Checksum: 5a1690aacbd87830f2f68a4e743b4cc3
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XBM_1\679066.xbm
+
+Checksum: 5aac73614f6d13aa762c4a281b128a25
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XBM_3\658123.html
+
+Checksum: 5b0997fda7c2f6b7debced003b441f3d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_106\411909.doc
+
+Checksum: 5b4a8589960cffbdb6ed58a5efceefcf
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2766\606481.dbase3
+
+Checksum: 5d02d93ebb9cbad3f6579739a4fd6004
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_7\259476.ppt
+
+Checksum: 5fcec5bc812a9954b3868083fe1245d8
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_46\253121.wp
+
+Checksum: 609d92081910055f33280be47a41a9dd
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\EPS_8\143546.eps
+
+Checksum: 617e9af996506f32c0695b0279035c60
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_101\116121.txt
+
+Checksum: 638b7f60ac2a0f2573f84ea94c199cbc
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_141\269681.dbase3
+
+Checksum: 64f76d9c58d6174641761642b791865e
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_138\973796.doc
+
+Checksum: 65c99b1aea235a91295dcd2bf6e83ce5
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2401\517629.pdf
+
+Checksum: 671d21154e53af9f17031cb16a7f0f6c
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1278\113610.pdf
+
+Checksum: 6794ebaa6a0aa7aeecd951fcbe671f4d
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_49\803198.txt
+
+Checksum: 6dbb2c6fa43d51640c9627f4685178c4
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TMP_8\330112.tmp
+
+Checksum: 70448f8b6caaabcaa8b047e4cfa8ef2a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1274\762420.pdf
+
+Checksum: 71f5c2df64062dff3f2abe26b170bb81
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\WP_1\175241.wp
+
+Checksum: 723e4328103022bf2921495fc2091a39
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\SWF_10\589808.swf
+
+Checksum: 72d0fcfad2e4cd67304c45490da7dbf7
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1384\296645.pdf
+
+Checksum: 72dd909bc149431beff29ae6f61748f8
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOCX_2\017091.docx
+
+Checksum: 79dfb9e4b9d628a35c437727e7137b41
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XML_19\356605.xml
+
+Checksum: 7a5e61fff18003996cd79618b1e56045
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1320\120852.pdf
+
+Checksum: 7a653f5527242bc98f19c1896e175f48
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_94\194880.dbase3
+
+Checksum: 7b5a2dbdd3caf0f0a254c574b0d5d164
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PPT_41\481639.html
+
+Checksum: 7f988383036c4fd170185ed86b2f539f
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HTML_26\450984.pdf
+
+Checksum: 80aca84fa9a578ae3ff3f803c9b7ab2e
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2613\636867.pdf
+
+Checksum: 8120b79ffa65157ba20edf8fe50673a1
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_12\023430.csv
+
+Checksum: 81c0d10e39bbf610f1e5ec37cc682edb
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_37\650000.log
+
+Checksum: 83543b19a61d1aa00440c2abac78d6a4
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_112\491808.doc
+
+Checksum: 84eeb880bacca5af0eb4d78e1dd91375
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_128\719067.pdf
+
+Checksum: 89735f14faceae83a33f1a1d4f83cf44
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_16\096379.csv
+
+Checksum: 89d766b3bf988ece4d6a2cd4979e5b98
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TEXT_129\279655.txt
+
+Checksum: 8a28864102775972544b3f4cfbb2f5e3
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_953\360008.pdf
+
+Checksum: 8aaab90feb228ffbdbef6e8a7d86e816
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_138\881860.doc
+
+Checksum: 8b030eb0991379c1a5a8ee93f77622e5
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2875\620969.pdf
+
+Checksum: 8c3268e2dcfc7d316a31c173edd22947
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PUB_1\894979.pub
+
+Checksum: 8c9b26cd4e8727972be86393db0cc927
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_162\508651.zip
+
+Checksum: 8d68c06aed84b4ab30248fab684d8153
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_86\079477.dbase3
+
+Checksum: 967bee132f767c8ff52b51000358caae
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2923\633275.pdf
+
+Checksum: 98162b1ad383f1a4dc9ea3e30bef14f1
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HTML_150\615845.pdf
+
+Checksum: a19b0fd502949645285723be1205b1b7
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_67\124558.doc
+
+Checksum: a1b78f62fff7197da3eeb8184711d49a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_774\283705.pdf
+
+Checksum: a23befb9febcbf90fadd56ae6ddbc246
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\CSV_28\467583.csv
+
+Checksum: a309485d628396845c8607d456e87b42
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_56\027845.dbase3
+
+Checksum: a3bd0a3cf5faa6ed7cc56fa7069e7c18
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2909\956476.pdf
+
+Checksum: ac16085b965862561c8dca2df4a48191
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_88\359806.unk
+
+Checksum: ac91273bd423f0dfa35aabba85601917
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_336\366572.pdf
+
+Checksum: acc8e1d9be364397bacd8f80064dd380
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2709\601606.pdf
+
+Checksum: ae73f4c946886798de7f3bb669d2994a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_94\196227.dbase3
+
+Checksum: b2af9e2e3e1f541c83bb10293dd5a143
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_943\150562.pdf
+
+Checksum: b339ffef07df92d50c75e33458119d67
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\LOG_36\640937.log
+
+Checksum: b5d453c9585bd4e790795ba3304f4000
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TMP_14\388738.tmp
+
+Checksum: b839cf07f7fdcd401a2a9acf0ea442ee
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TEXT_235\431017.txt
+
+Checksum: b8ea4f4a233a265af919a9b968d714c4
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\HTML_153\660166.pdf
+
+Checksum: be20d768449b9e347ff776909bc5acd0
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2735\603796.pdf
+
+Checksum: c014ac0682815f8a07dfc4e0196187b4
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\TMP_10\249416.tmp
+
+Checksum: c0abab93abba068b2a0bbb14bff0fd80
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2878\621261.pdf
+
+Checksum: c1592e11a85c29e4225caa8216fec9c8
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\WP_1\229988.wp
+
+Checksum: c4a8323134c52e62d29b3bb06b180e62
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1360\273882.pdf
+
+Checksum: c5447367dd7356c14db6dddd4c8489a9
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1458\497135.pdf
+
+Checksum: c8aa939848f9fa347bbc0ed717e8161a
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\SWF_14\581061.swf
+
+Checksum: c96244f566279b2094ed12d9c7fa6032
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2807\612157.pdf
+
+Checksum: cbf91c6273531371a0cf3c59bbcadde6
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_662\308099.pdf
+
+Checksum: d168685485fb18a21f27c4ee626a00a8
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1617\292661.pdf
+
+Checksum: d2d3faec9e676eef28cc2c0a87fe85f9
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XML_16\553462.html
+
+Checksum: d47bd1fd53bf5d4c7b1b75aad75420c9
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_126\647103.unk
+
+Checksum: d513496ffe1779e47ae195980a723aed
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2929\634806.pdf
+
+Checksum: d5c3162ddf866287f2ebd21197e32f42
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2981\654260.swf
+
+Checksum: daaf57b1b4957264098abedd51866926
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1945\318258.pdf
+
+Checksum: db5ce60d634d5e1a738a4c8edf7238f0
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2852\615977.pdf
+
+Checksum: de37ac29953dc5d7e58a8a9465588a13
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_1965\325405.pdf
+
+Checksum: dede93605f267dd40e0765a1086f1b43
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_69\045536.txt
+
+Checksum: df414bb53d1f4d681a29915a8f85d216
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2873\620673.pdf
+
+Checksum: e4269005480df43c5a40826a4b607925
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2912\630542.pdf
+
+Checksum: e7ca039c75c345b05dfbc5d1fc666111
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\DOC_138\881859.doc
+
+Checksum: e851016f3c384e5f36bf94827b366831
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_113\298562.dbase3
+
+Checksum: e87f3445a759b459a62e7785c4d234ca
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2914\630563.pdf
+
+Checksum: ea2dba38ced85c33678b883901b51137
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XLS_94\256726.dbase3
+
+Checksum: ec768745448eb2c0b6625ea435cb6fae
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_877\287209.pdf
+
+Checksum: eebf4db6b6dadf340b618ec526079701
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XML_7\562444.xml
+
+Checksum: f1187d508deb830c512247550d14b6fe
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2894\626693.pdf
+
+Checksum: f3ac7674a6ac14dd18648aaa180ea6fe
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\KML_4\183352.html
+
+Checksum: f6360b92a66e481d886c9299e148cab3
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\XML_24\564605.xml
+
+Checksum: fc293c351e98953e03d884af69e7c371
+Count: 2
+Example: C:\Working\droid-test\govdocs\govdocs_selected\govdocs_selected\PDF_2726\604862.pdf
+
+
+File Processing Errors Encountered During Scan:
+mscfb: illegal sector size; 8201 (20), mscfb: directory entries error finding sector (mscfb: FAT index is outside DIFAT range; 33554431); 0 (6), mscfb: directory entries error finding sector (mscfb: FAT index is outside DIFAT range; 1048576); 0 (1), mscfb: directory entries error finding sector (mscfb: FAT index is outside DIFAT range; 2228224); 0 (1), mscfb: directory entries error finding sector (mscfb: FAT index is outside DIFAT range; 2490368); 0 (1), mscfb: directory entries error finding sector (mscfb: FAT index is outside DIFAT range; 5373952); 0 (1), mscfb: directory entries error finding sector (mscfb: bad read finding next sector (mscfb: slicer read error (EOF); 47620); 47620); 0 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 1098240); 1098240 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 1106432); 1106432 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 123904); 123904 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 12976640); 12976640 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 15125504); 15125504 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 2353664); 2353664 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 2493128704); 2493128704 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 2795008); 2795008 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 381952); 381952 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 40960); 40960 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 4294574592); 4294574592 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 45056); 45056 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 495104); 495104 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 6734848); 6734848 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 675328); 675328 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 7471616); 7471616 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 781824); 781824 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 878080); 878080 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 910848); 910848 (1), mscfb: directory entries read error (mscfb: slicer read error (EOF); 971776); 971776 (1), mscfb: directory entries sector cycle; 0 (1), mscfb: error setting DIFAT(mscfb: slicer read error (EOF); 26435072); 51630 (1), mscfb: error setting DIFAT(mscfb: slicer read error (EOF); 4205139968); 4110242475 (1), mscfb: error setting DIFAT(mscfb: slicer read error (EOF); 7432704); 14516 (1), mscfb: illegal sector size; 65535 (1), mscfb: setting mini stream (mscfb: FAT index is outside DIFAT range; 29369247); 0 (1)
