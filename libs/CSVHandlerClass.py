@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import os.path
 import unicodecsv
 from urlparse import urlparse
@@ -56,60 +57,72 @@ class genericCSVHandler():
       if os.path.isfile(csvfname): 
          csvlist = []
          with open(csvfname, 'rb') as csvfile:
+
             if self.BOM is True:
                csvfile.seek(len(self.BOMVAL))
-            csvreader = unicodecsv.reader(csvfile)
-            for row in csvreader:
-               if csvreader.line_num == 1:		# not zero-based index
-                  header_list = self.__getCSVheaders__(row)
-                  columncount = len(header_list)
-               else:
-                  csv_dict = {}
-                  #for each column in header
-                  #note: don't need ID data. Ignoring multiple ID.
-                  for i in range(columncount):
-                     if i == FORMAT_COUNT:
-                        if row[i] != u'':
-                           count = int(row[i])
-                        else:
-                           count = 0
 
-                        csv_dict[header_list[i]] = count
-                        
-                        #exception for multiple ids
-                        if count > 1:
-                           MULTIPLE = True
-                           max_fields = len(multi_fields) * count
+            #inspect line by reading it first.
+            for line in csvfile:            
+               line = self.checkline(line)           
+               csvreader = unicodecsv.reader(line.splitlines())
+               for row in csvreader:
+                  if csvreader.line_num == 1:		# not zero-based index
+                     header_list = self.__getCSVheaders__(row)
+                     columncount = len(header_list)
+                  else:
+                     csv_dict = {}
+                     #for each column in header
+                     #note: don't need ID data. Ignoring multiple ID.
+                     for i in range(columncount):
+                        if i == FORMAT_COUNT:
+                           if row[i] != u'':
+                              count = int(row[i])
+                           else:
+                              count = 0
+
+                           csv_dict[header_list[i]] = count
                            
-                           #continue to put the remainder of the content into a dict
-                           format_list = row[FORMAT_COUNT+1:]
-                           format_list = format_list[:max_fields]
-
-                           while count > 0:
-                              mfields = multi_fields
-                              mdict = {}
-                              for i,t in enumerate(mfields):
-                                 mdict[t] = '"' + format_list[i] + '"'
-                              format_list = format_list[len(mfields):]
-                              multilist.append(mdict)
-                              count-=1
+                           #exception for multiple ids
+                           if count > 1:
+                              MULTIPLE = True
+                              max_fields = len(multi_fields) * count
                               
-                           #break for loop after cycling through remainder
-                           #for loop controls regular number of columns (count)
-                           #while loop takes us the into an exception mechanism negating that
-                           break
-                     else:
-                        csv_dict[header_list[i]] = row[i]
+                              #continue to put the remainder of the content into a dict
+                              format_list = row[FORMAT_COUNT+1:]
+                              format_list = format_list[:max_fields]
 
-                  #continue with exception and add new dict to primary dict
-                  if MULTIPLE == True:
-                     csv_dict[self.DICT_FORMATS] = multilist
+                              while count > 0:
+                                 mfields = multi_fields
+                                 mdict = {}
+                                 for i,t in enumerate(mfields):
+                                    mdict[t] = '"' + format_list[i] + '"'
+                                 format_list = format_list[len(mfields):]
+                                 multilist.append(mdict)
+                                 count-=1
+                                 
+                              #break for loop after cycling through remainder
+                              #for loop controls regular number of columns (count)
+                              #while loop takes us the into an exception mechanism negating that
+                              break
+                        else:
+                           csv_dict[header_list[i]] = row[i]
 
-                  #add list and reset variables
-                  csvlist.append(csv_dict)
-                  MULTIPLE = False
-                  multilist = []
+                     #continue with exception and add new dict to primary dict
+                     if MULTIPLE == True:
+                        csv_dict[self.DICT_FORMATS] = multilist
+
+                     #add list and reset variables
+                     csvlist.append(csv_dict)
+                     MULTIPLE = False
+                     multilist = []
+                     
       return csvlist
+      
+   def checkline(self, line):
+      if "\x00" in line:
+         sys.stderr.write("CSV contains null byte '\\x00'. Replacing with an empty string "".\n")
+         line = line.replace("\x00", "")
+      return line
 
 class droidCSVHandler():
 
