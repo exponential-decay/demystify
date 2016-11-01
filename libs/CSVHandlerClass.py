@@ -62,9 +62,9 @@ class genericCSVHandler():
                csvfile.seek(len(self.BOMVAL))
 
             #inspect line by reading it first.
-            for line in csvfile:            
-               line = self.checkline(line)           
-               csvreader = unicodecsv.reader(line.splitlines())
+            for lineno, line in enumerate(csvfile):            
+               line = self.checkline(line, lineno)           
+               csvreader = unicodecsv.reader(line.splitlines(), lineno)
                for row in csvreader:
                   if csvreader.line_num == 1:		# not zero-based index
                      header_list = self.__getCSVheaders__(row)
@@ -118,9 +118,9 @@ class genericCSVHandler():
                      
       return csvlist
       
-   def checkline(self, line):
+   def checkline(self, line, lineno):
       if "\x00" in line:
-         sys.stderr.write("CSV contains null byte '\\x00'. Replacing with an empty string "".\n")
+         sys.stderr.write("CSV line " + str(lineno+1) + " contains null byte '\\x00'. Replacing with an empty string.\n")
          line = line.replace("\x00", "")
       return line
 
