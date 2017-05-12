@@ -60,6 +60,10 @@ class DROIDLoader:
       if droidcsv != False:
          droidcsvhandler = droidCSVHandler()
          droidlist = droidcsvhandler.readDROIDCSV(droidcsv, self.BOM)
+         
+         #we don't need folders in the results set... let's remove them here
+         #alternative is to convert method for 'FOLDER' to 'folder'
+         droidlist = droidcsvhandler.removefolders(droidlist)
 
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
