@@ -73,6 +73,7 @@ class DROIDAnalysisResults:
    dateFrequency = None
 
    extensionOnlyIDFrequency = 0
+   extensionOnlyIDList = []
    
    #TODO: Turn lists into lists? Formatting at end..?
    uniqueExtensionsInCollectionList = None

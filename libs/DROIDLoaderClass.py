@@ -83,7 +83,7 @@ class DROIDLoader:
             MISMATCH = "False"
 
          MULTIPLE = False
-         if int(file['FORMAT_COUNT']) > 1:
+         if int(file['FORMAT_COUNT']) > 1:   
             MULTIPLE = True
          MULTIPLE_DONE = False
 
@@ -115,12 +115,14 @@ class DROIDLoader:
                      MULTIPLE_KEY_LIST, MULTIPLE_VALUE_LIST = self.populateIDTable(file[droidcsvhandler.DICT_FORMATS], METHOD, STATUS, MISMATCH)
                      MULTIPLE_DONE = True    #don't loop around this more than is needed
          
+         
+         
          id = None
-         file = None
+         fileidx = None
                       
          if filekeystring != '' and filevaluestring != '':
             cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
-            file = cursor.lastrowid
+            fileidx = cursor.lastrowid
          
          if MULTIPLE != True:
             if idkeystring != '' and idvaluestring != '':
@@ -130,11 +132,12 @@ class DROIDLoader:
                id = (cursor.lastrowid)
 
             if id != None and file != None:
-               cursor.execute(self.file_id_junction_insert(file,id))
+               cursor.execute(self.file_id_junction_insert(fileidx,id))
          else:
             for i,v in enumerate(MULTIPLE_KEY_LIST):
                insert = self.insertiddbstring(', '.join(v), ', '.join(MULTIPLE_VALUE_LIST[i]))
                cursor.execute(insert)
                id = cursor.lastrowid               
-               if file != None:
-                  cursor.execute(self.file_id_junction_insert(file,id))
+               if fileidx != None:
+                  cursor.execute(self.file_id_junction_insert(fileidx,id))
+

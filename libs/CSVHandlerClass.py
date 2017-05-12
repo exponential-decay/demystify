@@ -124,6 +124,7 @@ class genericCSVHandler():
                   #continue with exception and add new dict to primary dict
                   if MULTIPLE == True:
                      csv_dict[self.DICT_FORMATS] = multilist
+                     multilist = []
                      
                   #add list and reset variables
                   csvlist.append(csv_dict)
