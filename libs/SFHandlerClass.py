@@ -98,7 +98,12 @@ class SFYAMLHandler:
    def stripvalue(self, line):
       line = line.strip()
       line = line.lstrip("'").rstrip("'")
-      return line
+      return self.escapevalue(line)
+
+   #in case we have a value that has a single quote in it
+   #we can escape it here... (in future use params http://stackoverflow.com/a/12066822)
+   def escapevalue(self, line):
+      return line.replace("'", "''")
 
    def handleentry(self, line):
       line = line.split(':', 1)
@@ -119,8 +124,6 @@ class SFYAMLHandler:
             self.header[self.HEADCOUNT] = self.identifiercount
          elif line[0] != 'identifiers':
             self.header[line[0]] = line[1]
-
-
 
    def filesection(self, sfrecord):
       iddict = {}    # { nsname : {id : x, mime : x } }  
