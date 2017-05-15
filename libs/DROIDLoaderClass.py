@@ -61,15 +61,16 @@ class DROIDLoader:
          droidcsvhandler = droidCSVHandler()
          droidlist = droidcsvhandler.readDROIDCSV(droidcsv, self.BOM)
          
-         #we don't need folders in the results set... let's remove them here
-         #alternative is to convert method for 'FOLDER' to 'folder'
-         droidlist = droidcsvhandler.removefolders(droidlist)
-
       droidlist = droidcsvhandler.addurischeme(droidlist)
       droidlist = droidcsvhandler.addYear(droidlist)
       droidlist = droidcsvhandler.adddirname(droidlist)
 
       for file in droidlist:
+      
+         folder = False
+         if file['TYPE'].lower() == 'folder':
+            folder = True
+      
          filekeystring = ''
          filevaluestring = ''
          idkeystring = ''
@@ -127,21 +128,21 @@ class DROIDLoader:
          if filekeystring != '' and filevaluestring != '':
             cursor.execute(self.insertfiledbstring(filekeystring, filevaluestring))         
             fileidx = cursor.lastrowid
-         
-         if MULTIPLE != True:
-            if idkeystring != '' and idvaluestring != '':
-               idkeystring = idkeystring + 'NS_ID'
-               idvaluestring = idvaluestring + '"' + str(self.NS_ID) + '"'
-               cursor.execute(self.insertiddbstring(idkeystring, idvaluestring))
-               id = (cursor.lastrowid)
+                  
+         if not folder:
+            if MULTIPLE != True:
+               if idkeystring != '' and idvaluestring != '':
+                  idkeystring = idkeystring + 'NS_ID'
+                  idvaluestring = idvaluestring + '"' + str(self.NS_ID) + '"'
+                  cursor.execute(self.insertiddbstring(idkeystring, idvaluestring))
+                  id = (cursor.lastrowid)
 
-            if id != None and file != None:
-               cursor.execute(self.file_id_junction_insert(fileidx,id))
-         else:
-            for i,v in enumerate(MULTIPLE_KEY_LIST):
-               insert = self.insertiddbstring(', '.join(v), ', '.join(MULTIPLE_VALUE_LIST[i]))
-               cursor.execute(insert)
-               id = cursor.lastrowid               
-               if fileidx != None:
+               if id != None and file != None:
                   cursor.execute(self.file_id_junction_insert(fileidx,id))
-
+            else:
+               for i,v in enumerate(MULTIPLE_KEY_LIST):
+                  insert = self.insertiddbstring(', '.join(v), ', '.join(MULTIPLE_VALUE_LIST[i]))
+                  cursor.execute(insert)
+                  id = cursor.lastrowid               
+                  if fileidx != None:
+                     cursor.execute(self.file_id_junction_insert(fileidx,id))
