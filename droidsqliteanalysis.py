@@ -5,10 +5,8 @@ import time
 import argparse
 import os
 import sys
-import droid2sqlite
 import ConfigParser
 import libs.ExportDBClass
-import droid2sqlite
 from libs.DroidAnalysisClass import DROIDAnalysis
 from libs.IdentifyDatabase import IdentifyDB
 from libs.HandleBlacklistClass import HandleBlacklist
@@ -17,6 +15,11 @@ from libs.HandleBlacklistClass import HandleBlacklist
 from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
 from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
 from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+
+#sqlitefid
+sys.path.insert(0, 'sqlitefid')
+sys.path.insert(0, 'sqlitefid/libs')
+import sqlitefid
 
 rogueconfig = False
 
@@ -70,7 +73,7 @@ def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
    return analysisresults
 
 def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=False):
-   dbfilename = droid2sqlite.identifyinput(droidcsv)
+   dbfilename = sqlitefid.identifyinput(droidcsv)
    if dbfilename is not None:
       if analyse == True:
          analysisresults = handleDROIDDB(dbfilename, blacklist, rogues, heroes)
