@@ -5,12 +5,12 @@ import argparse
 import os
 import sys
 import time
-from libs.IdentifyExportClass import IdentifyExport
-from libs.GenerateBaselineDBClass import GenerateBaselineDB
-from libs.DROIDLoaderClass import DROIDLoader
-from libs.SFLoaderClass import SFLoader
-from libs.FidoLoaderClass import FidoLoader
-from libs.Version import SqliteFIDVersion
+from IdentifyExportClass import IdentifyExport
+from GenerateBaselineDBClass import GenerateBaselineDB
+from DROIDLoaderClass import DROIDLoader
+from SFLoaderClass import SFLoader
+from FidoLoaderClass import FidoLoader
+from Version import SqliteFIDVersion
 
 def identifyinput(export):
    id = IdentifyExport()
