@@ -5,12 +5,12 @@ import argparse
 import os
 import sys
 import time
-from IdentifyExportClass import IdentifyExport
-from GenerateBaselineDBClass import GenerateBaselineDB
-from DROIDLoaderClass import DROIDLoader
-from SFLoaderClass import SFLoader
-from FidoLoaderClass import FidoLoader
-from Version import SqliteFIDVersion
+from libs.IdentifyExportClass import IdentifyExport
+from libs.GenerateBaselineDBClass import GenerateBaselineDB
+from libs.DROIDLoaderClass import DROIDLoader
+from libs.SFLoaderClass import SFLoader
+from libs.FidoLoaderClass import FidoLoader
+from libs.Version import SqliteFIDVersion
 
 def identifyinput(export):
    id = IdentifyExport()
@@ -23,6 +23,8 @@ def identifyinput(export):
       return handleSFYAML(export)
    elif type == id.FIDOTYPE:
       return handleFIDOCSV(export)
+   elif type == id.SFCSVTYPE:
+      sys.stderr.write("Sigfried CSV. Not currently handled.")
    elif type == id.UNKTYPE:
       sys.stderr.write("Unknown export type.")	
       return None

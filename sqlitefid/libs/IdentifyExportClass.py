@@ -15,6 +15,7 @@ class IdentifyExport:
    UNKTYPE = "unknown"
 
    SFTYPE = "siegfried"
+   SFCSVTYPE = "siegfried csv"
 
    droid_md5 = ('"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS"' +
             ',"SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH",' + 
@@ -39,6 +40,8 @@ class IdentifyExport:
    fido_re = "^(OK|KO),[0-9]+,(fmt|x-fmt)\/[0-9]{1,4},"
    
    sf_orig = ('---' + '\x0A' + 'siegfried   :')
+
+   sfcsv_re = "^filename,filesize,modified,errors,md5,namespace,id,format,version,mime,basis,warning$"
 
    #UTF8 with BOM
    droid_utf8 = "\xEF\xBB\xBF" 
@@ -68,6 +71,8 @@ class IdentifyExport:
          return self.SFTYPE
       elif re.search(re.compile(self.fido_re), droid_magic) is not None:
          return self.FIDOTYPE
+      elif re.search(re.compile(self.sfcsv_re), droid_magic) is not None:
+         return self.SFCSVTYPE        
       else:
          return self.UNKTYPE
 
