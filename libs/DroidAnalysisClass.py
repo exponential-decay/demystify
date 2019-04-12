@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import division
+from __future__ import print_function, division
 import csv
 import sys
 import sqlite3
@@ -410,13 +410,13 @@ class DROIDAnalysis:
         )
         for id in methodresults:
             """
-         0  'ns:' || NSDATA.NS_NAME || ' ', 
-         1  IDDATA.ID, 
-         2  IDDATA.FORMAT_NAME, 
-         3  IDDATA.BASIS, 
-         4  IDDATA.FORMAT_VERSION, 
-         5  IDDATA.NS_ID, 
-         6  COUNT(IDDATA.ID         
+         0  'ns:' || NSDATA.NS_NAME || ' ',
+         1  IDDATA.ID,
+         2  IDDATA.FORMAT_NAME,
+         3  IDDATA.BASIS,
+         4  IDDATA.FORMAT_VERSION,
+         5  IDDATA.NS_ID,
+         6  COUNT(IDDATA.ID
          """
             ns_id = id[5]
             name = id[2]
@@ -472,7 +472,6 @@ class DROIDAnalysis:
         return l1 + l2
 
     def __analysebasis__(self):
-
         #########['id','basis','filesize','filename','offset']##########
         boftup = [None, "basis", "filename", "filesize", 0]
         eoftup = [None, "basis", "filename", "filesize", 0]
@@ -489,11 +488,21 @@ class DROIDAnalysis:
                 if "byte match" in match:
                     if "[[[" in match:
                         offs, length = self.__handlesquares__(match)
+                    elif "[[" in match:
+                        # Previously looking for triple square brackets, but
+                        # now seems to be [[]] e.g.
+                        # byte match at [[0 16] [77 4] [45015 12]]
+                        #
+                        offs, length = self.__handlesquares__(match)
                     else:
                         offs, length = self.__handlenosquares__(match)
-                    bof, eof, filesize = self.__getoffs__(
-                        offs, int(length), int(filesize)
-                    )
+                    try:
+                        bof, eof, filesize = self.__getoffs__(
+                            offs, int(length), int(filesize)
+                        )
+                    except ValueError:
+                        print("Cannot handle basis:", offs, match, file=sys.stderr)
+                        continue
 
                     if bof != 0 and boftup[4] < bof:
                         boftup[0] = fileid
