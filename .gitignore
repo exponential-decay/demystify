@@ -1,1 +1,15 @@
 *.pyc
+.tox/
+*.db
+*.htm
+*TODO*
+*.csv
+*.yml
+*.yaml
+samples/*
+data/*
+*.txt
+tests/fixtures
+*.sf
+sqlitefid/*
+pathlesstaken/*

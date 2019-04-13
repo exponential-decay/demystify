@@ -1,175 +1,168 @@
-import sys
+# -*- coding: utf-8 -*-
 
-sys.path.append(r"libs/")
-import DroidAnalysisClass
-from HandleBlacklistClass import HandleBlacklist
+from __future__ import absolute_import
+
+import logging
+
+from libs.HandleDenylistClass import HandleDenylist
+
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 
 class rogueoutputclass:
+    """Object to help encapsulate rogue output functions."""
 
-    roguelist = []
+    def __init__(self, analysis_results, config, heroes=False):
 
-    dupes = False
-    pro = False
-    black = False
-    fnames = False
-    dirs = False
-    zero = False
-    multi = False
-    ext = False
+        self.roguelist = []
 
-    def __init__(self, analysisresults, config, heroes=False):
-        self.analysisresults = analysisresults
+        self.unidentified = False
+        self.dupes = False
+        self.pro = False
+        self.denylist = False
+        self.fnames = False
+        self.dirs = False
+        self.zero = False
+        self.multi = False
+        self.ext = False
+
+        self.analysis_results = analysis_results
         self.heroes = heroes
         self.handleconfig(config)
 
-    def handleconfig(self, config):
-        if config != False:
-            if config.has_section(HandleBlacklist.CFG_ROGUES):
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE
-                ):
-                    self.dupes = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO
-                ):
-                    self.pro = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK
-                ):
-                    self.black = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES
-                ):
-                    self.fnames = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS
-                ):
-                    self.dirs = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO
-                ):
-                    self.zero = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI
-                ):
-                    self.multi = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI
-                    ).lower()
-                if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT
-                ):
-                    self.ext = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT
-                    ).lower()
+    @staticmethod
+    def _get_option(config, key, value):
+        """Wrap handling of option getter to improve readability."""
+        try:
+            val = config.get(key, value)
+            if val.lower() == "true":
+                return True
+        except (ConfigParser.NoOptionError, AttributeError):
+            pass
+        return False
 
-    def outputlist(self, pathlist):
-        for x in pathlist:
-            if x != "no value":  # todo: no values in duplicates, why?
-                sys.stdout.write(str(x) + "\n")
+    def handleconfig(self, config):
+        if config is not False and config.has_section(HandleDenylist.CFG_ROGUES):
+            self.unidentified = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_UNIDENTIFIED
+            )
+            self.dupes = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DUPE
+            )
+            self.pro = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_PRO
+            )
+            self.denylist = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DENY
+            )
+            self.fnames = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_FNAMES
+            )
+            self.dirs = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DIRS
+            )
+            self.zero = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_ZERO
+            )
+            self.multi = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_MULTI
+            )
+            self.ext = self._get_option(
+                config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_EXT
+            )
+
+    @staticmethod
+    def outputlist(path_list):
+        for path in path_list:
+            if path == "no value" or path == "" or path is None:
+                continue
+            print("{}".format(path))
 
     def rogueorhero(self, pathlist):
-        if pathlist != False and pathlist != None:
+        if pathlist:
             self.roguelist = self.roguelist + pathlist
 
     def printTextResults(self):
+        if self.dupes is True:
+            if self.analysis_results.hashused is True:
+                self.rogueorhero(self.analysis_results.rogue_duplicates)
 
-        if self.dupes == "true":
-            if self.analysisresults.hashused is True:
-                self.rogueorhero(self.analysisresults.rogue_duplicates)
+        if self.zero is True:
+            self.rogueorhero(self.analysis_results.zerobytelist)
 
-        if self.zero == "true":
-            self.rogueorhero(self.analysisresults.zerobytelist)
+        if self.ext is True:
+            self.rogueorhero(self.analysis_results.rogue_extension_mismatches)
 
-        if self.ext == "true":
-            self.rogueorhero(self.analysisresults.rogue_extension_mismatches)
-
-        if self.multi == "true":
-            if self.analysisresults.multipleidentificationcount > 0:
+        if self.multi is True:
+            if int(self.analysis_results.multipleidentificationcount) > 0:
                 self.rogueorhero(
-                    self.analysisresults.rogue_multiple_identification_list
+                    self.analysis_results.rogue_multiple_identification_list
                 )
-
         # PRONOM ONLY UNIDENTIFIED
         # output all unidentified files, but also, only when not using DROID output
-        if self.analysisresults.tooltype != "droid":
-            if self.analysisresults.rogue_pronom_ns_id != None and self.pro == "true":
-                self.rogueorhero(self.analysisresults.rogue_identified_pronom)
+        if self.unidentified is True:
+            if self.analysis_results.tooltype != "droid":
+                if (
+                    self.analysis_results.rogue_pronom_ns_id is not None
+                    and self.pro == "true"
+                ):
+                    self.rogueorhero(self.analysis_results.rogue_identified_pronom)
+                else:
+                    self.rogueorhero(self.analysis_results.rogue_identified_all)
             else:
-                self.rogueorhero(self.analysisresults.rogue_identified_all)
-        else:
-            if self.pro == "true":
-                self.rogueorhero(self.analysisresults.rogue_identified_pronom)
+                if self.pro is True:
+                    self.rogueorhero(self.analysis_results.rogue_identified_pronom)
+        if self.fnames is True:
+            self.rogueorhero(self.analysis_results.rogue_file_name_paths)
+        if self.dirs is True:
+            self.rogueorhero(self.analysis_results.rogue_dir_name_paths)
+        if self.denylist is True:
+            self.rogueorhero(self.analysis_results.rogue_denylist)
 
-        if self.fnames == "true":
-            self.rogueorhero(self.analysisresults.rogue_file_name_paths)
-        if self.dirs == "true":
-            self.rogueorhero(self.analysisresults.rogue_dir_name_paths)
+        try:
+            number_allfiles = len(set(self.analysis_results.rogue_all_paths))
+            number_alldirs = len(set(self.analysis_results.rogue_all_dirs))
+        except TypeError:
+            logging.warning(
+                "Rogues and heroes lists not created: Check config for Rogues being turned off"
+            )
+            return
 
-        if self.black == "true":
-            self.rogueorhero(self.analysisresults.rogue_blacklist)
-
-        number_allfiles = len(set(self.analysisresults.rogue_all_paths))
-        number_alldirs = len(set(self.analysisresults.rogue_all_dirs))
-
-        # Sets make it impossible to duplicate output... Also dealing with paths not files
-        # so the numbers will add up slightly strangely if we don't think about folders too...
         if self.heroes is True:
-            hfiles = set(self.analysisresults.rogue_all_paths) - set(self.roguelist)
-            hfolders = set(self.analysisresults.rogue_all_dirs) - set(self.roguelist)
-            hset = list(hfiles) + list(hfolders)
-
-            foldercount = len(hfolders)
-            filecount = len(hfiles)
-
-            self.outputlist(hset)
-            sys.stderr.write(
-                "\n"
-                + str(filecount)
-                + " out of ("
-                + str(number_allfiles)
-                + ") files output in rogues gallery."
+            hero_files = set(self.analysis_results.rogue_all_paths) - set(
+                self.roguelist
             )
-            sys.stderr.write(
-                "\n"
-                + str(foldercount)
-                + " out of ("
-                + str(number_alldirs)
-                + ") directories output in rogues gallery."
-                + "\n"
+            hero_folders = set(self.analysis_results.rogue_all_dirs) - set(
+                self.roguelist
             )
-
-        else:
-            rset = set(self.roguelist)
-            nofolders = len(rset - set(self.analysisresults.rogue_all_dirs))
-            foldercount = abs(len(rset) - nofolders)
-            filecount = len(rset) - foldercount
-
-            self.outputlist(rset)
-            sys.stderr.write(
-                "\n"
-                + str(filecount)
-                + " out of ("
-                + str(number_allfiles)
-                + ") files output in rogues gallery."
+            hero_set = list(hero_files) + list(hero_folders)
+            foldercount = len(hero_folders)
+            filecount = len(hero_files)
+            self.outputlist(hero_set)
+            logging.info(
+                "%s out of (%s) files output in heroes gallery",
+                filecount,
+                number_allfiles,
             )
-            sys.stderr.write(
-                "\n"
-                + str(foldercount)
-                + " out of ("
-                + str(number_alldirs)
-                + ") directories output in rogues gallery."
-                + "\n"
+            logging.info(
+                "%s out of (%s) directories output in heroes gallery",
+                foldercount,
+                number_alldirs,
             )
+            return
+        rogue_set = set(self.roguelist)
+        nofolders = len(rogue_set - set(self.analysis_results.rogue_all_dirs))
+        foldercount = abs(len(rogue_set) - nofolders)
+        filecount = len(rogue_set) - foldercount
+        self.outputlist(rogue_set)
+        logging.info(
+            "%s out of (%s) files output in rogues gallery", filecount, number_allfiles
+        )
+        logging.info(
+            "%s out of (%s) directories output in rogues gallery",
+            foldercount,
+            number_alldirs,
+        )
