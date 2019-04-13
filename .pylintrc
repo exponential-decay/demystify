@@ -1,0 +1,26 @@
+# Pylint config examples:
+#
+#   https://github.com/kubeflow/examples/blob/93ba9c52c696023b7f7cedcc923998c5a031e231/.pylintrc
+#
+# Mostly, the ignores below are to help refactoring. Some issues are so
+# numerous as to be too noisy, potentially missing more important
+# output that pylint can provide.
+
+[MESSAGES CONTROL]
+
+disable=
+        C0301,  # line-length too long, covered by Black/Flake.
+        R0801,  # similar code in two files - output code should be independent of each other.
+        R0903,  # too few public methods - this feels somewhat arbitrary, though I suspect points to potentially better object design.
+        R0902,  # too many instance variables - as above, could maybe be better if we have a different approach/model.
+        C0302,  # too many lines in module - the code could be more fragmented, but it isn't.
+        C0103,  # tmp: variable naming.
+        W0201,  # tmp: class vars defined out of init.
+        C0116,  # tmp: doc-string missing, will fix slowly over time...
+        C0114,  # tmp: missing module doc-string, will fix slowly over time...
+        R0205,  # tmp: inherits from object, remove with Python 3 only code...
+        R0914,  # tmp: too many local variables, slowly refactor.
+        R0915,  # tmp: too many statements, find better builder pattern for string output.
+        R0912,  # tmp: too many branches, we can be more EAFP (easier to ask forgiveness).
+        R0916,  # tmp: too many boolean expressions in an if. Can possibly be clearer, e.g. namespace handling.
+

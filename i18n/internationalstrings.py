@@ -37,7 +37,6 @@ class AnalysisStringsEN:
     SUMMARY_UNIQUE_EXTENSIONS = "Total Unique Extensions Across Accession/Extract"
     SUMMARY_ZERO_BYTE = "Total Zero-byte Files in Accession/Extract"
     SUMMARY_IDENTICAL_FILES = "Total Files with Identical Content (Checksum Value)"
-    SUMMARY_MULTIPLE_SPACES = "Total Files with Multiple Contiguous Space Characters"
     SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
     SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
 
@@ -95,9 +94,9 @@ class AnalysisStringsEN:
         "Total Text Based Identification Identifiers in the Accession/Extract"
     )
     SUMMARY_DESC_TEXT_ID_COUNT = (
-        "The total Text identifiers in the Accession/Exratact are used to help identify its "
+        "The total Text identifiers in the Accession/Extract are used to help identify its "
         "diversity/complexity. Text identifiers are returned for files where their encoding "
-        "can be regocognised not to be binary."
+        "can be recognized not to be binary."
     )
 
     SUMMARY_FILENAME_ID_COUNT = (
@@ -106,7 +105,7 @@ class AnalysisStringsEN:
     SUMMARY_DESC_FILENAME_ID_COUNT = (
         "The total Filename identifiers in the Accession/Exratact are used to help identify its "
         "diversity/complexity. Filename identifiers may be returned where the filename extension "
-        "is recognised, e.g. *.MP3, or the filename itself is recognised as being a common pattern, "
+        "is recognized, e.g. *.MP3, or the filename itself is recognised as being a common pattern, "
         "e.g. 'README*'."
     )
 
@@ -118,8 +117,8 @@ class AnalysisStringsEN:
     SUMMARY_DESC_GAPS_COVERED = (
         "Count of all the files that have zero identification results across all "
         "namespaces utilizing binary and container file format signatures. As such "
-        "this statisticate may indicate an immediate priority for digital preservation "
-        "researchers, and therfore may be indicative of the amount of work needed to "
+        "this statistic may indicate an immediate priority for digital preservation "
+        "researchers, and therefore may be indicative of the amount of work needed to "
         "understand an accession/extract."
     )
 
@@ -332,11 +331,6 @@ class AnalysisStringsEN:
 
     SUMMARY_DESC_IDENTICAL_FILES = "Total number of files across the accession/extract that are identical byte-for-byte."
 
-    SUMMARY_DESC_MULTIPLE_SPACES = (
-        "Number of filenames that contain more than one space in a row, these filenames may cause "
-        "some problems with some systems and may require pre-conditioning."
-    )
-
     SUMMARY_DESC_PERCENTAGE_IDENTIFIED = (
         "Percentage of files with formats that are positively identified by DROID, pending other processes "
         "such as format validation, this percentage may be indicative of how much of the accession/extract will "
@@ -459,16 +453,16 @@ class AnalysisStringsEN:
         "<a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"
     )
 
-    HEADING_BLACKLIST_IDS = "Blacklist Identifiers found in Accession/Extract"
-    HEADING_BLACKLIST_EXTS = "Blacklist Filename Extensions found in Accession/Extract"
-    HEADING_BLACKLIST_DIRS = "Blacklist Directory Names found in Accession/Extract"
-    HEADING_BLACKLIST_FILENAMES = "Blacklist Filenames found in Accession/Extract"
-    HEADING_DESC_BLACKLIST = """Lists objects which are considered undesirable inside an accession/extract. 
-                               The blacklist is entirely configurable by user and may contain files that can be
+    HEADING_DENYLIST_IDS = "Denylist Identifiers found in Accession/Extract"
+    HEADING_DENYLIST_EXTS = "Denylist Filename Extensions found in Accession/Extract"
+    HEADING_DENYLIST_DIRS = "Denylist Directory Names found in Accession/Extract"
+    HEADING_DENYLIST_FILENAMES = "Denylist Filenames found in Accession/Extract"
+    HEADING_DESC_DENYLIST = """Lists objects which are considered undesirable inside an accession/extract.
+                               The denylist is entirely configurable by user and may contain files that can be
                                identified as undesirable, e.g. system files; or file names that may need pre-conditioning
                                e.g. with the title 'Untitled Document'. Filename and directory searches are greedy and will
-                               look for instances of the strings specified in the blacklist within filename and directory
-                               strings using a wildcard search. IDs e.g. PUID identifiers, and filename extension searches 
+                               look for instances of the strings specified in the denylist within filename and directory
+                               strings using a wildcard search. IDs e.g. PUID identifiers, and filename extension searches
                                are understandably more precise."""
 
     TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
@@ -482,7 +476,7 @@ class AnalysisStringsEN:
     COLUMN_HEADER_VALUES_YEAR = "Volume"
 
     FNAME_CHECK_ASCII = "contains, characters outside of ASCII range"
-    FNAME_CHECK_PERIOD = "has a period ('.') as its last character"
+    FNAME_CHECK_PERIOD = "has a period '.' as its last character"
     FNAME_CHECK_NOT_RECOMMENDED = "contains, non-recommended character"
     FNAME_CHECK_NON_PRINT = "contains, non-printable character"
     FNAME_CHECK_RESERVED = "contains, reserved name"
