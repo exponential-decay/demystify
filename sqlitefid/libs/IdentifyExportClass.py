@@ -66,6 +66,10 @@ class IdentifyExport:
         sf_magic = droid_magic + f.readline()
         f.close()
 
+        if '"' not in droid_magic.strip():
+            magic = ['"{}"'.format(field) for field in droid_magic.strip().split(",")]
+            droid_magic = ",".join(magic)
+
         if (
             droid_magic.strip() == self.droid_md5
             or droid_magic.strip() == self.droid_sha1
