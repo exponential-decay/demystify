@@ -1,0 +1,33 @@
+---
+
+sudo: false
+dist: xenial
+
+language: python
+cache: pip
+
+branches:
+  only:
+    - master
+
+before_script:
+  - pip install tox
+
+script: tox
+
+notifications:
+  email: false
+
+matrix:
+  include:
+
+    - python: "2.7"
+      env: TOXENV=py27
+
+    - python: "3.6"
+      env: TOXENV=py36
+
+    # Linters
+
+    - python: "3.7"
+      env: TOXENV=linting
