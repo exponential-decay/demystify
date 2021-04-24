@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import csv
 import datetime
 import hashlib
@@ -5,9 +7,13 @@ import os
 import sqlite3
 import sys
 
+try:
+    from urlparse import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 from CSVHandlerClass import *
 from ToolMappingClass import ToolMapping
-from urlparse import urlparse
 
 
 class DROIDLoader:
@@ -154,15 +160,18 @@ class DROIDLoader:
                             idvaluestring = idvaluestring + '"' + value + '", '
                     else:
                         if MULTIPLE_DONE == False:
-                            MULTIPLE_KEY_LIST, MULTIPLE_VALUE_LIST = self.populateIDTable(
+                            (
+                                MULTIPLE_KEY_LIST,
+                                MULTIPLE_VALUE_LIST,
+                            ) = self.populateIDTable(
                                 file[droidcsvhandler.DICT_FORMATS],
                                 METHOD,
                                 STATUS,
                                 MISMATCH,
                             )
                             MULTIPLE_DONE = (
-                                True
-                            )  # don't loop around this more than is needed
+                                True  # don't loop around this more than is needed
+                            )
 
             id = None
             fileidx = None

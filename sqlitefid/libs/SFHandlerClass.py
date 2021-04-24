@@ -5,6 +5,12 @@ import codecs
 import os.path
 import urllib
 
+try:
+    from urlparse import urljoin, urlparse
+except ImportError:
+    import urllib.parse as urlparse
+    from urllib.parse import urljoin
+
 from PyDateHandler import PyDateHandler
 from urlparse import urljoin, urlparse
 

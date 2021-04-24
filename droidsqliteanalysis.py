@@ -7,7 +7,10 @@ import os
 import sys
 import time
 
-import ConfigParser
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 
 import libs.ExportDBClass
 from libs.DroidAnalysisClass import DROIDAnalysis

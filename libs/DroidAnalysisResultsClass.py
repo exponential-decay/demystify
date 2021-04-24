@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import DroidAnalysisClass
+from __future__ import absolute_import
+
+from . import *
 
 
 class DROIDAnalysisResults:

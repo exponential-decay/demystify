@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import sys
 
-import DroidAnalysisClass
+from i18n.internationalstrings import AnalysisStringsEN as IN_EN
 
-sys.path.append(r"i18n/")
-from internationalstrings import AnalysisStringsEN as IN_EN
+from .. import DroidAnalysisClass
 
 
 class DROIDAnalysisTextOutput:

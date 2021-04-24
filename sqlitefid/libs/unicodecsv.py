@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import csv
-from itertools import izip
+
+try:
+    from itertools import izip
+except ImportError:
+    pass
 
 # https://pypi.python.org/pypi/unicodecsv
 # http://semver.org/

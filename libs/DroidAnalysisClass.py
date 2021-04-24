@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, print_function
+from __future__ import absolute_import, division, print_function
 
 import argparse
 import csv
@@ -17,6 +17,23 @@ from lxml import etree, html
 from RoguesQueriesClass import RogueQueries
 from urlparse import urlparse
 from version import AnalysisVersion
+
+from libs import DroidAnalysisResultsClass, MsoftFnameAnalysis, RegexFnameAnalysis
+from libs.AnalysisQueriesClass import AnalysisQueries
+from libs.BlacklistQueriesClass import BlacklistQueries
+from libs.RoguesQueriesClass import RogueQueries
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
+from collections import Counter
+
+from lxml import etree, html
+
+from libs.HandleBlacklistClass import HandleBlacklist
+from libs.version import AnalysisVersion
 
 
 class DROIDAnalysis:
@@ -245,7 +262,7 @@ class DROIDAnalysis:
 
     def __getsplit__(self, vals):
         idlist = vals.split(",", 3)
-        if len(idlist) is 4:
+        if len(idlist) == 4:
             type = idlist[1]
             idno = idlist[0]
             idrow = idlist[2]
@@ -412,14 +429,14 @@ class DROIDAnalysis:
         )
         for id in methodresults:
             """
-         0  'ns:' || NSDATA.NS_NAME || ' ',
-         1  IDDATA.ID,
-         2  IDDATA.FORMAT_NAME,
-         3  IDDATA.BASIS,
-         4  IDDATA.FORMAT_VERSION,
-         5  IDDATA.NS_ID,
-         6  COUNT(IDDATA.ID
-         """
+            0  'ns:' || NSDATA.NS_NAME || ' ',
+            1  IDDATA.ID,
+            2  IDDATA.FORMAT_NAME,
+            3  IDDATA.BASIS,
+            4  IDDATA.FORMAT_VERSION,
+            5  IDDATA.NS_ID,
+            6  COUNT(IDDATA.ID
+            """
             ns_id = id[5]
             name = id[2]
             if name == "":
@@ -770,9 +787,10 @@ class DROIDAnalysis:
                 self.filenameIDs
             )
         if self.analysisresults.tooltype != "droid":
-            self.analysisresults.bof_distance, self.analysisresults.eof_distance = (
-                self.__analysebasis__()
-            )
+            (
+                self.analysisresults.bof_distance,
+                self.analysisresults.eof_distance,
+            ) = self.__analysebasis__()
             self.analysisresults.errorlist = self.__querydb__(
                 AnalysisQueries.SELECT_FREQUENCY_ERRORS
             )

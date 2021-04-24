@@ -3,6 +3,12 @@ import os.path
 import sys
 
 import unicodecsv
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    import urllib.parse as urlparse
+
 from PyDateHandler import PyDateHandler
 from urlparse import urlparse
 
