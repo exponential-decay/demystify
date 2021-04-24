@@ -2,9 +2,10 @@ import sys
 
 sys.path.append("../libs")
 
+from unittest import TestCase, TestLoader, TextTestRunner
+
 from PyDateHandler import PyDateHandler
 from SFHandlerClass import SFYAMLHandler
-from unittest import TestCase, TestLoader, TextTestRunner
 
 
 class SF2SqliteTests(TestCase):

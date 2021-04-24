@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import sys
 import os.path
+import sys
+
 import unicodecsv
-from urlparse import urlparse
 from PyDateHandler import PyDateHandler
+from urlparse import urlparse
 
 
 class genericCSVHandler:

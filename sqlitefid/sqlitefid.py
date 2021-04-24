@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import division
+
 import argparse
 import os
 import sys
 import time
-from IdentifyExportClass import IdentifyExport
-from GenerateBaselineDBClass import GenerateBaselineDB
+
 from DROIDLoaderClass import DROIDLoader
-from SFLoaderClass import SFLoader
 from FidoLoaderClass import FidoLoader
+from GenerateBaselineDBClass import GenerateBaselineDB
+from IdentifyExportClass import IdentifyExport
+from SFLoaderClass import SFLoader
 from Version import SqliteFIDVersion
 
 

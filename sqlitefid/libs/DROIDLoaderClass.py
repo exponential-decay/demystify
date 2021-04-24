@@ -1,12 +1,13 @@
-import os
-import sys
-import sqlite3
-import hashlib
-import datetime
 import csv
-from urlparse import urlparse
-from ToolMappingClass import ToolMapping
+import datetime
+import hashlib
+import os
+import sqlite3
+import sys
+
 from CSVHandlerClass import *
+from ToolMappingClass import ToolMapping
+from urlparse import urlparse
 
 
 class DROIDLoader:

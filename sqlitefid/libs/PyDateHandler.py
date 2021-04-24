@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+import datetime
 import re
 import sys
-import datetime
 
 
 class PyDateHandler:

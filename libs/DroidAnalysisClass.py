@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, division
-import csv
-import sys
-import sqlite3
+from __future__ import division, print_function
+
 import argparse
+import csv
+import sqlite3
+import sys
+from collections import Counter
+
+import DroidAnalysisResultsClass
 import MsoftFnameAnalysis
 import RegexFnameAnalysis
-import DroidAnalysisResultsClass
 from AnalysisQueriesClass import AnalysisQueries
 from BlacklistQueriesClass import BlacklistQueries
+from HandleBlacklistClass import HandleBlacklist
+from lxml import etree, html
 from RoguesQueriesClass import RogueQueries
 from urlparse import urlparse
-from lxml import etree, html
-from collections import Counter
 from version import AnalysisVersion
-from HandleBlacklistClass import HandleBlacklist
 
 
 class DROIDAnalysis:

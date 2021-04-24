@@ -1,20 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import division
-import time
+
 import argparse
 import os
 import sys
+import time
+
 import ConfigParser
+
 import libs.ExportDBClass
 from libs.DroidAnalysisClass import DROIDAnalysis
-from libs.IdentifyDatabase import IdentifyDB
 from libs.HandleBlacklistClass import HandleBlacklist
+from libs.IdentifyDatabase import IdentifyDB
 
 # custom output handlers
 from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
-from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
 from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
 
 # sqlitefid
 sys.path.insert(0, "sqlitefid")

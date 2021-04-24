@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 import DroidAnalysisClass
 
 sys.path.append(r"i18n/")

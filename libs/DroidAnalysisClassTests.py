@@ -5,8 +5,9 @@
 from __future__ import print_function
 
 from unittest import TestCase, TestLoader, TextTestRunner
-from DroidAnalysisClass import *
+
 import testdata
+from DroidAnalysisClass import *
 
 
 class DroidAnalysisClassTests(TestCase):

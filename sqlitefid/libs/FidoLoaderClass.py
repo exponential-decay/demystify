@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
-from ToolMappingClass import ToolMapping
-from CSVHandlerClass import *
 import tempfile
+
+from CSVHandlerClass import *
+from ToolMappingClass import ToolMapping
 
 
 class FidoLoader:
