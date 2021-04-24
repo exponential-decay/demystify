@@ -9,10 +9,11 @@ from collections import Counter
 
 from lxml import etree, html
 
-from libs import DroidAnalysisResultsClass, MsoftFnameAnalysis, RegexFnameAnalysis
+from libs import DroidAnalysisResultsClass, RegexFnameAnalysis
 from libs.AnalysisQueriesClass import AnalysisQueries
 from libs.BlacklistQueriesClass import BlacklistQueries
 from libs.RoguesQueriesClass import RogueQueries
+from pathlesstaken import pathlesstaken
 
 try:
     from urlparse import urlparse
@@ -216,7 +217,7 @@ class DROIDAnalysis:
         namelist = self.__querydb__(AnalysisQueries.SELECT_FILENAMES)
         dirlist = self.__querydb__(AnalysisQueries.SELECT_DIRNAMES)
 
-        charcheck = MsoftFnameAnalysis.MsoftFnameAnalysis()
+        charcheck = pathlesstaken.PathlesstakenAnalysis()
 
         self.rogue_names = []
         self.rogue_dirs = []

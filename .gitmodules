@@ -1,3 +1,6 @@
 [submodule "sqlitefid"]
 	path = sqlitefid
 	url = https://github.com/exponential-decay/sqlitefid
+[submodule "pathlesstaken"]
+	path = pathlesstaken
+	url = https://github.com/exponential-decay/pathlesstaken
