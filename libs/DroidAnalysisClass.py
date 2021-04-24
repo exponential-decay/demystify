@@ -9,10 +9,12 @@ from collections import Counter
 
 from lxml import etree, html
 
-from libs import DroidAnalysisResultsClass, MsoftFnameAnalysis, RegexFnameAnalysis
+from libs import DroidAnalysisResultsClass, RegexFnameAnalysis
 from libs.AnalysisQueriesClass import AnalysisQueries
 from libs.BlacklistQueriesClass import BlacklistQueries
 from libs.RoguesQueriesClass import RogueQueries
+
+from libs import MsoftFnameAnalysis
 
 try:
     from urlparse import urlparse
@@ -224,7 +226,7 @@ class DROIDAnalysis:
         namereport = []
         for d in namelist:
             namestring = d[0]
-            checkedname = charcheck.completeFnameAnalysis(namestring).encode("utf-8")
+            checkedname = charcheck.complete_file_name_analysis(namestring).encode("utf-8")
             if checkedname != "":
                 namereport.append(checkedname)
                 self.rogue_names.append(d[0])
@@ -233,7 +235,7 @@ class DROIDAnalysis:
         dirreport = []
         for d in dirlist:
             dirstring = d[0]
-            checkedname = charcheck.completeFnameAnalysis(dirstring, True).encode(
+            checkedname = charcheck.complete_file_name_analysis(dirstring, True).encode(
                 "utf-8"
             )
             if checkedname != "":
@@ -457,7 +459,7 @@ class DROIDAnalysis:
 
         countlist = []
 
-        for k, v in templist.iteritems():
+        for k, v in templist.items():
             countlist.append((k[0], v, k[1]))  # add ns to sort by
 
         countlist = self.__prioritysort__(countlist)

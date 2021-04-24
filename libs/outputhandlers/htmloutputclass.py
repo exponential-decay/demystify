@@ -27,7 +27,7 @@ class DROIDAnalysisHTMLOutput:
             for t in text:
                 self.htmloutput = self.htmloutput + str(t) + "</br></br>"
         else:
-            self.htmloutput = self.htmloutput + text
+            self.htmloutput = "{}{}".format(self.htmloutput, text)
 
         self.__printnewline__()
 

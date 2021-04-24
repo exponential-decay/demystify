@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-from . import *
+from libs.version import AnalysisVersion
 
 
 class DROIDAnalysisResults:
@@ -125,6 +125,6 @@ class DROIDAnalysisResults:
     rogue_dir_name_paths = []  # non-ascii dir names
 
     def __version__(self):
-        analysis = DroidAnalysisClass.DROIDAnalysis()
-        self.version = analysis.__version__()
+        v = AnalysisVersion()
+        self.version = v.getVersion()
         return self.version
