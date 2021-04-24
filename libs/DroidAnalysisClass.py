@@ -7,16 +7,7 @@ import sqlite3
 import sys
 from collections import Counter
 
-import DroidAnalysisResultsClass
-import MsoftFnameAnalysis
-import RegexFnameAnalysis
-from AnalysisQueriesClass import AnalysisQueries
-from BlacklistQueriesClass import BlacklistQueries
-from HandleBlacklistClass import HandleBlacklist
 from lxml import etree, html
-from RoguesQueriesClass import RogueQueries
-from urlparse import urlparse
-from version import AnalysisVersion
 
 from libs import DroidAnalysisResultsClass, MsoftFnameAnalysis, RegexFnameAnalysis
 from libs.AnalysisQueriesClass import AnalysisQueries

@@ -10,7 +10,6 @@ except ImportError:
     import urllib.parse as urlparse
 
 from PyDateHandler import PyDateHandler
-from urlparse import urlparse
 
 
 class genericCSVHandler:

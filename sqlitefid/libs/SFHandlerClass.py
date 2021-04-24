@@ -12,7 +12,6 @@ except ImportError:
     from urllib.parse import urljoin
 
 from PyDateHandler import PyDateHandler
-from urlparse import urljoin, urlparse
 
 
 class SFYAMLHandler:
