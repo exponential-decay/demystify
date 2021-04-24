@@ -9,12 +9,10 @@ from collections import Counter
 
 from lxml import etree, html
 
-from libs import DroidAnalysisResultsClass, RegexFnameAnalysis
+from libs import DroidAnalysisResultsClass, MsoftFnameAnalysis, RegexFnameAnalysis
 from libs.AnalysisQueriesClass import AnalysisQueries
 from libs.BlacklistQueriesClass import BlacklistQueries
 from libs.RoguesQueriesClass import RogueQueries
-
-from libs import MsoftFnameAnalysis
 
 try:
     from urlparse import urlparse
@@ -226,8 +224,8 @@ class DROIDAnalysis:
         namereport = []
         for d in namelist:
             namestring = d[0]
-            checkedname = charcheck.complete_file_name_analysis(namestring).encode("utf-8")
-            if checkedname != "":
+            checkedname = charcheck.complete_file_name_analysis(namestring)
+            if len(checkedname) > 0:
                 namereport.append(checkedname)
                 self.rogue_names.append(d[0])
 
@@ -238,7 +236,7 @@ class DROIDAnalysis:
             checkedname = charcheck.complete_file_name_analysis(dirstring, True).encode(
                 "utf-8"
             )
-            if checkedname != "":
+            if len(checkedname) > 0:
                 dirreport.append(checkedname)
                 self.rogue_dirs.append(d[0])
 
