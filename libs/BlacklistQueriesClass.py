@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
+
 class BlacklistQueries:
     def getfilenames(self, filenamelist):
-        fnamequery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME 
+        fnamequery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME
                       FROM FILEDATA
                       WHERE FILEDATA.TYPE != 'Folder'
                       AND ("""
