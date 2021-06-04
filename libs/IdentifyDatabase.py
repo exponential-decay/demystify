@@ -1,4 +1,4 @@
-﻿import sys
+﻿# -*- coding: utf-8 -*-
 
 
 class IdentifyDB:
@@ -6,7 +6,7 @@ class IdentifyDB:
     SQLITE_DB = "SQLITE 3"
     UNKNOWN_DB = "unknown"
 
-    #'SQLite format 3'
+    # 'SQLite format 3'
     sqlite3 = "\x53\x51\x4C\x69\x74\x65\x20\x66\x6F\x72\x6D\x61\x74\x20\x33"
 
     def identify_export(self, db):
