@@ -1,5 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from __future__ import division
 
 import argparse
@@ -12,7 +12,6 @@ try:
 except ImportError:
     import configparser as ConfigParser
 
-import libs.ExportDBClass
 from libs.DroidAnalysisClass import DROIDAnalysis
 from libs.HandleBlacklistClass import HandleBlacklist
 from libs.IdentifyDatabase import IdentifyDB
@@ -21,11 +20,7 @@ from libs.IdentifyDatabase import IdentifyDB
 from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
 from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
-
-# sqlitefid
-sys.path.insert(0, "sqlitefid")
-sys.path.insert(0, "sqlitefid/libs")
-import sqlitefid
+from sqlitefid import sqlitefid
 
 rogueconfig = False
 
@@ -76,7 +71,7 @@ def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
 
     # avoid unecessary processing with rogue path analyses
     rogueanalysis = False
-    if rogues != False or heroes != False:
+    if rogues is not False or heroes is not False:
         rogueanalysis = True
 
     # send rogue argument to analysis class
@@ -88,7 +83,7 @@ def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
 def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=False):
     dbfilename = sqlitefid.identifyinput(droidcsv)
     if dbfilename is not None:
-        if analyse == True:
+        if analyse is True:
             analysisresults = handleDROIDDB(dbfilename, blacklist, rogues, heroes)
             handleOutput(analysisresults, txtout, rogues, heroes)
 
