@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 import re
 import sys
 
@@ -90,7 +92,12 @@ class DROIDAnalysisHTMLOutput:
     def splitidresults(self, puid):
         identifier = puid[0].rsplit("(", 1)[0]
         namespace = puid[0].split(" ", 1)[0]
-        patt = re.compile("(x-)?fmt\/[0-9]+")
+
+        # TODO: Flake8 doesn't like the escape sequence here... `\/` is
+        # this really invalid? What alternatives are there for what we
+        # want to achieve?
+        patt = re.compile("(x-)?fmt\/[0-9]+")  # noqa
+
         p = re.search(patt, identifier)
         if p is not None:
             p = p.span()
@@ -122,9 +129,9 @@ class DROIDAnalysisHTMLOutput:
         )
 
     def __generateOffsetText__(self, offsettext):
-        #########['id','basis','filename','filesize','offset']##########
+        # #########['id','basis','filename','filesize','offset']##########
         offs = offsettext
-        if offs != None:
+        if offs is not None:
             return (
                 "<code>"
                 + offs[0]
@@ -269,9 +276,8 @@ class DROIDAnalysisHTMLOutput:
 
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
         # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
-        #'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
+        # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
         ds = DroidAnalysisClass.DROIDAnalysis()
-        output = ""
         for ns in nsdatalist:
             signatureids = signaturefrequency
             nstitle = ns[ds.NS_CONST_TITLE]
@@ -437,7 +443,7 @@ class DROIDAnalysisHTMLOutput:
     ):
         pixels = str(pixels)
         newline = True
-        if heading != None and description != None:
+        if heading is not None and description is not None:
             self.__outputheading__(heading, description)
         length = len(listing)
         rows = int(length / 5)
@@ -450,14 +456,14 @@ class DROIDAnalysisHTMLOutput:
         )
         for item in listing:
             if type(item) is str:
-                if nonewline == False:
+                if nonewline is False:
                     string = item + "</br></br>"
                     newline = False
                 else:
                     string = item
             elif len(item) == 1:
                 string = str(item[0])
-            elif count == False:
+            elif count is False:
                 if item[1] == "":
                     string = str(item[0]) + ", " + "Format name not set"
                 else:
@@ -477,7 +483,7 @@ class DROIDAnalysisHTMLOutput:
                 )
                 colno = 1
         self.printFormattedText("</tr></table>")
-        if newline == True:
+        if newline is True:
             self.__htmlnewline__()
         self.printFormattedText("<hr/>")
 
@@ -822,9 +828,9 @@ class DROIDAnalysisHTMLOutput:
         if len(signature_id_list) > 0:
             self.signature_id_listing(signature_id_list)
 
-        ###MORE AGGREGATE LISTS PER IDENTIFIER###
+        # ###MORE AGGREGATE LISTS PER IDENTIFIER###
         self.outputaggregatelists()
-        ###MORE AGGREGATE LISTS PER IDENTIFIER###
+        # ###MORE AGGREGATE LISTS PER IDENTIFIER###
 
         if self.analysisresults.idmethodFrequency is not None:
             # ID Method Frequency
@@ -916,7 +922,7 @@ class DROIDAnalysisHTMLOutput:
                 "400",
             )
 
-        ##########NS SPECIFIC OUTPUT####################
+        # ##########NS SPECIFIC OUTPUT####################
         if (
             self.analysisresults.signatureidentifiedfrequency is not None
             and self.analysisresults.nsdatalist is not None
@@ -929,11 +935,11 @@ class DROIDAnalysisHTMLOutput:
                 self.analysisresults.nsdatalist,
                 self.analysisresults.signatureidentifiedfrequency,
             )
-        ##########NS SPECIFIC OUTPUT####################
+        # ##########NS SPECIFIC OUTPUT####################
 
-        ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+        # ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
         self.__handleidspecificoutput__()
-        ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+        # ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
 
         if self.analysisresults.zerobytelist is not None:
             if len(self.analysisresults.zerobytelist):
