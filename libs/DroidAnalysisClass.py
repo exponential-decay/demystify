@@ -1,31 +1,18 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import absolute_import, division, print_function
 
-import argparse
-import csv
 import sqlite3
 import sys
 from collections import Counter
 
-from lxml import etree, html
-
-from libs import DroidAnalysisResultsClass, RegexFnameAnalysis
+from libs import DroidAnalysisResultsClass
 from libs.AnalysisQueriesClass import AnalysisQueries
 from libs.BlacklistQueriesClass import BlacklistQueries
-from libs.RoguesQueriesClass import RogueQueries
-from pathlesstaken import pathlesstaken
-
-try:
-    from urlparse import urlparse
-except ImportError:
-    import urllib.parse as urlparse
-
-from collections import Counter
-
-from lxml import etree, html
-
 from libs.HandleBlacklistClass import HandleBlacklist
+from libs.RoguesQueriesClass import RogueQueries
 from libs.version import AnalysisVersion
+from pathlesstaken import pathlesstaken
 
 
 class DROIDAnalysis:
@@ -71,7 +58,7 @@ class DROIDAnalysis:
 
     def __init__(self, dbfilename=None, config=False, blacklist=False):
         self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
-        if dbfilename != None:
+        if dbfilename is not None:
             self.openDROIDDB(dbfilename)
             self.query = AnalysisQueries()
             self.analysisresults.tooltype = self.__querydb__(
@@ -85,7 +72,7 @@ class DROIDAnalysis:
             if self.analysisresults.namespacecount > 1:
                 for ns_deets in nsdata:
                     # to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
-                    #'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
+                    # 'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
                     sig_deets = ns_deets[2]
                     if "DROID_" in sig_deets and "limited to" not in sig_deets:
                         self.pronom_ns_id = ns_deets[0]
@@ -97,7 +84,7 @@ class DROIDAnalysis:
             self.blacklist = blacklist
 
     def __get_ns_priority__(self, config):
-        if config == False:
+        if config is False:
             self.priority_ns_id = self.pronom_ns_id
         else:
             if config == self.ID_PRONOM:
@@ -111,7 +98,7 @@ class DROIDAnalysis:
 
     def __readconfig__(self, config):
         ns_out = None
-        if config != None:
+        if config is not None:
             if config.has_section("priority"):
                 if (
                     config.has_option("priority", "pronom") is True
@@ -140,7 +127,7 @@ class DROIDAnalysis:
 
         return ns_out
 
-    ## DB self.cursor
+    # DB self.cursor
     cursor = None
 
     def __querydb__(self, query, fetchone=False, numberquery=False, tolist=False):
@@ -158,7 +145,6 @@ class DROIDAnalysis:
                     list.append(result[0])
                 return list
 
-    ###
     # List queries
 
     def listDuplicateFilesFromHASH(self):
@@ -415,7 +401,6 @@ class DROIDAnalysis:
     def getMethodIDResults(self, methodids, fmt_version=False):
         # TODO: Fine line between formatting, and not formatting in this function
         countlist = []
-        text = ""
         methodresults = self.__querydb__(
             self.query.query_from_idrows(methodids, self.priority_ns_id)
         )
@@ -442,7 +427,7 @@ class DROIDAnalysis:
             else:
                 basis = ""
 
-            if fmt_version == False:
+            if fmt_version is False:
                 idval = (
                     id[0] + id[1] + name + id[4] + " " + basis + " (" + str(id[6]) + ")"
                 )  # concatenate count
@@ -483,10 +468,10 @@ class DROIDAnalysis:
         return l1 + l2
 
     def __analysebasis__(self):
-        #########['id','basis','filesize','filename','offset']##########
+        # #########['id','basis','filesize','filename','offset']##########
         boftup = [None, "basis", "filename", "filesize", 0]
         eoftup = [None, "basis", "filename", "filesize", 0]
-        #########['id','basis','filesize','filename','offset']##########
+        # #########['id','basis','filesize','filename','offset']##########
 
         basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS)
 
@@ -522,16 +507,16 @@ class DROIDAnalysis:
                         boftup[3] = filesize
                         boftup[4] = bof
 
-                    if eof != None and eoftup[4] < eof:
+                    if eof is not None and eoftup[4] < eof:
                         eoftup[0] = fileid
                         eoftup[1] = match.strip()
                         eoftup[2] = filename
                         eoftup[3] = filesize
                         eoftup[4] = eof
 
-        if boftup[0] == None:
+        if boftup[0] is None:
             boftup = None
-        if eoftup[0] == None:
+        if eoftup[0] is None:
             eoftup = None
 
         return boftup, eoftup
@@ -573,14 +558,14 @@ class DROIDAnalysis:
         bl = BlacklistQueries()
         blacklist = {}
 
-        if self.blacklist[HandleBlacklist.IDS] != None:
+        if self.blacklist[HandleBlacklist.IDS] is not None:
             q4 = bl.getids(self.blacklist[HandleBlacklist.IDS])
             ids = self.__querydb__(q4)
             if ids:
                 for found in ids:
                     blacklist[found[0]] = (HandleBlacklist.IDS, found[2].strip())
 
-        if self.blacklist[HandleBlacklist.EXTENSIONS] != None:
+        if self.blacklist[HandleBlacklist.EXTENSIONS] is not None:
             q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])
             extensions = self.__querydb__(q3)
             if extensions:
@@ -588,7 +573,7 @@ class DROIDAnalysis:
                     if found[0] not in blacklist.keys():
                         blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2])
 
-        if self.blacklist[HandleBlacklist.FILENAMES] != None:
+        if self.blacklist[HandleBlacklist.FILENAMES] is not None:
             q1 = bl.getfilenames(self.blacklist[HandleBlacklist.FILENAMES])
             filenames = self.__querydb__(q1)
             if filenames:
@@ -596,7 +581,7 @@ class DROIDAnalysis:
                     if found[0] not in blacklist.keys():
                         blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1])
 
-        if self.blacklist[HandleBlacklist.DIRECTORIES] != None:
+        if self.blacklist[HandleBlacklist.DIRECTORIES] is not None:
             q2 = bl.getdirnames(self.blacklist[HandleBlacklist.DIRECTORIES])
             directories = self.__querydb__(q2)
             if directories:
@@ -753,11 +738,13 @@ class DROIDAnalysis:
 
         # MORE WORK NEEDED ON ROGUES NOW... ACCURACY IS PARAMOUNT
         if len(self.extensionIDonly) > 0:
-            extonly = self.query.query_from_ids(self.extensionIDonly)
-            extrogues = self.__querydb__(extonly)
+            """ TODO: The values below are not used - why? """
+            # extonly = self.query.query_from_ids(self.extensionIDonly)
+            # extrogues = self.__querydb__(extonly)
         if len(self.noids) > 0:  # NOT THE SAME AS COMPLETELY UNIDENTIFIED
-            none = self.query.query_from_ids(self.noids)
-            nonerogues = self.__querydb__(none)
+            """ TODO: The values below are not used - why? """
+            # none = self.query.query_from_ids(self.noids)
+            # nonerogues = self.__querydb__(none)
 
         # create a statistic for aggregated binary identification
         if self.binaryIDs is not None and len(self.binaryIDs) > 0:
@@ -842,16 +829,16 @@ class DROIDAnalysis:
             # handle filename analysis
             self.msoftfnameanalysis()
 
-            ###################################################################################
-            ######BLACKLIST RESULTS: GET RESULTS SPECIFIC TO THE BLACKLIST FUNCTIONALITY#######
-            ###################################################################################
+            # ###################################################################################
+            # ######BLACKLIST RESULTS: GET RESULTS SPECIFIC TO THE BLACKLIST FUNCTIONALITY#######
+            # ###################################################################################
             if self.blacklist is not False:
                 self.analysisresults.blacklist = True
                 self.getblacklistresults()
 
-            ###################################################################################
+            # ###################################################################################
             # ROGUES: Functions associated with Rogues - Nearly every QUERY that returns a PATH#
-            ###################################################################################
+            # ###################################################################################
 
             # need to run these regardless of choice to use rogues
             self.listzerobytefiles()  # self.analysisresults.zerobytelist
@@ -884,7 +871,7 @@ class DROIDAnalysis:
                 if self.analysisresults.tooltype == "droid":
                     self.pronom_ns_id = 1
 
-                if self.pronom_ns_id != None:
+                if self.pronom_ns_id is not None:
                     self.analysisresults.rogue_pronom_ns_id = self.pronom_ns_id
                     self.analysisresults.rogue_identified_pronom = self.__querydb__(
                         rq.get_pronom_identified_files(self.pronom_ns_id),
@@ -913,7 +900,6 @@ class DROIDAnalysis:
 
     def runanalysis(self, rogueanalysis):
         self.rogueanalysis = rogueanalysis
-        analysisresults = self.queryDB()  # primary db query functions
         return self.analysisresults
 
     def openDROIDDB(self, dbfilename):
