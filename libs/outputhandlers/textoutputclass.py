@@ -46,14 +46,13 @@ class DROIDAnalysisTextOutput:
     # namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
     def __frequencyoutput__(self, itemlist, zeros=False):
         val = ""
-        ns = None
         if type(itemlist) is not list:
             sys.stderr.write(
                 "LOG: Not sending a list to a function wanting a list." + "\n"
             )
         else:
             for item in itemlist:
-                if zeros == True:
+                if zeros is True:
                     val = val + str(item[0]) + ", "
                 else:
                     val = val + str(item[0]) + " (" + str(item[1]) + "), "
@@ -70,7 +69,7 @@ class DROIDAnalysisTextOutput:
         else:
             for item in itemlist:
                 name = item[0]
-                if item[1] != None:
+                if item[1] is not None:
                     count = "(" + str(item[1]) + ")"
                     outstr = outstr + name + " " + count + "\n"
                 else:
@@ -95,7 +94,7 @@ class DROIDAnalysisTextOutput:
 
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
         # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
-        #'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
+        # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
         ds = DroidAnalysisClass.DROIDAnalysis()
         output = ""
         for ns in nsdatalist:
@@ -179,9 +178,9 @@ class DROIDAnalysisTextOutput:
         return output.strip("\n")
 
     def __generateOffsetText__(self, offsettext):
-        #########['id','basis','filename','filesize','offset']##########
+        # #########['id','basis','filename','filesize','offset']##########
         offs = offsettext
-        if offs != None:
+        if offs is not None:
             return (
                 offs[0]
                 + ", "
@@ -502,7 +501,7 @@ class DROIDAnalysisTextOutput:
                 self.__frequencyoutput__(self.analysisresults.mimetypeFrequency)
             )
 
-        ##########NS SPECIFIC OUTPUT####################
+        # ##########NS SPECIFIC OUTPUT####################
         if (
             self.analysisresults.signatureidentifiedfrequency is not None
             and self.analysisresults.nsdatalist is not None
@@ -516,9 +515,9 @@ class DROIDAnalysisTextOutput:
                     self.analysisresults.signatureidentifiedfrequency,
                 )
             )
-        ##########NS SPECIFIC OUTPUT####################
+        # ##########NS SPECIFIC OUTPUT####################
 
-        ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+        # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
         if (
             self.analysisresults.xml_identifiers is not None
             and len(self.analysisresults.xml_identifiers) > 0
@@ -543,7 +542,7 @@ class DROIDAnalysisTextOutput:
             self.printFormattedText(
                 self.__frequencyoutput__(self.analysisresults.filename_identifiers)
             )
-        ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
+        # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
 
         if self.analysisresults.zerobytecount > 0:
             self.printFormattedText("\n")
