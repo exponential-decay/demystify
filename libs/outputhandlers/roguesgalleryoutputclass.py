@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
+
 import sys
 
 from libs.HandleBlacklistClass import HandleBlacklist
-
-from .. import DroidAnalysisClass
 
 
 class rogueoutputclass:
@@ -24,7 +24,7 @@ class rogueoutputclass:
         self.handleconfig(config)
 
     def handleconfig(self, config):
-        if config != False:
+        if config is not False:
             if config.has_section(HandleBlacklist.CFG_ROGUES):
                 if config.has_option(
                     HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE
@@ -81,7 +81,7 @@ class rogueoutputclass:
                 sys.stdout.write(str(x) + "\n")
 
     def rogueorhero(self, pathlist):
-        if pathlist != False and pathlist != None:
+        if pathlist is not False and pathlist is not None:
             self.roguelist = self.roguelist + pathlist
 
     def printTextResults(self):
@@ -105,7 +105,10 @@ class rogueoutputclass:
         # PRONOM ONLY UNIDENTIFIED
         # output all unidentified files, but also, only when not using DROID output
         if self.analysisresults.tooltype != "droid":
-            if self.analysisresults.rogue_pronom_ns_id != None and self.pro == "true":
+            if (
+                self.analysisresults.rogue_pronom_ns_id is not None
+                and self.pro == "true"
+            ):
                 self.rogueorhero(self.analysisresults.rogue_identified_pronom)
             else:
                 self.rogueorhero(self.analysisresults.rogue_identified_all)
