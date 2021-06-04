@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 class RogueQueries:
 
     SELECT_ALL_FILEPATHS = (
@@ -46,7 +49,7 @@ class RogueQueries:
                   WHERE FREQUENCY > """
 
         query = ""
-        if paths == False:
+        if paths is False:
             query = count + body + str(nscount)
         else:
             query = pathquery + body + str(nscount)
