@@ -1,4 +1,7 @@
-﻿class AnalysisQueries:
+﻿# -*- coding: utf-8 -*-
+
+
+class AnalysisQueries:
 
     SELECT_FILENAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
     SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
@@ -95,7 +98,7 @@
 
     def select_frequency_identifier_types(self, method):
         # treating new identifer capabilities as first class citizens
-        #%match on filename%    %xml match%    %text match%
+        # %match on filename%    %xml match%    %text match%
         identifier_pattern = "{{ identifier }}"
         identifier_text = ""
 
@@ -116,15 +119,15 @@
 
         return SELECT_IDENTIFIER_COUNT.replace(identifier_pattern, identifier_text)
 
-    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT) 
-                                       FROM FILEDATA  
+    SELECT_COUNT_EXTENSION_RANGE = """SELECT COUNT(DISTINCT FILEDATA.EXT)
+                                       FROM FILEDATA
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"""
 
-    SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total 
-                                       FROM IDRESULTS  
+    SELECT_METHOD_FREQUENCY_COUNT = """SELECT IDDATA.METHOD, COUNT(*) AS total
+                                       FROM IDRESULTS
                                        JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                          
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                        GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""
 
     # select the gamut of MIMEs in the accession/extract, not counts
@@ -133,8 +136,8 @@
         for ids in idids:
             mimes.append(ids[1])
 
-        query1 = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total 
-                  FROM IDRESULTS 
+        query1 = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total
+                  FROM IDRESULTS
                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                   WHERE IDRESULTS.ID_ID IN """
 
@@ -152,35 +155,35 @@
                                     WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
                                     GROUP BY IDDATA.ID ORDER BY NSDATA.NS_NAME, TOTAL DESC"""
 
-    SELECT_YEAR_FREQUENCY_COUNT = """SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total 
-                                       FROM FILEDATA 
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+    SELECT_YEAR_FREQUENCY_COUNT = """SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total
+                                       FROM FILEDATA
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                        GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC"""
 
     # TODO: THIS STAT NEEDS REVISITING IN LIGHT OF SIEGFRIED
     # MULTIPLE IDS WILL BE REFLECTED USING MULTIPLE NAMESPACE PLACES - HOW TO REPORT ON?
-    SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME 
-                                    FROM IDDATA 
+    SELECT_PUIDS_EXTENSION_ONLY = """SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME
+                                    FROM IDDATA
                                     WHERE (IDDATA.METHOD='Extension')"""
 
-    SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT 
-                                    FROM FILEDATA 
+    SELECT_ALL_UNIQUE_EXTENSIONS = """SELECT DISTINCT FILEDATA.EXT
+                                    FROM FILEDATA
                                     WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                     AND FILEDATA.EXT!=''"""
 
-    SELECT_COUNT_EXTENSION_FREQUENCY = """SELECT FILEDATA.EXT, COUNT(*) AS total 
+    SELECT_COUNT_EXTENSION_FREQUENCY = """SELECT FILEDATA.EXT, COUNT(*) AS total
                                        FROM FILEDATA
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
+                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                        AND FILEDATA.EXT!=''
                                        GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
 
     # MULTIPLE ID FOR FILES GREATER THAN ZERO BYTES
-    SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH 
-                                 FROM IDRESULTS 
+    SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH
+                                 FROM IDRESULTS
                                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID                                      
-                                 WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container') 
-                                 AND (IDDATA.FORMAT_COUNT > 1) 
+                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+                                 WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
+                                 AND (IDDATA.FORMAT_COUNT > 1)
                                  AND (FILEDATA.SIZE > 0)"""
 
     SELECT_COUNT_DUPLICATE_CHECKSUMS = """SELECT FILEDATA.HASH, COUNT(*) AS TOTAL
@@ -200,7 +203,7 @@
     def count_multiple_ids(self, nscount, paths=False):
         # e.g. if nscount (number of namespaces) == 3, a multuple id has count > 3
         query = ""
-        if paths == False:
+        if paths is False:
             body = """SELECT count(FREQUENCY)
                    FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
                    FROM IDRESULTS
@@ -235,10 +238,10 @@
         return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='" + id + "')"
 
     def search_id_instance_filepaths(self, id):
-        query_part1 = """SELECT FILEDATA.FILE_PATH 
-                        FROM IDRESULTS 
+        query_part1 = """SELECT FILEDATA.FILE_PATH
+                        FROM IDRESULTS
                         JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID  
+                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                         WHERE IDDATA.ID='"""
 
         query_part2 = id + "' ORDER BY FILEDATA.FILE_PATH DESC"
@@ -268,7 +271,7 @@
         # print list
         SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS
         query = SELECT_NAMESPACE_AND_IDS + "\n" + list
-        if priority != None:
+        if priority is not None:
             query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
         else:
             # TODO: ONCE AGAIN MAY NEED TO PULL THIS QUERY APART - NEEDS TESTING FURTHER
@@ -282,7 +285,7 @@
             where = where + str(i[1]) + ", "
         list = list + where.strip(", ") + ")"
 
-        SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID      
+        SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID
                                     FROM IDRESULTS
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
@@ -295,14 +298,14 @@
         # print list
         SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS
         query = SELECT_NAMESPACE_AND_IDS + "\n" + list
-        if priority != None:
+        if priority is not None:
             query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
         return query
 
     # IT MIGHT BE WORTH PULLING THIS APART BUT WILL SEE...
     def query_from_ids(self, idlist, idmethod=False):
 
-        if idmethod != False:
+        if idmethod is not False:
             list = "IDRESULTS.FILE_ID IN "
             where = "("
             for i in idlist:
@@ -322,7 +325,7 @@
                                     JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
                                     JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
                                     WHERE IDDATA.METHOD="""
-        if idmethod != False:
+        if idmethod is not False:
             SELECT_NAMESPACE_AND_IDS = (
                 SELECT_NAMESPACE_AND_IDS + "'" + idmethod + "'"
             )  # which method?
@@ -333,7 +336,7 @@
             return SELECT_PATHS + "\n" + list
 
     # NAMESPACE QUERIES
-    SELECT_NS_DATA = """SELECT * 
+    SELECT_NS_DATA = """SELECT *
                         FROM NSDATA"""
 
     def get_ns_gap_count_lists(self, nsid):
