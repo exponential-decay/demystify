@@ -1,7 +1,6 @@
+# -*- coding: utf-8 -*-
+
 import sys
-
-sys.path.append("../libs")
-
 from unittest import TestCase, TestLoader, TextTestRunner
 
 from PyDateHandler import PyDateHandler
