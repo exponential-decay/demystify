@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+# TODO: Find out where is this file used, and document it properly.
+
 testcsv = [
     {
         u"STATUS": u"Done",

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# pylint: disable=W1633
+
 from __future__ import absolute_import, division, print_function
 
 import sqlite3
@@ -570,7 +572,7 @@ class DROIDAnalysis:
             extensions = self.__querydb__(q3)
             if extensions:
                 for found in extensions:
-                    if found[0] not in blacklist.keys():
+                    if found[0] not in list(blacklist.keys()):
                         blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2])
 
         if self.blacklist[HandleBlacklist.FILENAMES] is not None:
@@ -578,7 +580,7 @@ class DROIDAnalysis:
             filenames = self.__querydb__(q1)
             if filenames:
                 for found in filenames:
-                    if found[0] not in blacklist.keys():
+                    if found[0] not in list(blacklist.keys()):
                         blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1])
 
         if self.blacklist[HandleBlacklist.DIRECTORIES] is not None:
@@ -586,19 +588,19 @@ class DROIDAnalysis:
             directories = self.__querydb__(q2)
             if directories:
                 for found in directories:
-                    if found[0] not in blacklist.keys():
+                    if found[0] not in list(blacklist.keys()):
                         blacklist[found[0]] = (HandleBlacklist.DIRECTORIES, found[1])
 
         if not blacklist:
             blacklist = False
         else:
             newlist = []
-            for k, v in blacklist.iteritems():
+            for k, v in blacklist.items():
                 self.analysisresults.rogue_blacklist.append(k)
                 newlist.append(v)
             count = Counter(newlist)
             newlist = []
-            for c, v in count.iteritems():
+            for c, v in count.items():
                 newlist.append(c + (v,))
             newlist.sort(key=lambda tup: tup[len(tup) - 1], reverse=True)
             blacklist = newlist

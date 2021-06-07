@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# pylint: disable=W1633
+
+from __future__ import absolute_import, division
 
 import re
 import sys
