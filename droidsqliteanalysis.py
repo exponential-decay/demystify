@@ -3,16 +3,23 @@
 from __future__ import absolute_import, division
 
 import argparse
+import logging
 import os
 import sys
 import time
+
+LOGFORMAT = "%(asctime)-15s %(levelname)s: %(message)s"
+DATEFORMAT = "%Y-%m-%d %H:%M:%S"
+
+logging.basicConfig(format=LOGFORMAT, datefmt=DATEFORMAT, level="INFO")
+
 
 try:
     import ConfigParser
 except ImportError:
     import configparser as ConfigParser
 
-from libs.DroidAnalysisClass import DROIDAnalysis
+from libs.DemystifyAnalysisClass import DemystifyAnalysis
 from libs.HandleBlacklistClass import HandleBlacklist
 from libs.IdentifyDatabase import IdentifyDB
 
@@ -40,17 +47,21 @@ def handleConfig(blacklist):
 
 def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
     if txtout is True:
+        logging.info("outputting txt report")
         textoutput = DROIDAnalysisTextOutput(analysisresults)
         sys.stdout.write(
             textoutput.printTextResults()
         )  # Text class still uses print statements...
     elif rogues is True:
+        logging.info("rogues reporting is on")
         rogueoutput = rogueoutputclass(analysisresults, rogueconfig)
         rogueoutput.printTextResults()
     elif heroes is True:
+        logging.info("heroes reporting is on")
         rogueoutput = rogueoutputclass(analysisresults, rogueconfig, heroes)
         rogueoutput.printTextResults()
     else:
+        logging.info("outputting html report")
         htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
         sys.stdout.write(htmloutput.printHTMLResults())
 
@@ -67,7 +78,7 @@ def getConfigInfo():
 
 
 def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
-    analysis = DROIDAnalysis(dbfilename, getConfigInfo(), blacklist)
+    analysis = DemystifyAnalysis(dbfilename, getConfigInfo(), blacklist)
 
     # avoid unecessary processing with rogue path analyses
     rogueanalysis = False

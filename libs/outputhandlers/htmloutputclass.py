@@ -8,7 +8,7 @@ import re
 import sys
 
 from i18n.internationalstrings import AnalysisStringsEN as IN_EN
-from libs import DroidAnalysisClass
+from libs import DemystifyAnalysisClass
 
 
 class DROIDAnalysisHTMLOutput:
@@ -280,7 +280,7 @@ class DROIDAnalysisHTMLOutput:
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
         # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
         # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
-        ds = DroidAnalysisClass.DROIDAnalysis()
+        ds = DemystifyAnalysisClass.DemystifyAnalysis()
         for ns in nsdatalist:
             signatureids = signaturefrequency
             nstitle = ns[ds.NS_CONST_TITLE]

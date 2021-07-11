@@ -4,6 +4,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+import logging
 import sqlite3
 import sys
 from collections import Counter
@@ -17,7 +18,7 @@ from libs.version import AnalysisVersion
 from pathlesstaken import pathlesstaken
 
 
-class DROIDAnalysis:
+class DemystifyAnalysis:
     def __version__(self):
         v = AnalysisVersion()
         self.analysisresults.__version_no__ = v.getVersion()
@@ -616,6 +617,14 @@ class DROIDAnalysis:
                     self.analysisresults.blacklist_ids.append((b[1], b[2]))
 
     def queryDB(self):
+        """Query runner for all demystify queries based on how the
+        object has been configured up to now.
+
+        :returns: The analysis object containing all of the results. The
+            object can be used to then output different serialization
+            types.
+        """
+        logging.info("Querying database")
         self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
         if self.hashtype == "None" or self.hashtype == "False":
             sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
@@ -740,11 +749,11 @@ class DROIDAnalysis:
 
         # MORE WORK NEEDED ON ROGUES NOW... ACCURACY IS PARAMOUNT
         if len(self.extensionIDonly) > 0:
-            """ TODO: The values below are not used - why? """
+            """TODO: The values below are not used - why?"""
             # extonly = self.query.query_from_ids(self.extensionIDonly)
             # extrogues = self.__querydb__(extonly)
         if len(self.noids) > 0:  # NOT THE SAME AS COMPLETELY UNIDENTIFIED
-            """ TODO: The values below are not used - why? """
+            """TODO: The values below are not used - why?"""
             # none = self.query.query_from_ids(self.noids)
             # nonerogues = self.__querydb__(none)
 
@@ -901,8 +910,17 @@ class DROIDAnalysis:
         return self.analysisresults
 
     def runanalysis(self, rogueanalysis):
+        """Runs the analysis on the supplied report.
+
+        :param rogueanalysis: Boolean that lets the analysis engine know
+            to handle the rogue list at the same time (bool).
+        :returns: The analysis object containing all of the results. The
+            object can be used to then output different serialization
+            types.
+        """
+        logging.info("Running analysis")
         self.rogueanalysis = rogueanalysis
-        return self.analysisresults
+        return self.queryDB()
 
     def openDROIDDB(self, dbfilename):
         self.analysisresults.filename = dbfilename.rstrip(".db")

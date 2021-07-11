@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import, print_function
 
-from libs.DroidAnalysisClass import DROIDAnalysis  # noqa
+from libs.DemystifyAnalysisClass import DROIDAnalysis  # noqa
 
 
 def test_recurse_delete_folders():
