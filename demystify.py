@@ -14,6 +14,12 @@ DATEFORMAT = "%Y-%m-%d %H:%M:%S"
 logging.basicConfig(format=LOGFORMAT, datefmt=DATEFORMAT, level="INFO")
 
 
+if sys.version_info[0] == 3:
+    PY3 = True
+else:
+    PY3 = False
+
+
 try:
     import ConfigParser
 except ImportError:
@@ -63,7 +69,10 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
     else:
         logging.info("outputting html report")
         htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
-        sys.stdout.write(htmloutput.printHTMLResults())
+        if PY3:
+            print(htmloutput.printHTMLResults())
+        else:
+            print(htmloutput.printHTMLResults().encode("utf8"))
 
 
 # function should go somewhere more appropriate in time
