@@ -6,7 +6,6 @@ from libs.version import AnalysisVersion
 
 
 class DROIDAnalysisResults:
-
     def __init__(self):
 
         # version

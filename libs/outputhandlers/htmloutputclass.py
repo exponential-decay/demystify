@@ -4,6 +4,7 @@
 
 from __future__ import absolute_import, division
 
+import logging
 import re
 import sys
 
@@ -12,13 +13,11 @@ from libs import DemystifyAnalysisClass
 
 
 class DROIDAnalysisHTMLOutput:
-
-    htmloutput = ""
-
     def __init__(self, analysisresults):
         self.wiki = True
         self.STRINGS = IN_EN
         self.analysisresults = analysisresults
+        self.htmloutput = u""
 
     def STDOUTprintFormattedText(self, text):
         sys.stdout.write(text)
@@ -28,12 +27,19 @@ class DROIDAnalysisHTMLOutput:
         sys.stdout.write("\n")
 
     def printFormattedText(self, text):
-        if type(text) is list:
+        if isinstance(text, list):
             for t in text:
                 self.htmloutput = self.htmloutput + str(t) + "</br></br>"
-        else:
-            self.htmloutput = "{}{}".format(self.htmloutput, text)
-
+            self.__printnewline__()
+            return
+        try:
+            newtext = u"{}".format(text.decode("utf8"))
+        except AttributeError:
+            newtext = text
+        except UnicodeEncodeError:
+            logging.error("XXXXXXX %s %s", text, type(text))
+            newtext = "THIS PART IS BROKEN"
+        self.htmloutput = u"{}{}".format(self.htmloutput, newtext)
         self.__printnewline__()
 
     def __printnewline__(self):
@@ -857,7 +863,7 @@ class DROIDAnalysisHTMLOutput:
         if self.analysisresults.extensionOnlyIDList is not None:
             if len(self.analysisresults.extensionOnlyIDList) > 0:
                 # Extension Only Identification
-                extlist = self.analysisresults.extensionOnlyIDFrequency
+                extlist = self.analysisresults.extensionOnlyIDList
                 for item in list(extlist):
                     if "UNKNOWN" in item[0] or "unknown" in item[0]:
                         extlist.remove(item)
@@ -969,7 +975,12 @@ class DROIDAnalysisHTMLOutput:
 
         if self.analysisresults.hashused is True:
             if self.analysisresults.duplicateHASHlisting is not None:
+
                 # Duplicate Content
+                # dupes = "{} ({})".format(self.STRINGS.HEADING_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
+                # dupes_ = "{} ({})".format(self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT, self.analysisresults.totalHASHduplicates)
+                # self.__outputheading__(dupes,)
+
                 self.__outputheading__(
                     self.STRINGS.HEADING_IDENTICAL_CONTENT
                     + " ("
@@ -980,23 +991,23 @@ class DROIDAnalysisHTMLOutput:
                     + str(self.analysisresults.totalHASHduplicates)
                     + ")",
                 )
-                for (
-                    dupes
-                ) in (
-                    self.analysisresults.duplicateHASHlisting
-                ):  # TODO: consider count next to HASH val
+
+                for dupes in self.analysisresults.duplicateHASHlisting:
                     self.printFormattedText(
-                        "<b>"
-                        + dupes["checksum"]
-                        + "</b> Count: "
-                        + dupes["count"]
-                        + "<br/><br/>"
+                        "<b>{}</b> Count: {}<br/><br/>".format(
+                            dupes["checksum"], dupes["count"]
+                        )
                     )
                     self.printFormattedText("<code>")
                     for ex in dupes["examples"]:
-                        self.printFormattedText(ex + "<br/>")
+                        try:
+                            text = u"{}<br/>".format(ex.decode("utf8"))
+                        except (AttributeError, UnicodeEncodeError):
+                            text = u"{}<br/>".format(ex)
+                        self.printFormattedText(text)
                     self.printFormattedText("</code>")
                     self.__htmlnewline__()
+
                 self.printFormattedText("<hr/>")
 
         if self.analysisresults.badFileNames is not None:

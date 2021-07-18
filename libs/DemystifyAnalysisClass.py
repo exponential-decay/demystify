@@ -214,19 +214,22 @@ class DemystifyAnalysis:
 
         namereport = []
         for d in namelist:
-            namestring = d[0]
+            try:
+                namestring = u"{}".format(d[0].decode("utf8"))
+            except AttributeError:
+                namestring = u"{}".format(d[0])
             checkedname = charcheck.complete_file_name_analysis(namestring)
             if len(checkedname) > 0:
                 namereport.append(checkedname)
                 self.rogue_names.append(d[0])
 
-        # TODO: Handle recursive paths better to avoid duplication
         dirreport = []
         for d in dirlist:
-            dirstring = d[0]
-            checkedname = charcheck.complete_file_name_analysis(dirstring, True).encode(
-                "utf-8"
-            )
+            try:
+                dirstring = u"{}".format(d[0].decode("utf8"))
+            except AttributeError:
+                dirstring = u"{}".format(d[0])
+            checkedname = charcheck.complete_file_name_analysis(dirstring, True)
             if len(checkedname) > 0:
                 dirreport.append(checkedname)
                 self.rogue_dirs.append(d[0])
@@ -728,7 +731,7 @@ class DemystifyAnalysis:
         if len(self.extensionIDonly) > 0:
             extid = self.query.query_from_ids(self.extensionIDonly, "Extension")
             test = self.__querydb__(extid)
-            combined_list = []  # namespace + id
+            combined_list = []
             for entry in test:
                 entry = " ".join(entry)
                 combined_list.append(entry)
