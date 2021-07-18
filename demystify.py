@@ -53,21 +53,19 @@ def handleConfig(blacklist):
 
 def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
     if txtout is True:
-        logging.info("outputting txt report")
+        logging.info("Outputting text report")
         textoutput = DROIDAnalysisTextOutput(analysisresults)
-        sys.stdout.write(
-            textoutput.printTextResults()
-        )  # Text class still uses print statements...
+        print(textoutput.printTextResults())
     elif rogues is True:
-        logging.info("rogues reporting is on")
+        logging.info("Rogues reporting is on")
         rogueoutput = rogueoutputclass(analysisresults, rogueconfig)
         rogueoutput.printTextResults()
     elif heroes is True:
-        logging.info("heroes reporting is on")
+        logging.info("Heroes reporting is on")
         rogueoutput = rogueoutputclass(analysisresults, rogueconfig, heroes)
         rogueoutput.printTextResults()
     else:
-        logging.info("outputting html report")
+        logging.info("Outputting HTML report")
         htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
         if PY3:
             print(htmloutput.printHTMLResults())
@@ -110,7 +108,7 @@ def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=Fa
 
 
 def outputtime(start_time):
-    sys.stderr.write("\n" + "--- %s seconds ---" % (time.time() - start_time) + "\n")
+    logging.info("Output took: %s seconds", (time.time() - start_time))
 
 
 def main():

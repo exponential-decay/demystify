@@ -10,6 +10,11 @@ from i18n.internationalstrings import AnalysisStringsEN as IN_EN
 
 from .. import DemystifyAnalysisClass
 
+if sys.version_info[0] == 3:
+    PY3 = True
+else:
+    PY3 = False
+
 
 class DROIDAnalysisTextOutput:
 
@@ -36,10 +41,16 @@ class DROIDAnalysisTextOutput:
         self.printFormattedText(title + ":")
 
     def printFormattedText(self, string, newline=True):
-        lnend = ""
+        lnend = u""
         if newline:
-            lnend = "\n"
-        self.textoutput = self.textoutput + str(string) + lnend
+            lnend = u"\n"
+        try:
+            string = "{}".format(string)
+        except UnicodeEncodeError:
+            string = b"{}".format(string.encode("utf8"))
+        self.textoutput = "{}{}{}".format(self.textoutput, string, lnend)
+        # else:
+        # self.textoutput = u"{}{}{}".format(self.textoutput, string.decode("utf8"), lnend)
 
     def printTextResults(self):
         self.generateTEXT()
@@ -616,7 +627,7 @@ class DROIDAnalysisTextOutput:
                     self.__aggregatelists__(self.analysisresults.blacklist_directories)
                 )
 
-        if self.analysisresults.errorlist is not None:
+        if self.analysisresults.errorlist:
             self.__output_list_title__(self.STRINGS.HEADING_ERRORS)
             self.printFormattedText(
                 self.__frequencyoutput__(self.analysisresults.errorlist)
