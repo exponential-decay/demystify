@@ -93,6 +93,7 @@ def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
 
 def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=False):
     dbfilename = sqlitefid.identifyinput(droidcsv)
+    logging.info("db filename: %s", dbfilename)
     if dbfilename is not None:
         if analyse is True:
             analysisresults = handleDROIDDB(dbfilename, blacklist, rogues, heroes)
