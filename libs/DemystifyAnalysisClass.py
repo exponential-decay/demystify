@@ -39,28 +39,29 @@ class DemystifyAnalysis:
     NS_CONST_BINARY_COUNT = "binary method count"
     NS_CONST_MULTIPLE_IDS = "multiple ids"
 
-    # variables we need internally:
-    extensionIDonly = None
-    binaryIDs = None
-    noids = None
-    xmlIDs = None
-    textIDs = None
-    filenameIDs = None
-    namespacedata = None
-    priority_ns_id = None
-
-    # namespaceids
-    pronom_ns_id = None
-    freedesktop_ns_id = None
-    tika_ns_id = None
-
     ID_TIKA = "TIKA"
     ID_PRONOM = "PRONOM"
     ID_FREEDESKTOP = "FREE"
     ID_NONE = "NONE"
 
     def __init__(self, dbfilename=None, config=False, blacklist=False):
+
+        self.extensionIDonly = None
+        self.binaryIDs = None
+        self.noids = None
+        self.xmlIDs = None
+        self.textIDs = None
+        self.filenameIDs = None
+        self.namespacedata = None
+        self.priority_ns_id = None
+
+        # namespaceids
+        self.pronom_ns_id = None
+        self.freedesktop_ns_id = None
+        self.tika_ns_id = None
+
         self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
+
         if dbfilename is not None:
             self.openDROIDDB(dbfilename)
             self.query = AnalysisQueries()

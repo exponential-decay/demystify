@@ -7,123 +7,125 @@ from libs.version import AnalysisVersion
 
 class DROIDAnalysisResults:
 
-    # version
-    version = 0
+    def __init__(self):
 
-    # filename
-    filename = ""
+        # version
+        self.version = 0
 
-    # hashused
-    hashused = False
+        # filename
+        self.filename = ""
 
-    # tooltype
-    tooltype = None
+        # hashused
+        self.hashused = False
 
-    # blacklist
-    blacklist = False
-    blacklist_filenames = []
-    blacklist_directories = []
-    blacklist_ids = []
-    blacklist_exts = []
+        # tooltype
+        self.tooltype = None
 
-    # Counts
-    collectionsize = 0
-    filecount = 0
-    containercount = 0
-    filesincontainercount = 0
-    directoryCount = 0
-    uniqueFileNames = 0
-    uniqueDirectoryNames = 0
-    identifiedfilecount = 0
-    multipleidentificationcount = 0
-    unidentifiedfilecount = 0
-    distinctSignaturePuidcount = 0
-    extensionIDOnlyCount = 0
-    distinctextensioncount = 0
-    zeroidcount = 0
+        # blacklist
+        self.blacklist = False
+        self.blacklist_filenames = []
+        self.blacklist_directories = []
+        self.blacklist_ids = []
+        self.blacklist_exts = []
 
-    # SF ONLY
-    xmlidfilecount = 0
-    textidfilecount = 0
-    filenameidfilecount = 0
-    distinctOtherIdentifiers = 0
-    distinctXMLIdentifiers = 0
-    distinctTextIdentifiers = 0
-    distinctFilenameIdentifiers = 0
-    textidentifiers = None
-    filenameidentifiers = None
-    binaryidentifiers = None
-    xmlidentifiers = None
-    bof_distance = None
-    eof_distance = None
-    namespacecount = None
-    namespacedata = None
-    nsdatalist = None
-    identificationgaps = None
-    errorlist = None
-    xml_identifiers = None
-    text_identifiers = None
-    filename_identifiers = None
-    # SF ONLY
+        # Counts
+        self.collectionsize = 0
+        self.filecount = 0
+        self.containercount = 0
+        self.filesincontainercount = 0
+        self.directoryCount = 0
+        self.uniqueFileNames = 0
+        self.uniqueDirectoryNames = 0
+        self.identifiedfilecount = 0
+        self.multipleidentificationcount = 0
+        self.unidentifiedfilecount = 0
+        self.distinctSignaturePuidcount = 0
+        self.extensionIDOnlyCount = 0
+        self.distinctextensioncount = 0
+        self.zeroidcount = 0
 
-    extmismatchCount = 0
+        # SF ONLY
+        self.xmlidfilecount = 0
+        self.textidfilecount = 0
+        self.filenameidfilecount = 0
+        self.distinctOtherIdentifiers = 0
+        self.distinctXMLIdentifiers = 0
+        self.distinctTextIdentifiers = 0
+        self.distinctFilenameIdentifiers = 0
+        self.textidentifiers = None
+        self.filenameidentifiers = None
+        self.binaryidentifiers = None
+        self.xmlidentifiers = None
+        self.bof_distance = None
+        self.eof_distance = None
+        self.namespacecount = None
+        self.namespacedata = None
+        self.nsdatalist = None
+        self.identificationgaps = None
+        self.errorlist = None
+        self.xml_identifiers = None
+        self.text_identifiers = None
+        self.filename_identifiers = None
 
-    unidentifiedPercentage = 0
-    identifiedPercentage = 0
+        # SF ONLY
+        self.extmismatchCount = 0
 
-    signatureidentifiers = None
-    signatureidentifiedfrequency = None
+        self.unidentifiedPercentage = 0
+        self.identifiedPercentage = 0
 
-    dateFrequency = None
+        self.signatureidentifiers = None
+        self.signatureidentifiedfrequency = None
 
-    extensionOnlyIDFrequency = 0
-    extensionOnlyIDList = []
+        self.dateFrequency = None
 
-    # TODO: Turn lists into lists? Formatting at end..?
-    uniqueExtensionsInCollectionList = None
-    frequencyOfAllExtensions = None
+        self.extensionOnlyIDFrequency = 0
+        self.extensionOnlyIDList = []
 
-    idmethodFrequency = None
+        # TODO: Turn lists into lists? Formatting at end..?
+        self.uniqueExtensionsInCollectionList = None
+        self.frequencyOfAllExtensions = None
 
-    mimetypeFrequency = None
+        self.idmethodFrequency = None
 
-    topPUIDList = None
-    topExtensionList = None
+        self.mimetypeFrequency = None
 
-    totalmd5duplicates = 0
-    duplicatemd5listing = []
-    duplicatemd5altlisting = []
+        self.topPUIDList = None
+        self.topExtensionList = None
 
-    totaluniquefilenames = 0
-    duplicatefnamelisting = []
-    duplicatefnamealtlisting = []
+        self.totalmd5duplicates = 0
+        self.duplicatemd5listing = []
+        self.duplicatemd5altlisting = []
 
-    containertypeslist = None
+        self.totaluniquefilenames = 0
+        self.duplicatefnamelisting = []
+        self.duplicatefnamealtlisting = []
 
-    duplicatespathlist = []
+        self.containertypeslist = None
 
-    zerobytecount = 0
-    zerobytelist = None
+        self.duplicatespathlist = []
 
-    multiplespacelist = ""
-    badFileNames = None
-    badDirNames = None
+        self.zerobytecount = 0
+        self.zerobytelist = None
 
-    duplicateHASHlisting = None
-    totalHASHduplicates = None
+        self.multiplespacelist = ""
+        self.badFileNames = None
+        self.badDirNames = None
 
-    # rogues
-    rogue_pronom_ns_id = None
-    rogue_all_paths = None
-    rogue_all_dirs = None
-    rogue_blacklist = []
-    rogue_duplicates = []
-    rogue_identified_all = []
-    rogue_identified_pronom = []
-    rogue_extension_mismatches = []
-    rogue_multiple_identification_list = []
-    rogue_file_name_paths = []  # non-ascii file names
-    rogue_dir_name_paths = []  # non-ascii dir names
+        self.duplicateHASHlisting = None
+        self.totalHASHduplicates = None
+
+        # rogues
+        self.rogue_pronom_ns_id = None
+        self.rogue_all_paths = None
+        self.rogue_all_dirs = None
+        self.rogue_blacklist = []
+        self.rogue_duplicates = []
+        self.rogue_identified_all = []
+        self.rogue_identified_pronom = []
+        self.rogue_extension_mismatches = []
+        self.rogue_multiple_identification_list = []
+        self.rogue_file_name_paths = []  # non-ascii file names
+        self.rogue_dir_name_paths = []  # non-ascii dir names
 
     def __version__(self):
         v = AnalysisVersion()

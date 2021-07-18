@@ -6,7 +6,7 @@ import sys
 
 try:
     import ucd
-except ModuleNotFoundError:
+except ImportError:
     from . import ucd
 
 
