@@ -179,38 +179,44 @@ class DemystifyAnalysis:
     # List queries
 
     def listDuplicateFilesFromHASH(self):
+        """Process duplicates based on hash from analysis."""
+
+        # Result looks as follows: list([HASH, COUNT])
         result = self.__querydb__(AnalysisQueries.SELECT_COUNT_DUPLICATE_CHECKSUMS)
 
-        duplicate_sum = {}
         duplicatelist = []
-
-        self.analysisresults.totalHASHduplicates = 0
-        for r in result:
-            self.analysisresults.totalHASHduplicates = (
-                self.analysisresults.totalHASHduplicates + int(r[1])
-            )
-
+        duplicate_sum = {}
         roguepaths = []
 
-        # result list([HASH, COUNT])
-        for r in result:
-            example = self.__querydb__(self.query.list_duplicate_paths(r[0]))
+        self.analysisresults.totalHASHduplicates = 0
+        for res in result:
+            count = int(res[1])
+            checksum = res[0]
+            self.analysisresults.totalHASHduplicates = (self.analysisresults.totalHASHduplicates + count)
+            duplicate_examples = self.__querydb__(self.query.list_duplicate_paths(res[0]))
             pathlist = []
-            for e in example:
-                pathlist.append(e[0])
-                self.analysisresults.duplicatespathlist.append(
-                    e[0]
-                )  # create path only listing
-
-            roguepaths = roguepaths + pathlist
-
-            duplicate_sum["checksum"] = str(r[0])
-            duplicate_sum["count"] = str(r[1])
+            for duplicates in duplicate_examples:
+                filename = duplicates[0]
+                pathlist.append(filename)
+                self.analysisresults.duplicatespathlist.append(filename)
+            roguepaths = "{}{}".format(roguepaths, pathlist)
+            duplicate_sum["checksum"] = checksum
+            duplicate_sum["count"] = count
             duplicate_sum["examples"] = pathlist
             duplicatelist.append(duplicate_sum)
             duplicate_sum = {}
 
+        assert self.analysisresults.totalHASHduplicates == 6
         self.analysisresults.duplicateHASHlisting = duplicatelist
+
+        print(self.analysisresults.duplicateHASHlisting)
+        x = [{'checksum': '0c391e403302385e9d227733fc477bf440f978d2', 'count': 2, 'examples': ['cp437/año/cp437_encoded_dirs.txt', 'cp437/café/cp437_encoded_dirs.txt']}, {'checksum': '4bc1d53ee7d365094fde303fec365b4fdec34c80', 'count': '2', 'examples': ['shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt', 'windows_1252/søster/cp1252_encoded_dirs.txt']}, {'checksum': 'd0e093259ce05cde2b326e418ac547359b91ee5f', 'count': 2, 'examples': ['emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt', 'emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt']}]
+        x = [{'checksum': '0c391e403302385e9d227733fc477bf440f978d2', 'count': 2, 'examples': ['cp437/año/cp437_encoded_dirs.txt', 'cp437/café/cp437_encoded_dirs.txt']}, {'checksum': '4bc1d53ee7d365094fde303fec365b4fdec34c80', 'count': 2, 'examples': ['shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt', 'windows_1252/søster/cp1252_encoded_dirs.txt']}, {'checksum': 'd0e093259ce05cde2b326e418ac547359b91ee5f', 'count': 2, 'examples': ['emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt', 'emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt']}]
+
+
+        assert self.analysisresults.duplicateHASHlisting == x
+        assert False, "this is where I am in the code..."
+
         return roguepaths
 
     def listzerobytefiles(self):

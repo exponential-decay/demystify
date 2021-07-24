@@ -21,7 +21,7 @@ class DROIDAnalysisResults:
         self.tooltype = None
 
         # denylist
-        self.denylistlist = False
+        self.denylist = False
         self.denylist_filenames = []
         self.denylist_directories = []
         self.denylist_ids = []
