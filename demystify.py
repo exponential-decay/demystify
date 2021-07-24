@@ -102,7 +102,7 @@ def _handle_denylist_config():
     return denylist
 
 
-def handle_output(analysisresults, txtout=False, rogues=False, heroes=False):
+def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
     """Handle output from the analysis.
 
     :param analysisresults: Object containing all of our analysis
@@ -115,19 +115,19 @@ def handle_output(analysisresults, txtout=False, rogues=False, heroes=False):
     """
     if txtout is True:
         logging.info("Outputting text report")
-        textoutput = DROIDAnalysisTextOutput(analysisresults)
+        textoutput = DROIDAnalysisTextOutput(analysis_results)
         print(textoutput.printTextResults())
     elif rogues is True:
         logging.info("Rogues reporting is on")
-        rogueoutput = rogueoutputclass(analysisresults, rogueconfig)
+        rogueoutput = rogueoutputclass(analysis_results, rogueconfig)
         rogueoutput.printTextResults()
     elif heroes is True:
         logging.info("Heroes reporting is on")
-        rogueoutput = rogueoutputclass(analysisresults, rogueconfig, heroes)
+        rogueoutput = rogueoutputclass(analysis_results, rogueconfig, heroes)
         rogueoutput.printTextResults()
     else:
         logging.info("Outputting HTML report")
-        htmloutput = DROIDAnalysisHTMLOutput(analysisresults)
+        htmloutput = DROIDAnalysisHTMLOutput(analysis_results)
         if PY3:
             print(htmloutput.printHTMLResults())
         else:
@@ -156,32 +156,29 @@ def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
     return analysis_results
 
 
-def analysis_from_csv(
-    format_report, analyse, txtout, denylist, rogues=None, heroes=None
-):
+def analysis_from_csv(format_report, analyze, denylist, rogues=None, heroes=None):
     """Analysis of format identification report from raw data, i.e.
     DROID CSV, SF YAML etc.
 
     :param format_report: path to format report (String)
-    :param analyse: flag to request analysis from this utility, as
+    :param analyze: flag to request analysis from this utility, as
         opposed to just outputting a database file (Boolean)
-    :param txtout: flag to output text only over HTML (Boolean)
-    :param denylist: information to filter from denylist (List)
+    :param denylist: information to filter from denylist (Dict)
     :param rogues: flag to output rogues (Boolean)
     :param heroes: flag to output heroes (Boolean)
 
     :return: None (Nonetype)
     """
-    database_path = sqlitefid.identifyinput(format_report)
+    database_path = sqlitefid.identify_and_process_input(format_report)
     logging.info("Database path: %s", database_path)
     if database_path is None:
         logging.error("No database filename supplied: %s", database_path)
         return
-    if analyse is not True:
-        logging.error("Analysis is not set: %s", analyse)
+    if analyze is not True:
+        logging.error("Analysis is not set: %s", analyze)
         return
     analysis_results = analysis_from_database(database_path, denylist, rogues, heroes)
-    handle_output(analysis_results, txtout, rogues, heroes)
+    return analysis_results
 
 
 def output_time(start_time):
@@ -235,24 +232,20 @@ def main():
     if args.denylist or args.rogues or args.heroes:
         denylist = _handle_denylist_config()
     if args.export:
-        analysis_from_csv(
-            args.export, True, args.txt, denylist, args.rogues, args.heroes
+        args.db = False
+        analysis_results = analysis_from_csv(
+            args.export, True, denylist, args.rogues, args.heroes
         )
-        output_time(start_time)
-        return
     if args.db:
-        if not os.path.isfile(args.db):
-            logging.error("Database path not a file: %s", args.db)
-            sys.exit(1)
         if not IdentifyDB().identify_export(args.db):
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
-        analysisresults = analysis_from_database(
+        analysis_results = analysis_from_database(
             args.db, denylist, args.rogues, args.heroes
         )
-        handle_output(analysisresults, args.txt, args.rogues, args.heroes)
+    if analysis_results:
+        handle_output(analysis_results, args.txt, args.rogues, args.heroes)
         output_time(start_time)
-        return
     logging.info("Exiting, nothing to do")
 
 

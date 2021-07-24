@@ -592,14 +592,14 @@ class DemystifyAnalysis:
         bl = DenylistQueries()
         denylist = {}
 
-        if self.denylist[HandleDenylist.IDS] is not None:
+        if self.denylist.get(HandleDenylist.IDS) is not None:
             q4 = bl.getids(self.denylist[HandleDenylist.IDS])
             ids = self.__querydb__(q4)
             if ids:
                 for found in ids:
                     denylist[found[0]] = (HandleDenylist.IDS, found[2].strip())
 
-        if self.denylist[HandleDenylist.EXTENSIONS] is not None:
+        if self.denylist.get(HandleDenylist.EXTENSIONS) is not None:
             q3 = bl.getexts(self.denylist[HandleDenylist.EXTENSIONS])
             extensions = self.__querydb__(q3)
             if extensions:
@@ -607,7 +607,7 @@ class DemystifyAnalysis:
                     if found[0] not in list(denylist.keys()):
                         denylist[found[0]] = (HandleDenylist.EXTENSIONS, found[2])
 
-        if self.denylist[HandleDenylist.FILENAMES] is not None:
+        if self.denylist.get(HandleDenylist.FILENAMES) is not None:
             q1 = bl.getfilenames(self.denylist[HandleDenylist.FILENAMES])
             filenames = self.__querydb__(q1)
             if filenames:
@@ -615,7 +615,7 @@ class DemystifyAnalysis:
                     if found[0] not in list(denylist.keys()):
                         denylist[found[0]] = (HandleDenylist.FILENAMES, found[1])
 
-        if self.denylist[HandleDenylist.DIRECTORIES] is not None:
+        if self.denylist.get(HandleDenylist.DIRECTORIES) is not None:
             q2 = bl.getdirnames(self.denylist[HandleDenylist.DIRECTORIES])
             directories = self.__querydb__(q2)
             if directories:
