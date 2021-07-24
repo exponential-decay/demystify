@@ -4,6 +4,7 @@
 
 from __future__ import absolute_import, division
 
+import logging
 import re
 import sys
 
@@ -244,7 +245,13 @@ class DROIDAnalysisHTMLOutput:
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
         # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
         # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
-        ds = DemystifyAnalysisClass.DemystifyAnalysis()
+        try:
+            ds = DemystifyAnalysisClass.DemystifyAnalysis()
+        except DemystifyAnalysisClass.AnalysisError:
+            logging.error(
+                "There shouldn't be a new DemystifyAnalysis object here: not performing NS work..."
+            )
+            return
         for ns in nsdatalist:
             signatureids = signaturefrequency
             nstitle = ns[ds.NS_CONST_TITLE]

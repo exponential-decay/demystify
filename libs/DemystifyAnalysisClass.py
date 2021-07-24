@@ -18,11 +18,12 @@ from libs.version import AnalysisVersion
 from pathlesstaken import pathlesstaken
 
 
+class AnalysisError(Exception):
+    """Exception for DemystifyAnalysis object."""
+
+
 class DemystifyAnalysis:
-    def __version__(self):
-        v = AnalysisVersion()
-        self.analysisresults.__version_no__ = v.getVersion()
-        return self.analysisresults.__version_no__
+    """DemystifyAnalysis"""
 
     # we need this value because we extract basedirs for all folders, including
     # the root directory of the extract, creating one additional entry
@@ -44,7 +45,10 @@ class DemystifyAnalysis:
     ID_FREEDESKTOP = "FREE"
     ID_NONE = "NONE"
 
-    def __init__(self, dbfilename=None, config=False, denylist=False):
+    def __init__(self, database_path=None, config=False, denylist=False):
+        """Constructor for DemystifyAnalysis object."""
+
+        logging.error("Analysis init: %s %s %s", database_path, config, denylist)
 
         self.extensionIDonly = None
         self.binaryIDs = None
@@ -62,30 +66,51 @@ class DemystifyAnalysis:
 
         self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
-        if dbfilename is not None:
-            self.openDROIDDB(dbfilename)
-            self.query = AnalysisQueries()
-            self.analysisresults.tooltype = self.__querydb__(
-                self.query.SELECT_TOOL, True
-            )[0]
-            self.analysisresults.namespacecount = self.__querydb__(
-                self.query.SELECT_COUNT_NAMESPACES, True
-            )[0]
-            self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)
-            nsdata = self.namespacedata
-            if self.analysisresults.namespacecount > 1:
-                for ns_deets in nsdata:
-                    # to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
-                    # 'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
-                    sig_deets = ns_deets[2]
-                    if "DROID_" in sig_deets and "limited to" not in sig_deets:
-                        self.pronom_ns_id = ns_deets[0]
-                    elif "tika" in sig_deets:
-                        self.tika_ns_id = ns_deets[0]
-                    elif "freedesktop" in sig_deets:
-                        self.freedesktop_ns_id = ns_deets[0]
-                self.__get_ns_priority__(self.__readconfig__(config))
-            self.denylist = denylist
+        self.conn = None
+
+        if database_path is None:
+            raise AnalysisError(
+                "Cannot initialize analysis class without a database: {}".format(
+                    database_path
+                )
+            )
+
+        self.conn = None
+        self.openDROIDDB(database_path)
+        self.query = AnalysisQueries()
+        self.analysisresults.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[
+            0
+        ]
+        self.analysisresults.namespacecount = self.__querydb__(
+            self.query.SELECT_COUNT_NAMESPACES, True
+        )[0]
+        self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)
+        nsdata = self.namespacedata
+        if self.analysisresults.namespacecount > 1:
+            for ns_deets in nsdata:
+                # to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
+                # 'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
+                sig_deets = ns_deets[2]
+                if "DROID_" in sig_deets and "limited to" not in sig_deets:
+                    self.pronom_ns_id = ns_deets[0]
+                elif "tika" in sig_deets:
+                    self.tika_ns_id = ns_deets[0]
+                elif "freedesktop" in sig_deets:
+                    self.freedesktop_ns_id = ns_deets[0]
+            self.__get_ns_priority__(self.__readconfig__(config))
+        self.denylist = denylist
+
+    def __del__(self):
+        """Destructor for DemystifyAnalysis object."""
+        try:
+            self.close_database()
+        except AttributeError:
+            logging.error("Destructor should not reach here...")
+
+    def __version__(self):
+        v = AnalysisVersion()
+        self.analysisresults.__version_no__ = v.getVersion()
+        return self.analysisresults.__version_no__
 
     def __get_ns_priority__(self, config):
         if config is False:
@@ -913,17 +938,17 @@ class DemystifyAnalysis:
 
         return self.analysisresults
 
-    def runanalysis(self, rogueanalysis):
+    def runanalysis(self, analyze_rogues):
         """Runs the analysis on the supplied report.
 
-        :param rogueanalysis: Boolean that lets the analysis engine know
+        :param analyze_rogues: Boolean that lets the analysis engine know
             to handle the rogue list at the same time (bool).
         :returns: The analysis object containing all of the results. The
             object can be used to then output different serialization
             types.
         """
-        logging.info("Running analysis")
-        self.rogueanalysis = rogueanalysis
+        logging.info("Running analysis, rogues: %s", analyze_rogues)
+        self.rogueanalysis = analyze_rogues
         return self.queryDB()
 
     def openDROIDDB(self, dbfilename):
@@ -932,5 +957,5 @@ class DemystifyAnalysis:
         self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
         self.cursor = self.conn.cursor()
 
-    def closeDROIDDB(self):
+    def close_database(self):
         self.conn.close()

@@ -33,7 +33,9 @@ import os
 import sys
 import time
 
-LOGFORMAT = "%(asctime)-15s %(levelname)s: %(message)s"
+LOGFORMAT = (
+    "%(asctime)-15s %(levelname)s: %(filename)s:%(lineno)s:%(funcName)s(): %(message)s"
+)
 DATEFORMAT = "%Y-%m-%d %H:%M:%S"
 
 logging.basicConfig(format=LOGFORMAT, datefmt=DATEFORMAT, level="INFO")
@@ -50,7 +52,7 @@ try:
 except ImportError:
     import configparser as ConfigParser
 
-from libs.DemystifyAnalysisClass import DemystifyAnalysis
+from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from libs.HandleDenylistClass import HandleDenylist
 from libs.IdentifyDatabase import IdentifyDB
 
@@ -96,9 +98,6 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
 
     :return: None (Nonetype)
     """
-
-    logging.info(type(analysisresults))
-
     if txtout is True:
         logging.info("Outputting text report")
         textoutput = DROIDAnalysisTextOutput(analysisresults)
@@ -120,53 +119,76 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
             print(htmloutput.printHTMLResults().encode("utf8"))
 
 
-# function should go somewhere more appropriate in time
-def getConfigInfo():
-    cfg = "config.cfg"
-    if os.path.exists(cfg) and os.path.isfile(cfg):
-        conf = ConfigParser.ConfigParser()
-        conf.read(cfg)
-    else:
-        conf = False
-    return conf
+def get_config():
+    """Retrieve overall configuration for the utility.
+
+    :return: Configuration object with global configuration for
+        Demystify (ConfigParser) or None (NoneType)
+    """
+    CONFIG = "config.cfg"
+    if not os.path.isfile(CONFIG):
+        logging.error("Not using config config file doesn't exist: %s", CONFIG)
+        return None
+    return ConfigParser.ConfigParser().read(CONFIG)
 
 
-def handleDROIDDB(dbfilename, denylist, rogues=False, heroes=False):
-    analysis = DemystifyAnalysis(dbfilename, getConfigInfo(), denylist)
+def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
+    """Analysis of format identification report from existing database.
 
-    # avoid unecessary processing with rogue path analyses
-    rogueanalysis = False
-    if rogues is not False or heroes is not False:
-        rogueanalysis = True
+    :param database_path: path to sqlite database containing analysis
+        data (String)
+    :param denylist: information to filter from denylist (List)
+    :param rogues: flag to output rogues (Boolean)
+    :param heroes: flag to output heroes (Boolean)
 
-    # send rogue argument to analysis class
-    analysisresults = analysis.runanalysis(rogueanalysis)
-    analysis.closeDROIDDB()
-    return analysisresults
+    :return: analysis_results (DROIDAnalysisResults)
+    """
+    try:
+        analysis = DemystifyAnalysis(database_path, get_config(), denylist)
+    except AnalysisError as err:
+        raise AnalysisError(err)
+    rogue_analysis = False
+    if rogues is not None or heroes is not None:
+        rogue_analysis = True
+    analysis_results = analysis.runanalysis(rogue_analysis)
+    return analysis_results
 
 
-def handleDROIDCSV(droidcsv, analyse, txtout, denylist, rogues=False, heroes=False):
-    dbfilename = sqlitefid.identifyinput(droidcsv)
-    logging.info("db filename: %s", dbfilename)
-    if dbfilename is None:
-        logging.error("No database filename supplied")
+def analysis_from_csv(
+    format_report, analyse, txtout, denylist, rogues=None, heroes=None
+):
+    """Analysis of format identification report from raw data, i.e.
+    DROID CSV, SF YAML etc.
+
+    :param format_report: path to format report (String)
+    :param analyse: flag to request analysis from this utility, as
+        opposed to just outputting a database file (Boolean)
+    :param txtout: flag to output text only over HTML (Boolean)
+    :param denylist: information to filter from denylist (List)
+    :param rogues: flag to output rogues (Boolean)
+    :param heroes: flag to output heroes (Boolean)
+
+    :return: None (Nonetype)
+    """
+    database_path = sqlitefid.identifyinput(format_report)
+    logging.info("Database path: %s", database_path)
+    if database_path is None:
+        logging.error("No database filename supplied: %s", database_path)
         return
     if analyse is not True:
-        logging.error("Analysis is not set to true")
+        logging.error("Analysis is not set: %s", analyse)
         return
-    analysisresults = handleDROIDDB(dbfilename, denylist, rogues, heroes)
-    handleOutput(analysisresults, txtout, rogues, heroes)
+    analysis_results = analysis_from_database(database_path, denylist, rogues, heroes)
+    handleOutput(analysis_results, txtout, rogues, heroes)
 
 
 def outputtime(start_time):
+    """Output a time taken to process string given a start_time."""
     logging.info("Output took: %s seconds", (time.time() - start_time))
 
 
 def main():
-
-    #   Usage:  --csv [droid report]
-
-    #   Handle command line arguments for the script
+    """Primary entry point for Demystify from the command line."""
     parser = argparse.ArgumentParser(
         description="Analyse DROID and Siegfried results stored in a SQLite database"
     )
@@ -175,7 +197,7 @@ def main():
         "--droid",
         "--sf",
         "--exp",
-        help="Optional: DROID or Siegfried export to read, and then analyse",
+        help="Optional: DROID or Siegfried export to read, and then analyze",
         default=False,
     )
     parser.add_argument(
@@ -211,17 +233,21 @@ def main():
     if args.denylist or args.rogues or args.heroes:
         denylist = _handle_denylist_config()
     if args.export:
-        handleDROIDCSV(args.export, True, args.txt, denylist, args.rogues, args.heroes)
+        analysis_from_csv(
+            args.export, True, args.txt, denylist, args.rogues, args.heroes
+        )
         outputtime(start_time)
         return
     if args.db:
         if not os.path.isfile(args.db):
-            logging.error("Not a file: %s", args.db)
+            logging.error("Database path not a file: %s", args.db)
             sys.exit(1)
         if not IdentifyDB().identify_export(args.db) == IdentifyDB().SQLITE_DB:
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
-        analysisresults = handleDROIDDB(args.db, denylist, args.rogues, args.heroes)
+        analysisresults = analysis_from_database(
+            args.db, denylist, args.rogues, args.heroes
+        )
         handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
         outputtime(start_time)
         return
