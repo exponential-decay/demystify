@@ -605,26 +605,26 @@ class DROIDAnalysisTextOutput:
                     # Already UTF-8 on way into here...
                     self.printFormattedText(badnames, False)
 
-        if self.analysisresults.blacklist is True:
-            if self.analysisresults.blacklist_ids:
-                self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_IDS)
+        if self.analysisresults.denylist is True:
+            if self.analysisresults.denylist_ids:
+                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_IDS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.blacklist_ids)
+                    self.__aggregatelists__(self.analysisresults.denylist_ids)
                 )
-            if self.analysisresults.blacklist_exts:
-                self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_EXTS)
+            if self.analysisresults.denylist_exts:
+                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_EXTS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.blacklist_exts)
+                    self.__aggregatelists__(self.analysisresults.denylist_exts)
                 )
-            if self.analysisresults.blacklist_filenames:
-                self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_FILENAMES)
+            if self.analysisresults.denylist_filenames:
+                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_FILENAMES)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.blacklist_filenames)
+                    self.__aggregatelists__(self.analysisresults.denylist_filenames)
                 )
-            if self.analysisresults.blacklist_directories:
-                self.__output_list_title__(self.STRINGS.HEADING_BLACKLIST_DIRS)
+            if self.analysisresults.denylist_directories:
+                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_DIRS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.blacklist_directories)
+                    self.__aggregatelists__(self.analysisresults.denylist_directories)
                 )
 
         if self.analysisresults.errorlist:

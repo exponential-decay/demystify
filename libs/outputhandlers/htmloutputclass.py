@@ -982,39 +982,39 @@ class DROIDAnalysisHTMLOutput:
                     self.__htmlnewline__(2)
                 self.printFormattedText("<hr/>")
 
-        if self.analysisresults.blacklist is True:
-            if self.analysisresults.blacklist_ids:
+        if self.analysisresults.denylist is True:
+            if self.analysisresults.denylist_ids:
                 self.__outputtable__(
-                    self.analysisresults.blacklist_ids,
-                    self.STRINGS.HEADING_BLACKLIST_IDS,
-                    self.STRINGS.HEADING_DESC_BLACKLIST,
+                    self.analysisresults.denylist_ids,
+                    self.STRINGS.HEADING_DENYLIST_IDS,
+                    self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     1,
                     "800",
                 )
-            if self.analysisresults.blacklist_exts:
+            if self.analysisresults.denylist_exts:
                 self.__outputtable__(
-                    self.analysisresults.blacklist_exts,
-                    self.STRINGS.HEADING_BLACKLIST_EXTS,
-                    self.STRINGS.HEADING_DESC_BLACKLIST,
+                    self.analysisresults.denylist_exts,
+                    self.STRINGS.HEADING_DENYLIST_EXTS,
+                    self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     3,
                     "260",
                 )
-            if self.analysisresults.blacklist_filenames:
+            if self.analysisresults.denylist_filenames:
                 self.__outputtable__(
-                    self.analysisresults.blacklist_filenames,
-                    self.STRINGS.HEADING_BLACKLIST_FILENAMES,
-                    self.STRINGS.HEADING_DESC_BLACKLIST,
+                    self.analysisresults.denylist_filenames,
+                    self.STRINGS.HEADING_DENYLIST_FILENAMES,
+                    self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     1,
                     "800",
                 )
-            if self.analysisresults.blacklist_directories:
+            if self.analysisresults.denylist_directories:
                 self.__outputtable__(
-                    self.analysisresults.blacklist_directories,
-                    self.STRINGS.HEADING_BLACKLIST_DIRS,
-                    self.STRINGS.HEADING_DESC_BLACKLIST,
+                    self.analysisresults.denylist_directories,
+                    self.STRINGS.HEADING_DENYLIST_DIRS,
+                    self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     1,
                     "800",

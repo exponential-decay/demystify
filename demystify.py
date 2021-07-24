@@ -1,5 +1,30 @@
 # -*- coding: utf-8 -*-
 
+"""Demystify
+
+Demystify is a utility for static analysis of file format identification
+tool results. The utility analyses all aspects of a format
+identification result from filename to the checksums to provide
+de-duplication reporting. In sum total demystify:
+
+   * Analyses directory and file names for characters that may need to
+     be looked after differently in a digital preservation workflow.
+   * Provides de-duplication reporting based on different checksum
+     algorithm outputs.
+   * Charts the most frequent formats in a report and helps to visualize
+     the long tail.
+   * Identifies other issues with a format identification, e.g.
+     extension only results and multiple-IDs.
+   * Summarizes your results as best as possible.
+
+The features were extended with the help of colleague and friend AKB
+(Andrea K. Byrne) to include rogues output. Rogues output is a way of
+filtering on more information relevant to your institution, e.g. if
+your workplaces is one of those rare entities that want to filter on
+.ds_store objects. Those results will be presented in reports and
+rsync style lists for filtering on disk.
+"""
+
 from __future__ import absolute_import, division
 
 import argparse
@@ -26,7 +51,7 @@ except ImportError:
     import configparser as ConfigParser
 
 from libs.DemystifyAnalysisClass import DemystifyAnalysis
-from libs.HandleBlacklistClass import HandleBlacklist
+from libs.HandleDenylistClass import HandleDenylist
 from libs.IdentifyDatabase import IdentifyDB
 
 # custom output handlers
@@ -38,20 +63,42 @@ from sqlitefid import sqlitefid
 rogueconfig = False
 
 
-def handleConfig(blacklist):
-    if os.path.isfile(blacklist):
+def _handle_denylist_config():
+    """Handles static configuration options, i.e. rogues and heroes
+    filtering for the rsync lists this module can output.
+
+    return: List containing denylist items (List)
+    """
+    DENYLIST = "denylist.cfg"
+
+    if os.path.isfile(DENYLIST):
         config = ConfigParser.RawConfigParser()
-        config.read(blacklist)  # adds to config object in own right
-        hbl = HandleBlacklist()
-        blacklist = hbl.blacklist(config)
+        config.read(DENYLIST)
+        denylist = HandleDenylist().denylist(config)
+
         global rogueconfig
         rogueconfig = config
+
     else:
-        blacklist = False
-    return blacklist
+        denylist = False
+
+    return denylist
 
 
 def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
+    """Handle output from the analysis.
+
+    :param analysisresults: Object containing all of our analysis
+        results (DROIDAnalysisResults)
+    :param txtout: Output text (True) vs. HTML (False) (Bool)
+    :param rogues: Output rogues gallery output for rsync (Bool)
+    :param heroes: Output heroes gallery output for rsync (Bool)
+
+    :return: None (Nonetype)
+    """
+
+    logging.info(type(analysisresults))
+
     if txtout is True:
         logging.info("Outputting text report")
         textoutput = DROIDAnalysisTextOutput(analysisresults)
@@ -84,8 +131,8 @@ def getConfigInfo():
     return conf
 
 
-def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
-    analysis = DemystifyAnalysis(dbfilename, getConfigInfo(), blacklist)
+def handleDROIDDB(dbfilename, denylist, rogues=False, heroes=False):
+    analysis = DemystifyAnalysis(dbfilename, getConfigInfo(), denylist)
 
     # avoid unecessary processing with rogue path analyses
     rogueanalysis = False
@@ -98,12 +145,12 @@ def handleDROIDDB(dbfilename, blacklist, rogues=False, heroes=False):
     return analysisresults
 
 
-def handleDROIDCSV(droidcsv, analyse, txtout, blacklist, rogues=False, heroes=False):
+def handleDROIDCSV(droidcsv, analyse, txtout, denylist, rogues=False, heroes=False):
     dbfilename = sqlitefid.identifyinput(droidcsv)
     logging.info("db filename: %s", dbfilename)
     if dbfilename is not None:
         if analyse is True:
-            analysisresults = handleDROIDDB(dbfilename, blacklist, rogues, heroes)
+            analysisresults = handleDROIDDB(dbfilename, denylist, rogues, heroes)
             handleOutput(analysisresults, txtout, rogues, heroes)
 
 
@@ -113,9 +160,9 @@ def outputtime(start_time):
 
 def main():
 
-    # 	Usage: 	--csv [droid report]
+    #   Usage:  --csv [droid report]
 
-    # 	Handle command line arguments for the script
+    #   Handle command line arguments for the script
     parser = argparse.ArgumentParser(
         description="Analyse DROID and Siegfried results stored in a SQLite database"
     )
@@ -124,30 +171,30 @@ def main():
         "--droid",
         "--sf",
         "--exp",
-        help="Optional: DROID or Siegfried export to read, and then analyse.",
+        help="Optional: DROID or Siegfried export to read, and then analyse",
         default=False,
     )
     parser.add_argument(
         "--db",
-        help="Optional: Single DROID or Siegfried sqlite db to read.",
+        help="Optional: Single DROID or Siegfried sqlite db to read",
         default=False,
     )
     parser.add_argument(
-        "--txt", "--text", help="Output HTML instead of text.", action="store_true"
+        "--txt", "--text", help="Output HTML instead of text", action="store_true"
     )
     parser.add_argument(
-        "--blacklist", help="Use configured blacklist.", action="store_true"
+        "--denylist", help="Use configured denylist", action="store_true"
     )
     parser.add_argument(
         "--rogues",
         "--rogue",
-        help="Output 'Rogues Gallery' listing.",
+        help="Output 'Rogues Gallery' listing",
         action="store_true",
     )
     parser.add_argument(
         "--heroes",
         "--hero",
-        help="Output 'Heroes Gallery' listing.",
+        help="Output 'Heroes Gallery' listing",
         action="store_true",
     )
 
@@ -157,25 +204,21 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    # 	Parse arguments into namespace object to reference later in the script
+    #   Parse arguments into namespace object to reference later in the script
     global args
     args = parser.parse_args()
-
-    if args.blacklist or args.rogues or args.heroes:
-        args.blacklist = "blacklist.cfg"
-        blacklist = handleConfig(args.blacklist)
-    else:
-        blacklist = False
-
+    denylist = False
+    if args.denylist or args.rogues or args.heroes:
+        denylist = _handle_denylist_config()
     if args.export:
-        handleDROIDCSV(args.export, True, args.txt, blacklist, args.rogues, args.heroes)
+        handleDROIDCSV(args.export, True, args.txt, denylist, args.rogues, args.heroes)
         outputtime(start_time)
     if args.db:
         if os.path.isfile(args.db):
             iddb = IdentifyDB()
             if iddb.identify_export(args.db) == iddb.SQLITE_DB:
                 analysisresults = handleDROIDDB(
-                    args.db, blacklist, args.rogues, args.heroes
+                    args.db, denylist, args.rogues, args.heroes
                 )
                 handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
                 outputtime(start_time)

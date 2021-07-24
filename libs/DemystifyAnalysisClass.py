@@ -11,8 +11,8 @@ from collections import Counter
 
 from libs import DroidAnalysisResultsClass
 from libs.AnalysisQueriesClass import AnalysisQueries
-from libs.BlacklistQueriesClass import BlacklistQueries
-from libs.HandleBlacklistClass import HandleBlacklist
+from libs.DenylistQueriesClass import DenylistQueries
+from libs.HandleDenylistClass import HandleDenylist
 from libs.RoguesQueriesClass import RogueQueries
 from libs.version import AnalysisVersion
 from pathlesstaken import pathlesstaken
@@ -44,7 +44,7 @@ class DemystifyAnalysis:
     ID_FREEDESKTOP = "FREE"
     ID_NONE = "NONE"
 
-    def __init__(self, dbfilename=None, config=False, blacklist=False):
+    def __init__(self, dbfilename=None, config=False, denylist=False):
 
         self.extensionIDonly = None
         self.binaryIDs = None
@@ -85,7 +85,7 @@ class DemystifyAnalysis:
                     elif "freedesktop" in sig_deets:
                         self.freedesktop_ns_id = ns_deets[0]
                 self.__get_ns_priority__(self.__readconfig__(config))
-            self.blacklist = blacklist
+            self.denylist = denylist
 
     def __get_ns_priority__(self, config):
         if config is False:
@@ -561,64 +561,64 @@ class DemystifyAnalysis:
         basis = basis.replace(" ", "").split(",", 2)[:2]
         return basis, 1
 
-    def getblacklistresults(self):
-        bl = BlacklistQueries()
-        blacklist = {}
+    def getdenylistresults(self):
+        bl = DenylistQueries()
+        denylist = {}
 
-        if self.blacklist[HandleBlacklist.IDS] is not None:
-            q4 = bl.getids(self.blacklist[HandleBlacklist.IDS])
+        if self.denylist[HandleDenylist.IDS] is not None:
+            q4 = bl.getids(self.denylist[HandleDenylist.IDS])
             ids = self.__querydb__(q4)
             if ids:
                 for found in ids:
-                    blacklist[found[0]] = (HandleBlacklist.IDS, found[2].strip())
+                    denylist[found[0]] = (HandleDenylist.IDS, found[2].strip())
 
-        if self.blacklist[HandleBlacklist.EXTENSIONS] is not None:
-            q3 = bl.getexts(self.blacklist[HandleBlacklist.EXTENSIONS])
+        if self.denylist[HandleDenylist.EXTENSIONS] is not None:
+            q3 = bl.getexts(self.denylist[HandleDenylist.EXTENSIONS])
             extensions = self.__querydb__(q3)
             if extensions:
                 for found in extensions:
-                    if found[0] not in list(blacklist.keys()):
-                        blacklist[found[0]] = (HandleBlacklist.EXTENSIONS, found[2])
+                    if found[0] not in list(denylist.keys()):
+                        denylist[found[0]] = (HandleDenylist.EXTENSIONS, found[2])
 
-        if self.blacklist[HandleBlacklist.FILENAMES] is not None:
-            q1 = bl.getfilenames(self.blacklist[HandleBlacklist.FILENAMES])
+        if self.denylist[HandleDenylist.FILENAMES] is not None:
+            q1 = bl.getfilenames(self.denylist[HandleDenylist.FILENAMES])
             filenames = self.__querydb__(q1)
             if filenames:
                 for found in filenames:
-                    if found[0] not in list(blacklist.keys()):
-                        blacklist[found[0]] = (HandleBlacklist.FILENAMES, found[1])
+                    if found[0] not in list(denylist.keys()):
+                        denylist[found[0]] = (HandleDenylist.FILENAMES, found[1])
 
-        if self.blacklist[HandleBlacklist.DIRECTORIES] is not None:
-            q2 = bl.getdirnames(self.blacklist[HandleBlacklist.DIRECTORIES])
+        if self.denylist[HandleDenylist.DIRECTORIES] is not None:
+            q2 = bl.getdirnames(self.denylist[HandleDenylist.DIRECTORIES])
             directories = self.__querydb__(q2)
             if directories:
                 for found in directories:
-                    if found[0] not in list(blacklist.keys()):
-                        blacklist[found[0]] = (HandleBlacklist.DIRECTORIES, found[1])
+                    if found[0] not in list(denylist.keys()):
+                        denylist[found[0]] = (HandleDenylist.DIRECTORIES, found[1])
 
-        if not blacklist:
-            blacklist = False
+        if not denylist:
+            denylist = False
         else:
             newlist = []
-            for k, v in blacklist.items():
-                self.analysisresults.rogue_blacklist.append(k)
+            for k, v in denylist.items():
+                self.analysisresults.rogue_denylist.append(k)
                 newlist.append(v)
             count = Counter(newlist)
             newlist = []
             for c, v in count.items():
                 newlist.append(c + (v,))
             newlist.sort(key=lambda tup: tup[len(tup) - 1], reverse=True)
-            blacklist = newlist
+            denylist = newlist
 
-            for b in blacklist:
-                if b[0] == HandleBlacklist.DIRECTORIES:
-                    self.analysisresults.blacklist_directories.append((b[1], b[2]))
-                if b[0] == HandleBlacklist.FILENAMES:
-                    self.analysisresults.blacklist_filenames.append((b[1], b[2]))
-                if b[0] == HandleBlacklist.EXTENSIONS:
-                    self.analysisresults.blacklist_exts.append((b[1], b[2]))
-                if b[0] == HandleBlacklist.IDS:
-                    self.analysisresults.blacklist_ids.append((b[1], b[2]))
+            for b in denylist:
+                if b[0] == HandleDenylist.DIRECTORIES:
+                    self.analysisresults.denylist_directories.append((b[1], b[2]))
+                if b[0] == HandleDenylist.FILENAMES:
+                    self.analysisresults.denylist_filenames.append((b[1], b[2]))
+                if b[0] == HandleDenylist.EXTENSIONS:
+                    self.analysisresults.denylist_exts.append((b[1], b[2]))
+                if b[0] == HandleDenylist.IDS:
+                    self.analysisresults.denylist_ids.append((b[1], b[2]))
 
     def queryDB(self):
         """Query runner for all demystify queries based on how the
@@ -845,11 +845,11 @@ class DemystifyAnalysis:
             self.msoftfnameanalysis()
 
             # ###################################################################################
-            # ######BLACKLIST RESULTS: GET RESULTS SPECIFIC TO THE BLACKLIST FUNCTIONALITY#######
+            # ######DENYLIST RESULTS: GET RESULTS SPECIFIC TO THE DENYLIST FUNCTIONALITY#######
             # ###################################################################################
-            if self.blacklist is not False:
-                self.analysisresults.blacklist = True
-                self.getblacklistresults()
+            if self.denylist is not False:
+                self.analysisresults.denylist = True
+                self.getdenylistresults()
 
             # ###################################################################################
             # ROGUES: Functions associated with Rogues - Nearly every QUERY that returns a PATH#

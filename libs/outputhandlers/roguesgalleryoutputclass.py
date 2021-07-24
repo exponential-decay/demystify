@@ -4,77 +4,77 @@ from __future__ import absolute_import
 
 import sys
 
-from libs.HandleBlacklistClass import HandleBlacklist
+from libs.HandleDenylistClass import HandleDenylist
 
 
 class rogueoutputclass:
-
-    roguelist = []
-
-    dupes = False
-    pro = False
-    black = False
-    fnames = False
-    dirs = False
-    zero = False
-    multi = False
-    ext = False
-
     def __init__(self, analysisresults, config, heroes=False):
+
+        self.roguelist = []
+
+        self.dupes = False
+        self.pro = False
+        self.denylist = False
+        self.fnames = False
+        self.dirs = False
+        self.zero = False
+        self.multi = False
+        self.ext = False
+
         self.analysisresults = analysisresults
         self.heroes = heroes
         self.handleconfig(config)
 
     def handleconfig(self, config):
         if config is not False:
-            if config.has_section(HandleBlacklist.CFG_ROGUES):
+            if config.has_section(HandleDenylist.CFG_ROGUES):
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DUPE
                 ):
                     self.dupes = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DUPE
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DUPE
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_PRO
                 ):
                     self.pro = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_PRO
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_PRO
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DENY
                 ):
-                    self.black = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_BLACK
+                    self.denylist = config.get(
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DENY
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_FNAMES
                 ):
                     self.fnames = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_FNAMES
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_FNAMES
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DIRS
                 ):
                     self.dirs = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_DIRS
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DIRS
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_ZERO
                 ):
                     self.zero = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_ZERO
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_ZERO
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_MULTI
                 ):
                     self.multi = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_MULTI
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_MULTI
                     ).lower()
                 if config.has_option(
-                    HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_EXT
                 ):
                     self.ext = config.get(
-                        HandleBlacklist.CFG_ROGUES, HandleBlacklist.ROGUE_EXT
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_EXT
                     ).lower()
 
     def outputlist(self, pathlist):
@@ -123,8 +123,8 @@ class rogueoutputclass:
         if self.dirs == "true":
             self.rogueorhero(self.analysisresults.rogue_dir_name_paths)
 
-        if self.black == "true":
-            self.rogueorhero(self.analysisresults.rogue_blacklist)
+        if self.denylist == "true":
+            self.rogueorhero(self.analysisresults.rogue_denylist)
 
         number_allfiles = len(set(self.analysisresults.rogue_all_paths))
         number_alldirs = len(set(self.analysisresults.rogue_all_dirs))

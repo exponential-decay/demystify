@@ -20,12 +20,12 @@ class DROIDAnalysisResults:
         # tooltype
         self.tooltype = None
 
-        # blacklist
-        self.blacklist = False
-        self.blacklist_filenames = []
-        self.blacklist_directories = []
-        self.blacklist_ids = []
-        self.blacklist_exts = []
+        # denylist
+        self.denylistlist = False
+        self.denylist_filenames = []
+        self.denylist_directories = []
+        self.denylist_ids = []
+        self.denylist_exts = []
 
         # Counts
         self.collectionsize = 0
@@ -117,7 +117,7 @@ class DROIDAnalysisResults:
         self.rogue_pronom_ns_id = None
         self.rogue_all_paths = None
         self.rogue_all_dirs = None
-        self.rogue_blacklist = []
+        self.rogue_denylist = []
         self.rogue_duplicates = []
         self.rogue_identified_all = []
         self.rogue_identified_pronom = []
