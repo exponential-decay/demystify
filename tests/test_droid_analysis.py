@@ -4,7 +4,7 @@ from __future__ import absolute_import, print_function
 
 from demystify import analysis_from_csv
 
-DROID_CSV = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA1_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA1_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","0","file:////10.1.4.222/gda/archives-sample-files/opf-format-corpus/format-corpus/","\\10.1.4.222\\gda\archives-sample-files\\opf-format-corpus\format-corpus","🖤format-corpus",,"Done","","Folder",,"2014-02-28T15:49:11","false",,"",,"","",""
 "3","2","file:////10.1.4.222/gda/archives-sample-files/opf-format-corpus/format-corpus/video/","\\10.1.4.222\\gda\archives-sample-files\\opf-format-corpus\format-corpus\video","video",,"Done","","Folder",,"2014-02-28T15:48:47","false",,"",,"","",""
 "4","3","file:////10.1.4.222/gda/archives-sample-files/opf-format-corpus/format-corpus/video/Quicktime/","\\10.1.4.222\\gda\archives-sample-files\\opf-format-corpus\format-corpus\video\\Quicktime","Quicktime",,"Done","","Folder",,"2014-02-28T15:48:59","false",,"",,"","",""
@@ -415,7 +415,7 @@ def test_run_droid_analysis(tmp_path):
     # Get results.
 
     dir_ = tmp_path
-    droid_csv = dir_ / "droid_test.csv"
+    droid_csv = dir_ / "droid_💜_test.csv"
     droid_csv.write_text(DROID_CSV.strip())
 
     # Analysis from CSV will currently read the results from the CSV
@@ -423,7 +423,9 @@ def test_run_droid_analysis(tmp_path):
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    _ = analysis_from_csv(str(droid_csv), True, {})
+    res = analysis_from_csv(str(droid_csv), True, {})
+
+    assert res.filename.endswith("droid_💜_test")
 
 
 def test_run_siegfried_analysis(tmp_path):
@@ -434,7 +436,7 @@ def test_run_siegfried_analysis(tmp_path):
     # Get results.
 
     dir_ = tmp_path
-    sf_yaml = dir_ / "sf_test.yaml"
+    sf_yaml = dir_ / "sf_💜_test.yaml"
     sf_yaml.write_text(SIEGFRIED_YAML.strip())
 
     # Analysis from CSV will currently read the results from the CSV
@@ -442,4 +444,6 @@ def test_run_siegfried_analysis(tmp_path):
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    _ = analysis_from_csv(str(sf_yaml), True, {})
+    res = analysis_from_csv(str(sf_yaml), True, {})
+
+    assert res.filename.endswith("sf_💜_test")
