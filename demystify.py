@@ -148,10 +148,14 @@ def handleDROIDDB(dbfilename, denylist, rogues=False, heroes=False):
 def handleDROIDCSV(droidcsv, analyse, txtout, denylist, rogues=False, heroes=False):
     dbfilename = sqlitefid.identifyinput(droidcsv)
     logging.info("db filename: %s", dbfilename)
-    if dbfilename is not None:
-        if analyse is True:
-            analysisresults = handleDROIDDB(dbfilename, denylist, rogues, heroes)
-            handleOutput(analysisresults, txtout, rogues, heroes)
+    if dbfilename is None:
+        logging.error("No database filename supplied")
+        return
+    if analyse is not True:
+        logging.error("Analysis is not set to true")
+        return
+    analysisresults = handleDROIDDB(dbfilename, denylist, rogues, heroes)
+    handleOutput(analysisresults, txtout, rogues, heroes)
 
 
 def outputtime(start_time):
@@ -197,14 +201,10 @@ def main():
         help="Output 'Heroes Gallery' listing",
         action="store_true",
     )
-
     start_time = time.time()
-
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
-
-    #   Parse arguments into namespace object to reference later in the script
     global args
     args = parser.parse_args()
     denylist = False
@@ -213,21 +213,19 @@ def main():
     if args.export:
         handleDROIDCSV(args.export, True, args.txt, denylist, args.rogues, args.heroes)
         outputtime(start_time)
+        return
     if args.db:
-        if os.path.isfile(args.db):
-            iddb = IdentifyDB()
-            if iddb.identify_export(args.db) == iddb.SQLITE_DB:
-                analysisresults = handleDROIDDB(
-                    args.db, denylist, args.rogues, args.heroes
-                )
-                handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
-                outputtime(start_time)
-            else:
-                sys.exit("Exiting: Not a recognised SQLite file.")
-        else:
-            sys.exit("Exiting: Not a file.")
-    else:
-        sys.exit(1)
+        if not os.path.isfile(args.db):
+            logging.error("Not a file: %s", args.db)
+            sys.exit(1)
+        if not IdentifyDB().identify_export(args.db) == IdentifyDB().SQLITE_DB:
+            logging.error("Not a recognized sqlite database: %s", args.db)
+            sys.exit(1)
+        analysisresults = handleDROIDDB(args.db, denylist, args.rogues, args.heroes)
+        handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
+        outputtime(start_time)
+        return
+    logging.info("Exiting, nothing to do")
 
 
 if __name__ == "__main__":
