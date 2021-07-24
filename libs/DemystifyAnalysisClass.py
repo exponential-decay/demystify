@@ -4,6 +4,11 @@
 
 from __future__ import absolute_import, division, print_function
 
+try:
+    from ConfigParser import NoOptionError
+except ImportError:
+    from configparser import NoOptionError
+
 import logging
 import sqlite3
 import sys
@@ -67,6 +72,7 @@ class DemystifyAnalysis:
         self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
 
         self.conn = None
+        self.cursor = None
 
         if database_path is None:
             raise AnalysisError(
@@ -113,51 +119,47 @@ class DemystifyAnalysis:
         return self.analysisresults.__version_no__
 
     def __get_ns_priority__(self, config):
-        if config is False:
+        if not config:
             self.priority_ns_id = self.pronom_ns_id
-        else:
-            if config == self.ID_PRONOM:
-                self.priority_ns_id = self.pronom_ns_id
-            if config == self.ID_FREEDESKTOP:
-                self.priority_ns_id = self.freedesktop_ns_id
-            if config == self.ID_TIKA:
-                self.priority_ns_id = self.tika_ns_id
-            if config == self.ID_NONE:
-                self.priority_ns_id = None
+            return
+        if config == self.ID_PRONOM:
+            self.priority_ns_id = self.pronom_ns_id
+        if config == self.ID_FREEDESKTOP:
+            self.priority_ns_id = self.freedesktop_ns_id
+        if config == self.ID_TIKA:
+            self.priority_ns_id = self.tika_ns_id
+        if config == self.ID_NONE:
+            self.priority_ns_id = None
 
     def __readconfig__(self, config):
-        ns_out = None
-        if config is not None:
-            if config.has_section("priority"):
-                if (
-                    config.has_option("priority", "pronom") is True
-                    and config.get("priority", "pronom").lower() == "true"
-                ):
-                    ns_out = self.ID_PRONOM
-                elif (
-                    config.has_option("priority", "freedesktop")
-                    and config.get("priority", "freedesktop").lower() == "true"
-                ):
-                    ns_out = self.ID_FREEDESKTOP
-                elif (
-                    config.has_option("priority", "tika")
-                    and config.get("priority", "tika").lower() == "true"
-                ):
-                    ns_out = self.ID_TIKA
-                elif (
-                    config.has_option("priority", "none")
-                    and config.get("priority", "none").lower() == "true"
-                ):
-                    ns_out = self.ID_NONE
-                else:
-                    ns_out = None
-                if ns_out == "":
-                    ns_out = None
+        """Read values from config.
 
-        return ns_out
+        At this point in time this is only a way to prioritize a
+        namespace in the output.
 
-    # DB self.cursor
-    cursor = None
+        :param config: Configuration object (ConfigParser)
+        :return: Namespace ID (String const) or None (Nonetype)
+        """
+        if not config:
+            return None
+        if not config.has_section("priority"):
+            return None
+        try:
+            config.get("priority", "pronom").lower() == "true"
+            return self.ID_PRONOM
+        except NoOptionError:
+            pass
+        try:
+            config.get("priority", "freedesktop").lower() == "true"
+            return self.ID_FREEDESKTOP
+        except NoOptionError:
+            pass
+        try:
+            config.get("priority", "tika").lower() == "true"
+            return self.ID_TIKA
+        except NoOptionError:
+            pass
+        return None
 
     def __querydb__(self, query, fetchone=False, numberquery=False, tolist=False):
         self.cursor.execute(query.replace("  ", ""))

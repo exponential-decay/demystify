@@ -65,6 +65,21 @@ from sqlitefid import sqlitefid
 rogueconfig = False
 
 
+def get_config():
+    """Retrieve overall configuration for the utility.
+
+    :return: Configuration object with global configuration for
+        Demystify (ConfigParser) or None (NoneType)
+    """
+    CONFIG = "config.cfg"
+    if not os.path.isfile(CONFIG):
+        logging.error("Not using config config file doesn't exist: %s", CONFIG)
+        return None
+    config = ConfigParser.ConfigParser()
+    config.read(CONFIG)
+    return config
+
+
 def _handle_denylist_config():
     """Handles static configuration options, i.e. rogues and heroes
     filtering for the rsync lists this module can output.
@@ -87,7 +102,7 @@ def _handle_denylist_config():
     return denylist
 
 
-def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
+def handle_output(analysisresults, txtout=False, rogues=False, heroes=False):
     """Handle output from the analysis.
 
     :param analysisresults: Object containing all of our analysis
@@ -117,19 +132,6 @@ def handleOutput(analysisresults, txtout=False, rogues=False, heroes=False):
             print(htmloutput.printHTMLResults())
         else:
             print(htmloutput.printHTMLResults().encode("utf8"))
-
-
-def get_config():
-    """Retrieve overall configuration for the utility.
-
-    :return: Configuration object with global configuration for
-        Demystify (ConfigParser) or None (NoneType)
-    """
-    CONFIG = "config.cfg"
-    if not os.path.isfile(CONFIG):
-        logging.error("Not using config config file doesn't exist: %s", CONFIG)
-        return None
-    return ConfigParser.ConfigParser().read(CONFIG)
 
 
 def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
@@ -179,10 +181,10 @@ def analysis_from_csv(
         logging.error("Analysis is not set: %s", analyse)
         return
     analysis_results = analysis_from_database(database_path, denylist, rogues, heroes)
-    handleOutput(analysis_results, txtout, rogues, heroes)
+    handle_output(analysis_results, txtout, rogues, heroes)
 
 
-def outputtime(start_time):
+def output_time(start_time):
     """Output a time taken to process string given a start_time."""
     logging.info("Output took: %s seconds", (time.time() - start_time))
 
@@ -236,20 +238,20 @@ def main():
         analysis_from_csv(
             args.export, True, args.txt, denylist, args.rogues, args.heroes
         )
-        outputtime(start_time)
+        output_time(start_time)
         return
     if args.db:
         if not os.path.isfile(args.db):
             logging.error("Database path not a file: %s", args.db)
             sys.exit(1)
-        if not IdentifyDB().identify_export(args.db) == IdentifyDB().SQLITE_DB:
+        if not IdentifyDB().identify_export(args.db):
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
         analysisresults = analysis_from_database(
             args.db, denylist, args.rogues, args.heroes
         )
-        handleOutput(analysisresults, args.txt, args.rogues, args.heroes)
-        outputtime(start_time)
+        handle_output(analysisresults, args.txt, args.rogues, args.heroes)
+        output_time(start_time)
         return
     logging.info("Exiting, nothing to do")
 
