@@ -106,7 +106,7 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
     """Handle output from the analysis.
 
     :param analysisresults: Object containing all of our analysis
-        results (DROIDAnalysisResults)
+        results (AnalysisResults)
     :param txtout: Output text (True) vs. HTML (False) (Bool)
     :param rogues: Output rogues gallery output for rsync (Bool)
     :param heroes: Output heroes gallery output for rsync (Bool)
@@ -143,7 +143,7 @@ def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
     :param rogues: flag to output rogues (Boolean)
     :param heroes: flag to output heroes (Boolean)
 
-    :return: analysis_results (DROIDAnalysisResults)
+    :return: analysis_results (AnalysisResults)
     """
     try:
         analysis = DemystifyAnalysis(database_path, get_config(), denylist)
@@ -246,7 +246,7 @@ def main():
     if analysis_results:
         handle_output(analysis_results, args.txt, args.rogues, args.heroes)
         output_time(start_time)
-    logging.info("Exiting, nothing to do")
+    logging.info("Exiting: nothing else to do")
 
 
 if __name__ == "__main__":
