@@ -225,6 +225,7 @@ def main():
         sys.exit(1)
     global args
     args = parser.parse_args()
+    denylist=None
     if args.denylist or args.rogues or args.heroes:
         denylist = _handle_denylist_config()
     if args.export:

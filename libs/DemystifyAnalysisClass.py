@@ -64,15 +64,20 @@ class DemystifyAnalysis:
                 )
             )
 
+        # Give the object a place to hold results and the powers to
+        # generate data for that.
         self.analysis_results = AnalysisResultsClass.AnalysisResults()
         self.query = AnalysisQueries()
 
+        # Initialize database connection variables.
         self._open_database(database_path)
-        self.analysis_results.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[0]
+        self.analysis_results.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[
+            0
+        ]
 
         self.denylist = denylist
 
-        # Instance variables.
+        # Initialize instance variables.
         self.extensionIDonly = None
         self.binaryIDs = None
         self.noids = None
@@ -80,9 +85,8 @@ class DemystifyAnalysis:
         self.textIDs = None
         self.filenameIDs = None
 
-        # Namespaace data.
+        # Initialize namespaace data.
         self._initialize_namespace_details(config)
-
 
     def __del__(self):
         """Destructor for DemystifyAnalysis object."""
@@ -339,14 +343,18 @@ class DemystifyAnalysis:
         filenameidrows = []
 
         # create a set to remove the fileids with duplicate methods
-        for id in allids:
-            file = id[0]
-            method = id[2].lower().strip()
-            idrow = id[1]
-            ns = id[3]
-            method_list.append(
-                str(file) + "," + method + "," + str(idrow) + "," + str(ns)
-            )
+        for id_ in allids:
+            file = id_[0]
+            try:
+                method = id_[2].lower().strip()
+                idrow = id_[1]
+                ns = id_[3]
+                method_list.append(
+                    str(file) + "," + method + "," + str(idrow) + "," + str(ns)
+                )
+            except AttributeError:
+                logging.error("We shouldn't have this issue - begins in sqlitefid")
+                pass
 
         # go through list the first time and prioritize container and signature
         # and THEN our sorted list of NS identifiers...
