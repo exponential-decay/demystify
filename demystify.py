@@ -246,7 +246,7 @@ def main():
     if analysis_results:
         handle_output(analysis_results, args.txt, args.rogues, args.heroes)
         output_time(start_time)
-    logging.info("Exiting: nothing else to do")
+    logging.info("Nothing else to do")
 
 
 if __name__ == "__main__":

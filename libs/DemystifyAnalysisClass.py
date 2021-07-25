@@ -14,7 +14,7 @@ import sqlite3
 import sys
 from collections import Counter
 
-from libs import DroidAnalysisResultsClass
+from libs import AnalysisResultsClass
 from libs.AnalysisQueriesClass import AnalysisQueries
 from libs.DenylistQueriesClass import DenylistQueries
 from libs.HandleDenylistClass import HandleDenylist
@@ -69,7 +69,7 @@ class DemystifyAnalysis:
         self.freedesktop_ns_id = None
         self.tika_ns_id = None
 
-        self.analysisresults = DroidAnalysisResultsClass.DROIDAnalysisResults()
+        self.analysisresults = AnalysisResultsClass.AnalysisResults()
 
         self.conn = None
         self.cursor = None

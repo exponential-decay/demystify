@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from libs.version import AnalysisVersion
 
 
-class DROIDAnalysisResults:
+class AnalysisResults:
     def __init__(self):
 
         # version
