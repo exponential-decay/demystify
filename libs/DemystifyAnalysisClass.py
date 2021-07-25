@@ -64,33 +64,28 @@ class DemystifyAnalysis:
                 )
             )
 
+        self.analysis_results = AnalysisResultsClass.AnalysisResults()
+        self.query = AnalysisQueries()
+
+        self._open_database(database_path)
+        self.analysis_results.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[0]
+
         self.denylist = denylist
 
+        # Instance variables.
         self.extensionIDonly = None
         self.binaryIDs = None
         self.noids = None
         self.xmlIDs = None
         self.textIDs = None
         self.filenameIDs = None
+
+        # Namespace data.
         self.namespacedata = None
         self.priority_ns_id = None
-
-        # namespaceids
         self.pronom_ns_id = None
         self.freedesktop_ns_id = None
         self.tika_ns_id = None
-
-        self.analysis_results = AnalysisResultsClass.AnalysisResults()
-
-        self.conn = None
-        self.cursor = None
-
-        self.openDROIDDB(database_path)
-        self.query = AnalysisQueries()
-
-        self.analysis_results.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[
-            0
-        ]
 
         # Working with Siegfried means that we can work with multiple
         # namespaces. Setup work for that is all below.
@@ -123,7 +118,7 @@ class DemystifyAnalysis:
     def __del__(self):
         """Destructor for DemystifyAnalysis object."""
         try:
-            self.close_database()
+            self._close_database()
         except AttributeError:
             logging.error("Destructor should not reach here...")
 
@@ -131,6 +126,15 @@ class DemystifyAnalysis:
         v = AnalysisVersion()
         self.analysis_results.__version_no__ = v.getVersion()
         return self.analysis_results.__version_no__
+
+    def _open_database(self, dbfilename):
+        self.analysis_results.filename = dbfilename.rstrip(".db")
+        self.conn = sqlite3.connect(dbfilename)
+        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
+        self.cursor = self.conn.cursor()
+
+    def _close_database(self):
+        self.conn.close()
 
     def __get_ns_priority__(self, config):
         if not config:
@@ -974,12 +978,3 @@ class DemystifyAnalysis:
         logging.info("Running analysis, rogues: %s", analyze_rogues)
         self.rogueanalysis = analyze_rogues
         return self.queryDB()
-
-    def openDROIDDB(self, dbfilename):
-        self.analysis_results.filename = dbfilename.rstrip(".db")
-        self.conn = sqlite3.connect(dbfilename)
-        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
-        self.cursor = self.conn.cursor()
-
-    def close_database(self):
-        self.conn.close()
