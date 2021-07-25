@@ -21,7 +21,7 @@ class DROIDAnalysisHTMLOutput:
     def __init__(self, analysisresults):
         self.wiki = True
         self.STRINGS = IN_EN
-        self.analysisresults = analysisresults
+        self.analysis_results = analysisresults
         self.htmloutput = u""
 
     def STDOUTprintFormattedText(self, text):
@@ -163,7 +163,7 @@ class DROIDAnalysisHTMLOutput:
                 '</td><td style="width: 100px;">{}</td>'.format(str(sig[1]).strip())
             )
             self.printFormattedText(
-                self.__outputmeter__(sig[1], 0, self.analysisresults.filecount)
+                self.__outputmeter__(sig[1], 0, self.analysis_results.filecount)
             )
             self.printFormattedText("</tr>")
         self.printFormattedText("</table>")
@@ -206,11 +206,11 @@ class DROIDAnalysisHTMLOutput:
     def __handleidspecificoutput__(self):
         # handle output for other identifiers in the namespace
         if (
-            self.analysisresults.xml_identifiers is not None
-            and len(self.analysisresults.xml_identifiers) > 0
+            self.analysis_results.xml_identifiers is not None
+            and len(self.analysis_results.xml_identifiers) > 0
         ):
             self.__outputtable__(
-                self.analysisresults.xml_identifiers,
+                self.analysis_results.xml_identifiers,
                 self.STRINGS.HEADING_XML_ID_COMPLETE,
                 self.STRINGS.HEADING_DESC_XML_ID_COMPLETE,
                 True,
@@ -218,11 +218,11 @@ class DROIDAnalysisHTMLOutput:
                 "800",
             )
         if (
-            self.analysisresults.text_identifiers is not None
-            and len(self.analysisresults.text_identifiers) > 0
+            self.analysis_results.text_identifiers is not None
+            and len(self.analysis_results.text_identifiers) > 0
         ):
             self.__outputtable__(
-                self.analysisresults.text_identifiers,
+                self.analysis_results.text_identifiers,
                 self.STRINGS.HEADING_TEXT_ID_COMPLETE,
                 self.STRINGS.HEADING_DESC_TEXT_ID_COMPLETE,
                 True,
@@ -230,11 +230,11 @@ class DROIDAnalysisHTMLOutput:
                 "800",
             )
         if (
-            self.analysisresults.filename_identifiers is not None
-            and len(self.analysisresults.filename_identifiers) > 0
+            self.analysis_results.filename_identifiers is not None
+            and len(self.analysis_results.filename_identifiers) > 0
         ):
             self.__outputtable__(
-                self.analysisresults.filename_identifiers,
+                self.analysis_results.filename_identifiers,
                 self.STRINGS.HEADING_FILENAME_ID_COMPLETE,
                 self.STRINGS.HEADING_DESC_FILENAME_ID_COMPLETE,
                 True,
@@ -260,11 +260,13 @@ class DROIDAnalysisHTMLOutput:
             text = ns[ds.NS_CONST_TEXT_COUNT]
             filename = ns[ds.NS_CONST_FILENAME_COUNT]
             ext = ns[ds.NS_CONST_EXTENSION_COUNT]
-            unidentified = self.analysisresults.filecount - identified
+            unidentified = self.analysis_results.filecount - identified
             percent_not = ds.calculatePercent(
-                self.analysisresults.filecount, unidentified
+                self.analysis_results.filecount, unidentified
             )
-            percent_ok = ds.calculatePercent(self.analysisresults.filecount, identified)
+            percent_ok = ds.calculatePercent(
+                self.analysis_results.filecount, identified
+            )
 
             self.printFormattedText(
                 self.__make_list_item__(
@@ -302,7 +304,7 @@ class DROIDAnalysisHTMLOutput:
                 )
             )
 
-            if self.analysisresults.tooltype != "droid":
+            if self.analysis_results.tooltype != "droid":
                 self.printFormattedText(
                     self.__make_list_item__(
                         self.STRINGS.SUMMARY_DESC_XML_ID,
@@ -353,8 +355,10 @@ class DROIDAnalysisHTMLOutput:
         return newlist
 
     def outputaggregatelists(self):
-        if self.analysisresults.binaryidentifiers is not None:
-            newlist = self.__removenamespaceid__(self.analysisresults.binaryidentifiers)
+        if self.analysis_results.binaryidentifiers is not None:
+            newlist = self.__removenamespaceid__(
+                self.analysis_results.binaryidentifiers
+            )
             self.__outputtable__(
                 newlist,
                 self.STRINGS.HEADING_BINARY_ID,
@@ -364,8 +368,8 @@ class DROIDAnalysisHTMLOutput:
                 "800",
                 False,
             )
-        if self.analysisresults.xmlidentifiers is not None:
-            newlist = self.__removenamespaceid__(self.analysisresults.xmlidentifiers)
+        if self.analysis_results.xmlidentifiers is not None:
+            newlist = self.__removenamespaceid__(self.analysis_results.xmlidentifiers)
             self.__outputtable__(
                 newlist,
                 self.STRINGS.HEADING_XML_ID,
@@ -375,8 +379,8 @@ class DROIDAnalysisHTMLOutput:
                 "800",
                 False,
             )
-        if self.analysisresults.textidentifiers is not None:
-            newlist = self.__removenamespaceid__(self.analysisresults.textidentifiers)
+        if self.analysis_results.textidentifiers is not None:
+            newlist = self.__removenamespaceid__(self.analysis_results.textidentifiers)
             self.__outputtable__(
                 newlist,
                 self.STRINGS.HEADING_TEXT_ID,
@@ -386,9 +390,9 @@ class DROIDAnalysisHTMLOutput:
                 "800",
                 False,
             )
-        if self.analysisresults.filenameidentifiers is not None:
+        if self.analysis_results.filenameidentifiers is not None:
             newlist = self.__removenamespaceid__(
-                self.analysisresults.filenameidentifiers
+                self.analysis_results.filenameidentifiers
             )
             self.__outputtable__(
                 newlist,
@@ -465,7 +469,7 @@ class DROIDAnalysisHTMLOutput:
         self.printFormattedText("<!DOCTYPE html>")
         self.printFormattedText("<html lang='en'>")
         self.printFormattedText("<head>")
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
                 "<title>{}</title>".format(self.STRINGS.REPORT_TITLE_SF)
             )
@@ -486,51 +490,51 @@ class DROIDAnalysisHTMLOutput:
             "<body style='font-family: calibri, arial; letter-spacing: 0.5px; margin:0 auto; width: 800px; '>"
         )
 
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText("<h1>{}</h1>".format(self.STRINGS.REPORT_TITLE_SF))
         else:
             self.printFormattedText("<h1>{}</h1>".format(self.STRINGS.REPORT_TITLE_DR))
 
         self.printFormattedText(
             "<b>{}: </b>{}".format(
-                self.STRINGS.REPORT_VERSION, self.analysisresults.__version__()
+                self.STRINGS.REPORT_VERSION, self.analysis_results.__version__()
             )
         )
         self.__htmlnewline__()
         self.printFormattedText(
             "<b>{}: </b>{}".format(
-                self.STRINGS.REPORT_FILE, self.analysisresults.filename
+                self.STRINGS.REPORT_FILE, self.analysis_results.filename
             )
         )
         self.__htmlnewline__()
         self.printFormattedText(
             "<b>{}: </b>{}".format(
-                self.STRINGS.REPORT_TOOL, self.analysisresults.tooltype
+                self.STRINGS.REPORT_TOOL, self.analysis_results.tooltype
             )
         )
         self.__htmlnewline__(2)
         self.printFormattedText(
             "<b>{}: </b>{}".format(
-                self.STRINGS.NAMESPACES, self.analysisresults.namespacecount
+                self.STRINGS.NAMESPACES, self.analysis_results.namespacecount
             )
         )
         self.__htmlnewline__()
-        if self.analysisresults.bof_distance is not None:
+        if self.analysis_results.bof_distance is not None:
             self.__htmlnewline__()
             self.printFormattedText(
                 "<b>{}: </b>{}".format(
                     self.STRINGS.SUMMARY_DISTANCE_BOF,
-                    self.__generateOffsetText__(self.analysisresults.bof_distance),
+                    self.__generateOffsetText__(self.analysis_results.bof_distance),
                 )
             )
-        if self.analysisresults.eof_distance is not None:
-            if self.analysisresults.bof_distance is not None:
+        if self.analysis_results.eof_distance is not None:
+            if self.analysis_results.bof_distance is not None:
                 self.__htmlnewline__()
             self.__htmlnewline__()
             self.printFormattedText(
                 "<b>{}: </b>{}".format(
                     self.STRINGS.SUMMARY_DISTANCE_EOF,
-                    self.__generateOffsetText__(self.analysisresults.eof_distance),
+                    self.__generateOffsetText__(self.analysis_results.eof_distance),
                 )
             )
 
@@ -541,24 +545,24 @@ class DROIDAnalysisHTMLOutput:
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_TOTAL_FILES,
                 self.STRINGS.SUMMARY_TOTAL_FILES,
-                self.analysisresults.filecount,
+                self.analysis_results.filecount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_ARCHIVE_FILES,
                 self.STRINGS.SUMMARY_ARCHIVE_FILES,
-                self.analysisresults.containercount,
+                self.analysis_results.containercount,
             )
         )
 
         # even if we have archive files, if the analysis isn't on, we can't output this value
-        if self.analysisresults.filesincontainercount > 0:
+        if self.analysis_results.filesincontainercount > 0:
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_INSIDE_ARCHIVES,
                     self.STRINGS.SUMMARY_INSIDE_ARCHIVES,
-                    self.analysisresults.filesincontainercount,
+                    self.analysis_results.filesincontainercount,
                 )
             )
 
@@ -566,58 +570,58 @@ class DROIDAnalysisHTMLOutput:
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_DIRECTORIES,
                 self.STRINGS.SUMMARY_DIRECTORIES,
-                self.analysisresults.directoryCount,
+                self.analysis_results.directoryCount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_UNIQUE_DIRNAMES,
                 self.STRINGS.SUMMARY_UNIQUE_DIRNAMES,
-                self.analysisresults.uniqueDirectoryNames,
+                self.analysis_results.uniqueDirectoryNames,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_IDENTIFIED_FILES,
                 self.STRINGS.SUMMARY_IDENTIFIED_FILES,
-                self.analysisresults.identifiedfilecount,
+                self.analysis_results.identifiedfilecount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_MULTIPLE,
                 self.STRINGS.SUMMARY_MULTIPLE,
-                self.analysisresults.multipleidentificationcount,
+                self.analysis_results.multipleidentificationcount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_UNIDENTIFIED,
                 self.STRINGS.SUMMARY_UNIDENTIFIED,
-                self.analysisresults.unidentifiedfilecount,
+                self.analysis_results.unidentifiedfilecount,
             )
         )
 
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_XML_ID,
                     self.STRINGS.SUMMARY_XML_ID,
-                    self.analysisresults.xmlidfilecount,
+                    self.analysis_results.xmlidfilecount,
                 )
             )
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_TEXT_ID,
                     self.STRINGS.SUMMARY_TEXT_ID,
-                    self.analysisresults.textidfilecount,
+                    self.analysis_results.textidfilecount,
                 )
             )
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_FILENAME_ID,
                     self.STRINGS.SUMMARY_FILENAME_ID,
-                    self.analysisresults.filenameidfilecount,
+                    self.analysis_results.filenameidfilecount,
                 )
             )
 
@@ -625,51 +629,51 @@ class DROIDAnalysisHTMLOutput:
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_EXTENSION_ID,
                 self.STRINGS.SUMMARY_EXTENSION_ID,
-                self.analysisresults.extensionIDOnlyCount,
+                self.analysis_results.extensionIDOnlyCount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_EXTENSION_MISMATCH,
                 self.STRINGS.SUMMARY_EXTENSION_MISMATCH,
-                self.analysisresults.extmismatchCount,
+                self.analysis_results.extmismatchCount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_ID_PUID_COUNT,
                 self.STRINGS.SUMMARY_ID_PUID_COUNT,
-                self.analysisresults.distinctSignaturePuidcount,
+                self.analysis_results.distinctSignaturePuidcount,
             )
         )
 
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_OTHER_ID_COUNT,
                     self.STRINGS.SUMMARY_OTHER_ID_COUNT,
-                    self.analysisresults.distinctOtherIdentifiers,
+                    self.analysis_results.distinctOtherIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_XML_ID_COUNT,
                     self.STRINGS.SUMMARY_XML_ID_COUNT,
-                    self.analysisresults.distinctXMLIdentifiers,
+                    self.analysis_results.distinctXMLIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_TEXT_ID_COUNT,
                     self.STRINGS.SUMMARY_TEXT_ID_COUNT,
-                    self.analysisresults.distinctTextIdentifiers,
+                    self.analysis_results.distinctTextIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_FILENAME_ID_COUNT,
                     self.STRINGS.SUMMARY_FILENAME_ID_COUNT,
-                    self.analysisresults.distinctFilenameIdentifiers,
+                    self.analysis_results.distinctFilenameIdentifiers,
                 )
             )
 
@@ -677,23 +681,23 @@ class DROIDAnalysisHTMLOutput:
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_UNIQUE_EXTENSIONS,
                 self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS,
-                self.analysisresults.distinctextensioncount,
+                self.analysis_results.distinctextensioncount,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_ZERO_BYTE,
                 self.STRINGS.SUMMARY_ZERO_BYTE,
-                self.analysisresults.zerobytecount,
+                self.analysis_results.zerobytecount,
             )
         )
 
-        if self.analysisresults.hashused > 0:
+        if self.analysis_results.hashused > 0:
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_IDENTICAL_FILES,
                     self.STRINGS.SUMMARY_IDENTICAL_FILES,
-                    self.analysisresults.totalHASHduplicates,
+                    self.analysis_results.totalHASHduplicates,
                 )
             )
 
@@ -701,33 +705,33 @@ class DROIDAnalysisHTMLOutput:
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_MULTIPLE_SPACES,
                 self.STRINGS.SUMMARY_MULTIPLE_SPACES,
-                len(self.analysisresults.multiplespacelist),
+                len(self.analysis_results.multiplespacelist),
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED,
                 self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED,
-                self.analysisresults.identifiedPercentage,
+                self.analysis_results.identifiedPercentage,
             )
         )
         self.printFormattedText(
             self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_PERCENTAGE_UNIDENTIFIED,
                 self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED,
-                self.analysisresults.unidentifiedPercentage,
+                self.analysis_results.unidentifiedPercentage,
             )
         )
 
         if (
-            self.analysisresults.namespacecount > 1
-            and self.analysisresults.identificationgaps is not None
+            self.analysis_results.namespacecount > 1
+            and self.analysis_results.identificationgaps is not None
         ):
             self.printFormattedText(
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_GAPS_COVERED,
                     self.STRINGS.SUMMARY_GAPS_COVERED,
-                    self.analysisresults.identificationgaps,
+                    self.analysis_results.identificationgaps,
                 )
             )
 
@@ -741,7 +745,7 @@ class DROIDAnalysisHTMLOutput:
         )
 
         # easier to reference from a var
-        size = self.analysisresults.collectionsize
+        size = self.analysis_results.collectionsize
 
         self.printFormattedText(
             "{} bytes | {} MiB/MB (Megabytes)".format(
@@ -752,9 +756,9 @@ class DROIDAnalysisHTMLOutput:
         self.printFormattedText("<hr/>")
 
         signature_id_list = []
-        if self.analysisresults.signatureidentifiers is not None:
+        if self.analysis_results.signatureidentifiers is not None:
             countlist = []
-            for puid in self.analysisresults.signatureidentifiers:
+            for puid in self.analysis_results.signatureidentifiers:
                 namespace, identifier, formatname, count = self.splitidresults(puid)
                 countlist.append((identifier, int(count)))
                 signature_id_list.append(
@@ -762,7 +766,7 @@ class DROIDAnalysisHTMLOutput:
                 )
             self.identifierchart(countlist)
 
-        if self.analysisresults.dateFrequency is not None:
+        if self.analysis_results.dateFrequency is not None:
             # Date Ranges
             self.__outputheading__(
                 self.STRINGS.HEADING_DATE_RANGE, self.STRINGS.HEADING_DESC_DATE_RANGE
@@ -774,7 +778,7 @@ class DROIDAnalysisHTMLOutput:
                     self.STRINGS.COLUMN_HEADER_VALUES_COUNT,
                 )
             )
-            for dates in self.analysisresults.dateFrequency:
+            for dates in self.analysis_results.dateFrequency:
                 self.printFormattedText('<tr><td style="width: 100px;">')
 
                 if self.wiki is True:
@@ -790,7 +794,7 @@ class DROIDAnalysisHTMLOutput:
 
                 # Unused Meter Code...
                 self.printFormattedText(
-                    self.__outputmeter__(dates[1], 0, self.analysisresults.filecount)
+                    self.__outputmeter__(dates[1], 0, self.analysis_results.filecount)
                 )
                 self.printFormattedText("</tr>")
 
@@ -806,18 +810,18 @@ class DROIDAnalysisHTMLOutput:
         self.outputaggregatelists()
         # ###MORE AGGREGATE LISTS PER IDENTIFIER###
 
-        if self.analysisresults.idmethodFrequency is not None:
+        if self.analysis_results.idmethodFrequency is not None:
             # ID Method Frequency
             self.__outputtable__(
-                self.analysisresults.idmethodFrequency,
+                self.analysis_results.idmethodFrequency,
                 self.STRINGS.HEADING_ID_METHOD,
                 self.STRINGS.HEADING_DESC_ID_METHOD,
             )
 
-        if self.analysisresults.extensionOnlyIDList is not None:
+        if self.analysis_results.extensionOnlyIDList is not None:
             # Extension Only ID : TODO: Consider usefulness...
             self.__outputtable__(
-                self.analysisresults.extensionOnlyIDList,
+                self.analysis_results.extensionOnlyIDList,
                 self.STRINGS.HEADING_EXTENSION_ONLY,
                 self.STRINGS.HEADING_DESC_EXTENSION_ONLY,
                 False,
@@ -825,14 +829,14 @@ class DROIDAnalysisHTMLOutput:
                 "400",
             )
 
-        if self.analysisresults.extensionOnlyIDList is not None:
-            if len(self.analysisresults.extensionOnlyIDList) > 0:
+        if self.analysis_results.extensionOnlyIDList is not None:
+            if len(self.analysis_results.extensionOnlyIDList) > 0:
                 # Extension Only Identification
-                extlist = self.analysisresults.extensionOnlyIDList
+                extlist = self.analysis_results.extensionOnlyIDList
                 for item in list(extlist):
                     if "UNKNOWN" in item[0] or "unknown" in item[0]:
                         extlist.remove(item)
-                if self.analysisresults.tooltype != "droid":
+                if self.analysis_results.tooltype != "droid":
                     # we have basis information so need a bigger table...
                     self.__outputtable__(
                         extlist,
@@ -852,28 +856,28 @@ class DROIDAnalysisHTMLOutput:
                         "275",
                     )
 
-        if self.analysisresults.frequencyOfAllExtensions is not None:
+        if self.analysis_results.frequencyOfAllExtensions is not None:
             # Extension Frequency
             self.__outputtable__(
-                self.analysisresults.frequencyOfAllExtensions,
+                self.analysis_results.frequencyOfAllExtensions,
                 self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL,
                 self.STRINGS.HEADING_DESC_FREQUENCY_EXTENSIONS_ALL,
             )
 
-        if self.analysisresults.uniqueExtensionsInCollectionList is not None:
+        if self.analysis_results.uniqueExtensionsInCollectionList is not None:
             # Unique Extensions Identified
             self.__outputtable__(
-                self.analysisresults.uniqueExtensionsInCollectionList,
+                self.analysis_results.uniqueExtensionsInCollectionList,
                 self.STRINGS.HEADING_UNIQUE_EXTENSIONS,
                 self.STRINGS.HEADING_DESC_UNIQUE_EXTENSIONS,
                 False,
             )
 
-        if self.analysisresults.rogue_multiple_identification_list is not None:
-            if len(self.analysisresults.rogue_multiple_identification_list) > 0:
+        if self.analysis_results.rogue_multiple_identification_list is not None:
+            if len(self.analysis_results.rogue_multiple_identification_list) > 0:
                 # Files with multiple identifications, signature only
                 self.__outputtable__(
-                    self.analysisresults.rogue_multiple_identification_list,
+                    self.analysis_results.rogue_multiple_identification_list,
                     self.STRINGS.HEADING_LIST_MULTIPLE,
                     self.STRINGS.HEADING_DESC_LIST_MULTIPLE,
                     False,
@@ -881,9 +885,9 @@ class DROIDAnalysisHTMLOutput:
                     "800",
                 )
 
-        if self.analysisresults.mimetypeFrequency is not None:
+        if self.analysis_results.mimetypeFrequency is not None:
             # Mimetype Frequency
-            mimes = self.analysisresults.mimetypeFrequency
+            mimes = self.analysis_results.mimetypeFrequency
             for m in list(mimes):
                 if m[0] == "":
                     mimes.remove(m)
@@ -898,16 +902,16 @@ class DROIDAnalysisHTMLOutput:
 
         # ##########NS SPECIFIC OUTPUT####################
         if (
-            self.analysisresults.signatureidentifiedfrequency is not None
-            and self.analysisresults.nsdatalist is not None
+            self.analysis_results.signatureidentifiedfrequency is not None
+            and self.analysis_results.nsdatalist is not None
         ):
             self.__outputheading__(
                 self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS,
                 self.STRINGS.HEADING_DESC_NAMESPACE_SPECIFIC_STATISTICS,
             )
             self.__handlenamespacestats__(
-                self.analysisresults.nsdatalist,
-                self.analysisresults.signatureidentifiedfrequency,
+                self.analysis_results.nsdatalist,
+                self.analysis_results.signatureidentifiedfrequency,
             )
         # ##########NS SPECIFIC OUTPUT####################
 
@@ -915,11 +919,11 @@ class DROIDAnalysisHTMLOutput:
         self.__handleidspecificoutput__()
         # ##########ID SPECIFIC OUTPUT#################### #XML, TEXT, FILENAME
 
-        if self.analysisresults.zerobytelist is not None:
-            if len(self.analysisresults.zerobytelist):
+        if self.analysis_results.zerobytelist is not None:
+            if len(self.analysis_results.zerobytelist):
                 # Zero Byte Objects
                 self.__outputtable__(
-                    self.analysisresults.zerobytelist,
+                    self.analysis_results.zerobytelist,
                     self.STRINGS.HEADING_LIST_ZERO_BYTES,
                     self.STRINGS.HEADING_DESC_LIST_ZERO_BYTES,
                     False,
@@ -928,30 +932,30 @@ class DROIDAnalysisHTMLOutput:
                     True,
                 )
 
-        if self.analysisresults.containertypeslist is not None:
-            if len(self.analysisresults.containertypeslist) > 0:
+        if self.analysis_results.containertypeslist is not None:
+            if len(self.analysis_results.containertypeslist) > 0:
                 # archive file types
                 self.__outputtable__(
-                    self.analysisresults.containertypeslist,
+                    self.analysis_results.containertypeslist,
                     self.STRINGS.HEADING_ARCHIVE_FORMATS,
                     self.STRINGS.HEADING_DESC_ARCHIVE_FORMATS,
                     False,
                 )
 
-        if self.analysisresults.hashused is True:
-            if self.analysisresults.duplicateHASHlisting is not None:
+        if self.analysis_results.hashused is True:
+            if self.analysis_results.duplicateHASHlisting is not None:
                 # Duplicate Content
                 self.__outputheading__(
                     "{} ({})".format(
                         self.STRINGS.HEADING_IDENTICAL_CONTENT,
-                        self.analysisresults.totalHASHduplicates,
+                        self.analysis_results.totalHASHduplicates,
                     ),
                     "{} ({})".format(
                         self.STRINGS.HEADING_DESC_IDENTICAL_CONTENT,
-                        self.analysisresults.totalHASHduplicates,
+                        self.analysis_results.totalHASHduplicates,
                     ),
                 )
-                for dupes in self.analysisresults.duplicateHASHlisting:
+                for dupes in self.analysis_results.duplicateHASHlisting:
                     self.printFormattedText(
                         "<b>{}</b> Count: {}<br/><br/>".format(
                             dupes["checksum"], dupes["count"]
@@ -969,61 +973,61 @@ class DROIDAnalysisHTMLOutput:
 
                 self.printFormattedText("<hr/>")
 
-        if self.analysisresults.badFileNames is not None:
-            if len(self.analysisresults.badFileNames) > 0:
+        if self.analysis_results.badFileNames is not None:
+            if len(self.analysis_results.badFileNames) > 0:
                 # Troublesome Filenames
                 self.__outputheading__(
                     self.STRINGS.HEADING_TROUBLESOME_FILENAMES,
                     self.STRINGS.HEADING_DESC_TROUBLESOME_FILENAMES,
                 )
-                for fnames in self.analysisresults.badFileNames:
+                for fnames in self.analysis_results.badFileNames:
                     self.printFormattedText(fnames)
                     self.__htmlnewline__(2)
                 self.printFormattedText("<hr/>")
 
-        if self.analysisresults.badDirNames is not None:
-            if len(self.analysisresults.badDirNames) > 0:
+        if self.analysis_results.badDirNames is not None:
+            if len(self.analysis_results.badDirNames) > 0:
                 # Troublesome Filenames
                 self.__outputheading__(
                     self.STRINGS.HEADING_TROUBLESOME_DIRNAMES,
                     self.STRINGS.HEADING_DESC_TROUBLESOME_DIRNAMES,
                 )
-                for fnames in self.analysisresults.badDirNames:
+                for fnames in self.analysis_results.badDirNames:
                     self.printFormattedText(fnames)
                     self.__htmlnewline__(2)
                 self.printFormattedText("<hr/>")
 
-        if self.analysisresults.denylist is True:
-            if self.analysisresults.denylist_ids:
+        if self.analysis_results.denylist is True:
+            if self.analysis_results.denylist_ids:
                 self.__outputtable__(
-                    self.analysisresults.denylist_ids,
+                    self.analysis_results.denylist_ids,
                     self.STRINGS.HEADING_DENYLIST_IDS,
                     self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     1,
                     "800",
                 )
-            if self.analysisresults.denylist_exts:
+            if self.analysis_results.denylist_exts:
                 self.__outputtable__(
-                    self.analysisresults.denylist_exts,
+                    self.analysis_results.denylist_exts,
                     self.STRINGS.HEADING_DENYLIST_EXTS,
                     self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     3,
                     "260",
                 )
-            if self.analysisresults.denylist_filenames:
+            if self.analysis_results.denylist_filenames:
                 self.__outputtable__(
-                    self.analysisresults.denylist_filenames,
+                    self.analysis_results.denylist_filenames,
                     self.STRINGS.HEADING_DENYLIST_FILENAMES,
                     self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
                     1,
                     "800",
                 )
-            if self.analysisresults.denylist_directories:
+            if self.analysis_results.denylist_directories:
                 self.__outputtable__(
-                    self.analysisresults.denylist_directories,
+                    self.analysis_results.denylist_directories,
                     self.STRINGS.HEADING_DENYLIST_DIRS,
                     self.STRINGS.HEADING_DESC_DENYLIST,
                     True,
@@ -1031,9 +1035,9 @@ class DROIDAnalysisHTMLOutput:
                     "800",
                 )
 
-        if self.analysisresults.errorlist:
+        if self.analysis_results.errorlist:
             self.__outputtable__(
-                self.analysisresults.errorlist,
+                self.analysis_results.errorlist,
                 self.STRINGS.HEADING_ERRORS,
                 self.STRINGS.HEADING_DESC_ERRORS,
                 True,

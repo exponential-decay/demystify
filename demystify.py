@@ -95,11 +95,8 @@ def _handle_denylist_config():
 
         global rogueconfig
         rogueconfig = config
-
-    else:
-        denylist = False
-
-    return denylist
+        return denylist
+    return None
 
 
 def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
@@ -134,7 +131,7 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
             print(htmloutput.printHTMLResults().encode("utf8"))
 
 
-def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
+def analysis_from_database(database_path, denylist=None, rogues=None, heroes=None):
     """Analysis of format identification report from existing database.
 
     :param database_path: path to sqlite database containing analysis
@@ -152,11 +149,11 @@ def analysis_from_database(database_path, denylist, rogues=None, heroes=None):
     rogue_analysis = False
     if rogues is not None or heroes is not None:
         rogue_analysis = True
-    analysis_results = analysis.runanalysis(rogue_analysis)
-    return analysis_results
+    analysis.runanalysis(rogue_analysis)
+    return analysis
 
 
-def analysis_from_csv(format_report, analyze, denylist, rogues=None, heroes=None):
+def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes=None):
     """Analysis of format identification report from raw data, i.e.
     DROID CSV, SF YAML etc.
 
@@ -177,8 +174,8 @@ def analysis_from_csv(format_report, analyze, denylist, rogues=None, heroes=None
     if analyze is not True:
         logging.error("Analysis is not set: %s", analyze)
         return
-    analysis_results = analysis_from_database(database_path, denylist, rogues, heroes)
-    return analysis_results
+    analysis = analysis_from_database(database_path, denylist, rogues, heroes)
+    return analysis
 
 
 def output_time(start_time):
@@ -228,23 +225,20 @@ def main():
         sys.exit(1)
     global args
     args = parser.parse_args()
-    denylist = False
     if args.denylist or args.rogues or args.heroes:
         denylist = _handle_denylist_config()
     if args.export:
         args.db = False
-        analysis_results = analysis_from_csv(
+        analysis = analysis_from_csv(
             args.export, True, denylist, args.rogues, args.heroes
         )
     if args.db:
         if not IdentifyDB().identify_export(args.db):
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
-        analysis_results = analysis_from_database(
-            args.db, denylist, args.rogues, args.heroes
-        )
-    if analysis_results:
-        handle_output(analysis_results, args.txt, args.rogues, args.heroes)
+        analysis = analysis_from_database(args.db, denylist, args.rogues, args.heroes)
+    if analysis:
+        handle_output(analysis.analysis_results, args.txt, args.rogues, args.heroes)
         output_time(start_time)
     logging.info("Nothing else to do")
 

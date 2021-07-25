@@ -50,10 +50,21 @@ class DemystifyAnalysis:
     ID_FREEDESKTOP = "FREE"
     ID_NONE = "NONE"
 
-    def __init__(self, database_path=None, config=False, denylist=False):
+    TOOLTYPE_DROID = "droid"
+
+    def __init__(self, database_path=None, config=False, denylist=None):
         """Constructor for DemystifyAnalysis object."""
 
         logging.error("Analysis init: %s %s %s", database_path, config, denylist)
+
+        if database_path is None:
+            raise AnalysisError(
+                "Cannot initialize analysis class without a database: {}".format(
+                    database_path
+                )
+            )
+
+        self.denylist = denylist
 
         self.extensionIDonly = None
         self.binaryIDs = None
@@ -69,42 +80,45 @@ class DemystifyAnalysis:
         self.freedesktop_ns_id = None
         self.tika_ns_id = None
 
-        self.analysisresults = AnalysisResultsClass.AnalysisResults()
+        self.analysis_results = AnalysisResultsClass.AnalysisResults()
 
         self.conn = None
         self.cursor = None
 
-        if database_path is None:
-            raise AnalysisError(
-                "Cannot initialize analysis class without a database: {}".format(
-                    database_path
-                )
-            )
-
-        self.conn = None
         self.openDROIDDB(database_path)
         self.query = AnalysisQueries()
-        self.analysisresults.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[
+
+        self.analysis_results.tooltype = self.__querydb__(self.query.SELECT_TOOL, True)[
             0
         ]
-        self.analysisresults.namespacecount = self.__querydb__(
+
+        # Working with Siegfried means that we can work with multiple
+        # namespaces. Setup work for that is all below.
+        self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)
+
+        if self.analysis_results.tooltype == self.TOOLTYPE_DROID:
+            self.analysis_results.namespacecount = 1
+            return
+
+        self.analysis_results.namespacecount = self.__querydb__(
             self.query.SELECT_COUNT_NAMESPACES, True
         )[0]
-        self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)
-        nsdata = self.namespacedata
-        if self.analysisresults.namespacecount > 1:
-            for ns_deets in nsdata:
-                # to prioritize PRONOM look for below strings, and avoid limited to DROID signature files
-                # 'DROID_SignatureFile_V84.xml; container-signature-20160121.xml; built without reports; limited to ids: x-fmt/111'
-                sig_deets = ns_deets[2]
-                if "DROID_" in sig_deets and "limited to" not in sig_deets:
-                    self.pronom_ns_id = ns_deets[0]
-                elif "tika" in sig_deets:
-                    self.tika_ns_id = ns_deets[0]
-                elif "freedesktop" in sig_deets:
-                    self.freedesktop_ns_id = ns_deets[0]
-            self.__get_ns_priority__(self.__readconfig__(config))
-        self.denylist = denylist
+        if self.analysis_results.namespacecount <= 1:
+            return
+
+        # Assign an index in the namespace lookup table to our instance
+        # variables to support lookup during the analysis.
+        for namespace_details in self.namespacedata:
+            sig_details = namespace_details[2]
+            if "DROID_" in sig_details and "limited to" not in sig_details:
+                self.pronom_ns_id = namespace_details[0]
+            elif "tika" in sig_details:
+                self.tika_ns_id = namespace_details[0]
+            elif "freedesktop" in sig_details:
+                self.freedesktop_ns_id = namespace_details[0]
+
+        # Workout priority ID based on the namespace indices above.
+        self.priority_ns_id = self.__get_ns_priority__(self.__readconfig__(config))
 
     def __del__(self):
         """Destructor for DemystifyAnalysis object."""
@@ -115,21 +129,19 @@ class DemystifyAnalysis:
 
     def __version__(self):
         v = AnalysisVersion()
-        self.analysisresults.__version_no__ = v.getVersion()
-        return self.analysisresults.__version_no__
+        self.analysis_results.__version_no__ = v.getVersion()
+        return self.analysis_results.__version_no__
 
     def __get_ns_priority__(self, config):
         if not config:
-            self.priority_ns_id = self.pronom_ns_id
-            return
+            return self.pronom_ns_id
         if config == self.ID_PRONOM:
-            self.priority_ns_id = self.pronom_ns_id
+            return self.pronom_ns_id
         if config == self.ID_FREEDESKTOP:
-            self.priority_ns_id = self.freedesktop_ns_id
+            return self.freedesktop_ns_id
         if config == self.ID_TIKA:
-            self.priority_ns_id = self.tika_ns_id
-        if config == self.ID_NONE:
-            self.priority_ns_id = None
+            return self.tika_ns_id
+        return None
 
     def __readconfig__(self, config):
         """Read values from config.
@@ -188,7 +200,7 @@ class DemystifyAnalysis:
         duplicate_sum = {}
         roguepaths = []
 
-        self.analysisresults.totalHASHduplicates = 0
+        self.analysis_results.totalHASHduplicates = 0
 
         for res in result:
             count = int(res[1])
@@ -200,8 +212,8 @@ class DemystifyAnalysis:
             if checksum == "":
                 continue
 
-            self.analysisresults.totalHASHduplicates = (
-                self.analysisresults.totalHASHduplicates + count
+            self.analysis_results.totalHASHduplicates = (
+                self.analysis_results.totalHASHduplicates + count
             )
             duplicate_examples = self.__querydb__(
                 self.query.list_duplicate_paths(res[0])
@@ -210,7 +222,7 @@ class DemystifyAnalysis:
             for duplicates in duplicate_examples:
                 filename = duplicates[0]
                 pathlist.append(filename)
-                self.analysisresults.duplicatespathlist.append(filename)
+                self.analysis_results.duplicatespathlist.append(filename)
             roguepaths = "{}{}".format(roguepaths, pathlist)
             duplicate_sum["checksum"] = checksum
             duplicate_sum["count"] = count
@@ -218,20 +230,20 @@ class DemystifyAnalysis:
             duplicatelist.append(duplicate_sum)
             duplicate_sum = {}
 
-        self.analysisresults.duplicateHASHlisting = duplicatelist
+        self.analysis_results.duplicateHASHlisting = duplicatelist
         return roguepaths
 
     def listzerobytefiles(self):
-        self.analysisresults.zerobytecount = self.__querydb__(
+        self.analysis_results.zerobytecount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_ZERO_BYTE_FILES, True, True
         )
-        if self.analysisresults.zerobytecount > 0:
-            self.analysisresults.zerobytelist = self.__querydb__(
+        if self.analysis_results.zerobytecount > 0:
+            self.analysis_results.zerobytelist = self.__querydb__(
                 AnalysisQueries.SELECT_ZERO_BYTE_FILEPATHS, False, False, True
             )
         else:
-            self.analysisresults.zerobytelist = None
-        return self.analysisresults.zerobytecount
+            self.analysis_results.zerobytelist = None
+        return self.analysis_results.zerobytecount
 
     def calculatePercent(self, total, subset):
         if total > 0:
@@ -269,8 +281,8 @@ class DemystifyAnalysis:
                 dirreport.append(checkedname)
                 self.rogue_dirs.append(d[0])
 
-        self.analysisresults.badFileNames = namereport
-        self.analysisresults.badDirNames = dirreport
+        self.analysis_results.badFileNames = namereport
+        self.analysis_results.badDirNames = dirreport
 
     def multiplecount(self, nscount):
         return self.__querydb__(self.query.count_multiple_ids(nscount), True, True)
@@ -291,7 +303,7 @@ class DemystifyAnalysis:
 
     def create_id_breakdown(self):
 
-        tooltype = self.analysisresults.tooltype
+        tooltype = self.analysis_results.tooltype
         query = self.query.methods_return_ns_sort(self.priority_ns_id)
         allids = self.__querydb__(query)
         method_list = []
@@ -395,12 +407,12 @@ class DemystifyAnalysis:
                 ):
                     none_bin.append(idno)
 
-        self.analysisresults.identifiedfilecount = len(container_bin) + len(binary_bin)
+        self.analysis_results.identifiedfilecount = len(container_bin) + len(binary_bin)
 
-        self.analysisresults.unidentifiedfilecount = (
-            self.analysisresults.filecount - self.analysisresults.identifiedfilecount
+        self.analysis_results.unidentifiedfilecount = (
+            self.analysis_results.filecount - self.analysis_results.identifiedfilecount
         )
-        self.analysisresults.extensionIDOnlyCount = len(extension_bin)
+        self.analysis_results.extensionIDOnlyCount = len(extension_bin)
 
         self.extensionIDonly = extension_bin
         self.noids = none_bin
@@ -410,13 +422,13 @@ class DemystifyAnalysis:
         self.textIDs = textidrows
         self.filenameIDs = filenameidrows
 
-        self.analysisresults.xmlidfilecount = len(xml_bin)
-        self.analysisresults.textidfilecount = len(text_bin)
-        self.analysisresults.filenameidfilecount = len(filename_bin)
+        self.analysis_results.xmlidfilecount = len(xml_bin)
+        self.analysis_results.textidfilecount = len(text_bin)
+        self.analysis_results.filenameidfilecount = len(filename_bin)
 
         # ID Method frequencylist can be created here also
         # e.g. [('None', 2269), ('Text', 149), ('Signature', 57), ('Filename', 52), ('Extension', 7), ('Container', 1)]
-        # self.analysisresults.idmethodFrequency
+        # self.analysis_results.idmethodFrequency
         list1 = ("None", len(none_bin))
         list2 = ("Container", len(container_bin))
         list3 = ("Signature", len(binary_bin))
@@ -432,11 +444,11 @@ class DemystifyAnalysis:
             list_of_lists.append(list7)
 
         list_of_lists.sort(key=lambda tup: tup[1], reverse=True)
-        self.analysisresults.idmethodFrequency = list_of_lists
-        self.analysisresults.zeroidcount = len(none_bin)
+        self.analysis_results.idmethodFrequency = list_of_lists
+        self.analysis_results.zeroidcount = len(none_bin)
 
         # Rogues: Get All ids for All tools (need also a PRONOM only one later)
-        self.analysisresults.rogue_identified_all = (
+        self.analysis_results.rogue_identified_all = (
             container_bin + binary_bin + text_bin + xml_bin
         )
 
@@ -636,7 +648,7 @@ class DemystifyAnalysis:
         else:
             newlist = []
             for k, v in denylist.items():
-                self.analysisresults.rogue_denylist.append(k)
+                self.analysis_results.rogue_denylist.append(k)
                 newlist.append(v)
             count = Counter(newlist)
             newlist = []
@@ -647,13 +659,13 @@ class DemystifyAnalysis:
 
             for b in denylist:
                 if b[0] == HandleDenylist.DIRECTORIES:
-                    self.analysisresults.denylist_directories.append((b[1], b[2]))
+                    self.analysis_results.denylist_directories.append((b[1], b[2]))
                 if b[0] == HandleDenylist.FILENAMES:
-                    self.analysisresults.denylist_filenames.append((b[1], b[2]))
+                    self.analysis_results.denylist_filenames.append((b[1], b[2]))
                 if b[0] == HandleDenylist.EXTENSIONS:
-                    self.analysisresults.denylist_exts.append((b[1], b[2]))
+                    self.analysis_results.denylist_exts.append((b[1], b[2]))
                 if b[0] == HandleDenylist.IDS:
-                    self.analysisresults.denylist_ids.append((b[1], b[2]))
+                    self.analysis_results.denylist_ids.append((b[1], b[2]))
 
     def queryDB(self):
         """Query runner for all demystify queries based on how the
@@ -667,31 +679,31 @@ class DemystifyAnalysis:
         self.hashtype = self.__querydb__(AnalysisQueries.SELECT_HASH, True)[0]
         if self.hashtype == "None" or self.hashtype == "False":
             sys.stderr.write(AnalysisQueries.ERROR_NOHASH + "\n")
-            self.analysisresults.hashused = False
+            self.analysis_results.hashused = False
         else:
-            self.analysisresults.hashused = True
+            self.analysis_results.hashused = True
 
-        self.analysisresults.collectionsize = self.__querydb__(
+        self.analysis_results.collectionsize = self.__querydb__(
             AnalysisQueries.SELECT_COLLECTION_SIZE, True, True
         )
-        self.analysisresults.filecount = self.__querydb__(
+        self.analysis_results.filecount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_FILES, True, True
         )
-        self.analysisresults.containercount = self.__querydb__(
+        self.analysis_results.containercount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_CONTAINERS, True, True
         )
-        self.analysisresults.filesincontainercount = self.__querydb__(
+        self.analysis_results.filesincontainercount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_FILES_IN_CONTAINERS, True, True
         )
-        self.analysisresults.directoryCount = self.__querydb__(
+        self.analysis_results.directoryCount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_FOLDERS, True, True
         )
 
         # not necessarily used in the output
-        self.analysisresults.uniqueFileNames = self.__querydb__(
+        self.analysis_results.uniqueFileNames = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_UNIQUE_FILENAMES, True, True
         )
-        self.analysisresults.uniqueDirectoryNames = (
+        self.analysis_results.uniqueDirectoryNames = (
             self.__querydb__(AnalysisQueries.SELECT_COUNT_UNIQUE_DIRNAMES, True, True)
             - self.NONROOTBASEDIR
         )
@@ -700,66 +712,66 @@ class DemystifyAnalysis:
         self.create_id_breakdown()
         # ------------WHAT IS AND ISN'T IDENTIFIED SUMMARY------------#
 
-        self.analysisresults.extmismatchCount = self.__querydb__(
+        self.analysis_results.extmismatchCount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_EXT_MISMATCHES, True, True
         )
-        self.analysisresults.distinctSignaturePuidcount = self.__querydb__(
+        self.analysis_results.distinctSignaturePuidcount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_FORMAT_COUNT, True, True
         )
 
-        if self.analysisresults.tooltype != "droid":
-            self.analysisresults.distinctOtherIdentifiers = self.__querydb__(
+        if self.analysis_results.tooltype != "droid":
+            self.analysis_results.distinctOtherIdentifiers = self.__querydb__(
                 AnalysisQueries.SELECT_COUNT_OTHER_FORMAT_COUNT, True, True
             )
-            self.analysisresults.distinctXMLIdentifiers = self.__querydb__(
+            self.analysis_results.distinctXMLIdentifiers = self.__querydb__(
                 self.query.select_count_identifiers("XML"), True, True
             )
-            self.analysisresults.distinctTextIdentifiers = self.__querydb__(
+            self.analysis_results.distinctTextIdentifiers = self.__querydb__(
                 self.query.select_count_identifiers("Text"), True, True
             )
-            self.analysisresults.distinctFilenameIdentifiers = self.__querydb__(
+            self.analysis_results.distinctFilenameIdentifiers = self.__querydb__(
                 self.query.select_count_identifiers("Filename"), True, True
             )
 
-            self.analysisresults.xml_identifiers = self.__querydb__(
+            self.analysis_results.xml_identifiers = self.__querydb__(
                 self.query.select_frequency_identifier_types("XML")
             )
-            self.analysisresults.text_identifiers = self.__querydb__(
+            self.analysis_results.text_identifiers = self.__querydb__(
                 self.query.select_frequency_identifier_types("Text")
             )
-            self.analysisresults.filename_identifiers = self.__querydb__(
+            self.analysis_results.filename_identifiers = self.__querydb__(
                 self.query.select_frequency_identifier_types("Filename")
             )
 
-        self.analysisresults.distinctextensioncount = self.__querydb__(
+        self.analysis_results.distinctextensioncount = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True
         )
 
         # todo: consider merit of each identification bin
         mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
-        self.analysisresults.mimetypeFrequency = self.__querydb__(
+        self.analysis_results.mimetypeFrequency = self.__querydb__(
             self.query.getmimes(mimeids)
         )
 
         # NOTE: Must be calculated after we have total, and subset values
-        self.analysisresults.identifiedPercentage = self.calculatePercent(
-            self.analysisresults.filecount, self.analysisresults.identifiedfilecount
+        self.analysis_results.identifiedPercentage = self.calculatePercent(
+            self.analysis_results.filecount, self.analysis_results.identifiedfilecount
         )
-        self.analysisresults.unidentifiedPercentage = self.calculatePercent(
-            self.analysisresults.filecount, self.analysisresults.unidentifiedfilecount
+        self.analysis_results.unidentifiedPercentage = self.calculatePercent(
+            self.analysis_results.filecount, self.analysis_results.unidentifiedfilecount
         )
 
-        self.analysisresults.dateFrequency = self.__querydb__(
+        self.analysis_results.dateFrequency = self.__querydb__(
             AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT
         )
-        self.analysisresults.signatureidentifiedfrequency = self.__querydb__(
+        self.analysis_results.signatureidentifiedfrequency = self.__querydb__(
             AnalysisQueries.SELECT_BINARY_MATCH_COUNT
         )
-        self.analysisresults.extensionOnlyIDList = self.__querydb__(
+        self.analysis_results.extensionOnlyIDList = self.__querydb__(
             AnalysisQueries.SELECT_PUIDS_EXTENSION_ONLY
         )
-        self.analysisresults.multipleidentificationcount = self.multiplecount(
-            self.analysisresults.namespacecount
+        self.analysis_results.multipleidentificationcount = self.multiplecount(
+            self.analysis_results.namespacecount
         )
 
         # most complicated way to retrieve extension only PUIDs
@@ -771,18 +783,18 @@ class DemystifyAnalysis:
                 entry = " ".join(entry)
                 combined_list.append(entry)
             sorted_list = Counter(elem for elem in combined_list).most_common()
-            self.analysisresults.extensionOnlyIDFrequency = sorted_list
+            self.analysis_results.extensionOnlyIDFrequency = sorted_list
 
         # OKAY stat...
-        self.analysisresults.uniqueExtensionsInCollectionList = self.__querydb__(
+        self.analysis_results.uniqueExtensionsInCollectionList = self.__querydb__(
             AnalysisQueries.SELECT_ALL_UNIQUE_EXTENSIONS
         )
-        self.analysisresults.frequencyOfAllExtensions = self.__querydb__(
+        self.analysis_results.frequencyOfAllExtensions = self.__querydb__(
             AnalysisQueries.SELECT_COUNT_EXTENSION_FREQUENCY
         )
 
         # Additional useful queries...
-        self.analysisresults.containertypeslist = self.__querydb__(
+        self.analysis_results.containertypeslist = self.__querydb__(
             AnalysisQueries.SELECT_CONTAINER_TYPES
         )
 
@@ -798,36 +810,38 @@ class DemystifyAnalysis:
 
         # create a statistic for aggregated binary identification
         if self.binaryIDs is not None and len(self.binaryIDs) > 0:
-            self.analysisresults.signatureidentifiers = self.getMethodIDResults(
+            self.analysis_results.signatureidentifiers = self.getMethodIDResults(
                 self.binaryIDs, True
             )
 
         # New functions thanks to Siegfried
         if self.binaryIDs is not None and len(self.binaryIDs) > 0:
-            self.analysisresults.binaryidentifiers = self.getMethodIDResults(
+            self.analysis_results.binaryidentifiers = self.getMethodIDResults(
                 self.binaryIDs
             )
         if self.xmlIDs is not None and len(self.xmlIDs) > 0:
-            self.analysisresults.xmlidentifiers = self.getMethodIDResults(self.xmlIDs)
+            self.analysis_results.xmlidentifiers = self.getMethodIDResults(self.xmlIDs)
         if self.textIDs is not None and len(self.textIDs) > 0:
-            self.analysisresults.textidentifiers = self.getMethodIDResults(self.textIDs)
+            self.analysis_results.textidentifiers = self.getMethodIDResults(
+                self.textIDs
+            )
         if self.filenameIDs is not None and len(self.filenameIDs) > 0:
-            self.analysisresults.filenameidentifiers = self.getMethodIDResults(
+            self.analysis_results.filenameidentifiers = self.getMethodIDResults(
                 self.filenameIDs
             )
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             (
-                self.analysisresults.bof_distance,
-                self.analysisresults.eof_distance,
+                self.analysis_results.bof_distance,
+                self.analysis_results.eof_distance,
             ) = self.__analysebasis__()
-            self.analysisresults.errorlist = self.__querydb__(
+            self.analysis_results.errorlist = self.__querydb__(
                 AnalysisQueries.SELECT_FREQUENCY_ERRORS
             )
         # we need namespace data - ann NS queries can be generic
         # ns count earlier on in this function can be left as-is
         if (
-            self.analysisresults.namespacecount is not None
-            and self.analysisresults.namespacecount > 0
+            self.analysis_results.namespacecount is not None
+            and self.analysis_results.namespacecount > 0
         ):
             nsdatalist = []
             for ns in self.namespacedata:
@@ -852,16 +866,16 @@ class DemystifyAnalysis:
                 )
                 nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(
                     self.query.get_ns_multiple_ids(
-                        nsid, self.analysisresults.namespacecount
+                        nsid, self.analysis_results.namespacecount
                     ),
                     True,
                     True,
                 )
                 nsdatalist.append(nsdict)
-            self.analysisresults.nsdatalist = nsdatalist
+            self.analysis_results.nsdatalist = nsdatalist
 
             # get nsgap count
-            if self.analysisresults.namespacecount > 1:
+            if self.analysis_results.namespacecount > 1:
                 idslist = []
                 for ns in self.namespacedata:
                     nsid = ns[0]
@@ -872,9 +886,9 @@ class DemystifyAnalysis:
                 counted = dict(Counter(idslist))
                 noids = []
                 for x in counted:
-                    if counted[x] == self.analysisresults.namespacecount:
+                    if counted[x] == self.analysis_results.namespacecount:
                         noids.append(x)
-                self.analysisresults.identificationgaps = len(noids)
+                self.analysis_results.identificationgaps = len(noids)
 
             # handle filename analysis
             self.msoftfnameanalysis()
@@ -882,8 +896,8 @@ class DemystifyAnalysis:
             # ###################################################################################
             # ######DENYLIST RESULTS: GET RESULTS SPECIFIC TO THE DENYLIST FUNCTIONALITY#######
             # ###################################################################################
-            if self.denylist is not False:
-                self.analysisresults.denylist = True
+            if self.denylist is not None:
+                self.analysis_results.denylist = True
                 self.getdenylistresults()
 
             # ###################################################################################
@@ -891,62 +905,62 @@ class DemystifyAnalysis:
             # ###################################################################################
 
             # need to run these regardless of choice to use rogues
-            self.listzerobytefiles()  # self.analysisresults.zerobytelist
+            self.listzerobytefiles()  # self.analysis_results.zerobytelist
 
-            if self.analysisresults.hashused is True:
-                self.analysisresults.rogue_duplicates = (
+            if self.analysis_results.hashused is True:
+                self.analysis_results.rogue_duplicates = (
                     self.list_duplicate_files_from_hash()
                 )
 
-            if self.analysisresults.multipleidentificationcount > 0:
-                self.analysisresults.rogue_multiple_identification_list = self.multiple_id_paths(
-                    self.analysisresults.namespacecount
+            if self.analysis_results.multipleidentificationcount > 0:
+                self.analysis_results.rogue_multiple_identification_list = self.multiple_id_paths(
+                    self.analysis_results.namespacecount
                 )
 
             if self.rogueanalysis:
 
                 rq = RogueQueries()
-                self.analysisresults.rogue_all_paths = self.__querydb__(
+                self.analysis_results.rogue_all_paths = self.__querydb__(
                     rq.SELECT_ALL_FILEPATHS, False, False, True
                 )
-                self.analysisresults.rogue_all_dirs = self.__querydb__(
+                self.analysis_results.rogue_all_dirs = self.__querydb__(
                     rq.SELECT_ALL_FOLDERS, False, False, True
                 )
 
-                self.analysisresults.rogue_extension_mismatches = self.__querydb__(
+                self.analysis_results.rogue_extension_mismatches = self.__querydb__(
                     rq.SELECT_EXTENSION_MISMATCHES, False, False, True
                 )
 
                 # NEED THIS FOR DROID TOOL ONLY?
-                if self.analysisresults.tooltype == "droid":
+                if self.analysis_results.tooltype == "droid":
                     self.pronom_ns_id = 1
 
                 if self.pronom_ns_id is not None:
-                    self.analysisresults.rogue_pronom_ns_id = self.pronom_ns_id
-                    self.analysisresults.rogue_identified_pronom = self.__querydb__(
+                    self.analysis_results.rogue_pronom_ns_id = self.pronom_ns_id
+                    self.analysis_results.rogue_identified_pronom = self.__querydb__(
                         rq.get_pronom_identified_files(self.pronom_ns_id),
                         False,
                         False,
                         True,
                     )
                 else:
-                    self.analysisresults.rogue_identified_all = self.__querydb__(
-                        rq.get_all_non_ids(self.analysisresults.rogue_identified_all),
+                    self.analysis_results.rogue_identified_all = self.__querydb__(
+                        rq.get_all_non_ids(self.analysis_results.rogue_identified_all),
                         False,
                         False,
                         True,
                     )
 
-                self.analysisresults.rogue_file_name_paths = self.__querydb__(
+                self.analysis_results.rogue_file_name_paths = self.__querydb__(
                     rq.get_rogue_name_paths(self.rogue_names), False, False, True
                 )
 
                 if len(self.rogue_dirs) > 0:
-                    self.analysisresults.rogue_dir_name_paths = self.__querydb__(
+                    self.analysis_results.rogue_dir_name_paths = self.__querydb__(
                         rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True
                     )
 
-        return self.analysisresults
+        return self.analysis_results
 
     def runanalysis(self, analyze_rogues):
         """Runs the analysis on the supplied report.
@@ -962,7 +976,7 @@ class DemystifyAnalysis:
         return self.queryDB()
 
     def openDROIDDB(self, dbfilename):
-        self.analysisresults.filename = dbfilename.rstrip(".db")
+        self.analysis_results.filename = dbfilename.rstrip(".db")
         self.conn = sqlite3.connect(dbfilename)
         self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
         self.cursor = self.conn.cursor()

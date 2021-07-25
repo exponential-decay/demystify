@@ -18,7 +18,7 @@ class AnalysisResults:
         self.tooltype = None
 
         # denylist
-        self.denylist = False
+        self.denylist = None
         self.denylist_filenames = []
         self.denylist_directories = []
         self.denylist_ids = []

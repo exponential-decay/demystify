@@ -20,9 +20,9 @@ class DROIDAnalysisTextOutput:
 
     textoutput = ""
 
-    def __init__(self, analysisresults):
+    def __init__(self, analysis_results):
         self.STRINGS = IN_EN
-        self.analysisresults = analysisresults
+        self.analysis_results = analysis_results
 
     def __output_list__(self, title, value):
         return title + ": " + str(value)
@@ -90,15 +90,15 @@ class DROIDAnalysisTextOutput:
         return outstr.strip("\n")
 
     def getDateList(self):
-        if self.analysisresults.dateFrequency is not None:
-            return self.__frequencyoutput__(self.analysisresults.dateFrequency)
+        if self.analysis_results.dateFrequency is not None:
+            return self.__frequencyoutput__(self.analysis_results.dateFrequency)
 
     def __outputdupes__(self, list):
         output = ""
         for (
             dupes
         ) in (
-            self.analysisresults.duplicateHASHlisting
+            self.analysis_results.duplicateHASHlisting
         ):  # TODO: consider count next to HASH val
             output = output + "Checksum: " + str(dupes["checksum"]) + "\n"
             output = output + "Count: " + str(dupes["count"]) + "\n"
@@ -118,11 +118,13 @@ class DROIDAnalysisTextOutput:
             text = ns[ds.NS_CONST_TEXT_COUNT]
             filename = ns[ds.NS_CONST_FILENAME_COUNT]
             ext = ns[ds.NS_CONST_EXTENSION_COUNT]
-            unidentified = self.analysisresults.filecount - identified
+            unidentified = self.analysis_results.filecount - identified
             percent_not = ds.calculatePercent(
-                self.analysisresults.filecount, unidentified
+                self.analysis_results.filecount, unidentified
             )
-            percent_ok = ds.calculatePercent(self.analysisresults.filecount, identified)
+            percent_ok = ds.calculatePercent(
+                self.analysis_results.filecount, identified
+            )
             output = (
                 output
                 + self.STRINGS.HEADING_NAMESPACE
@@ -156,7 +158,7 @@ class DROIDAnalysisTextOutput:
             )
             output = output + self.STRINGS.SUMMARY_EXTENSION_ID + ": " + str(ext) + "\n"
 
-            if self.analysisresults.tooltype != "droid":
+            if self.analysis_results.tooltype != "droid":
                 output = output + self.STRINGS.SUMMARY_XML_ID + ": " + str(xmlid) + "\n"
                 output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
                 output = (
@@ -209,211 +211,211 @@ class DROIDAnalysisTextOutput:
 
     def __removenamespaceid__(self, oldlist):
         newlist = []
-        for item in self.analysisresults.binaryidentifiers:
+        for item in self.analysis_results.binaryidentifiers:
             newlist.append((str(item[0]), None))
         return newlist
 
     def generateTEXT(self):
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(self.STRINGS.REPORT_TITLE_SF)
         else:
             self.printFormattedText(self.STRINGS.REPORT_TITLE_DR)
 
         self.printFormattedText(
-            self.STRINGS.REPORT_VERSION + ": " + self.analysisresults.__version__()
+            self.STRINGS.REPORT_VERSION + ": " + self.analysis_results.__version__()
         )
         self.printFormattedText(
-            self.STRINGS.REPORT_FILE + ": " + self.analysisresults.filename
+            self.STRINGS.REPORT_FILE + ": " + self.analysis_results.filename
         )
         self.printFormattedText(
-            self.STRINGS.REPORT_TOOL + ": " + self.analysisresults.tooltype
+            self.STRINGS.REPORT_TOOL + ": " + self.analysis_results.tooltype
         )
         self.printFormattedText("")
         self.printFormattedText(
-            self.STRINGS.NAMESPACES + ": " + str(self.analysisresults.namespacecount)
+            self.STRINGS.NAMESPACES + ": " + str(self.analysis_results.namespacecount)
         )
 
-        if self.analysisresults.bof_distance is not None:
+        if self.analysis_results.bof_distance is not None:
             self.printFormattedText(
                 self.STRINGS.SUMMARY_DISTANCE_BOF
                 + ": "
-                + self.__generateOffsetText__(self.analysisresults.bof_distance)
+                + self.__generateOffsetText__(self.analysis_results.bof_distance)
             )
 
-        if self.analysisresults.eof_distance is not None:
+        if self.analysis_results.eof_distance is not None:
             self.printFormattedText(
                 self.STRINGS.SUMMARY_DISTANCE_EOF
                 + ": "
-                + self.__generateOffsetText__(self.analysisresults.eof_distance)
+                + self.__generateOffsetText__(self.analysis_results.eof_distance)
             )
 
         self.printFormattedText("")
 
         self.printFormattedText(
             self.__output_list__(
-                self.STRINGS.SUMMARY_TOTAL_FILES, self.analysisresults.filecount
+                self.STRINGS.SUMMARY_TOTAL_FILES, self.analysis_results.filecount
             )
         )
         self.printFormattedText(
             self.__output_list__(
-                self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysisresults.containercount
+                self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysis_results.containercount
             )
         )
 
         # even if we have archive files, if the analysis isn't on, we can't output this value
-        if self.analysisresults.filesincontainercount > 0:
+        if self.analysis_results.filesincontainercount > 0:
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_INSIDE_ARCHIVES,
-                    self.analysisresults.filesincontainercount,
+                    self.analysis_results.filesincontainercount,
                 )
             )
 
         self.printFormattedText(
             self.__output_list__(
-                self.STRINGS.SUMMARY_DIRECTORIES, self.analysisresults.directoryCount
+                self.STRINGS.SUMMARY_DIRECTORIES, self.analysis_results.directoryCount
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_UNIQUE_DIRNAMES,
-                self.analysisresults.uniqueDirectoryNames,
+                self.analysis_results.uniqueDirectoryNames,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_IDENTIFIED_FILES,
-                self.analysisresults.identifiedfilecount,
+                self.analysis_results.identifiedfilecount,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_MULTIPLE,
-                self.analysisresults.multipleidentificationcount,
+                self.analysis_results.multipleidentificationcount,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_UNIDENTIFIED,
-                self.analysisresults.unidentifiedfilecount,
+                self.analysis_results.unidentifiedfilecount,
             )
         )
 
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
                 self.__output_list__(
-                    self.STRINGS.SUMMARY_XML_ID, self.analysisresults.xmlidfilecount
+                    self.STRINGS.SUMMARY_XML_ID, self.analysis_results.xmlidfilecount
                 )
             )
             self.printFormattedText(
                 self.__output_list__(
-                    self.STRINGS.SUMMARY_TEXT_ID, self.analysisresults.textidfilecount
+                    self.STRINGS.SUMMARY_TEXT_ID, self.analysis_results.textidfilecount
                 )
             )
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_FILENAME_ID,
-                    self.analysisresults.filenameidfilecount,
+                    self.analysis_results.filenameidfilecount,
                 )
             )
 
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_EXTENSION_ID,
-                self.analysisresults.extensionIDOnlyCount,
+                self.analysis_results.extensionIDOnlyCount,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_EXTENSION_MISMATCH,
-                self.analysisresults.extmismatchCount,
+                self.analysis_results.extmismatchCount,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_ID_PUID_COUNT,
-                self.analysisresults.distinctSignaturePuidcount,
+                self.analysis_results.distinctSignaturePuidcount,
             )
         )
 
-        if self.analysisresults.tooltype != "droid":
+        if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_OTHER_ID_COUNT,
-                    self.analysisresults.distinctOtherIdentifiers,
+                    self.analysis_results.distinctOtherIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_XML_ID_COUNT,
-                    self.analysisresults.distinctXMLIdentifiers,
+                    self.analysis_results.distinctXMLIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_TEXT_ID_COUNT,
-                    self.analysisresults.distinctTextIdentifiers,
+                    self.analysis_results.distinctTextIdentifiers,
                 )
             )
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_FILENAME_ID_COUNT,
-                    self.analysisresults.distinctFilenameIdentifiers,
+                    self.analysis_results.distinctFilenameIdentifiers,
                 )
             )
 
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS,
-                self.analysisresults.distinctextensioncount,
+                self.analysis_results.distinctextensioncount,
             )
         )
         self.printFormattedText(
             self.__output_list__(
-                self.STRINGS.SUMMARY_ZERO_BYTE, self.analysisresults.zerobytecount
+                self.STRINGS.SUMMARY_ZERO_BYTE, self.analysis_results.zerobytecount
             )
         )
 
-        if self.analysisresults.hashused > 0:
+        if self.analysis_results.hashused > 0:
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_IDENTICAL_FILES,
-                    self.analysisresults.totalHASHduplicates,
+                    self.analysis_results.totalHASHduplicates,
                 )
             )
 
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_MULTIPLE_SPACES,
-                len(self.analysisresults.multiplespacelist),
+                len(self.analysis_results.multiplespacelist),
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED,
-                self.analysisresults.identifiedPercentage,
+                self.analysis_results.identifiedPercentage,
             )
         )
         self.printFormattedText(
             self.__output_list__(
                 self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED,
-                self.analysisresults.unidentifiedPercentage,
+                self.analysis_results.unidentifiedPercentage,
             )
         )
 
         if (
-            self.analysisresults.namespacecount > 1
-            and self.analysisresults.identificationgaps is not None
+            self.analysis_results.namespacecount > 1
+            and self.analysis_results.identificationgaps is not None
         ):
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.SUMMARY_GAPS_COVERED,
-                    self.analysisresults.identificationgaps,
+                    self.analysis_results.identificationgaps,
                 )
             )
 
         # return the size of the collection
-        size = self.analysisresults.collectionsize  # easier to reference from a var
+        size = self.analysis_results.collectionsize  # easier to reference from a var
         self.printFormattedText(
             self.STRINGS.HEADING_SIZE
             + ": "
@@ -423,36 +425,38 @@ class DROIDAnalysisTextOutput:
             + " MiB/MB (Megabytes)"
         )  # MiB/MB = (2^1024)*2
 
-        if self.analysisresults.signatureidentifiers is not None:
+        if self.analysis_results.signatureidentifiers is not None:
             # ('ns:pronom x-fmt/266 GZIP Format, extension match gz; byte match at 0, 3', 1)
             self.__output_list_title__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
-            for ids in self.analysisresults.signatureidentifiers:
+            for ids in self.analysis_results.signatureidentifiers:
                 self.printFormattedText(ids[0].rstrip(", "))
 
-        if self.analysisresults.binaryidentifiers is not None:
+        if self.analysis_results.binaryidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
-            newlist = self.__removenamespaceid__(self.analysisresults.binaryidentifiers)
+            newlist = self.__removenamespaceid__(
+                self.analysis_results.binaryidentifiers
+            )
             self.printFormattedText(self.__aggregatelists__(newlist))
-        if self.analysisresults.xmlidentifiers is not None:
+        if self.analysis_results.xmlidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
-            newlist = self.__removenamespaceid__(self.analysisresults.xmlidentifiers)
+            newlist = self.__removenamespaceid__(self.analysis_results.xmlidentifiers)
             self.printFormattedText(self.__aggregatelists__(newlist))
-        if self.analysisresults.textidentifiers is not None:
+        if self.analysis_results.textidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
-            newlist = self.__removenamespaceid__(self.analysisresults.textidentifiers)
+            newlist = self.__removenamespaceid__(self.analysis_results.textidentifiers)
             self.printFormattedText(self.__aggregatelists__(newlist))
-        if self.analysisresults.filenameidentifiers is not None:
+        if self.analysis_results.filenameidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
             newlist = self.__removenamespaceid__(
-                self.analysisresults.filenameidentifiers
+                self.analysis_results.filenameidentifiers
             )
             self.printFormattedText(self.__aggregatelists__(newlist))
 
-        if self.analysisresults.extensionIDOnlyCount > 0:
-            if self.analysisresults.extensionOnlyIDList is not None:
-                if len(self.analysisresults.extensionOnlyIDList) > 0:
+        if self.analysis_results.extensionIDOnlyCount > 0:
+            if self.analysis_results.extensionOnlyIDList is not None:
+                if len(self.analysis_results.extensionOnlyIDList) > 0:
                     self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
-                    for item in self.analysisresults.extensionOnlyIDList:
+                    for item in self.analysis_results.extensionOnlyIDList:
                         output = item[0] + ", " + item[1]
                         self.printFormattedText(output)
 
@@ -461,174 +465,174 @@ class DROIDAnalysisTextOutput:
             self.__output_list_title__(self.STRINGS.HEADING_DATE_RANGE)
             self.printFormattedText(dates)
 
-        if self.analysisresults.idmethodFrequency is not None:
+        if self.analysis_results.idmethodFrequency is not None:
             self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.idmethodFrequency)
+                self.__frequencyoutput__(self.analysis_results.idmethodFrequency)
             )
 
-        if self.analysisresults.extensionIDOnlyCount > 0:
+        if self.analysis_results.extensionIDOnlyCount > 0:
             if (
-                self.analysisresults.extensionOnlyIDList is not None
-                and self.analysisresults.extensionOnlyIDFrequency is not None
+                self.analysis_results.extensionOnlyIDList is not None
+                and self.analysis_results.extensionOnlyIDFrequency is not None
             ):
-                if len(self.analysisresults.extensionOnlyIDList) > 0:
+                if len(self.analysis_results.extensionOnlyIDList) > 0:
                     self.__output_list_title__(
                         self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY
                     )
                     self.printFormattedText(
                         self.__frequencyoutput__(
-                            self.analysisresults.extensionOnlyIDFrequency
+                            self.analysis_results.extensionOnlyIDFrequency
                         )
                     )
 
-        if self.analysisresults.uniqueExtensionsInCollectionList is not None:
+        if self.analysis_results.uniqueExtensionsInCollectionList is not None:
             self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
             output = ""
-            for item in self.analysisresults.uniqueExtensionsInCollectionList:
+            for item in self.analysis_results.uniqueExtensionsInCollectionList:
                 output = output + item[0] + ", "
             self.printFormattedText(output.strip(", "))
 
-        if self.analysisresults.rogue_multiple_identification_list is not None:
-            if len(self.analysisresults.rogue_multiple_identification_list) > 0:
+        if self.analysis_results.rogue_multiple_identification_list is not None:
+            if len(self.analysis_results.rogue_multiple_identification_list) > 0:
                 self.__output_list_title__(self.STRINGS.HEADING_LIST_MULTIPLE)
                 self.printFormattedText(
                     self.__itemlist__(
-                        self.analysisresults.rogue_multiple_identification_list
+                        self.analysis_results.rogue_multiple_identification_list
                     )
                 )
 
-        if self.analysisresults.frequencyOfAllExtensions is not None:
+        if self.analysis_results.frequencyOfAllExtensions is not None:
             self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.frequencyOfAllExtensions)
+                self.__frequencyoutput__(self.analysis_results.frequencyOfAllExtensions)
             )
 
-        if self.analysisresults.mimetypeFrequency is not None:
+        if self.analysis_results.mimetypeFrequency is not None:
             self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
-            mimes = self.analysisresults.mimetypeFrequency
+            mimes = self.analysis_results.mimetypeFrequency
             for m in mimes:
                 if m[0] == "":
                     mimes.remove(m)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.mimetypeFrequency)
+                self.__frequencyoutput__(self.analysis_results.mimetypeFrequency)
             )
 
         # ##########NS SPECIFIC OUTPUT####################
         if (
-            self.analysisresults.signatureidentifiedfrequency is not None
-            and self.analysisresults.nsdatalist is not None
+            self.analysis_results.signatureidentifiedfrequency is not None
+            and self.analysis_results.nsdatalist is not None
         ):
             self.__output_list_title__(
                 self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS
             )
             self.printFormattedText(
                 self.__handlenamespacestats__(
-                    self.analysisresults.nsdatalist,
-                    self.analysisresults.signatureidentifiedfrequency,
+                    self.analysis_results.nsdatalist,
+                    self.analysis_results.signatureidentifiedfrequency,
                 )
             )
         # ##########NS SPECIFIC OUTPUT####################
 
         # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
         if (
-            self.analysisresults.xml_identifiers is not None
-            and len(self.analysisresults.xml_identifiers) > 0
+            self.analysis_results.xml_identifiers is not None
+            and len(self.analysis_results.xml_identifiers) > 0
         ):
             self.__output_list_title__(self.STRINGS.HEADING_XML_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.xml_identifiers)
+                self.__frequencyoutput__(self.analysis_results.xml_identifiers)
             )
         if (
-            self.analysisresults.text_identifiers is not None
-            and len(self.analysisresults.text_identifiers) > 0
+            self.analysis_results.text_identifiers is not None
+            and len(self.analysis_results.text_identifiers) > 0
         ):
             self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.text_identifiers)
+                self.__frequencyoutput__(self.analysis_results.text_identifiers)
             )
         if (
-            self.analysisresults.filename_identifiers is not None
-            and len(self.analysisresults.filename_identifiers) > 0
+            self.analysis_results.filename_identifiers is not None
+            and len(self.analysis_results.filename_identifiers) > 0
         ):
             self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.filename_identifiers)
+                self.__frequencyoutput__(self.analysis_results.filename_identifiers)
             )
         # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
 
-        if self.analysisresults.zerobytecount > 0:
+        if self.analysis_results.zerobytecount > 0:
             self.printFormattedText("\n")
             self.printFormattedText(
                 self.__output_list__(
                     self.STRINGS.HEADING_LIST_ZERO_BYTES,
-                    self.analysisresults.zerobytecount,
+                    self.analysis_results.zerobytecount,
                 )
             )
             self.printFormattedText(
-                self.__itemlist__(self.analysisresults.zerobytelist)
+                self.__itemlist__(self.analysis_results.zerobytelist)
             )
 
-        if self.analysisresults.containertypeslist is not None:
-            if len(self.analysisresults.containertypeslist) > 0:
+        if self.analysis_results.containertypeslist is not None:
+            if len(self.analysis_results.containertypeslist) > 0:
                 self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
                 output = ""
-                for archive in self.analysisresults.containertypeslist:
+                for archive in self.analysis_results.containertypeslist:
                     output = output + archive[0] + ", "
                 self.printFormattedText(output.strip(", "))
 
         self.printFormattedText("\n", True)
 
-        if self.analysisresults.hashused > 0:
-            if self.analysisresults.totalHASHduplicates > 0:
+        if self.analysis_results.hashused > 0:
+            if self.analysis_results.totalHASHduplicates > 0:
                 self.printFormattedText(
                     self.__output_list__(
                         self.STRINGS.HEADING_IDENTICAL_CONTENT,
-                        self.analysisresults.totalHASHduplicates,
+                        self.analysis_results.totalHASHduplicates,
                     )
                 )
                 self.printFormattedText(
-                    self.__outputdupes__(self.analysisresults.duplicateHASHlisting)
+                    self.__outputdupes__(self.analysis_results.duplicateHASHlisting)
                 )
 
-        if self.analysisresults.badFileNames is not None:
-            if len(self.analysisresults.badFileNames) > 0:
+        if self.analysis_results.badFileNames is not None:
+            if len(self.analysis_results.badFileNames) > 0:
                 self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
-                for badnames in self.analysisresults.badFileNames:
+                for badnames in self.analysis_results.badFileNames:
                     # Already UTF-8 on way into here...
                     self.printFormattedText(badnames, False)
 
-        if self.analysisresults.badDirNames is not None:
-            if len(self.analysisresults.badDirNames) > 0:
+        if self.analysis_results.badDirNames is not None:
+            if len(self.analysis_results.badDirNames) > 0:
                 self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
-                for badnames in self.analysisresults.badDirNames:
+                for badnames in self.analysis_results.badDirNames:
                     # Already UTF-8 on way into here...
                     self.printFormattedText(badnames, False)
 
-        if self.analysisresults.denylist is True:
-            if self.analysisresults.denylist_ids:
+        if self.analysis_results.denylist is True:
+            if self.analysis_results.denylist_ids:
                 self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_IDS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.denylist_ids)
+                    self.__aggregatelists__(self.analysis_results.denylist_ids)
                 )
-            if self.analysisresults.denylist_exts:
+            if self.analysis_results.denylist_exts:
                 self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_EXTS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.denylist_exts)
+                    self.__aggregatelists__(self.analysis_results.denylist_exts)
                 )
-            if self.analysisresults.denylist_filenames:
+            if self.analysis_results.denylist_filenames:
                 self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_FILENAMES)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.denylist_filenames)
+                    self.__aggregatelists__(self.analysis_results.denylist_filenames)
                 )
-            if self.analysisresults.denylist_directories:
+            if self.analysis_results.denylist_directories:
                 self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_DIRS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysisresults.denylist_directories)
+                    self.__aggregatelists__(self.analysis_results.denylist_directories)
                 )
 
-        if self.analysisresults.errorlist:
+        if self.analysis_results.errorlist:
             self.__output_list_title__(self.STRINGS.HEADING_ERRORS)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysisresults.errorlist)
+                self.__frequencyoutput__(self.analysis_results.errorlist)
             )

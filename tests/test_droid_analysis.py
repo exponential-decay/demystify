@@ -2681,14 +2681,27 @@ def test_run_droid_analysis(tmp_path):
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    res = analysis_from_csv(str(droid_csv), True, {})
+    res = analysis_from_csv(str(droid_csv), True)
 
-    assert res.filename.endswith("droid_💜_test")
-    assert res.hashused is True
-    assert res.totalHASHduplicates == 6
+    assert res.analysis_results.namespacecount == 1
 
-    assert len(res.duplicateHASHlisting) == 3
-    assert res.duplicateHASHlisting == [
+    assert res.namespacedata[0][0] == 1
+    assert res.namespacedata[0][1] == "pronom"
+    assert res.namespacedata[0][2].endswith("droid_💜_test.csv")
+
+    assert res.analysis_results.filename.endswith("droid_💜_test")
+    assert res.analysis_results.tooltype == "droid"
+
+    assert res.analysis_results.denylist is None
+    assert res.analysis_results.denylist_filenames == []
+    assert res.analysis_results.denylist_directories == []
+    assert res.analysis_results.denylist_ids == []
+    assert res.analysis_results.denylist_exts == []
+
+    assert res.analysis_results.hashused is True
+    assert res.analysis_results.totalHASHduplicates == 6
+    assert len(res.analysis_results.duplicateHASHlisting) == 3
+    assert res.analysis_results.duplicateHASHlisting == [
         {
             "checksum": "0c391e403302385e9d227733fc477bf440f978d2",
             "count": 2,
@@ -2728,18 +2741,49 @@ def test_run_siegfried_analysis(tmp_path):
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True, {})
+    res = analysis_from_csv(str(sf_yaml), True)
 
-    assert res.filename.endswith("sf_💜_test")
-    assert res.hashused is True
+    assert res.namespacedata[0] == (
+        1,
+        "pronom",
+        "DROID_SignatureFile_V97.xml; container-signature-20201001.xml",
+    )
+    assert res.namespacedata[1] == (2, "tika", "tika-mimetypes.xml (1.24, 2020-04-17)")
+    assert res.namespacedata[2] == (
+        3,
+        "freedesktop.org",
+        "freedesktop.org.xml (2.0, 2020-06-05)",
+    )
+    assert res.namespacedata[3] == (
+        4,
+        "loc",
+        "fddXML.zip (2020-09-02, DROID_SignatureFile_V97.xml, container-signature-20201001.xml)",
+    )
 
-    assert res.totalHASHduplicates == 6
+    # Siegfried only instance results.
+    assert res.priority_ns_id == 4
+    assert res.pronom_ns_id == 4
 
-    assert len(res.duplicateHASHlisting) == 3
+    # Anticipating PRONOM so lets confirm our PRONOM index and priority
+    # IDs are correct.
+    assert res.priority_ns_id == res.pronom_ns_id
 
-    print(res.duplicateHASHlisting)
+    assert res.tika_ns_id == 2
+    assert res.freedesktop_ns_id == 3
 
-    assert res.duplicateHASHlisting == [
+    assert res.analysis_results.filename.endswith("sf_💜_test")
+    assert res.analysis_results.tooltype == "siegfried: 1.9.1"
+
+    assert res.analysis_results.denylist is None
+    assert res.analysis_results.denylist_filenames == []
+    assert res.analysis_results.denylist_directories == []
+    assert res.analysis_results.denylist_ids == []
+    assert res.analysis_results.denylist_exts == []
+
+    assert res.analysis_results.hashused is True
+    assert res.analysis_results.totalHASHduplicates == 6
+    assert len(res.analysis_results.duplicateHASHlisting) == 3
+    assert res.analysis_results.duplicateHASHlisting == [
         {
             "checksum": "0653e4959fa11f1ffce974b092efdd00",
             "count": 2,
