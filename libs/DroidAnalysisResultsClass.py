@@ -14,9 +14,6 @@ class DROIDAnalysisResults:
         # filename
         self.filename = ""
 
-        # hashused
-        self.hashused = False
-
         # tooltype
         self.tooltype = None
 
@@ -91,10 +88,6 @@ class DROIDAnalysisResults:
         self.topPUIDList = None
         self.topExtensionList = None
 
-        self.totalmd5duplicates = 0
-        self.duplicatemd5listing = []
-        self.duplicatemd5altlisting = []
-
         self.totaluniquefilenames = 0
         self.duplicatefnamelisting = []
         self.duplicatefnamealtlisting = []
@@ -110,10 +103,12 @@ class DROIDAnalysisResults:
         self.badFileNames = None
         self.badDirNames = None
 
+        # Hash related values.
+        self.hashused = False
         self.duplicateHASHlisting = None
         self.totalHASHduplicates = None
 
-        # rogues
+        # Rogue related values.
         self.rogue_pronom_ns_id = None
         self.rogue_all_paths = None
         self.rogue_all_dirs = None

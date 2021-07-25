@@ -189,6 +189,7 @@ class AnalysisQueries:
     SELECT_COUNT_DUPLICATE_CHECKSUMS = """SELECT FILEDATA.HASH, COUNT(*) AS TOTAL
                                           FROM FILEDATA
                                           WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'
+                                          AND FILEDATA.HASH != ''
                                           GROUP BY FILEDATA.HASH
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
@@ -228,10 +229,8 @@ class AnalysisQueries:
         return query
 
     def list_duplicate_paths(self, checksum):
-        return (
-            "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='"
-            + checksum
-            + "'ORDER BY FILEDATA.FILE_PATH"
+        return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(
+            checksum
         )
 
     def count_id_instances(self, id):

@@ -178,10 +178,10 @@ class DemystifyAnalysis:
 
     # List queries
 
-    def listDuplicateFilesFromHASH(self):
+    def list_duplicate_files_from_hash(self):
         """Process duplicates based on hash from analysis."""
 
-        # Result looks as follows: list([HASH, COUNT])
+        # Result will looks as follows: list([HASH, COUNT])
         result = self.__querydb__(AnalysisQueries.SELECT_COUNT_DUPLICATE_CHECKSUMS)
 
         duplicatelist = []
@@ -189,11 +189,23 @@ class DemystifyAnalysis:
         roguepaths = []
 
         self.analysisresults.totalHASHduplicates = 0
+
         for res in result:
             count = int(res[1])
             checksum = res[0]
-            self.analysisresults.totalHASHduplicates = (self.analysisresults.totalHASHduplicates + count)
-            duplicate_examples = self.__querydb__(self.query.list_duplicate_paths(res[0]))
+
+            # There is a potential or empty checksums in the database,
+            # either through incorrectly writing the data or rogue
+            # datasets, avoid processing and outputting those here.
+            if checksum == "":
+                continue
+
+            self.analysisresults.totalHASHduplicates = (
+                self.analysisresults.totalHASHduplicates + count
+            )
+            duplicate_examples = self.__querydb__(
+                self.query.list_duplicate_paths(res[0])
+            )
             pathlist = []
             for duplicates in duplicate_examples:
                 filename = duplicates[0]
@@ -206,17 +218,7 @@ class DemystifyAnalysis:
             duplicatelist.append(duplicate_sum)
             duplicate_sum = {}
 
-        assert self.analysisresults.totalHASHduplicates == 6
         self.analysisresults.duplicateHASHlisting = duplicatelist
-
-        print(self.analysisresults.duplicateHASHlisting)
-        x = [{'checksum': '0c391e403302385e9d227733fc477bf440f978d2', 'count': 2, 'examples': ['cp437/año/cp437_encoded_dirs.txt', 'cp437/café/cp437_encoded_dirs.txt']}, {'checksum': '4bc1d53ee7d365094fde303fec365b4fdec34c80', 'count': '2', 'examples': ['shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt', 'windows_1252/søster/cp1252_encoded_dirs.txt']}, {'checksum': 'd0e093259ce05cde2b326e418ac547359b91ee5f', 'count': 2, 'examples': ['emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt', 'emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt']}]
-        x = [{'checksum': '0c391e403302385e9d227733fc477bf440f978d2', 'count': 2, 'examples': ['cp437/año/cp437_encoded_dirs.txt', 'cp437/café/cp437_encoded_dirs.txt']}, {'checksum': '4bc1d53ee7d365094fde303fec365b4fdec34c80', 'count': 2, 'examples': ['shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt', 'windows_1252/søster/cp1252_encoded_dirs.txt']}, {'checksum': 'd0e093259ce05cde2b326e418ac547359b91ee5f', 'count': 2, 'examples': ['emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt', 'emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt']}]
-
-
-        assert self.analysisresults.duplicateHASHlisting == x
-        assert False, "this is where I am in the code..."
-
         return roguepaths
 
     def listzerobytefiles(self):
@@ -893,8 +895,8 @@ class DemystifyAnalysis:
 
             if self.analysisresults.hashused is True:
                 self.analysisresults.rogue_duplicates = (
-                    self.listDuplicateFilesFromHASH()
-                )  # expensive duplicate checking [default: ON]
+                    self.list_duplicate_files_from_hash()
+                )
 
             if self.analysisresults.multipleidentificationcount > 0:
                 self.analysisresults.rogue_multiple_identification_list = self.multiple_id_paths(
