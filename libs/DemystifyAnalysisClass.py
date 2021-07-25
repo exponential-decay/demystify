@@ -80,15 +80,49 @@ class DemystifyAnalysis:
         self.textIDs = None
         self.filenameIDs = None
 
-        # Namespace data.
+        # Namespaace data.
+        self._initialize_namespace_details(config)
+
+
+    def __del__(self):
+        """Destructor for DemystifyAnalysis object."""
+        try:
+            self._close_database()
+        except AttributeError:
+            logging.error("Destructor should not reach here...")
+
+    def __version__(self):
+        """Return a version number for the analysis."""
+        v = AnalysisVersion()
+        self.analysis_results.__version_no__ = v.getVersion()
+        return self.analysis_results.__version_no__
+
+    def _open_database(self, dbfilename):
+        """Open the database connection and initialize the instance
+        variables needed to run the demystify analysis.
+        """
+        self.analysis_results.filename = dbfilename.rstrip(".db")
+        self.conn = sqlite3.connect(dbfilename)
+        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
+        self.cursor = self.conn.cursor()
+
+    def _close_database(self):
+        """Close the database connection."""
+        self.conn.close()
+
+    def _initialize_namespace_details(self, config):
+        """Initialize namespace data.
+
+        Working with Siegfried means that we can work with multiple
+        namespaces. Setup work and initialization of class variables is
+        all done here.
+        """
         self.namespacedata = None
         self.priority_ns_id = None
         self.pronom_ns_id = None
         self.freedesktop_ns_id = None
         self.tika_ns_id = None
 
-        # Working with Siegfried means that we can work with multiple
-        # namespaces. Setup work for that is all below.
         self.namespacedata = self.__querydb__(self.query.SELECT_NS_DATA)
 
         if self.analysis_results.tooltype == self.TOOLTYPE_DROID:
@@ -114,27 +148,6 @@ class DemystifyAnalysis:
 
         # Workout priority ID based on the namespace indices above.
         self.priority_ns_id = self.__get_ns_priority__(self.__readconfig__(config))
-
-    def __del__(self):
-        """Destructor for DemystifyAnalysis object."""
-        try:
-            self._close_database()
-        except AttributeError:
-            logging.error("Destructor should not reach here...")
-
-    def __version__(self):
-        v = AnalysisVersion()
-        self.analysis_results.__version_no__ = v.getVersion()
-        return self.analysis_results.__version_no__
-
-    def _open_database(self, dbfilename):
-        self.analysis_results.filename = dbfilename.rstrip(".db")
-        self.conn = sqlite3.connect(dbfilename)
-        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
-        self.cursor = self.conn.cursor()
-
-    def _close_database(self):
-        self.conn.close()
 
     def __get_ns_priority__(self, config):
         if not config:
