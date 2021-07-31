@@ -2727,57 +2727,59 @@ def test_run_droid_analysis(tmp_path):
     assert res.analysis_results.denylist_exts == []
 
     assert int(res.analysis_results.collectionsize) == 124005330
-    assert res.analysis_results.filecount == 78
 
-    '''
-    assert res.analysis_results.directoryCount == 24
-    assert res.analysis_results.uniqueFileNames == 54
-    assert res.analysis_results.uniqueDirectoryNames == 24
-    assert res.analysis_results.identifiedfilecount == 40
-    assert res.analysis_results.multipleidentificationcount == 2
-    assert res.analysis_results.unidentifiedfilecount == 16
-    assert res.analysis_results.distinctSignaturePuidcount == 18
-    assert res.analysis_results.extensionIDOnlyCount == 10
-    assert res.analysis_results.distinctextensioncount == 18
+    # Verified through sqlitefid.
+    assert res.analysis_results.filecount == 75
+    assert res.analysis_results.directoryCount == 38
+
+    # Other statistics.
+    assert res.analysis_results.uniqueFileNames == 59
+    assert res.analysis_results.uniqueDirectoryNames == 25
+    assert res.analysis_results.distinctSignaturePuidcount == 19
+    assert res.analysis_results.distinctextensioncount == 21
     assert res.analysis_results.zeroidcount == 6
-    '''
 
+    # TODO: Verify...
+    assert res.analysis_results.identifiedfilecount == 51
+    assert res.analysis_results.multipleidentificationcount == 1
+    assert res.analysis_results.unidentifiedfilecount == 24
+    assert res.analysis_results.extensionIDOnlyCount == 18
     assert res.analysis_results.containercount == 6
-
-    # TODO, is this count something useful?
     assert res.analysis_results.filesincontainercount == 15
 
-    '''
-    assert res.analysis_results.hashused is True
-    assert res.analysis_results.totalHASHduplicates == 6
-    assert len(res.analysis_results.duplicateHASHlisting) == 3
-    assert res.analysis_results.duplicateHASHlisting == [
-        {
-            "checksum": "0c391e403302385e9d227733fc477bf440f978d2",
-            "count": 2,
-            "examples": [
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/año/cp437_encoded_dirs.txt",
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/cp437_encoded_dirs.txt",
-            ],
-        },
-        {
-            "checksum": "1766219eb64113604a1fe2c003b10c8258bb1cbb",
-            "count": 2,
-            "examples": [
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
-            ],
-        },
-        {
-            "checksum": "d0e093259ce05cde2b326e418ac547359b91ee5f",
-            "count": 2,
-            "examples": [
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt",
-                "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt",
-            ],
-        },
-    ]
-    '''
+    # Duplicate checking, looks to be working okay.
+    assert len(res.analysis_results.duplicateHASHlisting) == 13
+    examples = []
+    for entry in res.analysis_results.duplicateHASHlisting:
+        assert entry["count"] > 1
+        for example in entry["examples"]:
+            examples.append(example)
+            if (
+                example
+                == "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt"
+            ):
+                assert sorted(entry) == sorted(
+                    {
+                        "checksum": "0653e4959fa11f1ffce974b092efdd00",
+                        "count": 2,
+                        "examples": [
+                            "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+                            "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
+                        ],
+                    }
+                )
+
+    assert (
+        "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/año/cp437_encoded_dirs.txt"
+        in examples
+    )
+    assert (
+        "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt"
+        in examples
+    )
+
+
+
 
 def test_run_siegfried_analysis(tmp_path):
     """Test analysis output for Siegfried."""
@@ -2831,7 +2833,11 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.denylist_exts == []
 
     assert res.analysis_results.collectionsize == 124005368
-    assert res.analysis_results.filecount == 78
+
+    # Verified through sqlitefid.
+    assert res.analysis_results.filecount == 77
+
+    # Other statistics.
     assert res.analysis_results.directoryCount == 22
     assert res.analysis_results.uniqueFileNames == 60
     assert res.analysis_results.uniqueDirectoryNames == 21
@@ -2844,37 +2850,50 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.zeroidcount == 5
     assert res.analysis_results.containercount == 8
 
-    # TODO, is this count something useful?
     assert res.analysis_results.filesincontainercount == 8
 
-    '''
+    # Errors are a Siegfried only feature.
+    assert len(res.analysis_results.errorlist) == 4
+    errs = sorted([err[0] for err in res.analysis_results.errorlist])
+    expected_errs = sorted(
+        [
+            "None",
+            "failed to decompress, got: webarchive: invalid ARC version block",
+            "failed to decompress, got: EOF",
+            "failed to decompress, got: zip: not a valid zip file",
+        ]
+    )
+    assert errs == expected_errs
+
+    # Duplicate checking, looks to be working okay.
     assert res.analysis_results.hashused is True
-    assert res.analysis_results.totalHASHduplicates == 6
-    assert len(res.analysis_results.duplicateHASHlisting) == 3
-    assert res.analysis_results.duplicateHASHlisting == [
-        {
-            "checksum": "0653e4959fa11f1ffce974b092efdd00",
-            "count": 2,
-            "examples": [
-                "fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
-                "fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
-            ],
-        },
-        {
-            "checksum": "2e58bf86585ae31fcd7112f1beee358b",
-            "count": 2,
-            "examples": [
-                "fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟/utf-8_encoded_dirs.txt",
-                "fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt",
-            ],
-        },
-        {
-            "checksum": "a2530a3d32134654f0bef01cf252afd7",
-            "count": 2,
-            "examples": [
-                "fixtures/dirs_with_various_encodings/cp437/año/cp437_encoded_dirs.txt",
-                "fixtures/dirs_with_various_encodings/cp437/café/cp437_encoded_dirs.txt",
-            ],
-        },
-    ]
-    '''
+    assert res.analysis_results.totalHASHduplicates == 32
+    assert len(res.analysis_results.duplicateHASHlisting) == 14
+    examples = []
+    for entry in res.analysis_results.duplicateHASHlisting:
+        assert entry["count"] > 1
+        for example in entry["examples"]:
+            examples.append(example)
+            if (
+                example
+                == "fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt"
+            ):
+                assert sorted(entry) == sorted(
+                    {
+                        "checksum": "0653e4959fa11f1ffce974b092efdd00",
+                        "count": 2,
+                        "examples": [
+                            "fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+                            "fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
+                        ],
+                    }
+                )
+
+    assert (
+        "fixtures/dirs_with_various_encodings/cp437/año/cp437_encoded_dirs.txt"
+        in examples
+    )
+    assert (
+        "fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt"
+        in examples
+    )
