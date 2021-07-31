@@ -214,19 +214,18 @@ class AnalysisQueries:
                    GROUP BY FILEDATA.FILE_ID
                    ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
                    WHERE FREQUENCY > """
-            query = body + str(nscount)
-        else:
-            body = """SELECT PATH
-                   FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
-                   FROM IDRESULTS
-                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                   WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
-                   GROUP BY FILEDATA.FILE_ID
-                   ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
-                   WHERE FREQUENCY > """
-            query = body + str(nscount)
-        return query
+            return "{}{}".format(body, nscount)
+        body = """SELECT PATH
+               FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
+               FROM IDRESULTS
+               JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
+               JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+               WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
+               GROUP BY FILEDATA.FILE_ID
+               ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
+               WHERE FREQUENCY > """
+        query = body + str(nscount)
+        return "{}{}".format(body, nscount)
 
     def list_duplicate_paths(self, checksum):
         return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(

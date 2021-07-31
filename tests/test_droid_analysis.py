@@ -2728,23 +2728,35 @@ def test_run_droid_analysis(tmp_path):
 
     assert int(res.analysis_results.collectionsize) == 124005330
 
+    assert res.analysis_results.unidentifiedPercentage == "32.0"
+    assert res.analysis_results.identifiedPercentage == "68.0"
+
     # Verified through sqlitefid.
     assert res.analysis_results.filecount == 75
     assert res.analysis_results.directoryCount == 38
 
-    # Other statistics.
+    # Other statistics, verified manually.
     assert res.analysis_results.uniqueFileNames == 59
     assert res.analysis_results.uniqueDirectoryNames == 25
     assert res.analysis_results.distinctSignaturePuidcount == 19
     assert res.analysis_results.distinctextensioncount == 21
     assert res.analysis_results.zeroidcount == 6
-
-    # TODO: Verify...
-    assert res.analysis_results.identifiedfilecount == 51
-    assert res.analysis_results.multipleidentificationcount == 1
-    assert res.analysis_results.unidentifiedfilecount == 24
     assert res.analysis_results.extensionIDOnlyCount == 18
     assert res.analysis_results.containercount == 6
+
+    # Identified through "Signature" and "Container" methods in DROID.
+    assert res.analysis_results.identifiedfilecount == 51
+
+    # Multiple identifications where number of IDs is greater than 1 and
+    # the format is identified through Container or Signature, i.e. not
+    # extension - any number of identifications can come out of an
+    # extension.
+    assert res.analysis_results.multipleidentificationcount == 1
+
+    # Extension + blank identification (if possible) and type File.
+    assert res.analysis_results.unidentifiedfilecount == 24
+
+    # URI isn't file:// and type isn't File or Conainer.
     assert res.analysis_results.filesincontainercount == 15
 
     # Duplicate checking, looks to be working okay.
@@ -2834,6 +2846,9 @@ def test_run_siegfried_analysis(tmp_path):
 
     assert res.analysis_results.collectionsize == 124005368
 
+    assert res.analysis_results.unidentifiedPercentage == "14.3"
+    assert res.analysis_results.identifiedPercentage == "85.7"
+
     # Verified through sqlitefid.
     assert res.analysis_results.filecount == 77
 
@@ -2848,9 +2863,13 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.extensionIDOnlyCount == 0
     assert res.analysis_results.distinctextensioncount == 22
     assert res.analysis_results.zeroidcount == 5
+
+    # Container count created by counting container PUIDs that SF can
+    # work with. "x-fmt/263", "x-fmt/266", "tar": "x-fmt/265",
+    # "warc": "fmt/289", "arc": "x-fmt/219", "arc_1": "fmt/410".
     assert res.analysis_results.containercount == 8
 
-    assert res.analysis_results.filesincontainercount == 8
+    assert res.analysis_results.filesincontainercount == 17
 
     # Errors are a Siegfried only feature.
     assert len(res.analysis_results.errorlist) == 4
