@@ -202,8 +202,11 @@ class AnalysisQueries:
                                  AND IDDATA.BASIS LIKE '%byte match%'"""
 
     def count_multiple_ids(self, nscount, paths=False):
-        # e.g. if nscount (number of namespaces) == 3, a multuple id has count > 3
-        query = ""
+        """Count multiple entries for identification where the count is
+        greater than the namespace count. E.g. a file has a multiple ID
+        if it uses 3 namespaces and the frequency is 4, but not if the
+        frequency is 3.
+        """
         if paths is False:
             body = """SELECT count(FREQUENCY)
                    FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
@@ -224,7 +227,6 @@ class AnalysisQueries:
                GROUP BY FILEDATA.FILE_ID
                ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
                WHERE FREQUENCY > """
-        query = body + str(nscount)
         return "{}{}".format(body, nscount)
 
     def list_duplicate_paths(self, checksum):

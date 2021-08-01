@@ -2791,8 +2791,6 @@ def test_run_droid_analysis(tmp_path):
     )
 
 
-
-
 def test_run_siegfried_analysis(tmp_path):
     """Test analysis output for Siegfried."""
 
@@ -2869,7 +2867,8 @@ def test_run_siegfried_analysis(tmp_path):
     # "warc": "fmt/289", "arc": "x-fmt/219", "arc_1": "fmt/410".
     assert res.analysis_results.containercount == 8
 
-    assert res.analysis_results.filesincontainercount == 17
+    # Containers verified in report and with additional work in sqlitefid.
+    assert res.analysis_results.filesincontainercount == 16
 
     # Errors are a Siegfried only feature.
     assert len(res.analysis_results.errorlist) == 4
