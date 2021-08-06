@@ -40,6 +40,10 @@ class AnalysisResults:
         self.distinctextensioncount = 0
         self.zeroidcount = 0
 
+        # Histogram of identifiers returned in the report with concrete,
+        # Binary or Container IDs.
+        self.binaryidentifiers = None
+
         # SF ONLY
         self.xmlidfilecount = 0
         self.textidfilecount = 0
@@ -50,7 +54,6 @@ class AnalysisResults:
         self.distinctFilenameIdentifiers = 0
         self.textidentifiers = None
         self.filenameidentifiers = None
-        self.binaryidentifiers = None
         self.xmlidentifiers = None
         self.bof_distance = None
         self.eof_distance = None

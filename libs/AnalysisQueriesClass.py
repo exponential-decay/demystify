@@ -1,5 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
+import logging
+
 
 class AnalysisQueries:
 
@@ -365,37 +367,36 @@ class AnalysisQueries:
         query = part1 + part2
         return query
 
-    def get_ns_methods(self, id, binary=True, method=False):
-        AND_NS = "WHERE NS_ID=" + str(id)
+    def get_ns_methods(self, id_, binary=True, method=False):
+        """Retrieve various counts about the data in the report based
+        on namespace. E.g.
 
-        COUNT_IDS_NS = """SELECT COUNT(DISTINCT IDRESULTS.FILE_ID)
-                        FROM IDRESULTS
-                        JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                        """
+          SELECT COUNT(DISTINCT IDRESULTS.FILE_ID)
+          FROM IDRESULTS
+          JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
+          WHERE NS_ID=1
+          AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
 
+        """
+        WHERE_NS = "WHERE NS_ID={}".format(id_)
+        COUNT_IDS_NS = (
+            "SELECT COUNT(DISTINCT IDRESULTS.FILE_ID)\n"
+            "FROM IDRESULTS\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        )
         COUNT_IDS_METHODS = (
             "AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')"
         )
-
-        ID_METHODS_COUNT = """SELECT COUNT(*)
-                              FROM IDDATA
-                              """
-
+        ID_METHODS_COUNT = "SELECT COUNT(*) " "FROM IDDATA\n"
         ID_METHODS_METHOD = "AND IDDATA.METHOD="
-
         query = ""
         if binary is True:
-            query = COUNT_IDS_NS + AND_NS + "\n" + COUNT_IDS_METHODS
+            query = "{}{}\n{}".format(COUNT_IDS_NS, WHERE_NS, COUNT_IDS_METHODS)
         elif method is not False:
-            query = (
-                ID_METHODS_COUNT
-                + AND_NS
-                + "\n"
-                + ID_METHODS_METHOD
-                + "'"
-                + method
-                + "'"
+            query = "{}{}\n{}'{}'".format(
+                ID_METHODS_COUNT, WHERE_NS, ID_METHODS_METHOD, method
             )
+        logging.debug("get_ns_methods: %s", query)
         return query
 
     # ERRORS, TODO: Place somewhere else?

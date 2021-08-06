@@ -2790,6 +2790,63 @@ def test_run_droid_analysis(tmp_path):
         in examples
     )
 
+    # SF only...
+    assert res.analysis_results.xmlidfilecount == 0
+    assert res.analysis_results.textidfilecount == 0
+    assert res.analysis_results.filenameidfilecount == 0
+    assert res.analysis_results.distinctOtherIdentifiers == 0
+    assert res.analysis_results.distinctXMLIdentifiers == 0
+    assert res.analysis_results.distinctTextIdentifiers == 0
+    assert res.analysis_results.distinctFilenameIdentifiers == 0
+    assert res.analysis_results.textidentifiers is None
+    assert res.analysis_results.filenameidentifiers is None
+    assert res.analysis_results.xmlidentifiers is None
+    assert res.analysis_results.bof_distance is None
+    assert res.analysis_results.eof_distance is None
+    assert res.analysis_results.namespacedata is None
+    assert res.analysis_results.identificationgaps is None
+    assert res.analysis_results.xml_identifiers is None
+    assert res.analysis_results.text_identifiers is None
+    assert res.analysis_results.text_identifiers is None
+    assert res.analysis_results.filename_identifiers is None
+
+    assert len(res.analysis_results.binaryidentifiers) == 19
+    assert res.analysis_results.binaryidentifiers == [
+        ("ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0  (2)", 1),
+        ("ns:pronom x-fmt/401, StarOffice Draw, 5.x  (2)", 1),
+        ("ns:pronom x-fmt/384, Quicktime,   (24)", 1),
+        ("ns:pronom x-fmt/266, GZIP Format,   (2)", 1),
+        ("ns:pronom x-fmt/265, Tape Archive Format,   (1)", 1),
+        ("ns:pronom x-fmt/263, ZIP Format,   (2)", 1),
+        ("ns:pronom x-fmt/219, Internet Archive, 1.0  (1)", 1),
+        ("ns:pronom fmt/999, Krita Document Format,   (2)", 1),
+        ("ns:pronom fmt/853, Serif DrawPlus Drawing, 5  (2)", 1),
+        ("ns:pronom fmt/641, Epson Raw Image Format,   (1)", 1),
+        ("ns:pronom fmt/631, Microsoft PowerPoint Template, 2007  (2)", 1),
+        ("ns:pronom fmt/484, 7Zip format,   (1)", 1),
+        ("ns:pronom fmt/443, Microsoft Visio Drawing, 2003-2010  (2)", 1),
+        ("ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards  (2)", 1),
+        ("ns:pronom fmt/410, Internet Archive, 1.1  (1)", 1),
+        ("ns:pronom fmt/289, WARC,   (1)", 1),
+        ("ns:pronom fmt/1281, WARC, 1.1  (1)", 1),
+        ("ns:pronom fmt/1280, NCH Dictation Audio File,   (1)", 1),
+        ("ns:pronom fmt/1098, XZ File Format,   (1)", 1),
+    ]
+
+    assert len(res.analysis_results.nsdatalist) == 1
+    assert sorted(res.analysis_results.nsdatalist[0]) == sorted(
+        {
+            "multiple ids": 1,
+            "xml method count": 0,
+            "filename method count": 0,
+            "binary method count": 51,
+            "extension method count": 18,
+            "text method count": 0,
+            "namespace details": "/tmp/pytest-of-ross-spencer/pytest-41/test_run_droid_analysis0/droid_\xf0\x9f\x92\x9c_test.csv",
+            "namespace title": "pronom",
+        }
+    )
+
 
 def test_run_siegfried_analysis(tmp_path):
     """Test analysis output for Siegfried."""
@@ -2831,7 +2888,7 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.priority_ns_id == res.pronom_ns_id
 
     assert res.tika_ns_id == 2
-    assert res.freedesktop_ns_id == 3
+    assert res.freedesktop_ns_id == 3, test
 
     assert res.analysis_results.filename.endswith("sf_💜_test")
     assert res.analysis_results.tooltype == "siegfried: 1.9.1"
@@ -2915,3 +2972,32 @@ def test_run_siegfried_analysis(tmp_path):
         "fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝/utf-8_encoded_dirs.txt"
         in examples
     )
+
+    '''
+    # SF only...
+    assert res.analysis_results.xmlidfilecount == 0
+    assert res.analysis_results.textidfilecount == 0
+    assert res.analysis_results.filenameidfilecount == 0
+    assert res.analysis_results.distinctOtherIdentifiers == 0
+    assert res.analysis_results.distinctXMLIdentifiers == 0
+    assert res.analysis_results.distinctTextIdentifiers == 0
+    assert res.analysis_results.distinctFilenameIdentifiers == 0
+    assert res.analysis_results.textidentifiers == None
+    assert res.analysis_results.filenameidentifiers == None
+    assert res.analysis_results.binaryidentifiers == None
+    assert res.analysis_results.xmlidentifiers == None
+    assert res.analysis_results.bof_distance == None
+    assert res.analysis_results.eof_distance == None
+    assert res.analysis_results.namespacedata == None
+    assert res.analysis_results.nsdatalist == None
+    assert res.analysis_results.identificationgaps == None
+    assert res.analysis_results.xml_identifiers == None
+    assert res.analysis_results.text_identifiers == None
+    assert res.analysis_results.filename_identifiers == None
+    '''
+
+
+def test_denylist():
+    """Enable denylist and test the results here."""
+
+    # res.analysis_results is not None

@@ -102,7 +102,7 @@ def _handle_denylist_config():
 def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
     """Handle output from the analysis.
 
-    :param analysisresults: Object containing all of our analysis
+    :param analysis_results: Object containing all of our analysis
         results (AnalysisResults)
     :param txtout: Output text (True) vs. HTML (False) (Bool)
     :param rogues: Output rogues gallery output for rsync (Bool)

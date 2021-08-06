@@ -862,42 +862,15 @@ class DemystifyAnalysis:
             self.analysis_results.errorlist = self.__querydb__(
                 AnalysisQueries.SELECT_FREQUENCY_ERRORS
             )
-        # we need namespace data - ann NS queries can be generic
+
+        # we need namespace data - and NS queries can be generic
         # ns count earlier on in this function can be left as-is
         if (
             self.analysis_results.namespacecount is not None
             and self.analysis_results.namespacecount > 0
         ):
-            nsdatalist = []
-            for ns in self.namespacedata:
-                nsdict = {}
-                nsid = ns[0]
-                nsdict[self.NS_CONST_TITLE] = ns[1]
-                nsdict[self.NS_CONST_DETAILS] = ns[2]
-                nsdict[self.NS_CONST_BINARY_COUNT] = self.__querydb__(
-                    self.query.get_ns_methods(nsid), True, True
-                )
-                nsdict[self.NS_CONST_XML_COUNT] = self.__querydb__(
-                    self.query.get_ns_methods(nsid, False, "XML"), True, True
-                )
-                nsdict[self.NS_CONST_TEXT_COUNT] = self.__querydb__(
-                    self.query.get_ns_methods(nsid, False, "Text"), True, True
-                )
-                nsdict[self.NS_CONST_FILENAME_COUNT] = self.__querydb__(
-                    self.query.get_ns_methods(nsid, False, "Filename"), True, True
-                )
-                nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(
-                    self.query.get_ns_methods(nsid, False, "Extension"), True, True
-                )
-                nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(
-                    self.query.get_ns_multiple_ids(
-                        nsid, self.analysis_results.namespacecount
-                    ),
-                    True,
-                    True,
-                )
-                nsdatalist.append(nsdict)
-            self.analysis_results.nsdatalist = nsdatalist
+            # analysis_results.nsdatalist.
+            self.get_namespace_data_list()
 
             # get nsgap count
             if self.analysis_results.namespacecount > 1:
@@ -986,6 +959,39 @@ class DemystifyAnalysis:
                     )
 
         return self.analysis_results
+
+    def get_namespace_data_list(self):
+        """..."""
+        nsdatalist = []
+        for ns in self.namespacedata:
+            nsdict = {}
+            nsid = ns[0]
+            nsdict[self.NS_CONST_TITLE] = ns[1]
+            nsdict[self.NS_CONST_DETAILS] = ns[2]
+            nsdict[self.NS_CONST_BINARY_COUNT] = self.__querydb__(
+                self.query.get_ns_methods(nsid), True, True
+            )
+            nsdict[self.NS_CONST_XML_COUNT] = self.__querydb__(
+                self.query.get_ns_methods(nsid, False, "XML"), True, True
+            )
+            nsdict[self.NS_CONST_TEXT_COUNT] = self.__querydb__(
+                self.query.get_ns_methods(nsid, False, "Text"), True, True
+            )
+            nsdict[self.NS_CONST_FILENAME_COUNT] = self.__querydb__(
+                self.query.get_ns_methods(nsid, False, "Filename"), True, True
+            )
+            nsdict[self.NS_CONST_EXTENSION_COUNT] = self.__querydb__(
+                self.query.get_ns_methods(nsid, False, "Extension"), True, True
+            )
+            nsdict[self.NS_CONST_MULTIPLE_IDS] = self.__querydb__(
+                self.query.get_ns_multiple_ids(
+                    nsid, self.analysis_results.namespacecount
+                ),
+                True,
+                True,
+            )
+            nsdatalist.append(nsdict)
+        self.analysis_results.nsdatalist = nsdatalist
 
     def runanalysis(self, analyze_rogues):
         """Runs the analysis on the supplied report.
