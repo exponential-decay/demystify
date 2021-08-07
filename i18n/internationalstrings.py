@@ -95,9 +95,9 @@ class AnalysisStringsEN:
         "Total Text Based Identification Identifiers in the Accession/Extract"
     )
     SUMMARY_DESC_TEXT_ID_COUNT = (
-        "The total Text identifiers in the Accession/Exratact are used to help identify its "
+        "The total Text identifiers in the Accession/Extract are used to help identify its "
         "diversity/complexity. Text identifiers are returned for files where their encoding "
-        "can be regocognised not to be binary."
+        "can be recognized not to be binary."
     )
 
     SUMMARY_FILENAME_ID_COUNT = (
@@ -106,7 +106,7 @@ class AnalysisStringsEN:
     SUMMARY_DESC_FILENAME_ID_COUNT = (
         "The total Filename identifiers in the Accession/Exratact are used to help identify its "
         "diversity/complexity. Filename identifiers may be returned where the filename extension "
-        "is recognised, e.g. *.MP3, or the filename itself is recognised as being a common pattern, "
+        "is recognized, e.g. *.MP3, or the filename itself is recognised as being a common pattern, "
         "e.g. 'README*'."
     )
 
@@ -118,8 +118,8 @@ class AnalysisStringsEN:
     SUMMARY_DESC_GAPS_COVERED = (
         "Count of all the files that have zero identification results across all "
         "namespaces utilizing binary and container file format signatures. As such "
-        "this statisticate may indicate an immediate priority for digital preservation "
-        "researchers, and therfore may be indicative of the amount of work needed to "
+        "this statistic may indicate an immediate priority for digital preservation "
+        "researchers, and therefore may be indicative of the amount of work needed to "
         "understand an accession/extract."
     )
 

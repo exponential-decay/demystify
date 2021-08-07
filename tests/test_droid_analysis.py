@@ -2847,6 +2847,63 @@ def test_run_droid_analysis(tmp_path):
         }
     )
 
+    assert res.analysis_results.extmismatchCount == 1
+
+    assert len(res.analysis_results.signatureidentifiers) == 19
+    assert res.analysis_results.signatureidentifiers == [
+        ("ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (2)", 1),
+        ("ns:pronom x-fmt/401, StarOffice Draw, 5.x (2)", 1),
+        ("ns:pronom x-fmt/384, Quicktime,  (24)", 1),
+        ("ns:pronom x-fmt/266, GZIP Format,  (2)", 1),
+        ("ns:pronom x-fmt/265, Tape Archive Format,  (1)", 1),
+        ("ns:pronom x-fmt/263, ZIP Format,  (2)", 1),
+        ("ns:pronom x-fmt/219, Internet Archive, 1.0 (1)", 1),
+        ("ns:pronom fmt/999, Krita Document Format,  (2)", 1),
+        ("ns:pronom fmt/853, Serif DrawPlus Drawing, 5 (2)", 1),
+        ("ns:pronom fmt/641, Epson Raw Image Format,  (1)", 1),
+        ("ns:pronom fmt/631, Microsoft PowerPoint Template, 2007 (2)", 1),
+        ("ns:pronom fmt/484, 7Zip format,  (1)", 1),
+        ("ns:pronom fmt/443, Microsoft Visio Drawing, 2003-2010 (2)", 1),
+        ("ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (2)", 1),
+        ("ns:pronom fmt/410, Internet Archive, 1.1 (1)", 1),
+        ("ns:pronom fmt/289, WARC,  (1)", 1),
+        ("ns:pronom fmt/1281, WARC, 1.1 (1)", 1),
+        ("ns:pronom fmt/1280, NCH Dictation Audio File,  (1)", 1),
+        ("ns:pronom fmt/1098, XZ File Format,  (1)", 1),
+    ]
+
+    assert len(res.analysis_results.signatureidentifiedfrequency) == 19
+    assert res.analysis_results.signatureidentifiedfrequency == [
+        ("pronom", "x-fmt/384", 25),
+        ("pronom", "fmt/412", 2),
+        ("pronom", "fmt/443", 2),
+        ("pronom", "fmt/631", 2),
+        ("pronom", "fmt/853", 2),
+        ("pronom", "fmt/999", 2),
+        ("pronom", "x-fmt/263", 2),
+        ("pronom", "x-fmt/266", 2),
+        ("pronom", "x-fmt/401", 2),
+        ("pronom", "x-fmt/88", 2),
+        ("pronom", "fmt/1098", 1),
+        ("pronom", "fmt/1280", 1),
+        ("pronom", "fmt/1281", 1),
+        ("pronom", "fmt/289", 1),
+        ("pronom", "fmt/410", 1),
+        ("pronom", "fmt/484", 1),
+        ("pronom", "fmt/641", 1),
+        ("pronom", "x-fmt/219", 1),
+        ("pronom", "x-fmt/265", 1),
+    ]
+
+    print(res.analysis_results.dateFrequency)
+    assert False, "okay, dates aren't being written by sqlitefid"
+    assert res.analysis_results.dateFrequency == [
+        (2020, 47),
+        (2019, 25),
+        (2021, 4),
+        (1, 1),
+    ]
+
 
 def test_run_siegfried_analysis(tmp_path):
     """Test analysis output for Siegfried."""
@@ -2973,31 +3030,376 @@ def test_run_siegfried_analysis(tmp_path):
         in examples
     )
 
-    '''
     # SF only...
+    assert res.analysis_results.textidfilecount == 20
+    assert res.analysis_results.distinctOtherIdentifiers == 25
+    assert res.analysis_results.distinctTextIdentifiers == 4
+
+    assert res.analysis_results.textidentifiers == [
+        (
+            "ns:tika text/x-web-markdown, Markdown source code, None [extension match md; text match ASCII] (1)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/111, Plain Text File, None [extension match txt; text match ASCII] (19)",
+            1,
+        ),
+    ]
+
+    assert res.analysis_results.binaryidentifiers == [
+        (
+            "ns:loc fdd000022, TIFF, Revision 6.0, None [byte match at 0, 4 (signature 3/5)] (1)",
+            1,
+        ),
+        (
+            "ns:loc fdd000236, WARC, Web ARChive file format, None [extension match warc; byte match at 0, 280] (2)",
+            1,
+        ),
+        (
+            "ns:loc fdd000254, AMR, Adaptive Multi-Rate Speech Codec, None [byte match at 0, 3 (signature 2/2)] (25)",
+            1,
+        ),
+        (
+            "ns:loc fdd000354, ZIP File Format (PKWARE), None [extension match zip; extension match zip; container match with trigger and default extension] (2)",
+            1,
+        ),
+        (
+            "ns:loc fdd000380, Microsoft Compound File Binary File Format, Version 3, None [byte match at 0, 8] (8)",
+            1,
+        ),
+        (
+            "ns:loc fdd000514, Microsoft XML Paper Specification, (XPS), None [byte match at 0, 4] (7)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 [extension match ppt; container name PP40 with name only] (2)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/401, StarOffice Draw, 5.x [extension match sda; container name CompObj with byte match at 64, 16 (signature 2/2)] (2)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/266, GZIP Format, None [extension match gz; byte match at 0, 3] (2)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/265, Tape Archive Format, None [extension match tar; byte match at 0, 156] (1)",
+            1,
+        ),
+        (
+            "ns:pronom x-fmt/219, Internet Archive, 1.0 [extension match arc; byte match at [[0 129] [149 56]]] (1)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/999, Krita Document Format, None [extension match kra; container name mimetype with byte match at 0, 19] (2)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/853, Serif DrawPlus Drawing, 5 [extension match dpp; container name SummaryInformation with byte match at 512, 16] (2)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/631, Microsoft PowerPoint Template, 2007 [extension match potx; container name [Content_Types].xml with byte match at 2048, 92] (2)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/484, 7Zip format, None [extension match 7z; byte match at 0, 6] (1)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/443, Microsoft Visio Drawing, 2003-2010 [extension match vsd; container name VisioDocument with byte match at 0, 27] (2)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards [extension match docx; container name [Content_Types].xml with byte match at 16384, 188 (signature 3/3)] (2)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/410, Internet Archive, 1.1 [extension match arc; byte match at [[0 129] [149 56]]] (1)",
+            1,
+        ),
+        (
+            "ns:pronom fmt/1098, XZ File Format, None [extension match xz; byte match at [[0 6] [346 2]]] (1)",
+            1,
+        ),
+    ]
+
+    # Max Distance Scanned from Beginning of File
+    assert res.analysis_results.bof_distance == [
+        "fmt/641",
+        "byte match at 0, 348",
+        "fmt-641-signature-id-970.erf",
+        348,
+        348,
+    ]
+
+    assert res.analysis_results.eof_distance == [
+        "application/vnd.stardivision.draw",
+        "byte match at [[0 8] [2117 8]]",
+        "x-fmt-401-container-signature-id-23125.sda",
+        2560,
+        443,
+    ]
+
+    assert res.analysis_results.nsdatalist == [
+        {
+            "namespace title": "pronom",
+            "namespace details": "DROID_SignatureFile_V97.xml; container-signature-20201001.xml",
+            "binary method count": 51,
+            "xml method count": 0,
+            "text method count": 19,
+            "filename method count": 0,
+            "extension method count": 1,
+            "multiple ids": 0,
+        },
+        {
+            "namespace title": "tika",
+            "namespace details": "tika-mimetypes.xml (1.24, 2020-04-17)",
+            "binary method count": 52,
+            "xml method count": 0,
+            "text method count": 20,
+            "filename method count": 0,
+            "extension method count": 0,
+            "multiple ids": 0,
+        },
+        {
+            "namespace title": "freedesktop.org",
+            "namespace details": "freedesktop.org.xml (2.0, 2020-06-05)",
+            "binary method count": 48,
+            "xml method count": 0,
+            "text method count": 20,
+            "filename method count": 0,
+            "extension method count": 0,
+            "multiple ids": 0,
+        },
+        {
+            "namespace title": "loc",
+            "namespace details": "fddXML.zip (2020-09-02, DROID_SignatureFile_V97.xml, container-signature-20201001.xml)",
+            "binary method count": 45,
+            "xml method count": 0,
+            "text method count": 0,
+            "filename method count": 0,
+            "extension method count": 18,
+            "multiple ids": 0,
+        },
+    ]
+
+    # Number of items with zero identifiers given through Container or
+    # Signature matching.
+    assert res.analysis_results.identificationgaps == 25
+
+    # Verified counts for each of the text identifier types.
+    assert res.analysis_results.text_identifiers == [
+        ("ns:freedesktop.org text/plain", 19),
+        ("ns:pronom x-fmt/111", 19),
+        ("ns:tika text/plain", 19),
+        ("ns:freedesktop.org text/markdown", 1),
+        ("ns:tika text/x-web-markdown", 1),
+    ]
+
+    # Verified: 34 results for "match on filename".
+    assert res.analysis_results.filename_identifiers == [
+        ("ns:freedesktop.org text/plain", 16),
+        ("ns:tika text/plain", 16),
+        ("ns:freedesktop.org text/markdown", 1),
+        ("ns:tika text/x-web-markdown", 1),
+    ]
+
+    # Verified mismatches as 38.
+    assert res.analysis_results.extmismatchCount == 38
+
+    assert len(res.analysis_results.signatureidentifiers) == 19
+
+    # TODO: This statistic is likely correct, but it may also be a
+    # little weak and/or under-explained. It is sorted (I believe) to
+    # promote PRONOM first then I am not sure how the other identifiers
+    # come out of this at all, e.g. Tika could be here just as well.
+    assert res.analysis_results.signatureidentifiers == [
+        ("ns:loc fdd000022, TIFF, Revision 6.0, None (1)", 1),
+        ("ns:loc fdd000236, WARC, Web ARChive file format, None (2)", 1),
+        ("ns:loc fdd000254, AMR, Adaptive Multi-Rate Speech Codec, None (25)", 1),
+        ("ns:loc fdd000354, ZIP File Format (PKWARE), None (2)", 1),
+        (
+            "ns:loc fdd000380, Microsoft Compound File Binary File Format, Version 3, None (8)",
+            1,
+        ),
+        ("ns:loc fdd000514, Microsoft XML Paper Specification, (XPS), None (7)", 1),
+        ("ns:pronom x-fmt/88, Microsoft Powerpoint Presentation, 4.0 (2)", 1),
+        ("ns:pronom x-fmt/401, StarOffice Draw, 5.x (2)", 1),
+        ("ns:pronom x-fmt/266, GZIP Format, None (2)", 1),
+        ("ns:pronom x-fmt/265, Tape Archive Format, None (1)", 1),
+        ("ns:pronom x-fmt/219, Internet Archive, 1.0 (1)", 1),
+        ("ns:pronom fmt/999, Krita Document Format, None (2)", 1),
+        ("ns:pronom fmt/853, Serif DrawPlus Drawing, 5 (2)", 1),
+        ("ns:pronom fmt/631, Microsoft PowerPoint Template, 2007 (2)", 1),
+        ("ns:pronom fmt/484, 7Zip format, None (1)", 1),
+        ("ns:pronom fmt/443, Microsoft Visio Drawing, 2003-2010 (2)", 1),
+        ("ns:pronom fmt/412, Microsoft Word for Windows, 2007 onwards (2)", 1),
+        ("ns:pronom fmt/410, Internet Archive, 1.1 (1)", 1),
+        ("ns:pronom fmt/1098, XZ File Format, None (1)", 1),
+    ]
+    assert len(res.analysis_results.signatureidentifiedfrequency) == 43
+    assert res.analysis_results.signatureidentifiedfrequency == [
+        ("freedesktop.org", "application/x-ole-storage", 6),
+        ("freedesktop.org", "application/x-krita", 2),
+        ("freedesktop.org", "application/vnd.oasis.opendocument.database", 1),
+        ("freedesktop.org", "application/x-tar", 1),
+        ("loc", "fdd000254", 25),
+        ("loc", "fdd000380", 8),
+        ("loc", "fdd000514", 7),
+        ("loc", "fdd000236", 2),
+        ("loc", "fdd000354", 2),
+        ("loc", "fdd000022", 1),
+        ("pronom", "x-fmt/384", 25),
+        ("pronom", "fmt/412", 2),
+        ("pronom", "fmt/443", 2),
+        ("pronom", "fmt/631", 2),
+        ("pronom", "fmt/853", 2),
+        ("pronom", "fmt/999", 2),
+        ("pronom", "x-fmt/263", 2),
+        ("pronom", "x-fmt/266", 2),
+        ("pronom", "x-fmt/401", 2),
+        ("pronom", "x-fmt/88", 2),
+        ("pronom", "fmt/1098", 1),
+        ("pronom", "fmt/1281", 1),
+        ("pronom", "fmt/289", 1),
+        ("pronom", "fmt/410", 1),
+        ("pronom", "fmt/484", 1),
+        ("pronom", "fmt/641", 1),
+        ("pronom", "x-fmt/219", 1),
+        ("pronom", "x-fmt/265", 1),
+        ("tika", "video/quicktime", 50),
+        ("tika", "application/zip", 7),
+        ("tika", "application/gzip", 4),
+        (
+            "tika",
+            "application/vnd.openxmlformats-officedocument.presentationml.template",
+            4,
+        ),
+        (
+            "tika",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            4,
+        ),
+        ("tika", "application/vnd.visio", 4),
+        ("tika", "application/vnd.ms-powerpoint", 2),
+        ("tika", "application/vnd.stardivision.draw", 2),
+        ("tika", "application/warc", 2),
+        ("tika", "application/x-7z-compressed", 2),
+        ("tika", "application/x-internet-archive", 2),
+        ("tika", "application/x-tika-msoffice", 2),
+        ("tika", "application/x-xz", 2),
+        ("tika", "image/tiff", 2),
+        ("tika", "application/x-gtar", 1),
+    ]
+
+    assert res.analysis_results.dateFrequency == [
+        (2020, 47),
+        (2019, 25),
+        (2021, 4),
+        (1, 1),
+    ]
+
+    # These aren't triggered with the SF report above. They need testing
+    # independently for positive values.
     assert res.analysis_results.xmlidfilecount == 0
-    assert res.analysis_results.textidfilecount == 0
     assert res.analysis_results.filenameidfilecount == 0
-    assert res.analysis_results.distinctOtherIdentifiers == 0
     assert res.analysis_results.distinctXMLIdentifiers == 0
-    assert res.analysis_results.distinctTextIdentifiers == 0
     assert res.analysis_results.distinctFilenameIdentifiers == 0
-    assert res.analysis_results.textidentifiers == None
-    assert res.analysis_results.filenameidentifiers == None
-    assert res.analysis_results.binaryidentifiers == None
     assert res.analysis_results.xmlidentifiers == None
-    assert res.analysis_results.bof_distance == None
-    assert res.analysis_results.eof_distance == None
     assert res.analysis_results.namespacedata == None
-    assert res.analysis_results.nsdatalist == None
-    assert res.analysis_results.identificationgaps == None
-    assert res.analysis_results.xml_identifiers == None
-    assert res.analysis_results.text_identifiers == None
-    assert res.analysis_results.filename_identifiers == None
-    '''
+    assert res.analysis_results.xml_identifiers == []
+    assert res.filenameIDs == []
+    assert res.analysis_results.filenameidentifiers == None
+
+
+def test_xml_and_text_identiiers():
+    """..."""
+    # Need an XML ID...Text ID.
+    # assert res.analysis_results.xmlidfilecount == 0
+    # assert res.analysis_results.filenameidfilecount == 0
+    # assert res.analysis_results.distinctXMLIdentifiers == 0
+    # assert res.analysis_results.distinctFilenameIdentifiers == 0
+
+    # assert res.analysis_results.xmlidentifiers == None
+    # assert res.analysis_results.eof_distance == None
+    # assert res.analysis_results.namespacedata == None
+    # assert res.analysis_results.xml_identifiers == []
+
+    # This is blank... WHY?!
+    # I think there are no pure filename ids in the set. Need to find
+    # some...
+    # assert res.filenameIDs == []
+    # assert res.analysis_results.filenameidentifiers == None
+
+
+def test_bof_eof_extract():
+    """..."""
+
+    """From OPF Corpus
+    <b>Max Distance Scanned from Beginning of File: </b><code>x-fmt/240, byte match at [[[0 24]] [[93889 67]]] e.g. reviews.mdb filesize: 270336, 93956 bytes</code>
+    </br>
+    </br>
+    <b>Max Distance Scanned from End of File: </b><code>fmt/354, byte match at [[[0 8]] [[4942825 44]] [[4942883 79]]] (signature 1/2) e.g. 499039.pdf filesize: 5632355, 689472 bytes</code>
+    <h2>Summary Statistics</h2>
+    """
+    """Govdocs too:
+    Max Distance Scanned from Beginning of File: fmt/157, byte match at [[[0 8]] [[397929 35]]] e.g. 571574.pdf filesize: 867434, 397964 bytes
+
+    Max Distance Scanned from End of File: fmt/354, byte match at [[[0 8]] [[3287278 44]] [[3287336 79]]] (signature 1/2) e.g. 975126.pdf filesize: 4095553, 808217 bytes
+    """
 
 
 def test_denylist():
     """Enable denylist and test the results here."""
 
     # res.analysis_results is not None
+
+
+def tests_remaining():
+    """
+
+
+
+        self.extensionOnlyIDFrequency = 0
+        self.extensionOnlyIDList = []
+
+        self.uniqueExtensionsInCollectionList = None
+        self.frequencyOfAllExtensions = None
+
+        self.idmethodFrequency = None
+
+        self.mimetypeFrequency = None
+
+        self.topPUIDList = None
+        self.topExtensionList = None
+
+        self.totaluniquefilenames = 0
+        self.duplicatefnamelisting = []
+        self.duplicatefnamealtlisting = []
+
+        self.containertypeslist = None
+
+        self.duplicatespathlist = []
+
+        self.zerobytecount = 0
+        self.zerobytelist = None
+
+        self.multiplespacelist = ""
+        self.badFileNames = None
+        self.badDirNames = None
+
+        # Rogue related values.
+        self.rogue_pronom_ns_id = None
+        self.rogue_all_paths = None
+        self.rogue_all_dirs = None
+
+        self.rogue_duplicates = []
+        self.rogue_identified_all = []
+        self.rogue_identified_pronom = []
+        self.rogue_extension_mismatches = []
+        self.rogue_multiple_identification_list = []
+        self.rogue_file_name_paths = []  # non-ascii file names
+        self.rogue_dir_name_paths = []  # non-ascii dir names
+    """

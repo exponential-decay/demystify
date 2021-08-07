@@ -150,17 +150,21 @@ class AnalysisQueries:
         query = query1 + listing + query2
         return query
 
-    SELECT_BINARY_MATCH_COUNT = """SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL
-                                    FROM IDRESULTS
-                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                    WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')
-                                    GROUP BY IDDATA.ID ORDER BY NSDATA.NS_NAME, TOTAL DESC"""
+    SELECT_BINARY_MATCH_COUNT = (
+        "SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL\n"
+        "FROM IDRESULTS\n"
+        "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')\n"
+        "GROUP BY IDDATA.ID ORDER BY NSDATA.NS_NAME, TOTAL DESC"
+    )
 
-    SELECT_YEAR_FREQUENCY_COUNT = """SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total
-                                       FROM FILEDATA
-                                       WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
-                                       GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC"""
+    SELECT_YEAR_FREQUENCY_COUNT = (
+        "SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total\n"
+        "FROM FILEDATA\n"
+        "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')\n"
+        "GROUP BY FILEDATA.YEAR ORDER BY TOTAL DESC\n"
+    )
 
     # TODO: THIS STAT NEEDS REVISITING IN LIGHT OF SIEGFRIED
     # MULTIPLE IDS WILL BE REFLECTED USING MULTIPLE NAMESPACE PLACES - HOW TO REPORT ON?
@@ -195,13 +199,15 @@ class AnalysisQueries:
                                           GROUP BY FILEDATA.HASH
                                           HAVING TOTAL > 1
                                           ORDER BY TOTAL DESC"""
-    # siegfried only...
-    SELECT_BYTE_MATCH_BASIS = """SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME, FILEDATA.SIZE
-                                 FROM IDRESULTS
-                                 JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                 WHERE IDDATA.METHOD!='Container'
-                                 AND IDDATA.BASIS LIKE '%byte match%'"""
+    # Siegfried only queries...
+    SELECT_BYTE_MATCH_BASIS = (
+        "SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME, FILEDATA.SIZE\n"
+        "FROM IDRESULTS\n"
+        "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE IDDATA.METHOD!='Container'\n"
+        "AND IDDATA.BASIS LIKE '%byte match%'\n"
+    )
 
     def count_multiple_ids(self, nscount, paths=False):
         """Count multiple entries for identification where the count is
@@ -250,34 +256,34 @@ class AnalysisQueries:
         return query_part1 + query_part2
 
     def query_from_idrows(self, idlist, priority=None):
-        list = "WHERE IDRESULTS.ID_ID IN "
+        list_ = "WHERE IDRESULTS.ID_ID IN "
         where = "("
         for i in idlist:
-            where = where + str(i[1]) + ", "
-        list = list + where.strip(", ") + ")"
-
-        SELECT_NAMESPACE_AND_IDS = """SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID, COUNT(IDDATA.ID) AS TOTAL
-                                    FROM IDRESULTS
-                                    JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID
-                                    JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"""
-
-        PRIORITY_ID = """GROUP BY IDDATA.ID
-                       ORDER BY
-                       CASE IDDATA.NS_ID
-                          WHEN '{{ ns_id }}' THEN 1
-                          ELSE 2
-                       END"""
-
+            where = "{}{}, ".format(where, i[1])
+        list_ = "{}{})\n".format(list_, where.strip(", "))
+        SELECT_NAMESPACE_AND_IDS = (
+            "SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID, COUNT(IDDATA.ID) AS TOTAL\n"
+            "FROM IDRESULTS\n"
+            "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        )
+        PRIORITY_ID = (
+            "GROUP BY IDDATA.ID\n"
+            "ORDER BY\n"
+            "CASE IDDATA.NS_ID\n"
+            "WHEN '{{ ns_id }}' THEN 1\n"
+            "ELSE 2\n"
+            "END\n"
+        )
         GROUP_TOTAL = """GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
-
-        # print list
         SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS
-        query = SELECT_NAMESPACE_AND_IDS + "\n" + list
+        query = "{}\n{}".format(SELECT_NAMESPACE_AND_IDS, list_)
         if priority is not None:
-            query = query + PRIORITY_ID.replace(self.ns_pattern, str(priority))
+            query = "{}{}".format(
+                query, PRIORITY_ID.replace(self.ns_pattern, str(priority))
+            )
         else:
-            # TODO: ONCE AGAIN MAY NEED TO PULL THIS QUERY APART - NEEDS TESTING FURTHER
-            query = query + GROUP_TOTAL
+            query = "{}{}".format(query, GROUP_TOTAL)
         return query
 
     def query_from_idrows_(self, idlist, priority=None):
@@ -342,12 +348,16 @@ class AnalysisQueries:
                         FROM NSDATA"""
 
     def get_ns_gap_count_lists(self, nsid):
-        unidentified = """SELECT IDRESULTS.FILE_ID
-         FROM IDRESULTS
-         JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-         WHERE (IDDATA.METHOD!='Signature' AND IDDATA.METHOD!='Container')
-         AND IDDATA.NS_ID="""
-        return unidentified + str(nsid)
+        """Return a query for files not identified through Signature or
+        Container methods for a given namespace ID.
+        """
+        return (
+            "SELECT IDRESULTS.FILE_ID\n"
+            "FROM IDRESULTS\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+            "WHERE (IDDATA.METHOD!='Signature' AND IDDATA.METHOD!='Container')\n"
+            "AND IDDATA.NS_ID={}"
+        ).format(nsid)
 
     def get_ns_multiple_ids(self, nsid, nscount):
         SELECT_NAMESPACE_BINARY_IDS1 = """SELECT count(*)

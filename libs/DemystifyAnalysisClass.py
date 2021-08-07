@@ -478,12 +478,12 @@ class DemystifyAnalysis:
         )
 
     def getMethodIDResults(self, methodids, fmt_version=False):
-        # TODO: Fine line between formatting, and not formatting in this function
         countlist = []
         methodresults = self.__querydb__(
             self.query.query_from_idrows(methodids, self.priority_ns_id)
         )
-        for id in methodresults:
+
+        for id_ in methodresults:
             """
             0  'ns:' || NSDATA.NS_NAME || ' ',
             1  IDDATA.ID,
@@ -493,28 +493,26 @@ class DemystifyAnalysis:
             5  IDDATA.NS_ID,
             6  COUNT(IDDATA.ID
             """
-            ns_id = id[5]
-            name = id[2]
+            ns_id = id_[5]
+            name = id_[2]
+
             if name == "":
                 name = ", "
             else:
-                name = ", " + name + ", "
+                name = ", {}, ".format(name)
 
-            basis = id[3]
+            basis = id_[3]
             if basis is not None:
-                basis = "[" + basis + "]"
+                basis = "[{}]".format(basis)
             else:
                 basis = ""
 
             if fmt_version is False:
-                idval = (
-                    id[0] + id[1] + name + id[4] + " " + basis + " (" + str(id[6]) + ")"
-                )  # concatenate count
+                idval = "{}{}{}{} {} ({})".format(
+                    id_[0], id_[1], name, id_[4], basis, id_[6]
+                )
             else:
-                # we're creating a less detailed statistic for summary purposes
-                idval = (
-                    id[0] + id[1] + name + id[4] + " (" + str(id[6]) + ")"
-                )  # concatenate count
+                idval = "{}{}{}{} ({})".format(id_[0], id_[1], name, id_[4], id_[6])
             countlist.append((idval, ns_id))
 
         # counter returns dict
@@ -547,51 +545,75 @@ class DemystifyAnalysis:
         return l1 + l2
 
     def __analysebasis__(self):
-        # #########['id','basis','filesize','filename','offset']##########
+        """Return analysis basis results from report.
+
+            Fields used below are:
+                [
+                    'id',
+                    'basis',
+                    'filesize',
+                    'filename',
+                    'offset',
+                ]
+
+        """
+        BYTE_MATCH = "byte match"
+
         boftup = [None, "basis", "filename", "filesize", 0]
         eoftup = [None, "basis", "filename", "filesize", 0]
-        # #########['id','basis','filesize','filename','offset']##########
 
         basis = self.__querydb__(AnalysisQueries.SELECT_BYTE_MATCH_BASIS)
 
         for idrow in basis:
+
+            # print(idrow)
+
             val = idrow[0].split(";")
             filesize = int(idrow[3])
             filename = idrow[2]
             fileid = idrow[1]
+
             for match in val:
-                if "byte match" in match:
-                    if "[[[" in match:
-                        offs, length = self.__handlesquares__(match)
-                    elif "[[" in match:
-                        # Previously looking for triple square brackets, but
-                        # now seems to be [[]] e.g.
-                        # byte match at [[0 16] [77 4] [45015 12]]
-                        #
-                        offs, length = self.__handlesquares__(match)
-                    else:
-                        offs, length = self.__handlenosquares__(match)
-                    try:
-                        bof, eof, filesize = self.__getoffs__(
-                            offs, int(length), int(filesize)
-                        )
-                    except ValueError:
-                        print("Cannot handle basis:", offs, match, file=sys.stderr)
-                        continue
 
-                    if bof != 0 and boftup[4] < bof:
-                        boftup[0] = fileid
-                        boftup[1] = match.strip()
-                        boftup[2] = filename
-                        boftup[3] = filesize
-                        boftup[4] = bof
+                if BYTE_MATCH not in match:
+                    continue
 
-                    if eof is not None and eoftup[4] < eof:
-                        eoftup[0] = fileid
-                        eoftup[1] = match.strip()
-                        eoftup[2] = filename
-                        eoftup[3] = filesize
-                        eoftup[4] = eof
+                if "[[[" in match:
+                    # Canonical example is two brackets, below, so it
+                    # might be possible to deprecate this.
+                    offs, length = self.__handle_match_with_square_brackets__(match)
+                elif "[[" in match:
+                    # Example: byte match at [[0 16] [77 4] [45015 12]]
+                    offs, length = self.__handle_match_with_square_brackets__(match)
+                else:
+                    offs, length = self.__handle_match_without_brackets__(match)
+
+                # print(offs, length)
+
+                try:
+                    bof, eof, filesize = self.__getoffs__(
+                        offs, int(length), int(filesize)
+                    )
+
+                    # print(bof, eof)
+
+                except ValueError:
+                    logger.error("Cannot handle basis: %s %s", offs, match)
+                    continue
+
+                if bof != 0 and boftup[4] < bof:
+                    boftup[0] = fileid
+                    boftup[1] = match.strip()
+                    boftup[2] = filename
+                    boftup[3] = filesize
+                    boftup[4] = bof
+
+                if eof is not None and eoftup[4] < eof:
+                    eoftup[0] = fileid
+                    eoftup[1] = match.strip()
+                    eoftup[2] = filename
+                    eoftup[3] = filesize
+                    eoftup[4] = eof
 
         if boftup[0] is None:
             boftup = None
@@ -621,13 +643,23 @@ class DemystifyAnalysis:
                     eof = tmpeof
             return bof, eof, filesize
 
-    def __handlesquares__(self, basis):
-        basis = basis.replace("byte match at", "").strip()
-        no_sequences = (basis.count("[[")) * 2
+    def __handle_match_with_square_brackets__(self, basis):
+        """Split the match basis from Siegfried when there are square
+        brackets to be dealt with.
+        """
+        BYTE_MATCH_AT = "byte match at"
+        SIGNATURE = "signature"
+        basis = basis.replace(BYTE_MATCH_AT, "").strip()
+        # Number of sequences is the count of square brackets times two
+        # to account for the two values offset, position.
+        no_sequences = (basis.count("[") - 1) * 2
         basis = (basis.replace("[", "")).replace("]", "").replace(" ", ",")
-        return basis.split(",", no_sequences)[:no_sequences], (no_sequences / 2)
+        basis = basis.split(",", no_sequences)
+        if SIGNATURE in basis[len(basis) - 1]:
+            basis = basis[:-1]
+        return basis, int(no_sequences / 2)
 
-    def __handlenosquares__(self, basis):
+    def __handle_match_without_brackets__(self, basis):
         basis = basis.replace("byte match at", "").strip()
         basis = basis.replace("(", ",(")
         basis = basis.replace(" ", "").split(",", 2)[:2]
@@ -786,9 +818,11 @@ class DemystifyAnalysis:
             self.analysis_results.filecount, self.analysis_results.unidentifiedfilecount
         )
 
+        print(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)
         self.analysis_results.dateFrequency = self.__querydb__(
             AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT
         )
+        print(self.analysis_results.dateFrequency)
         self.analysis_results.signatureidentifiedfrequency = self.__querydb__(
             AnalysisQueries.SELECT_BINARY_MATCH_COUNT
         )
