@@ -2895,13 +2895,12 @@ def test_run_droid_analysis(tmp_path):
         ("pronom", "x-fmt/265", 1),
     ]
 
-    print(res.analysis_results.dateFrequency)
-    assert False, "okay, dates aren't being written by sqlitefid"
+    assert len(res.analysis_results.dateFrequency) == 4
     assert res.analysis_results.dateFrequency == [
-        (2020, 47),
+        (2020, 45),
         (2019, 25),
         (2021, 4),
-        (1, 1),
+        (None, 0),
     ]
 
 
@@ -2912,7 +2911,7 @@ def test_run_siegfried_analysis(tmp_path):
     sf_yaml = dir_ / "sf_💜_test.yaml"
     sf_yaml.write_text(SIEGFRIED_YAML.strip())
 
-    # Analysis from CSV will currently read the results from the CSV
+    # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
@@ -3180,7 +3179,7 @@ def test_run_siegfried_analysis(tmp_path):
             "xml method count": 0,
             "text method count": 0,
             "filename method count": 0,
-            "extension method count": 18,
+            "extension method count": 19,
             "multiple ids": 0,
         },
     ]
@@ -3294,11 +3293,23 @@ def test_run_siegfried_analysis(tmp_path):
         ("tika", "application/x-gtar", 1),
     ]
 
+    assert len(res.analysis_results.dateFrequency) == 4
     assert res.analysis_results.dateFrequency == [
         (2020, 47),
         (2019, 25),
         (2021, 4),
-        (1, 1),
+        ("None", 1),
+    ], "if dates failing, check that None hasn't changed from str to Nonetype"
+
+    assert res.namespacedata == [
+        (1, "pronom", "DROID_SignatureFile_V97.xml; container-signature-20201001.xml"),
+        (2, "tika", "tika-mimetypes.xml (1.24, 2020-04-17)"),
+        (3, "freedesktop.org", "freedesktop.org.xml (2.0, 2020-06-05)"),
+        (
+            4,
+            "loc",
+            "fddXML.zip (2020-09-02, DROID_SignatureFile_V97.xml, container-signature-20201001.xml)",
+        ),
     ]
 
     # These aren't triggered with the SF report above. They need testing
@@ -3308,30 +3319,343 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.distinctXMLIdentifiers == 0
     assert res.analysis_results.distinctFilenameIdentifiers == 0
     assert res.analysis_results.xmlidentifiers == None
-    assert res.analysis_results.namespacedata == None
     assert res.analysis_results.xml_identifiers == []
     assert res.filenameIDs == []
     assert res.analysis_results.filenameidentifiers == None
 
 
-def test_xml_and_text_identiiers():
-    """..."""
-    # Need an XML ID...Text ID.
-    # assert res.analysis_results.xmlidfilecount == 0
-    # assert res.analysis_results.filenameidfilecount == 0
-    # assert res.analysis_results.distinctXMLIdentifiers == 0
-    # assert res.analysis_results.distinctFilenameIdentifiers == 0
+SF_TEXT_XML_YAML = """---
+siegfried   : 1.9.1
+scandate    : 2021-11-08T22:55:20+01:00
+signature   : default.sig
+created     : 2020-10-06T19:15:15+02:00
+identifiers :
+  - name    : 'tika'
+    details : 'tika-mimetypes.xml (1.24, 2020-04-17)'
+---
+filename : 'govdocs_selected/HTML_10/082301.html'
+filesize : 9344
+modified : 2012-07-26T12:53:12+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'extension match html; xml match with root SCRIPT'
+    warning :
+---
+filename : 'govdocs_selected/HTML_113/408366.html'
+filesize : 20644
+modified : 2012-07-26T13:20:33+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'extension match html; xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning :
+---
+filename : 'govdocs_selected/HTML_12/096363.html'
+filesize : 83731
+modified : 2012-07-26T12:54:36+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'extension match html; xml match with root html and ns http://www.w3.org/TR/REC-html40'
+    warning :
+---
+filename : 'govdocs_selected/KML_1/531128.kml'
+filesize : 341
+modified : 2012-07-26T13:00:35+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/vnd.google-earth.kml+xml'
+    format  : 'Keyhole Markup Language'
+    mime    : 'application/vnd.google-earth.kml+xml'
+    basis   : 'extension match kml; xml match with root kml and ns http://earth.google.com/kml/2.0; xml match with root kml and ns http://earth.google.com/kml/2.0'
+    warning :
+---
+filename : 'govdocs_selected/DOC_83/397311.doc'
+filesize : 25027
+modified : 2012-07-27T12:17:22+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'xml match with root HTML'
+    warning : 'filename mismatch'
+---
+filename : 'govdocs_selected/DOC_90/580857.xml'
+filesize : 55909
+modified : 2012-07-26T13:19:43+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/xhtml+xml'
+    format  :
+    mime    : 'application/xhtml+xml'
+    basis   : 'xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning : 'filename mismatch'
+---
+filename : 'govdocs_selected/TEXT_46/017730.xml'
+filesize : 7868
+modified : 2012-07-26T12:57:43+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/rdf+xml'
+    format  : 'XML syntax for RDF graphs'
+    mime    : 'application/rdf+xml'
+    basis   : 'xml match with root RDF'
+    warning : 'filename mismatch'
+---
+filename : 'govdocs_selected/XML_20/574354.xml'
+filesize : 14174
+modified : 2012-07-26T13:20:49+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/rss+xml'
+    format  :
+    mime    : 'application/rss+xml'
+    basis   : 'xml match with root rss'
+    warning : 'filename mismatch'
+---
+filename : 'govdocs_selected/XML_24/561634.xml'
+filesize : 38447
+modified : 2012-07-26T13:22:13+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/vnd.ms-wordml'
+    format  : 'Word 2003 xml format, pre-ooxml'
+    mime    : 'application/vnd.ms-wordml'
+    basis   : 'xml match with root wordDocument'
+    warning :
+---
+filename : 'govdocs_selected/XML_9/299018.xml'
+filesize : 3573362
+modified : 2012-07-26T13:01:22+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'application/vnd.ms-spreadsheetml'
+    format  : 'Excel 2003 xml format, pre-ooxml'
+    mime    : 'application/vnd.ms-spreadsheetml'
+    basis   : 'xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet; xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet'
+    warning :
+---
+filename : 'govdocs_selected/JS_4/628170.unk'
+filesize : 10173
+modified : 2012-07-27T18:07:26+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/x-matlab'
+    format  : 'Matlab source code'
+    mime    : 'text/x-matlab'
+    basis   : 'byte match at 0, 10 (signature 1/4); text match ASCII'
+    warning :
+---
+filename : 'govdocs_selected/TEXT_142/103364.text'
+filesize : 120212
+modified : 2012-07-26T13:13:27+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'extension match text; text match ISO-8859'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+---
+filename : 'govdocs_selected/CSV_27/465815.csv'
+filesize : 13806440
+modified : 2012-07-26T13:21:08+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/csv'
+    format  :
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match Little-endian UTF-16 Unicode'
+    warning : 'match on filename and text only'
+---
+filename : 'govdocs_selected/CSV_28/467583.csv'
+filesize : 9767
+modified : 2012-07-26T13:21:11+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/csv'
+    format  :
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match UTF-8 Unicode'
+    warning : 'match on filename and text only'
+---
+filename : 'govdocs_selected/CSV_28/README'
+filesize : 335
+modified : 2012-07-26T13:21:11+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README; text match ASCII'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+---
+filename : 'govdocs_selected/PDF_1447/README'
+filesize : 383
+modified : 2012-07-26T13:15:37+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README; text match Non-ISO extended-ASCII'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+---
+filename : 'govdocs_selected/PDF_1448/README'
+filesize : 386
+modified : 2012-07-26T13:15:37+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README; text match ASCII'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+---
+filename : 'govdocs_selected/PDF_2572/594454.unk'
+filesize : 489353
+modified : 2012-07-27T18:06:44+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'text match ISO-8859'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+---
+filename : 'govdocs_selected/PDF_3100/README'
+filesize : 383
+modified : 2012-07-26T13:23:43+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README; text match Non-ISO extended-ASCII'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+---
+filename : 'govdocs_selected/*_1/613517.unk'
+filesize : 189848
+modified : 2012-07-27T18:13:01+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'text match UTF-8 Unicode'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+---
+filename : 'govdocs_selected/DOC_107/README'
+filesize : 297
+modified : 2012-07-26T13:20:55+02:00
+errors   :
+matches  :
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README'
+    warning : 'match on filename only; byte/xml signatures for this format did not match'
+"""
 
-    # assert res.analysis_results.xmlidentifiers == None
-    # assert res.analysis_results.eof_distance == None
-    # assert res.analysis_results.namespacedata == None
-    # assert res.analysis_results.xml_identifiers == []
 
-    # This is blank... WHY?!
-    # I think there are no pure filename ids in the set. Need to find
-    # some...
-    # assert res.filenameIDs == []
-    # assert res.analysis_results.filenameidentifiers == None
+def test_xml_and_text_identiiers(tmp_path):
+    """Test more esoteric SF outputs."""
+
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test_xml.yaml"
+    sf_yaml.write_text(SF_TEXT_XML_YAML.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    print(res.analysis_results.nsdatalist[0])
+
+    assert res.analysis_results.xmlidfilecount == 10
+    assert res.analysis_results.filenameidfilecount == 1
+    assert res.analysis_results.distinctXMLIdentifiers == 7
+    assert res.analysis_results.distinctFilenameIdentifiers == 1
+    assert res.analysis_results.xmlidentifiers == [
+        (
+            "ns:tika text/html, HyperText Markup Language, None [extension match html; xml match with root SCRIPT] (4)",
+            1,
+        ),
+        (
+            "ns:tika application/xhtml+xml, None, None [xml match with root html and ns http://www.w3.org/1999/xhtml] (1)",
+            1,
+        ),
+        (
+            "ns:tika application/vnd.ms-wordml, Word 2003 xml format, pre-ooxml, None [xml match with root wordDocument] (1)",
+            1,
+        ),
+        (
+            "ns:tika application/vnd.ms-spreadsheetml, Excel 2003 xml format, pre-ooxml, None [xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet; xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet] (1)",
+            1,
+        ),
+        (
+            "ns:tika application/vnd.google-earth.kml+xml, Keyhole Markup Language, None [extension match kml; xml match with root kml and ns http://earth.google.com/kml/2.0; xml match with root kml and ns http://earth.google.com/kml/2.0] (1)",
+            1,
+        ),
+        ("ns:tika application/rss+xml, None, None [xml match with root rss] (1)", 1),
+        (
+            "ns:tika application/rdf+xml, XML syntax for RDF graphs, None [xml match with root RDF] (1)",
+            1,
+        ),
+    ]
+
+    assert res.namespacedata == [(1, "tika", "tika-mimetypes.xml (1.24, 2020-04-17)")]
+
+    assert res.analysis_results.xml_identifiers == [
+        ("ns:tika text/html", 4),
+        ("ns:tika application/rdf+xml", 1),
+        ("ns:tika application/rss+xml", 1),
+        ("ns:tika application/vnd.google-earth.kml+xml", 1),
+        ("ns:tika application/vnd.ms-spreadsheetml", 1),
+        ("ns:tika application/vnd.ms-wordml", 1),
+        ("ns:tika application/xhtml+xml", 1),
+    ]
+
+    assert res.filenameIDs == [("21", "21")]
+
+    assert res.analysis_results.filenameidentifiers == [
+        ("ns:tika text/plain, None, None [glob match README] (1)", 1)
+    ]
+
+
+def test_sf_multiple_ids():
+    """pass"""
 
 
 def test_bof_eof_extract():

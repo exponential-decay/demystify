@@ -344,8 +344,7 @@ class AnalysisQueries:
             return SELECT_PATHS + "\n" + list
 
     # NAMESPACE QUERIES
-    SELECT_NS_DATA = """SELECT *
-                        FROM NSDATA"""
+    SELECT_NS_DATA = "SELECT * FROM NSDATA"
 
     def get_ns_gap_count_lists(self, nsid):
         """Return a query for files not identified through Signature or

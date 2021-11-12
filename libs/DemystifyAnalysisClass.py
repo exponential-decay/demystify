@@ -121,7 +121,6 @@ class DemystifyAnalysis:
         namespaces. Setup work and initialization of class variables is
         all done here.
         """
-        self.namespacedata = None
         self.priority_ns_id = None
         self.pronom_ns_id = None
         self.freedesktop_ns_id = None
@@ -316,11 +315,11 @@ class DemystifyAnalysis:
     def __getsplit__(self, vals):
         idlist = vals.split(",", 3)
         if len(idlist) == 4:
-            type = idlist[1]
+            type_ = idlist[1]
             idno = idlist[0]
             idrow = idlist[2]
             ns = idlist[3]
-            return type, idno, idrow, ns
+            return type_, idno, idrow, ns
 
     def create_id_breakdown(self):
 
@@ -358,20 +357,20 @@ class DemystifyAnalysis:
 
         # go through list the first time and prioritize container and signature
         # and THEN our sorted list of NS identifiers...
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "container":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "container":
                 if idno not in container_bin:
                     container_bin.append(idno)
                     binaryidrows.append((idno, idrow))
-            if type == "signature":
+            if type_ == "signature":
                 if idno not in container_bin and idno not in binary_bin:
                     binary_bin.append(idno)
                     binaryidrows.append((idno, idrow))
 
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "xml":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "xml":
                 if (
                     idno not in container_bin
                     and idno not in binary_bin
@@ -380,9 +379,9 @@ class DemystifyAnalysis:
                     xml_bin.append(idno)
                     xmlidrows.append((idno, idrow))
 
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "text":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "text":
                 if (
                     idno not in container_bin
                     and idno not in binary_bin
@@ -392,9 +391,9 @@ class DemystifyAnalysis:
                     text_bin.append(idno)
                     textidrows.append((idno, idrow))
 
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "filename":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "filename":
                 if (
                     idno not in container_bin
                     and idno not in binary_bin
@@ -405,9 +404,9 @@ class DemystifyAnalysis:
                     filename_bin.append(idno)
                     filenameidrows.append((idno, idrow))
 
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "extension":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "extension":
                 if (
                     idno not in container_bin
                     and idno not in binary_bin
@@ -418,9 +417,9 @@ class DemystifyAnalysis:
                 ):
                     extension_bin.append(idno)
 
-        for id in list(method_list):
-            type, idno, idrow, ns = self.__getsplit__(id)
-            if type == "none":
+        for id_ in list(method_list):
+            type_, idno, idrow, ns = self.__getsplit__(id_)
+            if type_ == "none":
                 if (
                     idno not in container_bin
                     and idno not in binary_bin
@@ -549,7 +548,7 @@ class DemystifyAnalysis:
 
             Fields used below are:
                 [
-                    'id',
+                    'id_',
                     'basis',
                     'filesize',
                     'filename',
@@ -818,11 +817,10 @@ class DemystifyAnalysis:
             self.analysis_results.filecount, self.analysis_results.unidentifiedfilecount
         )
 
-        print(AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT)
         self.analysis_results.dateFrequency = self.__querydb__(
             AnalysisQueries.SELECT_YEAR_FREQUENCY_COUNT
         )
-        print(self.analysis_results.dateFrequency)
+
         self.analysis_results.signatureidentifiedfrequency = self.__querydb__(
             AnalysisQueries.SELECT_BINARY_MATCH_COUNT
         )
