@@ -2944,7 +2944,7 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.priority_ns_id == res.pronom_ns_id
 
     assert res.tika_ns_id == 2
-    assert res.freedesktop_ns_id == 3, test
+    assert res.freedesktop_ns_id == 3
 
     assert res.analysis_results.filename.endswith("sf_💜_test")
     assert res.analysis_results.tooltype == "siegfried: 1.9.1"
@@ -3318,10 +3318,10 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.filenameidfilecount == 0
     assert res.analysis_results.distinctXMLIdentifiers == 0
     assert res.analysis_results.distinctFilenameIdentifiers == 0
-    assert res.analysis_results.xmlidentifiers == None
+    assert res.analysis_results.xmlidentifiers is None
     assert res.analysis_results.xml_identifiers == []
     assert res.filenameIDs == []
-    assert res.analysis_results.filenameidentifiers == None
+    assert res.analysis_results.filenameidentifiers is None
 
 
 SF_TEXT_XML_YAML = """---
@@ -3601,7 +3601,16 @@ def test_xml_and_text_identiiers(tmp_path):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True)
 
-    print(res.analysis_results.nsdatalist[0])
+    assert res.analysis_results.nsdatalist[0] == {
+        "namespace title": "tika",
+        "namespace details": "tika-mimetypes.xml (1.24, 2020-04-17)",
+        "binary method count": 1,
+        "xml method count": 10,
+        "text method count": 9,
+        "filename method count": 1,
+        "extension method count": 0,
+        "multiple ids": 0,
+    }
 
     assert res.analysis_results.xmlidfilecount == 10
     assert res.analysis_results.filenameidfilecount == 1
@@ -3654,6 +3663,963 @@ def test_xml_and_text_identiiers(tmp_path):
     ]
 
 
+SF_EXT_YAML = """---
+siegfried   : 1.9.1
+scandate    : 2021-12-05T19:21:39+01:00
+signature   : default.sig
+created     : 2020-10-06T19:13:40+02:00
+identifiers :
+  - name    : 'pronom'
+    details : 'DROID_SignatureFile_V97.xml; container-signature-20201001.xml'
+---
+filename : 'collection.zip'
+filesize : 900
+modified : 2021-12-05T19:20:23+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/263'
+    format  : 'ZIP Format'
+    version :
+    mime    : 'application/zip'
+    basis   : 'extension match zip; container match with trigger and default extension'
+    warning :
+---
+filename : 'collection.zip#file1.md'
+filesize : 0
+modified : 2021-12-05T18:18:50Z
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/1149'
+    format  : 'Markdown'
+    version :
+    mime    : 'text/markdown'
+    basis   : 'extension match md'
+    warning : 'match on extension only'
+---
+filename : 'collection.zip#file2.txt'
+filesize : 0
+modified : 2021-12-05T18:19:04Z
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'extension match txt'
+    warning : 'match on extension only'
+---
+filename : 'collection.zip#file3.csv'
+filesize : 0
+modified : 2021-12-05T18:19:14Z
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/18'
+    format  : 'Comma Separated Values'
+    version :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+---
+filename : 'collection.zip#file3.tsv'
+filesize : 0
+modified : 2021-12-05T18:19:18Z
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/13'
+    format  : 'Tab-separated values'
+    version :
+    mime    : 'text/tab-separated-values'
+    basis   : 'extension match tsv'
+    warning : 'match on extension only'
+---
+filename : 'collection.zip#file5.xlk'
+filesize : 0
+modified : 2021-12-05T18:19:22Z
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/23'
+    format  : 'Microsoft Excel Backup'
+    version :
+    mime    :
+    basis   : 'extension match xlk'
+    warning : 'match on extension only'
+---
+filename : 'file1.md'
+filesize : 0
+modified : 2021-12-05T18:18:51+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/1149'
+    format  : 'Markdown'
+    version :
+    mime    : 'text/markdown'
+    basis   : 'extension match md'
+    warning : 'match on extension only'
+---
+filename : 'file2.txt'
+filesize : 0
+modified : 2021-12-05T18:19:04+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'extension match txt'
+    warning : 'match on extension only'
+---
+filename : 'file3.csv'
+filesize : 0
+modified : 2021-12-05T18:19:14+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/18'
+    format  : 'Comma Separated Values'
+    version :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+---
+filename : 'file3.tsv'
+filesize : 0
+modified : 2021-12-05T18:19:18+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/13'
+    format  : 'Tab-separated values'
+    version :
+    mime    : 'text/tab-separated-values'
+    basis   : 'extension match tsv'
+    warning : 'match on extension only'
+---
+filename : 'file5.xlk'
+filesize : 0
+modified : 2021-12-05T18:19:22+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/23'
+    format  : 'Microsoft Excel Backup'
+    version :
+    mime    :
+    basis   : 'extension match xlk'
+    warning : 'match on extension only'
+"""
+
+
+def test_extension_identifiers(tmp_path):
+    """Test the reporting of extension only identification from
+    Siegfried.
+    """
+
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test_xml.yaml"
+    sf_yaml.write_text(SF_EXT_YAML.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    assert len(res.analysis_results.extensionOnlyIDFrequency) == 5
+    assert res.analysis_results.extensionOnlyIDFrequency == [
+        ("ns:pronom  fmt/1149", 2),
+        ("ns:pronom  x-fmt/111", 2),
+        ("ns:pronom  x-fmt/18", 2),
+        ("ns:pronom  x-fmt/13", 2),
+        ("ns:pronom  x-fmt/23", 2),
+    ]
+    assert res.analysis_results.extensionOnlyIDList == [
+        ("fmt/1149", "Markdown"),
+        ("x-fmt/111", "Plain Text File"),
+        ("x-fmt/13", "Tab-separated values"),
+        ("x-fmt/18", "Comma Separated Values"),
+        ("x-fmt/23", "Microsoft Excel Backup"),
+    ]
+    assert res.analysis_results.uniqueExtensionsInCollectionList == [
+        ("zip",),
+        ("md",),
+        ("txt",),
+        ("csv",),
+        ("tsv",),
+        ("xlk",),
+    ]
+    assert res.analysis_results.frequencyOfAllExtensions == [
+        ("xlk", 2),
+        ("txt", 2),
+        ("tsv", 2),
+        ("md", 2),
+        ("csv", 2),
+        ("zip", 1),
+    ]
+
+
+SF_METHODS_YAML = """---
+siegfried   : 1.9.1
+scandate    : 2021-12-05T20:27:50+01:00
+signature   : default.sig
+created     : 2020-10-06T19:15:15+02:00
+identifiers :
+  - name    : 'pronom'
+    details : 'DROID_SignatureFile_V97.xml; container-signature-20201001.xml'
+  - name    : 'tika'
+    details : 'tika-mimetypes.xml (1.24, 2020-04-17)'
+  - name    : 'freedesktop.org'
+    details : 'freedesktop.org.xml (2.0, 2020-06-05)'
+  - name    : 'loc'
+    details : 'fddXML.zip (2020-09-02, DROID_SignatureFile_V97.xml, container-signature-20201001.xml)'
+---
+filename : '017730.xml'
+filesize : 7868
+modified : 2021-12-05T20:21:58+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/101'
+    format  : 'Extensible Markup Language'
+    version : '1.0'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 19'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/rdf+xml'
+    format  : 'XML syntax for RDF graphs'
+    mime    : 'application/rdf+xml'
+    basis   : 'xml match with root RDF'
+    warning : 'filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'application/xml'
+    format  : 'XML document'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 5'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000014, fdd000053, fdd000054, fdd000075, fdd000171, fdd000174, fdd000175, fdd000256, fdd000263, fdd000264, fdd000275, fdd000280, fdd000295, fdd000358, fdd000451, fdd000452, fdd000453, fdd000499, fdd000503'
+---
+filename : '082301.html'
+filesize : 9344
+modified : 2021-12-05T20:14:14+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'UNKNOWN'
+    format  :
+    version :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fmt/97, fmt/98, fmt/99, fmt/100, fmt/102, fmt/103, fmt/96, fmt/471, fmt/583, fmt/1132'
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'extension match html; xml match with root SCRIPT'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'text/html'
+    format  : 'HTML document'
+    mime    : 'text/html'
+    basis   : 'extension match html; byte match at 0, 7 (signature 8/17); byte match at 126, 7 (signature 8/17); byte match at 250, 7 (signature 8/17)'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000432, fdd000475, fdd000481, fdd000483'
+---
+filename : '103364.text'
+filesize : 120212
+modified : 2021-12-05T20:24:22+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/388'
+    format  : 'Internet Calendar and Scheduling format'
+    version :
+    mime    : 'text/calendar'
+    basis   : 'byte match at [[0 15] [179 11] [120199 13]]'
+    warning : 'extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'extension match text; text match ISO-8859'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+  - ns      : 'freedesktop.org'
+    id      : 'text/calendar'
+    format  : 'VCS/ICS calendar'
+    mime    : 'text/calendar'
+    basis   : 'byte match at 0, 15 (signature 1/2); text match ISO-8859'
+    warning : 'filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : '299018.xml'
+filesize : 3573362
+modified : 2021-12-05T20:23:49+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/101'
+    format  : 'Extensible Markup Language'
+    version : '1.0'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 19'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/vnd.ms-spreadsheetml'
+    format  : 'Excel 2003 xml format, pre-ooxml'
+    mime    : 'application/vnd.ms-spreadsheetml'
+    basis   : 'xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet; xml match with root Workbook and ns urn:schemas-microsoft-com:office:spreadsheet'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'application/xml'
+    format  : 'XML document'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 5'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000014, fdd000053, fdd000054, fdd000075, fdd000171, fdd000174, fdd000175, fdd000256, fdd000263, fdd000264, fdd000275, fdd000280, fdd000295, fdd000358, fdd000451, fdd000452, fdd000453, fdd000499, fdd000503'
+---
+filename : '397311.doc'
+filesize : 25027
+modified : 2021-12-05T20:21:22+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/99'
+    format  : 'Hypertext Markup Language'
+    version : '4.0'
+    mime    : 'text/html'
+    basis   : 'byte match at 0, 44'
+    warning : 'extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'xml match with root HTML'
+    warning : 'filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'text/html'
+    format  : 'HTML document'
+    mime    : 'text/html'
+    basis   : 'byte match at 0, 14 (signature 1/17); byte match at 198, 5 (signature 6/17); byte match at 204, 5 (signature 4/17)'
+    warning : 'filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000509'
+---
+filename : '408366.html'
+filesize : 20644
+modified : 2021-12-05T20:14:32+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/102'
+    format  : 'Extensible Hypertext Markup Language'
+    version : '1.0'
+    mime    : 'application/xhtml+xml'
+    basis   : 'extension match html; byte match at [[58 44] [179 42] [484 7] [583 8]]'
+    warning :
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'extension match html; xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'application/xhtml+xml'
+    format  : 'XHTML page'
+    mime    : 'application/xhtml+xml'
+    basis   : 'extension match html; xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000432, fdd000475, fdd000481, fdd000483'
+---
+filename : '465815.csv'
+filesize : 13806440
+modified : 2021-12-05T20:24:33+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/18'
+    format  : 'Comma Separated Values'
+    version :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/csv'
+    format  :
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match Little-endian UTF-16 Unicode'
+    warning : 'match on filename and text only'
+  - ns      : 'freedesktop.org'
+    id      : 'text/csv'
+    format  : 'CSV document'
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match Little-endian UTF-16 Unicode'
+    warning : 'match on filename and text only'
+  - ns      : 'loc'
+    id      : 'fdd000323'
+    format  : 'CSV, Comma Separated Values (RFC 4180)'
+    full    : 'CSV, Comma Separated Values (strict form as described in RFC 4180)'
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+---
+filename : '467583.csv'
+filesize : 9767
+modified : 2021-12-05T20:24:50+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/18'
+    format  : 'Comma Separated Values'
+    version :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/csv'
+    format  :
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match UTF-8 Unicode'
+    warning : 'match on filename and text only'
+  - ns      : 'freedesktop.org'
+    id      : 'text/csv'
+    format  : 'CSV document'
+    mime    : 'text/csv'
+    basis   : 'extension match csv; text match UTF-8 Unicode'
+    warning : 'match on filename and text only'
+  - ns      : 'loc'
+    id      : 'fdd000323'
+    format  : 'CSV, Comma Separated Values (RFC 4180)'
+    full    : 'CSV, Comma Separated Values (strict form as described in RFC 4180)'
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+---
+filename : '531128.kml'
+filesize : 341
+modified : 2021-12-05T20:20:48+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/244'
+    format  : 'Keyhole Markup Language (XML)'
+    version :
+    mime    :
+    basis   : 'extension match kml; byte match at [[0 19] [39 11] [334 6]]'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/vnd.google-earth.kml+xml'
+    format  : 'Keyhole Markup Language'
+    mime    : 'application/vnd.google-earth.kml+xml'
+    basis   : 'extension match kml; xml match with root kml and ns http://earth.google.com/kml/2.0; xml match with root kml and ns http://earth.google.com/kml/2.0'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'application/vnd.google-earth.kml+xml'
+    format  : 'KML geographic data'
+    mime    : 'application/vnd.google-earth.kml+xml'
+    basis   : 'extension match kml; byte match at 0, 5'
+    warning :
+  - ns      : 'loc'
+    id      : 'fdd000340'
+    format  : 'KML, Version 2.2'
+    full    : 'KML (formerly Keyhole Markup Language), Version 2.2'
+    mime    : 'application/vnd.google-earth.kml+xml'
+    basis   : 'extension match kml'
+    warning : 'match on extension only'
+---
+filename : '561634.xml'
+filesize : 38447
+modified : 2021-12-05T20:23:35+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/101'
+    format  : 'Extensible Markup Language'
+    version : '1.0'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 19'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/vnd.ms-wordml'
+    format  : 'Word 2003 xml format, pre-ooxml'
+    mime    : 'application/vnd.ms-wordml'
+    basis   : 'xml match with root wordDocument'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'application/xml'
+    format  : 'XML document'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 5'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000014, fdd000053, fdd000054, fdd000075, fdd000171, fdd000174, fdd000175, fdd000256, fdd000263, fdd000264, fdd000275, fdd000280, fdd000295, fdd000358, fdd000451, fdd000452, fdd000453, fdd000499, fdd000503'
+---
+filename : '574354.xml'
+filesize : 14174
+modified : 2021-12-05T20:22:11+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/101'
+    format  : 'Extensible Markup Language'
+    version : '1.0'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 19'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/rss+xml'
+    format  :
+    mime    : 'application/rss+xml'
+    basis   : 'xml match with root rss'
+    warning : 'filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'application/xml'
+    format  : 'XML document'
+    mime    : 'application/xml'
+    basis   : 'extension match xml; byte match at 0, 5'
+    warning :
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000014, fdd000053, fdd000054, fdd000075, fdd000171, fdd000174, fdd000175, fdd000256, fdd000263, fdd000264, fdd000275, fdd000280, fdd000295, fdd000358, fdd000451, fdd000452, fdd000453, fdd000499, fdd000503'
+---
+filename : '580857.xml'
+filesize : 55909
+modified : 2021-12-05T20:21:44+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/102'
+    format  : 'Extensible Hypertext Markup Language'
+    version : '1.0'
+    mime    : 'application/xhtml+xml'
+    basis   : 'byte match at [[43 44] [166 42] [219 7] [244 8]]'
+    warning : 'extension mismatch'
+  - ns      : 'tika'
+    id      : 'application/xhtml+xml'
+    format  :
+    mime    : 'application/xhtml+xml'
+    basis   : 'xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning : 'filename mismatch'
+  - ns      : 'tika'
+    id      : 'text/html'
+    format  : 'HyperText Markup Language'
+    mime    : 'text/html'
+    basis   : 'xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning : 'filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'application/xhtml+xml'
+    format  : 'XHTML page'
+    mime    : 'application/xhtml+xml'
+    basis   : 'xml match with root html and ns http://www.w3.org/1999/xhtml'
+    warning : 'filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match; possibilities based on extension are fdd000014, fdd000053, fdd000054, fdd000075, fdd000171, fdd000174, fdd000175, fdd000256, fdd000263, fdd000264, fdd000275, fdd000280, fdd000295, fdd000358, fdd000451, fdd000452, fdd000453, fdd000499, fdd000503'
+---
+filename : '594454.unk'
+filesize : 489353
+modified : 2021-12-05T20:25:35+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ISO-8859'
+    warning : 'match on text only; extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'text match ISO-8859'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'text/plain'
+    format  : 'plain text document'
+    mime    : 'text/plain'
+    basis   : 'text match ISO-8859'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : '613517.unk'
+filesize : 189848
+modified : 2021-12-05T20:26:00+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match UTF-8 Unicode'
+    warning : 'match on text only; extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'text match UTF-8 Unicode'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'text/plain'
+    format  : 'plain text document'
+    mime    : 'text/plain'
+    basis   : 'text match UTF-8 Unicode'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : '628170.unk'
+filesize : 10173
+modified : 2021-12-05T20:24:09+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/x-matlab'
+    format  : 'Matlab source code'
+    mime    : 'text/x-matlab'
+    basis   : 'byte match at 0, 10 (signature 1/4); text match ASCII'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'text/x-matlab'
+    format  : 'MATLAB file'
+    mime    : 'text/x-matlab'
+    basis   : 'byte match at 0, 8 (signature 3/3); text match ASCII'
+    warning : 'filename mismatch'
+  - ns      : 'freedesktop.org'
+    id      : 'text/x-modelica'
+    format  : 'Modelica model'
+    mime    : 'text/x-modelica'
+    basis   : 'byte match at 0, 8 (signature 2/5); text match ASCII'
+    warning : 'filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : 'collection.zip'
+filesize : 900
+modified : 2021-12-05T19:20:23+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/263'
+    format  : 'ZIP Format'
+    version :
+    mime    : 'application/zip'
+    basis   : 'extension match zip; container match with trigger and default extension'
+    warning :
+  - ns      : 'tika'
+    id      : 'application/zip'
+    format  : 'Compressed Archive File'
+    mime    : 'application/zip'
+    basis   : 'extension match zip; byte match at 0, 4 (signature 1/3)'
+    warning :
+  - ns      : 'freedesktop.org'
+    id      : 'application/zip'
+    format  : 'Zip archive'
+    mime    : 'application/zip'
+    basis   : 'extension match zip; byte match at 0, 4'
+    warning :
+  - ns      : 'loc'
+    id      : 'fdd000354'
+    format  : 'ZIP File Format (PKWARE)'
+    full    : 'ZIP File Format (PKWARE)'
+    mime    : 'application/zip'
+    basis   : 'extension match zip; extension match zip; container match with trigger and default extension'
+    warning : 'extension mismatch'
+---
+filename : 'file1.md'
+filesize : 0
+modified : 2021-12-05T18:18:51+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'fmt/1149'
+    format  : 'Markdown'
+    version :
+    mime    : 'text/markdown'
+    basis   : 'extension match md'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/x-web-markdown'
+    format  : 'Markdown source code'
+    mime    : 'text/x-web-markdown'
+    basis   : 'extension match md'
+    warning : 'match on filename only'
+  - ns      : 'freedesktop.org'
+    id      : 'text/markdown'
+    format  : 'Markdown document'
+    mime    : 'text/markdown'
+    basis   : 'extension match md'
+    warning : 'match on filename only'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : 'file2.txt'
+filesize : 0
+modified : 2021-12-05T18:19:04+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'extension match txt'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'extension match txt'
+    warning : 'match on filename only; byte/xml signatures for this format did not match'
+  - ns      : 'freedesktop.org'
+    id      : 'text/plain'
+    format  : 'plain text document'
+    mime    : 'text/plain'
+    basis   : 'extension match txt'
+    warning : 'match on filename only; byte/xml signatures for this format did not match'
+  - ns      : 'loc'
+    id      : 'fdd000284'
+    format  : 'ESRI ArcInfo Coverage'
+    full    : 'ESRI ArcInfo Coverage'
+    mime    :
+    basis   : 'extension match txt'
+    warning : 'match on extension only'
+---
+filename : 'file3.csv'
+filesize : 0
+modified : 2021-12-05T18:19:14+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/18'
+    format  : 'Comma Separated Values'
+    version :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/csv'
+    format  :
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on filename only'
+  - ns      : 'freedesktop.org'
+    id      : 'text/csv'
+    format  : 'CSV document'
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on filename only'
+  - ns      : 'loc'
+    id      : 'fdd000323'
+    format  : 'CSV, Comma Separated Values (RFC 4180)'
+    full    : 'CSV, Comma Separated Values (strict form as described in RFC 4180)'
+    mime    : 'text/csv'
+    basis   : 'extension match csv'
+    warning : 'match on extension only'
+---
+filename : 'file3.tsv'
+filesize : 0
+modified : 2021-12-05T18:19:18+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/13'
+    format  : 'Tab-separated values'
+    version :
+    mime    : 'text/tab-separated-values'
+    basis   : 'extension match tsv'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'text/tab-separated-values'
+    format  :
+    mime    : 'text/tab-separated-values'
+    basis   : 'extension match tsv'
+    warning : 'match on filename only'
+  - ns      : 'freedesktop.org'
+    id      : 'text/tab-separated-values'
+    format  : 'TSV document'
+    mime    : 'text/tab-separated-values'
+    basis   : 'extension match tsv'
+    warning : 'match on filename only'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : 'file5.xlk'
+filesize : 0
+modified : 2021-12-05T18:19:22+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/23'
+    format  : 'Microsoft Excel Backup'
+    version :
+    mime    :
+    basis   : 'extension match xlk'
+    warning : 'match on extension only'
+  - ns      : 'tika'
+    id      : 'UNKNOWN'
+    format  :
+    mime    : 'UNKNOWN'
+    basis   :
+    warning : 'no match'
+  - ns      : 'freedesktop.org'
+    id      : 'UNKNOWN'
+    format  :
+    mime    : 'UNKNOWN'
+    basis   :
+    warning : 'no match'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+---
+filename : 'README'
+filesize : 297
+modified : 2021-12-05T20:26:13+01:00
+errors   :
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+  - ns      : 'tika'
+    id      : 'text/plain'
+    format  :
+    mime    : 'text/plain'
+    basis   : 'glob match README; text match ASCII'
+    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
+  - ns      : 'freedesktop.org'
+    id      : 'text/plain'
+    format  : 'plain text document'
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
+  - ns      : 'loc'
+    id      : 'UNKNOWN'
+    format  :
+    full    :
+    mime    :
+    basis   :
+    warning : 'no match'
+"""
+
+
+def test_sf_methods(tmp_path):
+    """TODO"""
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test_xml.yaml"
+    sf_yaml.write_text(SF_METHODS_YAML.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    # It doesn't look like any of these are used at all...
+    print(res.analysis_results.idmethodFrequency)
+    res.analysis_results.idmethodFrequency == 2
+    res.analysis_results.mimetypeFrequency == None
+
+    assert False, "This is where we are in the code..."
+
+
 def test_sf_multiple_ids():
     """pass"""
 
@@ -3683,14 +4649,6 @@ def test_denylist():
 
 def tests_remaining():
     """
-
-
-
-        self.extensionOnlyIDFrequency = 0
-        self.extensionOnlyIDList = []
-
-        self.uniqueExtensionsInCollectionList = None
-        self.frequencyOfAllExtensions = None
 
         self.idmethodFrequency = None
 

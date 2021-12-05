@@ -597,7 +597,7 @@ class DemystifyAnalysis:
                     # print(bof, eof)
 
                 except ValueError:
-                    logger.error("Cannot handle basis: %s %s", offs, match)
+                    logging.error("Cannot handle basis: %s %s", offs, match)
                     continue
 
                 if bof != 0 and boftup[4] < bof:
