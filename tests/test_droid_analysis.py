@@ -4613,11 +4613,28 @@ def test_sf_methods(tmp_path):
     res = analysis_from_csv(str(sf_yaml), True)
 
     # It doesn't look like any of these are used at all...
-    print(res.analysis_results.idmethodFrequency)
-    res.analysis_results.idmethodFrequency == 2
-    res.analysis_results.mimetypeFrequency == None
 
-    assert False, "This is where we are in the code..."
+    assert res.analysis_results.idmethodFrequency == [
+        ("Signature", 11),
+        ("Extension", 5),
+        ("Text", 5),
+        ("Container", 1),
+        ("None", 0),
+        ("Filename", 0),
+        ("XML", 0),
+    ]
+    assert res.analysis_results.mimetypeFrequency == [
+        ("application/xml", 4),
+        ("text/plain", 3),
+        ("text/html", 2),
+        ("text/csv", 2),
+        ("application/xhtml+xml", 2),
+        ("text/x-matlab", 1),
+        ("text/calendar", 1),
+        ("application/zip", 1),
+    ]
+
+    assert False, "check this stats out before moving on..."
 
 
 def test_sf_multiple_ids():
