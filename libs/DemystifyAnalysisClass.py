@@ -322,6 +322,15 @@ class DemystifyAnalysis:
             return type_, idno, idrow, ns
 
     def create_id_breakdown(self):
+        """Create a breakdown of IDs and methods. The breakdown is
+        created (the opposite of) accumulativly, i.e. we start with all
+        the data, and then slowly remove it from the sets based on the
+        quality of identification. So, container, signature, xml, text,
+        filename, extension... etc.
+
+        End result is an array of tuples I think, but need to come back
+        to this documentation to make that clearer...
+        """
 
         tooltype = self.analysis_results.tooltype
         query = self.query.methods_return_ns_sort(self.priority_ns_id)
@@ -341,19 +350,14 @@ class DemystifyAnalysis:
         textidrows = []
         filenameidrows = []
 
-        # create a set to remove the fileids with duplicate methods
+        # create a set to remove the file ids with duplicate methods
         for id_ in allids:
             file = id_[0]
-            try:
-                method = id_[2].lower().strip()
-                idrow = id_[1]
-                ns = id_[3]
-                method_list.append(
-                    str(file) + "," + method + "," + str(idrow) + "," + str(ns)
-                )
-            except AttributeError:
-                logging.error("We shouldn't have this issue - begins in sqlitefid")
-                pass
+            method = id_[2].lower().strip()
+            idrow = id_[1]
+            ns = id_[3]
+            method_data = "{},{},{},{}".format(file, method, idrow, ns)
+            method_list.append(method_data)
 
         # go through list the first time and prioritize container and signature
         # and THEN our sorted list of NS identifiers...

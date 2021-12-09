@@ -43,14 +43,16 @@ class AnalysisQueries:
                                  GROUP BY FILEDATA.ERROR ORDER BY TOTAL DESC"""
 
     ns_pattern = "{{ ns_id }}"
-    SELECT_COUNT_ID_METHODS_PATTERN = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID
-                                 FROM IDRESULTS
-                                 JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                                 ORDER BY
-                                 CASE IDDATA.NS_ID
-                                   WHEN '{{ ns_id }}' THEN 1
-                                   ELSE 2
-                                 END"""
+    SELECT_COUNT_ID_METHODS_PATTERN = (
+        "SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID\n"
+        "FROM IDRESULTS\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "ORDER BY\n"
+        "CASE IDDATA.NS_ID\n"
+        "WHEN '{{ ns_id }}' THEN 1\n"
+        "ELSE 2\n"
+        "END\n"
+    )
 
     # Prority of results is based on order input to database...
     SELECT_COUNT_ID_METHODS_NONE = """SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID
@@ -132,22 +134,26 @@ class AnalysisQueries:
                                        WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                        GROUP BY IDDATA.METHOD ORDER BY TOTAL DESC"""
 
-    # select the gamut of MIMEs in the accession/extract, not counts
     def getmimes(self, idids):
-        mimes = []
-        for ids in idids:
-            mimes.append(ids[1])
+        """Construct mime query using a set of IDs provided to the
+        function.
 
-        query1 = """SELECT IDDATA.MIME_TYPE, COUNT(*) AS total
-                  FROM IDRESULTS
-                  JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                  WHERE IDRESULTS.ID_ID IN """
-
-        query2 = """AND (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none' and IDDATA.MIME_TYPE!='')
-                  GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC"""
-
-        listing = "(" + ", ".join(mimes) + ")"
-        query = query1 + listing + query2
+            NB. Select the gamut of MIMEs in the accession/extract, not
+                counts.
+        """
+        mimes = [id_[1] for id_ in idids]
+        query1 = (
+            "SELECT IDDATA.MIME_TYPE, COUNT(*) AS total\n"
+            "FROM IDRESULTS\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+            "WHERE IDRESULTS.ID_ID IN"
+        )
+        query2 = (
+            "AND (IDDATA.MIME_TYPE!='None' and IDDATA.MIME_TYPE!='none' and IDDATA.MIME_TYPE!='')\n"
+            "GROUP BY IDDATA.MIME_TYPE ORDER BY TOTAL DESC\n"
+        )
+        listing = "({})".format(", ".join(mimes))
+        query = "{}{}{}".format(query1, listing, query2)
         return query
 
     SELECT_BINARY_MATCH_COUNT = (

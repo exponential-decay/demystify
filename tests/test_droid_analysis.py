@@ -3891,7 +3891,7 @@ matches  :
     format  : 'Extensible Markup Language'
     version : '1.0'
     mime    : 'application/xml'
-    basis   : 'extension match xml; byte match at 0, 19'
+    basis   : 'extension match xml'
     warning :
   - ns      : 'tika'
     id      : 'application/rdf+xml'
@@ -3903,7 +3903,7 @@ matches  :
     id      : 'application/xml'
     format  : 'XML document'
     mime    : 'application/xml'
-    basis   : 'extension match xml; byte match at 0, 5'
+    basis   : 'extension match xml'
     warning :
   - ns      : 'loc'
     id      : 'UNKNOWN'
@@ -4415,19 +4415,19 @@ matches  :
     format  : 'Markdown'
     version :
     mime    : 'text/markdown'
-    basis   : 'extension match md'
+    basis   : 'TEST'
     warning : 'match on extension only'
   - ns      : 'tika'
     id      : 'text/x-web-markdown'
     format  : 'Markdown source code'
     mime    : 'text/x-web-markdown'
-    basis   : 'extension match md'
+    basis   : 'TEST'
     warning : 'match on filename only'
   - ns      : 'freedesktop.org'
     id      : 'text/markdown'
     format  : 'Markdown document'
     mime    : 'text/markdown'
-    basis   : 'extension match md'
+    basis   : 'TEST'
     warning : 'match on filename only'
   - ns      : 'loc'
     id      : 'UNKNOWN'
@@ -4447,27 +4447,27 @@ matches  :
     format  : 'Plain Text File'
     version :
     mime    : 'text/plain'
-    basis   : 'extension match txt'
-    warning : 'match on extension only'
+    basis   :
+    warning :
   - ns      : 'tika'
     id      : 'text/plain'
     format  :
     mime    : 'text/plain'
-    basis   : 'extension match txt'
-    warning : 'match on filename only; byte/xml signatures for this format did not match'
+    basis   :
+    warning :
   - ns      : 'freedesktop.org'
     id      : 'text/plain'
     format  : 'plain text document'
     mime    : 'text/plain'
-    basis   : 'extension match txt'
-    warning : 'match on filename only; byte/xml signatures for this format did not match'
+    basis   :
+    warning :
   - ns      : 'loc'
     id      : 'fdd000284'
     format  : 'ESRI ArcInfo Coverage'
     full    : 'ESRI ArcInfo Coverage'
     mime    :
-    basis   : 'extension match txt'
-    warning : 'match on extension only'
+    basis   :
+    warning :
 ---
 filename : 'file3.csv'
 filesize : 0
@@ -4600,7 +4600,7 @@ matches  :
 
 
 def test_sf_methods(tmp_path):
-    """TODO"""
+    """Test ID method and MIMEType frequency results."""
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_xml.yaml"
     sf_yaml.write_text(SF_METHODS_YAML.strip())
@@ -4612,33 +4612,45 @@ def test_sf_methods(tmp_path):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True)
 
-    # It doesn't look like any of these are used at all...
-
     assert res.analysis_results.idmethodFrequency == [
-        ("Signature", 11),
-        ("Extension", 5),
+        ("Signature", 10),
         ("Text", 5),
+        ("Extension", 3),
+        ("None", 1),
         ("Container", 1),
-        ("None", 0),
-        ("Filename", 0),
-        ("XML", 0),
+        ("Filename", 1),
+        ("XML", 1),
     ]
     assert res.analysis_results.mimetypeFrequency == [
-        ("application/xml", 4),
         ("text/plain", 3),
+        ("application/xml", 3),
         ("text/html", 2),
         ("text/csv", 2),
         ("application/xhtml+xml", 2),
         ("text/x-matlab", 1),
         ("text/calendar", 1),
         ("application/zip", 1),
+        ("application/rdf+xml", 1),
     ]
 
-    assert False, "check this stats out before moving on..."
 
-
-def test_sf_multiple_ids():
+def test_sf_multiple_ids(tmp_path):
     """pass"""
+
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test_xml.yaml"
+    sf_yaml.write_text(SF_METHODS_YAML.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    assert res.analysis_results.rogue_multiple_identification_list == []
+
+    assert False, "This is where we are now, but we need a report with multiples..."
 
 
 def test_bof_eof_extract():
@@ -4698,7 +4710,7 @@ def tests_remaining():
         self.rogue_identified_all = []
         self.rogue_identified_pronom = []
         self.rogue_extension_mismatches = []
-        self.rogue_multiple_identification_list = []
+
         self.rogue_file_name_paths = []  # non-ascii file names
         self.rogue_dir_name_paths = []  # non-ascii dir names
     """
