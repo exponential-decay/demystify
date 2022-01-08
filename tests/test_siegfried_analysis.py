@@ -6,7 +6,6 @@ import sys
 
 from demystify import analysis_from_csv
 
-
 if sys.version_info[0] == 3:
     PY3 = True
 else:
@@ -3001,6 +3000,20 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.xml_identifiers == []
     assert res.filenameIDs == []
     assert res.analysis_results.filenameidentifiers is None
+    assert res.analysis_results.bof_distance == [
+        "fmt/641",
+        "byte match at 0, 348",
+        "fmt-641-signature-id-970.erf",
+        348,
+        348,
+    ]
+    assert res.analysis_results.eof_distance == [
+        "application/vnd.stardivision.draw",
+        "byte match at [[0 8] [2117 8]]",
+        "x-fmt-401-container-signature-id-23125.sda",
+        2560,
+        443,
+    ]
 
 
 SF_TEXT_XML_YAML = u"""---
@@ -3341,6 +3354,15 @@ def test_xml_and_text_identiiers(tmp_path):
         ("ns:tika text/plain, None, None [glob match README] (1)", 1)
     ]
 
+    assert res.analysis_results.bof_distance == [
+        "text/x-matlab",
+        "byte match at 0, 10 (signature 1/4)",
+        "628170.unk",
+        10173,
+        10,
+    ]
+    assert res.analysis_results.eof_distance == None
+
 
 SF_EXT_YAML = u"""---
 siegfried   : 1.9.1
@@ -3516,7 +3538,13 @@ def test_extension_identifiers(tmp_path):
     res.analysis_results.extensionOnlyIDFrequency.sort()
 
     assert len(res.analysis_results.extensionOnlyIDFrequency) == 5
-    assert res.analysis_results.extensionOnlyIDFrequency == [('ns:pronom  fmt/1149', 2), ('ns:pronom  x-fmt/111', 2), ('ns:pronom  x-fmt/13', 2), ('ns:pronom  x-fmt/18', 2), ('ns:pronom  x-fmt/23', 2)]
+    assert res.analysis_results.extensionOnlyIDFrequency == [
+        ("ns:pronom  fmt/1149", 2),
+        ("ns:pronom  x-fmt/111", 2),
+        ("ns:pronom  x-fmt/13", 2),
+        ("ns:pronom  x-fmt/18", 2),
+        ("ns:pronom  x-fmt/23", 2),
+    ]
 
     assert res.analysis_results.extensionOnlyIDList == [
         ("fmt/1149", "Markdown"),
@@ -3541,6 +3569,9 @@ def test_extension_identifiers(tmp_path):
         ("csv", 2),
         ("zip", 1),
     ]
+
+    assert res.analysis_results.bof_distance == None
+    assert res.analysis_results.eof_distance == None
 
 
 SF_METHODS_YAML = u"""---
@@ -4314,6 +4345,21 @@ def test_sf_methods(tmp_path):
         res.analysis_results.rogue_multiple_identification_list == []
     ), "Multiple identification list should be empty"
 
+    assert res.analysis_results.bof_distance == [
+        "fmt/102",
+        "byte match at [[58 44] [179 42] [484 7] [583 8]]",
+        "408366.html",
+        20644,
+        591,
+    ]
+    assert res.analysis_results.eof_distance == [
+        "fmt/388",
+        "byte match at [[0 15] [179 11] [120199 13]]",
+        "103364.text",
+        120212,
+        13,
+    ]
+
 
 SF_MULTI_YAML = u"""---
 siegfried   : 1.9.1
@@ -4442,28 +4488,47 @@ def test_sf_multiple_ids(tmp_path):
         ),
     ]
 
+    assert res.analysis_results.bof_distance == [
+        "text/x-matlab",
+        "byte match at 0, 10 (signature 1/4)",
+        "628170.unk",
+        10173,
+        10,
+    ]
+    assert res.analysis_results.eof_distance == None
 
-def test_bof_eof_extract():
+
+def test_bof_eof_extract(tmp_path):
     """..."""
 
-    """From OPF Corpus
-    <b>Max Distance Scanned from Beginning of File: </b><code>x-fmt/240, byte match at [[[0 24]] [[93889 67]]] e.g. reviews.mdb filesize: 270336, 93956 bytes</code>
-    </br>
-    </br>
-    <b>Max Distance Scanned from End of File: </b><code>fmt/354, byte match at [[[0 8]] [[4942825 44]] [[4942883 79]]] (signature 1/2) e.g. 499039.pdf filesize: 5632355, 689472 bytes</code>
-    <h2>Summary Statistics</h2>
-    """
-    """Govdocs too:
-    Max Distance Scanned from Beginning of File: fmt/157, byte match at [[[0 8]] [[397929 35]]] e.g. 571574.pdf filesize: 867434, 397964 bytes
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(SIEGFRIED_YAML.strip())
 
-    Max Distance Scanned from End of File: fmt/354, byte match at [[[0 8]] [[3287278 44]] [[3287336 79]]] (signature 1/2) e.g. 975126.pdf filesize: 4095553, 808217 bytes
-    """
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
 
+    # Max distance scanned from BOF.
+    assert res.analysis_results.bof_distance == [
+        "fmt/641",
+        "byte match at 0, 348",
+        "fmt-641-signature-id-970.erf",
+        348,
+        348,
+    ]
 
-def test_denylist():
-    """Enable denylist and test the results here."""
-
-    # res.analysis_results is not None
+    # Max distance scanned from EOF.
+    assert res.analysis_results.eof_distance == [
+        "application/vnd.stardivision.draw",
+        "byte match at [[0 8] [2117 8]]",
+        "x-fmt-401-container-signature-id-23125.sda",
+        2560,
+        443,
+    ]
 
 
 def tests_remaining():
