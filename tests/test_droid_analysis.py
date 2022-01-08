@@ -273,7 +273,7 @@ def test_run_droid_analysis(tmp_path):
             "binary method count": 51,
             "extension method count": 18,
             "text method count": 0,
-            "namespace details": "/tmp/pytest-of-ross-spencer/pytest-41/test_run_droid_analysis0/droid_\xf0\x9f\x92\x9c_test.csv",
+            "namespace details": "/test_dir/pytest-of-ross-spencer/pytest-41/test_run_droid_analysis0/droid_\xf0\x9f\x92\x9c_test.csv",
             "namespace title": "pronom",
         }
     )
@@ -332,4 +332,162 @@ def test_run_droid_analysis(tmp_path):
         (2019, 25),
         (2021, 4),
         (None, 0),
+    ]
+
+    res.analysis_results.containertypeslist.sort()
+    assert res.analysis_results.containertypeslist == [
+        ("7z",),
+        ("gz",),
+        ("tar",),
+        ("zip",),
+    ]
+
+    assert res.analysis_results.idmethodFrequency == [
+        ("Signature", 37),
+        ("Extension", 18),
+        ("Container", 14),
+        ("None", 6),
+    ]
+    assert res.analysis_results.mimetypeFrequency == [
+        ("video/quicktime", 24),
+        ("application/zip", 2),
+        ("application/x-krita", 2),
+        ("application/warc", 2),
+        ("application/vnd.visio", 2),
+        ("application/vnd.stardivision.draw", 2),
+        ("application/vnd.openxmlformats-officedocument.wordprocessingml.document", 2),
+        ("application/vnd.openxmlformats-officedocument.presentationml.template", 2),
+        ("application/vnd.ms-powerpoint", 2),
+        ("application/gzip", 2),
+        ("application/x-tar", 1),
+        ("application/x-internet-archive", 1),
+    ]
+
+
+DROID_CSV_EMPTY = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+"2","","file:/test_dir/empty_files/","/test_dir/empty_files","empty_files","","Done","","Folder","","2022-01-08T18:14:57","false","","","","","",""
+"3","2","file:/test_dir/empty_files/empty_file_one","/test_dir/empty_files/empty_file_one","empty_file_one","","Done","0","File","","2022-01-08T18:14:56","false","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","0","","","",""
+"4","2","file:/test_dir/empty_files/empty_file_two","/test_dir/empty_files/empty_file_two","empty_file_two","","Done","0","File","","2022-01-08T18:14:57","false","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","0","","","",""
+"""
+
+
+def test_empty_files(tmp_path):
+    """Ensure that zero byte files are accounted for correctly."""
+
+    dir_ = tmp_path
+    droid_csv = dir_ / "droid_💜_test.csv"
+    droid_csv.write_text(DROID_CSV_EMPTY.strip())
+
+    # Analysis from CSV will currently read the results from the CSV
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(droid_csv), True)
+    res.analysis_results.zerobytelist.sort()
+
+    assert res.analysis_results.zerobytecount == 2
+    assert res.analysis_results.zerobytelist == [
+        "/test_dir/empty_files/empty_file_one",
+        "/test_dir/empty_files/empty_file_two",
+    ]
+
+
+DROID_CSV_DUPLICATES = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+"2","","file:/tmp/duplicates/","/tmp/duplicates","duplicates","","Done","","Folder","","2022-01-08T19:11:14","false","","","","","",""
+"7","2","file:/tmp/duplicates/one_dupe_one","/tmp/duplicates/one_dupe_one","one_dupe_one","","Done","5","File","","2022-01-08T19:10:40","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
+"5","2","file:/tmp/duplicates/one_dupe_two","/tmp/duplicates/one_dupe_two","one_dupe_two","","Done","5","File","","2022-01-08T19:10:42","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
+"3","2","file:/tmp/duplicates/two_dupe_one","/tmp/duplicates/two_dupe_one","two_dupe_one","","Done","9","File","","2022-01-08T19:10:56","false","93816c18bc0146fb98362b9793abe0ee7b8a9530ba30f5af2ff2ca1b2182015b","0","","","",""
+"4","2","file:/tmp/duplicates/two_dupe_three","/tmp/duplicates/two_dupe_three","two_dupe_three","","Done","9","File","","2022-01-08T19:11:05","false","93816c18bc0146fb98362b9793abe0ee7b8a9530ba30f5af2ff2ca1b2182015b","0","","","",""
+"6","2","file:/tmp/duplicates/two_dupe_two","/tmp/duplicates/two_dupe_two","two_dupe_two","","Done","9","File","","2022-01-08T19:11:14","false","93816c18bc0146fb98362b9793abe0ee7b8a9530ba30f5af2ff2ca1b2182015b","0","","","",""
+"""
+
+
+def test_duplicates(tmp_path):
+    """Ensure that duplicates when checksums are enabled in DROID
+    are picked up as expected.
+    """
+
+    dir_ = tmp_path
+    droid_csv = dir_ / "droid_💜_test.csv"
+    droid_csv.write_text(DROID_CSV_DUPLICATES.strip())
+
+    # Analysis from CSV will currently read the results from the CSV
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(droid_csv), True)
+
+    assert res.analysis_results.duplicatespathlist == [
+        "/tmp/duplicates/two_dupe_one",
+        "/tmp/duplicates/two_dupe_three",
+        "/tmp/duplicates/two_dupe_two",
+        "/tmp/duplicates/one_dupe_one",
+        "/tmp/duplicates/one_dupe_two",
+    ]
+    assert res.analysis_results.hashused == True
+    assert res.analysis_results.duplicateHASHlisting == [
+        {
+            "checksum": "93816c18bc0146fb98362b9793abe0ee7b8a9530ba30f5af2ff2ca1b2182015b",
+            "count": 3,
+            "examples": [
+                "/tmp/duplicates/two_dupe_one",
+                "/tmp/duplicates/two_dupe_three",
+                "/tmp/duplicates/two_dupe_two",
+            ],
+        },
+        {
+            "checksum": "6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f",
+            "count": 2,
+            "examples": [
+                "/tmp/duplicates/one_dupe_one",
+                "/tmp/duplicates/one_dupe_two",
+            ],
+        },
+    ]
+    assert res.analysis_results.totalHASHduplicates == 5
+
+
+def test_name_issue_detection(tmp_path):
+    """Test name issue detection works as anticipated."""
+
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(DROID_CSV.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    assert res.analysis_results.badFileNames == [
+        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        u"File: 's�ster' contains, characters outside of ASCII range: '0xfffd, REPLACEMENT CHARACTER: �'\n",
+        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+    ]
+    assert res.analysis_results.badDirNames == [
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
     ]

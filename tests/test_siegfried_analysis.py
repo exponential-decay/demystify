@@ -12,7 +12,7 @@ else:
     PY3 = False
 
 
-SIEGFRIED_YAML = u"""---
+SF_YAML = u"""---
 siegfried   : 1.9.1
 scandate    : 2021-07-25T17:11:02+02:00
 signature   : default.sig
@@ -2587,7 +2587,7 @@ def test_run_siegfried_analysis(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SIEGFRIED_YAML.strip())
+    sf_yaml.write_text(SF_YAML.strip())
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -3013,6 +3013,15 @@ def test_run_siegfried_analysis(tmp_path):
         "x-fmt-401-container-signature-id-23125.sda",
         2560,
         443,
+    ]
+
+    res.analysis_results.containertypeslist.sort()
+    assert res.analysis_results.containertypeslist == [
+        ("arc",),
+        ("gz",),
+        ("tar",),
+        ("warc",),
+        ("zip",),
     ]
 
 
@@ -4360,6 +4369,9 @@ def test_sf_methods(tmp_path):
         13,
     ]
 
+    assert res.analysis_results.containertypeslist == [("zip",)]
+    # assert False
+
 
 SF_MULTI_YAML = u"""---
 siegfried   : 1.9.1
@@ -4503,7 +4515,7 @@ def test_bof_eof_extract(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SIEGFRIED_YAML.strip())
+    sf_yaml.write_text(SF_YAML.strip())
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4531,41 +4543,213 @@ def test_bof_eof_extract(tmp_path):
     ]
 
 
-def tests_remaining():
+SF_EMPTY_TEST = u"""---
+siegfried   : 1.9.1
+scandate    : 2022-01-08T18:09:07+01:00
+signature   : default.sig
+created     : 2020-10-06T19:13:40+02:00
+identifiers :
+  - name    : 'pronom'
+    details : 'DROID_SignatureFile_V97.xml; container-signature-20201001.xml'
+---
+filename : 'empty_file'
+filesize : 0
+modified : 2022-01-08T18:09:02+01:00
+errors   : 'empty source'
+matches  :
+  - ns      : 'pronom'
+    id      : 'UNKNOWN'
+    format  :
+    version :
+    mime    :
+    basis   :
+    warning : 'no match'
+"""
+
+
+def test_empty_files(tmp_path):
+    """Ensure that zero byte files are accounted for correctly."""
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(SF_EMPTY_TEST.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    assert res.analysis_results.zerobytecount == 1
+    assert res.analysis_results.zerobytelist == ["empty_file"]
+
+
+SF_DUPES_TEST = u"""---
+siegfried   : 1.9.1
+scandate    : 2022-01-08T19:11:23+01:00
+signature   : default.sig
+created     : 2020-10-06T19:13:40+02:00
+identifiers :
+  - name    : 'pronom'
+    details : 'DROID_SignatureFile_V97.xml; container-signature-20201001.xml'
+---
+filename : 'one_dupe_one'
+filesize : 5
+modified : 2022-01-08T19:10:40+01:00
+errors   :
+md5      : 6137cde4893c59f76f005a8123d8e8e6
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+---
+filename : 'one_dupe_two'
+filesize : 5
+modified : 2022-01-08T19:10:42+01:00
+errors   :
+md5      : 6137cde4893c59f76f005a8123d8e8e6
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+---
+filename : 'two_dupe_one'
+filesize : 9
+modified : 2022-01-08T19:10:56+01:00
+errors   :
+md5      : 64565b5c3348238da6cdc749a1bf2206
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+---
+filename : 'two_dupe_three'
+filesize : 9
+modified : 2022-01-08T19:11:05+01:00
+errors   :
+md5      : 64565b5c3348238da6cdc749a1bf2206
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+---
+filename : 'two_dupe_two'
+filesize : 9
+modified : 2022-01-08T19:11:14+01:00
+errors   :
+md5      : 64565b5c3348238da6cdc749a1bf2206
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'text match ASCII'
+    warning : 'match on text only; extension mismatch'
+"""
+
+
+def test_duplicates(tmp_path):
+    """Ensure that duplicates when checksums are enabled in Siegfried
+    are picked up as expected.
     """
 
-        self.idmethodFrequency = None
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(SF_DUPES_TEST.strip())
 
-        self.mimetypeFrequency = None
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
 
-        self.topPUIDList = None
-        self.topExtensionList = None
+    assert res.analysis_results.duplicatespathlist == [
+        "two_dupe_one",
+        "two_dupe_three",
+        "two_dupe_two",
+        "one_dupe_one",
+        "one_dupe_two",
+    ]
+    assert res.analysis_results.hashused == True
+    assert res.analysis_results.duplicateHASHlisting == [
+        {
+            "checksum": "64565b5c3348238da6cdc749a1bf2206",
+            "count": 3,
+            "examples": ["two_dupe_one", "two_dupe_three", "two_dupe_two"],
+        },
+        {
+            "checksum": "6137cde4893c59f76f005a8123d8e8e6",
+            "count": 2,
+            "examples": ["one_dupe_one", "one_dupe_two"],
+        },
+    ]
+    assert res.analysis_results.totalHASHduplicates == 5
 
-        self.totaluniquefilenames = 0
-        self.duplicatefnamelisting = []
-        self.duplicatefnamealtlisting = []
 
-        self.containertypeslist = None
+def test_name_issue_detection(tmp_path):
+    """Test name issue detection works as anticipated."""
 
-        self.duplicatespathlist = []
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(SF_YAML.strip())
 
-        self.zerobytecount = 0
-        self.zerobytelist = None
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
 
-        self.multiplespacelist = ""
-        self.badFileNames = None
-        self.badDirNames = None
-
-        # Rogue related values.
-        self.rogue_pronom_ns_id = None
-        self.rogue_all_paths = None
-        self.rogue_all_dirs = None
-
-        self.rogue_duplicates = []
-        self.rogue_identified_all = []
-        self.rogue_identified_pronom = []
-        self.rogue_extension_mismatches = []
-
-        self.rogue_file_name_paths = []  # non-ascii file names
-        self.rogue_dir_name_paths = []  # non-ascii dir names
-    """
+    assert res.analysis_results.badFileNames == [
+        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"File: 's?ster' contains, non-recommended character: '0x3f, QUESTION MARK: ?'\n",
+        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+    ]
+    assert res.analysis_results.badDirNames == [
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        u"Directory: 'fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+    ]
