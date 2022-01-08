@@ -453,15 +453,15 @@ def test_name_issue_detection(tmp_path):
     """Test name issue detection works as anticipated."""
 
     dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(DROID_CSV.strip())
+    droid_csv = dir_ / "droid_name_💜_test.csv"
+    droid_csv.write_text(DROID_CSV.strip())
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True)
+    res = analysis_from_csv(str(droid_csv), True)
 
     assert res.analysis_results.badFileNames == [
         u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
@@ -496,19 +496,24 @@ def test_name_issue_detection(tmp_path):
 def test_extension_tests(tmp_path):
     """Ensure that extension only matches work as anticipated."""
     dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(DROID_CSV.strip())
+    droid_csv = dir_ / "droid_ext_💜_test.csv"
+    droid_csv.write_text(DROID_CSV.strip())
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True)
+    res = analysis_from_csv(str(droid_csv), True)
 
     res.analysis_results.extensionOnlyIDFrequency.sort()
 
-    assert res.analysis_results.extensionOnlyIDFrequency == [('ns:pronom  fmt/1149', 1), ('ns:pronom  fmt/424', 1), ('ns:pronom  fmt/444', 1), ('ns:pronom  x-fmt/111', 16)]
+    assert res.analysis_results.extensionOnlyIDFrequency == [
+        ("ns:pronom  fmt/1149", 1),
+        ("ns:pronom  fmt/424", 1),
+        ("ns:pronom  fmt/444", 1),
+        ("ns:pronom  x-fmt/111", 16),
+    ]
     assert res.analysis_results.extensionOnlyIDList == [
         ("fmt/1149", "Markdown"),
         ("fmt/424", "OpenDocument Database Format"),
@@ -559,3 +564,49 @@ def test_extension_tests(tmp_path):
         ("erf", 1),
         ("7z", 1),
     ]
+
+
+DROID_CSV_MULTI = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+"31","2","file:/X:/digital/objects/39080024060920_1of2.wav","X:\\digital\\objects\39080024060920_1of2.wav","39080024060920_1of2.wav","Signature","Done","1575017726","File","wav","2017-12-23T21:04:35","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"32","2","file:/X:/digital/objects/39080024060920_2of2.wav","X:\\digital\\objects\39080024060920_2of2.wav","39080024060920_2of2.wav","Signature","Done","1602958526","File","wav","2017-12-23T21:04:35","true",,"3","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)","","fmt/134","audio/mpeg","MPEG 1/2 Audio Layer 3",""
+"29","2","file:/X:/digital/objects/39080024060938_1of2.wav","X:\\digital\\objects\39080024060938_1of2.wav","39080024060938_1of2.wav","Signature","Done","1599605894","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"28","2","file:/X:/digital/objects/39080024060938_2of2.wav","X:\\digital\\objects\39080024060938_2of2.wav","39080024060938_2of2.wav","Signature","Done","1606280216","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"27","2","file:/X:/digital/objects/39080024060946_1of2.wav","X:\\digital\\objects\39080024060946_1of2.wav","39080024060946_1of2.wav","Signature","Done","1600565990","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"25","2","file:/X:/digital/objects/39080024060946_2of2.wav","X:\\digital\\objects\39080024060946_2of2.wav","39080024060946_2of2.wav","Signature","Done","1605847400","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"33","2","file:/X:/digital/objects/39080024060953_1of2.wav","X:\\digital\\objects\39080024060953_1of2.wav","39080024060953_1of2.wav","Signature","Done","1594875284","File","wav","2017-12-23T21:16:46","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"30","2","file:/X:/digital/objects/39080024060953_2of2.wav","X:\\digital\\objects\39080024060953_2of2.wav","39080024060953_2of2.wav","Signature","Done","1601212508","File","wav","2017-12-23T21:16:46","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"95","66","file:/X:/digital/objects/access/39080024061027_1of2.mp3","X:\\digital\\objects\access\39080024061027_1of2.mp3","39080024061027_1of2.mp3","Signature","Done","41655895","File","mp3","2017-12-25T22:21:37","true",,"2","fmt/198","audio/mpeg","MPEG Audio Stream, Layer II","","fmt/134","audio/mpeg","MPEG 1/2 Audio Layer 3",""
+"""
+
+
+def test_sf_multiple_ids(tmp_path):
+    """Test the handling of multiple identification in DROID."""
+
+    dir_ = tmp_path
+    droid_csv = dir_ / "droid_💜_test_multi.csv"
+    droid_csv.write_text(DROID_CSV_MULTI.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(droid_csv), True)
+
+    assert res.analysis_results.multipleidentificationcount == 9
+    assert res.analysis_results.filecount == 9
+    assert res.analysis_results.rogue_multiple_identification_list == [
+        "X:\\digital\\objects\x039080024060920_2of2.wav",
+        "X:\\digital\\objects\x07ccess\x039080024061027_1of2.mp3",
+        "X:\\digital\\objects\x039080024060953_2of2.wav",
+        "X:\\digital\\objects\x039080024060953_1of2.wav",
+        "X:\\digital\\objects\x039080024060946_2of2.wav",
+        "X:\\digital\\objects\x039080024060946_1of2.wav",
+        "X:\\digital\\objects\x039080024060938_2of2.wav",
+        "X:\\digital\\objects\x039080024060938_1of2.wav",
+        "X:\\digital\\objects\x039080024060920_1of2.wav",
+    ]
+    assert res.analysis_results.namespacecount == 1
+    assert res.namespacedata[0][0] == 1
+    assert res.namespacedata[0][1] == "pronom"
+    assert res.namespacedata[0][2].endswith("droid_💜_test_multi.csv")

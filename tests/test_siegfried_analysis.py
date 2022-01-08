@@ -4473,7 +4473,7 @@ matches  :
 
 
 def test_sf_multiple_ids(tmp_path):
-    """pass"""
+    """Test the handling of multiple identification in Siegfried."""
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_multi.yaml"
@@ -4486,6 +4486,7 @@ def test_sf_multiple_ids(tmp_path):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True)
 
+    assert res.analysis_results.multipleidentificationcount == 1
     assert res.analysis_results.filecount == 2
     assert res.analysis_results.rogue_multiple_identification_list == ["628170.unk"]
     assert res.analysis_results.namespacecount == 4
@@ -4499,15 +4500,6 @@ def test_sf_multiple_ids(tmp_path):
             "fddXML.zip (2020-09-02, DROID_SignatureFile_V97.xml, container-signature-20201001.xml)",
         ),
     ]
-
-    assert res.analysis_results.bof_distance == [
-        "text/x-matlab",
-        "byte match at 0, 10 (signature 1/4)",
-        "628170.unk",
-        10173,
-        10,
-    ]
-    assert res.analysis_results.eof_distance == None
 
 
 def test_bof_eof_extract(tmp_path):
