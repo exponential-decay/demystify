@@ -189,7 +189,9 @@ class AnalysisQueries:
                                        AND FILEDATA.EXT!=''
                                        GROUP BY FILEDATA.EXT ORDER BY TOTAL DESC"""
 
+    # TODO: REMOVE THIS? IT DOESN'T SEEM TO BE USED...
     # MULTIPLE ID FOR FILES GREATER THAN ZERO BYTES
+    '''
     SELECT_MULTIPLE_ID_PATHS = """SELECT FILEDATA.FILE_PATH
                                  FROM IDRESULTS
                                  JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
@@ -197,6 +199,7 @@ class AnalysisQueries:
                                  WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')
                                  AND (IDDATA.FORMAT_COUNT > 1)
                                  AND (FILEDATA.SIZE > 0)"""
+    '''
 
     SELECT_COUNT_DUPLICATE_CHECKSUMS = """SELECT FILEDATA.HASH, COUNT(*) AS TOTAL
                                           FROM FILEDATA
@@ -222,26 +225,34 @@ class AnalysisQueries:
         frequency is 3.
         """
         if paths is False:
-            body = """SELECT count(FREQUENCY)
-                   FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
-                   FROM IDRESULTS
-                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                   WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
-                   GROUP BY FILEDATA.FILE_ID
-                   ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
-                   WHERE FREQUENCY > """
-            return "{}{}".format(body, nscount)
-        body = """SELECT PATH
-               FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY
-               FROM IDRESULTS
-               JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-               JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-               WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')
-               GROUP BY FILEDATA.FILE_ID
-               ORDER BY COUNT(FILEDATA.FILE_ID) DESC)
-               WHERE FREQUENCY > """
-        return "{}{}".format(body, nscount)
+            body = (
+                "SELECT count(FREQUENCY)\n"
+                "FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
+                "FROM IDRESULTS\n"
+                "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
+                "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+                "WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')\n"
+                "GROUP BY FILEDATA.FILE_ID\n"
+                "ORDER BY COUNT(FILEDATA.FILE_ID) DESC)\n"
+                "WHERE FREQUENCY > "
+            )
+            query = "{}{}".format(body, nscount)
+            return query
+        body = (
+            "SELECT PATH\n"
+            "FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
+            "FROM IDRESULTS\n"
+            "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+            "WHERE (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')\n"
+            "GROUP BY FILEDATA.FILE_ID\n"
+            "ORDER BY COUNT(FILEDATA.FILE_ID) DESC)\n"
+            "WHERE FREQUENCY > "
+        )
+        query = "{}{}".format(body, nscount)
+        print(query)
+        # assert False
+        return query
 
     def list_duplicate_paths(self, checksum):
         return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(
@@ -416,5 +427,5 @@ class AnalysisQueries:
 
     # ERRORS, TODO: Place somewhere else?
     ERROR_NOHASH = (
-        "Unable to detect duplicates: No HASH algorithm used by identification tool."
+        "Unable to detect duplicates: No HASH algorithm used by identification tool"
     )
