@@ -8,16 +8,11 @@ from libs.version import AnalysisVersion
 class AnalysisResults:
     def __init__(self):
 
-        # version
         self.version = 0
-
-        # filename
         self.filename = ""
-
-        # tooltype
         self.tooltype = None
 
-        # denylist
+        # Denylist.
         self.denylist = None
         self.denylist_filenames = []
         self.denylist_directories = []
@@ -44,7 +39,7 @@ class AnalysisResults:
         # Binary or Container IDs.
         self.binaryidentifiers = None
 
-        # SF ONLY
+        # Siegfried only.
         self.xmlidfilecount = 0
         self.textidfilecount = 0
         self.filenameidfilecount = 0
@@ -66,7 +61,7 @@ class AnalysisResults:
         self.text_identifiers = None
         self.filename_identifiers = None
 
-        # SF ONLY
+        # Siegfried only.
         self.extmismatchCount = 0
 
         self.unidentifiedPercentage = 0
@@ -80,7 +75,6 @@ class AnalysisResults:
         self.extensionOnlyIDFrequency = 0
         self.extensionOnlyIDList = []
 
-        # TODO: Turn lists into lists? Formatting at end..?
         self.uniqueExtensionsInCollectionList = None
         self.frequencyOfAllExtensions = None
 
