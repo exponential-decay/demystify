@@ -386,12 +386,6 @@ class DROIDAnalysisTextOutput:
 
         self.printFormattedText(
             self.__output_list__(
-                self.STRINGS.SUMMARY_MULTIPLE_SPACES,
-                len(self.analysis_results.multiplespacelist),
-            )
-        )
-        self.printFormattedText(
-            self.__output_list__(
                 self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED,
                 self.analysis_results.identifiedPercentage,
             )

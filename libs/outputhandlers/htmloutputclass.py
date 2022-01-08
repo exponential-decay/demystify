@@ -703,13 +703,6 @@ class DROIDAnalysisHTMLOutput:
 
         self.printFormattedText(
             self.__make_list_item__(
-                self.STRINGS.SUMMARY_DESC_MULTIPLE_SPACES,
-                self.STRINGS.SUMMARY_MULTIPLE_SPACES,
-                len(self.analysis_results.multiplespacelist),
-            )
-        )
-        self.printFormattedText(
-            self.__make_list_item__(
                 self.STRINGS.SUMMARY_DESC_PERCENTAGE_IDENTIFIED,
                 self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED,
                 self.analysis_results.identifiedPercentage,
