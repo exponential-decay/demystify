@@ -82,13 +82,6 @@ class AnalysisResults:
 
         self.mimetypeFrequency = None
 
-        self.topPUIDList = None
-        self.topExtensionList = None
-
-        self.totaluniquefilenames = 0
-        self.duplicatefnamelisting = []
-        self.duplicatefnamealtlisting = []
-
         self.containertypeslist = None
 
         self.duplicatespathlist = []
@@ -96,7 +89,6 @@ class AnalysisResults:
         self.zerobytecount = 0
         self.zerobytelist = None
 
-        self.multiplespacelist = ""
         self.badFileNames = None
         self.badDirNames = None
 
