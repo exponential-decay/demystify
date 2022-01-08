@@ -491,3 +491,71 @@ def test_name_issue_detection(tmp_path):
         u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
         u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
     ]
+
+
+def test_extension_tests(tmp_path):
+    """Ensure that extension only matches work as anticipated."""
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_test.yaml"
+    sf_yaml.write_text(DROID_CSV.strip())
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True)
+
+    res.analysis_results.extensionOnlyIDFrequency.sort()
+
+    assert res.analysis_results.extensionOnlyIDFrequency == [('ns:pronom  fmt/1149', 1), ('ns:pronom  fmt/424', 1), ('ns:pronom  fmt/444', 1), ('ns:pronom  x-fmt/111', 16)]
+    assert res.analysis_results.extensionOnlyIDList == [
+        ("fmt/1149", "Markdown"),
+        ("fmt/424", "OpenDocument Database Format"),
+        ("fmt/444", "OpenDocument Database Format"),
+        ("x-fmt/111", "Plain Text File"),
+    ]
+    assert res.analysis_results.uniqueExtensionsInCollectionList == [
+        ("gz",),
+        ("zip",),
+        ("7z",),
+        ("xz",),
+        ("warc",),
+        ("arc",),
+        ("docx",),
+        ("vsd",),
+        ("potx",),
+        ("dpp",),
+        ("kra",),
+        ("sda",),
+        ("ppt",),
+        ("txt",),
+        ("mov",),
+        ("odb",),
+        ("erf",),
+        ("md",),
+        ("format",),
+        ("tar",),
+    ]
+    assert res.analysis_results.frequencyOfAllExtensions == [
+        ("mov", 25),
+        ("txt", 16),
+        ("format", 5),
+        ("zip", 2),
+        ("warc", 2),
+        ("vsd", 2),
+        ("sda", 2),
+        ("ppt", 2),
+        ("potx", 2),
+        ("kra", 2),
+        ("gz", 2),
+        ("dpp", 2),
+        ("docx", 2),
+        ("arc", 2),
+        ("xz", 1),
+        ("tar", 1),
+        ("odb", 1),
+        ("md", 1),
+        ("erf", 1),
+        ("7z", 1),
+    ]

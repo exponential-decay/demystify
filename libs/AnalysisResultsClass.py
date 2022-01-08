@@ -39,7 +39,7 @@ class AnalysisResults:
         # Binary or Container IDs.
         self.binaryidentifiers = None
 
-        # Siegfried only.
+        # Siegfried only. Rely on capabilities in Siegfried only.
         self.xmlidfilecount = 0
         self.textidfilecount = 0
         self.filenameidfilecount = 0
@@ -61,7 +61,8 @@ class AnalysisResults:
         self.text_identifiers = None
         self.filename_identifiers = None
 
-        # Siegfried only.
+        # Not Siegfried only. Additional statistics that work across
+        # identifiers.
         self.extmismatchCount = 0
 
         self.unidentifiedPercentage = 0
