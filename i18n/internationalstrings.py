@@ -37,7 +37,6 @@ class AnalysisStringsEN:
     SUMMARY_UNIQUE_EXTENSIONS = "Total Unique Extensions Across Accession/Extract"
     SUMMARY_ZERO_BYTE = "Total Zero-byte Files in Accession/Extract"
     SUMMARY_IDENTICAL_FILES = "Total Files with Identical Content (Checksum Value)"
-    SUMMARY_MULTIPLE_SPACES = "Total Files with Multiple Contiguous Space Characters"
     SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
     SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
 
@@ -331,11 +330,6 @@ class AnalysisStringsEN:
     )
 
     SUMMARY_DESC_IDENTICAL_FILES = "Total number of files across the accession/extract that are identical byte-for-byte."
-
-    SUMMARY_DESC_MULTIPLE_SPACES = (
-        "Number of filenames that contain more than one space in a row, these filenames may cause "
-        "some problems with some systems and may require pre-conditioning."
-    )
 
     SUMMARY_DESC_PERCENTAGE_IDENTIFIED = (
         "Percentage of files with formats that are positively identified by DROID, pending other processes "
