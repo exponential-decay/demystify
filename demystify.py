@@ -87,12 +87,10 @@ def _handle_denylist_config():
     return: List containing denylist items (List)
     """
     DENYLIST = "denylist.cfg"
-
     if os.path.isfile(DENYLIST):
         config = ConfigParser.RawConfigParser()
         config.read(DENYLIST)
         denylist = HandleDenylist().denylist(config)
-
         global rogueconfig
         rogueconfig = config
         return denylist
@@ -131,7 +129,7 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
             print(htmloutput.printHTMLResults().encode("utf8"))
 
 
-def analysis_from_database(database_path, denylist=None, rogues=None, heroes=None):
+def analysis_from_database(database_path, denylist=None, rogues=False, heroes=False):
     """Analysis of format identification report from existing database.
 
     :param database_path: path to sqlite database containing analysis
@@ -142,12 +140,13 @@ def analysis_from_database(database_path, denylist=None, rogues=None, heroes=Non
 
     :return: analysis_results (AnalysisResults)
     """
+    logging.info("Analysis from database...")
     try:
         analysis = DemystifyAnalysis(database_path, get_config(), denylist)
     except AnalysisError as err:
         raise AnalysisError(err)
     rogue_analysis = False
-    if rogues is not None or heroes is not None:
+    if rogues is not False or heroes is not False:
         rogue_analysis = True
     analysis.runanalysis(rogue_analysis)
     return analysis
@@ -163,9 +162,9 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     :param denylist: information to filter from denylist (Dict)
     :param rogues: flag to output rogues (Boolean)
     :param heroes: flag to output heroes (Boolean)
-
     :return: None (Nonetype)
     """
+    logging.info("Generating database from input report...")
     database_path = sqlitefid.identify_and_process_input(format_report)
     logging.info("Database path: %s", database_path)
     if database_path is None:
@@ -241,7 +240,7 @@ def main():
     if analysis:
         handle_output(analysis.analysis_results, args.txt, args.rogues, args.heroes)
         output_time(start_time)
-    logging.info("Nothing else to do")
+    logging.info("Demystify: ...analysis complete")
 
 
 if __name__ == "__main__":

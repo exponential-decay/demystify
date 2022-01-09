@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 
-import sys
+import logging
 
 from libs.HandleDenylistClass import HandleDenylist
 
@@ -77,17 +77,17 @@ class rogueoutputclass:
                         HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_EXT
                     ).lower()
 
-    def outputlist(self, pathlist):
-        for x in pathlist:
-            if x != "no value":  # todo: no values in duplicates, why?
-                sys.stdout.write(str(x) + "\n")
+    def outputlist(self, path_list):
+        for path in path_list:
+            if path == "no value" or path == "" or path == None:
+                continue
+            print("{}".format(path))
 
     def rogueorhero(self, pathlist):
         if pathlist is not False and pathlist is not None:
             self.roguelist = self.roguelist + pathlist
 
     def printTextResults(self):
-
         if self.dupes == "true":
             if self.analysis_results.hashused is True:
                 self.rogueorhero(self.analysis_results.rogue_duplicates)
@@ -103,7 +103,6 @@ class rogueoutputclass:
                 self.rogueorhero(
                     self.analysis_results.rogue_multiple_identification_list
                 )
-
         # PRONOM ONLY UNIDENTIFIED
         # output all unidentified files, but also, only when not using DROID output
         if self.analysis_results.tooltype != "droid":
@@ -117,7 +116,6 @@ class rogueoutputclass:
         else:
             if self.pro == "true":
                 self.rogueorhero(self.analysis_results.rogue_identified_pronom)
-
         if self.fnames == "true":
             self.rogueorhero(self.analysis_results.rogue_file_name_paths)
         if self.dirs == "true":
@@ -125,56 +123,40 @@ class rogueoutputclass:
 
         if self.denylist == "true":
             self.rogueorhero(self.analysis_results.rogue_denylist)
-
         number_allfiles = len(set(self.analysis_results.rogue_all_paths))
         number_alldirs = len(set(self.analysis_results.rogue_all_dirs))
-
-        # Sets make it impossible to duplicate output... Also dealing with paths not files
-        # so the numbers will add up slightly strangely if we don't think about folders too...
         if self.heroes is True:
-            hfiles = set(self.analysis_results.rogue_all_paths) - set(self.roguelist)
-            hfolders = set(self.analysis_results.rogue_all_dirs) - set(self.roguelist)
-            hset = list(hfiles) + list(hfolders)
-
-            foldercount = len(hfolders)
-            filecount = len(hfiles)
-
-            self.outputlist(hset)
-            sys.stderr.write(
-                "\n"
-                + str(filecount)
-                + " out of ("
-                + str(number_allfiles)
-                + ") files output in rogues gallery."
+            hero_files = set(self.analysis_results.rogue_all_paths) - set(
+                self.roguelist
             )
-            sys.stderr.write(
-                "\n"
-                + str(foldercount)
-                + " out of ("
-                + str(number_alldirs)
-                + ") directories output in rogues gallery."
-                + "\n"
+            hero_folders = set(self.analysis_results.rogue_all_dirs) - set(
+                self.roguelist
             )
-
-        else:
-            rset = set(self.roguelist)
-            nofolders = len(rset - set(self.analysis_results.rogue_all_dirs))
-            foldercount = abs(len(rset) - nofolders)
-            filecount = len(rset) - foldercount
-
-            self.outputlist(rset)
-            sys.stderr.write(
-                "\n"
-                + str(filecount)
-                + " out of ("
-                + str(number_allfiles)
-                + ") files output in rogues gallery."
+            hero_set = list(hero_files) + list(hero_folders)
+            foldercount = len(hero_folders)
+            filecount = len(hero_files)
+            self.outputlist(hero_set)
+            logging.info(
+                "%s out of (%s) files output in heroes gallery",
+                filecount,
+                number_allfiles,
             )
-            sys.stderr.write(
-                "\n"
-                + str(foldercount)
-                + " out of ("
-                + str(number_alldirs)
-                + ") directories output in rogues gallery."
-                + "\n"
+            logging.info(
+                "%s out of (%s) directories output in heroes gallery",
+                foldercount,
+                number_alldirs,
             )
+            return
+        rogue_set = set(self.roguelist)
+        nofolders = len(rogue_set - set(self.analysis_results.rogue_all_dirs))
+        foldercount = abs(len(rogue_set) - nofolders)
+        filecount = len(rogue_set) - foldercount
+        self.outputlist(rogue_set)
+        logging.info(
+            "%s out of (%s) files output in rogues gallery", filecount, number_allfiles
+        )
+        logging.info(
+            "%s out of (%s) directories output in rogues gallery",
+            foldercount,
+            number_alldirs,
+        )

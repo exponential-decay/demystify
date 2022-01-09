@@ -54,9 +54,12 @@ class DemystifyAnalysis:
 
     def __init__(self, database_path=None, config=False, denylist=None):
         """Constructor for DemystifyAnalysis object."""
-
-        logging.error("Analysis init: %s %s %s", database_path, config, denylist)
-
+        logging.debug(
+            "Analysis __init__(): database_path: %s config: %s denylist: %s",
+            database_path,
+            config,
+            denylist,
+        )
         if database_path is None:
             raise AnalysisError(
                 "Cannot initialize analysis class without a database: {}".format(
@@ -988,52 +991,73 @@ class DemystifyAnalysis:
                 )
 
             if self.rogueanalysis:
-
-                rq = RogueQueries()
-                self.analysis_results.rogue_all_paths = self._querydb(
-                    rq.SELECT_ALL_FILEPATHS, False, False, True
-                )
-                self.analysis_results.rogue_all_dirs = self._querydb(
-                    rq.SELECT_ALL_FOLDERS, False, False, True
-                )
-
-                self.analysis_results.rogue_extension_mismatches = self._querydb(
-                    rq.SELECT_EXTENSION_MISMATCHES, False, False, True
-                )
-
-                # NEED THIS FOR DROID TOOL ONLY?
-                if self.analysis_results.tooltype == "droid":
-                    self.pronom_ns_id = 1
-
-                if self.pronom_ns_id is not None:
-                    self.analysis_results.rogue_pronom_ns_id = self.pronom_ns_id
-                    self.analysis_results.rogue_identified_pronom = self._querydb(
-                        rq.get_pronom_identified_files(self.pronom_ns_id),
-                        False,
-                        False,
-                        True,
-                    )
-                else:
-                    self.analysis_results.rogue_identified_all = self._querydb(
-                        rq.get_all_non_ids(self.analysis_results.rogue_identified_all),
-                        False,
-                        False,
-                        True,
-                    )
-
-                self.analysis_results.rogue_file_name_paths = self._querydb(
-                    rq.get_rogue_name_paths(self.rogue_names), False, False, True
-                )
-
-                if len(self.rogue_dirs) > 0:
-                    self.analysis_results.rogue_dir_name_paths = self._querydb(
-                        rq.get_rogue_dir_paths(self.rogue_dirs), False, False, True
-                    )
+                self._handle_rogue_analysis()
 
         return self.analysis_results
 
+    def _handle_rogue_analysis(self):
+        """Gather all the information needed to output a rogues or
+        heroes listing as requested by the caller.
+        """
+        rogue_queries = RogueQueries()
+        self.analysis_results.rogue_all_paths = self._querydb(
+            rogue_queries.SELECT_ALL_FILEPATHS,
+            fetchone=False,
+            numberquery=False,
+            tolist=True,
+        )
+        self.analysis_results.rogue_all_dirs = self._querydb(
+            rogue_queries.SELECT_ALL_FOLDERS,
+            fetchone=False,
+            numberquery=False,
+            tolist=True,
+        )
+        self.analysis_results.rogue_extension_mismatches = self._querydb(
+            rogue_queries.SELECT_EXTENSION_MISMATCHES,
+            fetchone=False,
+            numberquery=False,
+            tolist=True,
+        )
+        # TODO: This piece of code is either too complex, or not documented
+        # well enough. Handling of unidentified files gets difficult when not
+        # using PRONOM/DROID anyway. And get more complicated when using more
+        # than one namespace. I'd like to see this refined, made easier to
+        # read.
+        if self.analysis_results.tooltype == "droid":
+            self.pronom_ns_id = 1
+        if self.pronom_ns_id is not None:
+            self.analysis_results.rogue_pronom_ns_id = self.pronom_ns_id
+            self.analysis_results.rogue_identified_pronom = self._querydb(
+                rogue_queries.get_pronom_identified_files(self.pronom_ns_id),
+                fetchone=False,
+                numberquery=False,
+                tolist=True,
+            )
+        else:
+            self.analysis_results.rogue_identified_all = self._querydb(
+                rogue_queries.get_all_non_ids(
+                    self.analysis_results.rogue_identified_all
+                ),
+                fetchone=False,
+                numberquery=False,
+                tolist=True,
+            )
+        self.analysis_results.rogue_file_name_paths = self._querydb(
+            rogue_queries.get_rogue_name_paths(self.rogue_names),
+            fetchone=False,
+            numberquery=False,
+            tolist=True,
+        )
+        if len(self.rogue_dirs) > 0:
+            self.analysis_results.rogue_dir_name_paths = self._querydb(
+                rogue_queries.get_rogue_dir_paths(self.rogue_dirs),
+                fetchone=False,
+                numberquery=False,
+                tolist=True,
+            )
+
     def get_namespace_data_list(self):
-        """..."""
+        """Retrieve information about namespaces."""
         nsdatalist = []
         for ns in self.namespacedata:
             nsdict = {}
@@ -1074,6 +1098,6 @@ class DemystifyAnalysis:
             object can be used to then output different serialization
             types.
         """
-        logging.info("Running analysis, rogues: %s", analyze_rogues)
+        logging.info("Running analysis, Rogues or Heroes: %s", analyze_rogues)
         self.rogueanalysis = analyze_rogues
         return self.queryDB()
