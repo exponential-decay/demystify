@@ -22,7 +22,8 @@ if sys.version_info[0] == 3:
 else:
     PY3 = False
 
-DENYLIST_DENY = u"""[denylist]
+
+DENYLIST_ROGUES = u"""[denylist]
 
 ids=fmt/61,fmt/480
 
@@ -31,37 +32,17 @@ filenames='.DS_Store','Thumbs.db'
 directorynames='Untitled Folder','New Folder'
 
 fileextensions='.ini','.cfg'
-"""
-
-DENYLIST_DENY_TIKA = u"""[denylist]
-
-ids='application/vnd.ms-excel',text/x-ini
-
-filenames='.DS_Store','Thumbs.db'
-
-directorynames='Untitled Folder','New Folder'
-
-fileextensions='.ini','.cfg'
-"""
-
-
-DENYLIST_ROGUES = u"""[denylist]
-
-ids=fmt/111,fmt/682,fmt/394,x-fmt/409,x-fmt/410,x-fmt/411,fmt/688,fmt/689,fmt/690,fmt/691,fmt/468,fmt/473,fmt/474,fmt/503,fmt/523,fmt/819,x-fmt/157,x-fmt/418,x-fmt/419,x-fmt/428,x-fmt/429,x-fmt/453,application/x-sh,application/vnd.ms-tnef,application/x-stuffit,application/x-pak,application/x-mswinurl,application/x-executable,x-fmt/263,x-fmt/266,fmt/583,fmt/524
-
-filenames='.DS_Store','Untitled Document','desktop.ini','(copy','ZbThumbnail.info','lorem','New Microsoft Word Document','Bin.dat','Thumbs.db', 'vitae', 'Appointments', 'CV', 'Application', 'Resume', 'Appointment', 'Test', 'list', 'member', 'people', 'address', 'phone'
-
-directorynames='Untitled Folder','New Folder','(copy','.git','lorem'
-
-fileextensions='.ini','.exe','.cfg','.dll','.lnk','.tmp'
 
 [rogues]
 
-; Output duplicate files.
-duplicatechecksums=False
+; Output unidentified files.
+unidentified=True
 
 ; Output PRONOM only identification.
 pronomonly=True
+
+; Output duplicate files.
+duplicatechecksums=True
 
 ; Output denylist.
 denylist=True
@@ -76,10 +57,10 @@ nonasciidirs=True
 zerobytefiles=True
 
 ; Output multiple IDs.
-multiple-ids=False
+multipleids=True
 
 ; Output extension mismatches.
-extension-mismatches=True
+extensionmismatches=True
 """
 
 """Example layout for denylist.
@@ -101,12 +82,15 @@ extension-mismatches=True
     │   └── plain_text
     └── xlsx.xlsx
 
+For the rogues testing, the two lists for Siegfried and DROID are
+enhanced with data from their respective integration tests.
+
 """
 
 DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/tmp/denylist/","/tmp/denylist","denylist","","Done","","Folder","","2022-01-09T15:27:07","false","","","","","",""
-"8","2","file:/tmp/denylist/.DS_Store","/tmp/denylist/.DS_Store",".DS_Store","","Done","10","File","","2022-01-09T15:22:01","false","cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e","0","","","",""
-"3","2","file:/tmp/denylist/.git/","/tmp/denylist/.git",".git","","Done","","Folder","","2022-01-09T15:26:55","false","","","","","",""
+"8","2","file:/tmp/denylist/.DS_Store","/tmp/denylist/.DS_Store",",DS_Store","","Done","10","File","","2022-01-09T15:22:01","false","cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e","0","","","",""
+"3","2","file:/tmp/denylist/.git/","/tmp/denylist/.git",",git","","Done","","Folder","","2022-01-09T15:26:55","false","","","","","",""
 "13","3","file:/tmp/denylist/.git/commit_data","/tmp/denylist/.git/commit_data","commit_data","","Done","5","File","","2022-01-09T15:26:55","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
 "4","2","file:/tmp/denylist/New%20Folder/","/tmp/denylist/New Folder","New Folder","","Done","","Folder","","2022-01-09T15:27:27","false","","","","","",""
 "10","4","file:/tmp/denylist/New%20Folder/plain_text","/tmp/denylist/New Folder/plain_text","plain_text","","Done","5","File","","2022-01-09T15:27:27","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
@@ -120,6 +104,18 @@ DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZ
 "12","2","file:/tmp/denylist/pdf.pdf","/tmp/denylist/pdf.pdf","pdf.pdf","Signature","Done","15078","File","pdf","2022-01-09T15:26:09","false","06ba5beefb64e6647da2137492f615419739d549d7cc0b3f550464803b694559","1","fmt/480","application/pdf","Acrobat PDF/A - Portable Document Format","3b"
 "6","2","file:/tmp/denylist/plain_text","/tmp/denylist/plain_text","plain_text","","Done","5","File","","2022-01-09T15:21:02","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
 "16","2","file:/tmp/denylist/xlsx.xlsx","/tmp/denylist/xlsx.xlsx","xlsx.xlsx","Container","Done","4349","File","xlsx","2022-01-09T15:25:56","false","790e07bca72cffbb60ea80beb3e8d023f30ced0ce920d8b9d4520019521a2120","1","fmt/214","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","Microsoft Excel for Windows","2007 onwards"
+"31","2","file:/X:/digital/objects/39080024060920_1of2.wav","X:\\digital\\objects\39080024060920_1of2.wav","39080024060920_1of2.wav","Signature","Done","1575017726","File","wav","2017-12-23T21:04:35","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"32","2","file:/X:/digital/objects/39080024060920_2of2.wav","X:\\digital\\objects\39080024060920_2of2.wav","39080024060920_2of2.wav","Signature","Done","1602958526","File","wav","2017-12-23T21:04:35","true",,"3","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)","","fmt/134","audio/mpeg","MPEG 1/2 Audio Layer 3",""
+"29","2","file:/X:/digital/objects/39080024060938_1of2.wav","X:\\digital\\objects\39080024060938_1of2.wav","39080024060938_1of2.wav","Signature","Done","1599605894","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"28","2","file:/X:/digital/objects/39080024060938_2of2.wav","X:\\digital\\objects\39080024060938_2of2.wav","39080024060938_2of2.wav","Signature","Done","1606280216","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"27","2","file:/X:/digital/objects/39080024060946_1of2.wav","X:\\digital\\objects\39080024060946_1of2.wav","39080024060946_1of2.wav","Signature","Done","1600565990","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"25","2","file:/X:/digital/objects/39080024060946_2of2.wav","X:\\digital\\objects\39080024060946_2of2.wav","39080024060946_2of2.wav","Signature","Done","1605847400","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"33","2","file:/X:/digital/objects/39080024060953_1of2.wav","X:\\digital\\objects\39080024060953_1of2.wav","39080024060953_1of2.wav","Signature","Done","1594875284","File","wav","2017-12-23T21:16:46","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"30","2","file:/X:/digital/objects/39080024060953_2of2.wav","X:\\digital\\objects\39080024060953_2of2.wav","39080024060953_2of2.wav","Signature","Done","1601212508","File","wav","2017-12-23T21:16:46","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
+"95","66","file:/X:/digital/objects/access/39080024061027_1of2.mp3","X:\\digital\\objects\access\39080024061027_1of2.mp3","39080024061027_1of2.mp3","Signature","Done","41655895","File","mp3","2017-12-25T22:21:37","true",,"2","fmt/198","audio/mpeg","MPEG Audio Stream, Layer II","","fmt/134","audio/mpeg","MPEG 1/2 Audio Layer 3",""
+"70","68","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-%E2%9D%A4%F0%9F%92%96%F0%9F%92%99%F0%9F%92%9A%F0%9F%92%9B%F0%9F%92%9C%F0%9F%92%9D/","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝","hearts-❤💖💙💚💛💜💝","","Done","","Folder","","2020-06-22T19:38:22","false","","","","","",""
+"81","56","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-%E2%99%95%E2%99%96%E2%99%97%E2%99%98%E2%99%99%E2%99%9A%E2%99%9B%E2%99%9C%E2%99%9D%E2%99%9E%E2%99%9F.txt","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt","chess-♕♖♗♘♙♚♛♜♝♞♟.txt","Extension","Done","54","File","txt","2020-06-22T19:38:21","false","1766219eb64113604a1fe2c003b10c8258bb1cbb","1","x-fmt/111","text/plain","Plain Text File",""
+"62","60","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/caf%C3%A9/midnight/","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/","café","","Done","","Folder","","2020-06-22T19:38:22","false","","","","","",""
 """
 
 
@@ -128,77 +124,26 @@ def denylist(tmp_path):
     """Return a processed Denylist to provide to Demystify analysis."""
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_DENY.strip())
+    denylist.write_text(DENYLIST_ROGUES.strip())
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
     return HandleDenylist().denylist(config)
 
 
 @pytest.fixture(scope="function")
-def denylist_tika(tmp_path):
-    """Return a processed Denylist to provide to Demystify analysis."""
+def rogueconfig(tmp_path):
+    """Read Rogues configuration and supply it to a function as a
+    test fixture.
+    """
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_DENY_TIKA.strip())
+    denylist.write_text(DENYLIST_ROGUES.strip())
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
-    return HandleDenylist().denylist(config)
+    return config
 
 
-def test_denylist_droid(tmp_path, denylist):
-    """Test basic configuration of Denylist and rogues here."""
-
-    dir_ = tmp_path
-    droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
-
-    assert denylist == {
-        "IDS": ["fmt/61", "fmt/480"],
-        "FILENAMES": [".DS_Store", "Thumbs.db"],
-        "DIRECTORIES": ["Untitled Folder", "New Folder"],
-        "EXTENSIONS": [".ini", ".cfg"],
-    }
-
-    # Analysis from CSV will currently read the results from the CSV
-    # above and output an on-disk sqlite database at tmp_path. This
-    # works perfectly for us. In future, if we need to create an
-    # in-memory database for any reason we can but it will take some
-    # further refactoring.
-    res = analysis_from_csv(str(droid_csv), True, denylist, False, False)
-
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
-    res.analysis_results.denylist_filenames.sort()
-    assert res.analysis_results.denylist_filenames == [
-        (".DS_Store", 1),
-        ("Thumbs.db", 1),
-    ]
-    res.analysis_results.denylist_directories.sort()
-    assert res.analysis_results.denylist_directories == [
-        ("New Folder", 1),
-        ("Untitled Folder", 1),
-    ]
-    res.analysis_results.denylist_ids.sort()
-    assert res.analysis_results.denylist_ids == [
-        ("fmt/480: Acrobat PDF/A - Portable Document Format 3b", 1),
-        ("fmt/61: Microsoft Excel 97 Workbook (xls) 8", 1),
-    ]
-    res.analysis_results.denylist_exts.sort()
-    assert res.analysis_results.denylist_exts == [("cfg", 1), ("ini", 1)]
-    res.analysis_results.rogue_denylist.sort()
-    assert res.analysis_results.rogue_denylist == [
-        "/tmp/denylist/.DS_Store",
-        "/tmp/denylist/New Folder",
-        "/tmp/denylist/Thumbs.db",
-        "/tmp/denylist/Untitled Folder",
-        "/tmp/denylist/config.cfg",
-        "/tmp/denylist/config.ini",
-        "/tmp/denylist/ole2.xls",
-        "/tmp/denylist/pdf.pdf",
-    ]
-
-
-SF_DENY_TEST = u"""---
+SF_ROGUE_TEST = u"""---
 siegfried   : 1.9.1
 scandate    : 2022-01-09T16:44:18+01:00
 signature   : default.sig
@@ -374,280 +319,115 @@ matches  :
     mime    : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     basis   : 'extension match xlsx; container name [Content_Types].xml with byte match at 636, 88 (signature 1/3)'
     warning :
-"""
-
-
-def test_denylist_sf(tmp_path, denylist):
-    """..."""
-
-    dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST.strip())
-
-    # Analysis from YAML will currently read the results from the YAML
-    # above and output an on-disk sqlite database at tmp_path. This
-    # works perfectly for us. In future, if we need to create an
-    # in-memory database for any reason we can but it will take some
-    # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True, denylist, False, False)
-
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
-    res.analysis_results.denylist_filenames.sort()
-    assert res.analysis_results.denylist_filenames == [
-        (".DS_Store", 1),
-        ("Thumbs.db", 1),
-    ]
-    res.analysis_results.denylist_directories.sort()
-    assert res.analysis_results.denylist_directories == [
-        ("New Folder", 1),
-        ("Untitled Folder", 1),
-    ]
-    res.analysis_results.denylist_ids.sort()
-    assert res.analysis_results.denylist_ids == [
-        ("fmt/480: Acrobat PDF/A - Portable Document Format 3b", 1)
-    ]
-    res.analysis_results.denylist_exts.sort()
-    assert res.analysis_results.denylist_exts == [("cfg", 1), ("ini", 1)]
-    res.analysis_results.rogue_denylist.sort()
-    assert res.analysis_results.rogue_denylist == [
-        "denylist/.DS_Store",
-        "denylist/New Folder",
-        "denylist/Thumbs.db",
-        "denylist/Untitled Folder",
-        "denylist/config.cfg",
-        "denylist/config.ini",
-        "denylist/pdf.pdf",
-    ]
-
-
-SF_DENY_TEST_TIKA = u"""---
-siegfried   : 1.9.1
-scandate    : 2022-01-09T16:42:53+01:00
-signature   : default.sig
-created     : 2020-10-06T19:14:01+02:00
-identifiers :
-  - name    : 'tika'
-    details : 'tika-mimetypes.xml (1.24, 2020-04-17)'
 ---
-filename : 'denylist/.DS_Store'
-filesize : 10
-modified : 2022-01-09T15:22:01+01:00
+filename : 'fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt'
+filesize : 54
+modified : 2020-06-22T19:38:21+02:00
 errors   :
-md5      : 952fd44d14cee87882239b707231609d
+md5      : 0653e4959fa11f1ffce974b092efdd00
 matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
     mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/.git/commit_data'
-filesize : 5
-modified : 2022-01-09T15:26:55+01:00
-errors   :
-md5      : 6137cde4893c59f76f005a8123d8e8e6
-matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
-    mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/New Folder/plain_text'
-filesize : 5
-modified : 2022-01-09T15:27:27+01:00
-errors   :
-md5      : 6137cde4893c59f76f005a8123d8e8e6
-matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
-    mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/Thumbs.db'
-filesize : 10
-modified : 2022-01-09T15:21:46+01:00
-errors   :
-md5      : 0103e4d92d15e0ed2e630ff1c1a4d539
-matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
-    mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/Untitled Folder/plain_text'
-filesize : 5
-modified : 2022-01-09T15:22:38+01:00
-errors   :
-md5      : 6137cde4893c59f76f005a8123d8e8e6
-matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
-    mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/config.cfg'
-filesize : 4
-modified : 2022-01-09T15:23:05+01:00
-errors   :
-md5      : 9aedcb5a60b973955799b7611c449977
-matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
-    mime    : 'text/plain'
-    basis   : 'extension match cfg; text match ASCII'
-    warning : 'match on filename and text only; byte/xml signatures for this format did not match'
----
-filename : 'denylist/config.ini'
-filesize : 4
-modified : 2022-01-09T15:22:58+01:00
-errors   :
-md5      : 08cac458dcf75bb748c8bcd37b5c11d2
-matches  :
-  - ns      : 'tika'
-    id      : 'text/x-ini'
-    format  : 'Configuration file'
-    mime    : 'text/x-ini'
-    basis   : 'extension match ini; text match ASCII'
-    warning : 'match on filename and text only'
----
-filename : 'denylist/ole2'
-filesize : 0
-modified : 2022-01-09T15:23:57+01:00
-errors   : 'empty source'
-md5      : d41d8cd98f00b204e9800998ecf8427e
-matches  :
-  - ns      : 'tika'
-    id      : 'UNKNOWN'
-    format  :
-    mime    : 'UNKNOWN'
-    basis   :
-    warning : 'no match'
----
-filename : 'denylist/ole2.xls'
-filesize : 5632
-modified : 2022-01-09T15:25:33+01:00
-errors   :
-md5      : 102ded970d557ebd81a785b5418c12dd
-matches  :
-  - ns      : 'tika'
-    id      : 'application/vnd.ms-excel'
-    format  : 'Microsoft Excel Spreadsheet'
-    mime    : 'application/vnd.ms-excel'
-    basis   : 'extension match xls; byte match at 0, 8 (signature 6/6)'
+    basis   : 'extension match txt; text match ASCII'
     warning :
 ---
-filename : 'denylist/pdf.pdf'
-filesize : 15078
-modified : 2022-01-09T15:26:09+01:00
+filename : 'fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt'
+filesize : 101
+modified : 2020-06-22T19:38:22+02:00
 errors   :
-md5      : 690be6aff4ef6525c034b9559b5c9d76
+md5      : 4071a2a321e8c429362483e98a80960b
 matches  :
-  - ns      : 'tika'
-    id      : 'application/pdf'
-    format  : 'Portable Document Format'
-    mime    : 'application/pdf'
-    basis   : 'extension match pdf; byte match at 0, 5 (signature 1/4)'
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'extension match txt; text match ASCII'
     warning :
 ---
-filename : 'denylist/plain_text'
-filesize : 5
-modified : 2022-01-09T15:21:02+01:00
+filename : 'README'
+filesize : 297
+modified : 2021-12-05T20:26:13+01:00
 errors   :
-md5      : 6137cde4893c59f76f005a8123d8e8e6
+md5      : aa15e4959fa11f1ffce974b092efdd00
 matches  :
-  - ns      : 'tika'
-    id      : 'text/plain'
-    format  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File One'
     mime    : 'text/plain'
-    basis   : 'text match ASCII'
-    warning : 'match on text only; byte/xml signatures for this format did not match; filename mismatch'
----
-filename : 'denylist/xlsx.xlsx'
-filesize : 4349
-modified : 2022-01-09T15:25:56+01:00
-errors   :
-md5      : c613fa13ee1662454843ce86642ebd69
-matches  :
-  - ns      : 'tika'
-    id      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    format  : 'Office Open XML Workbook'
-    mime    : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    basis   : 'extension match xlsx; byte match at [[0 4] [30 11]] (signature 2/2)'
+    basis   : 'extension match pdf; byte match at [[0 8] [9290 44] [9342 73]]'
+    warning :
+  - ns      : 'pronom'
+    id      : 'x-fmt/112'
+    format  : 'Plain Text File Two'
+    mime    : 'text/plain'
+    basis   : 'extension match pdf; byte match at [[0 8] [9290 44] [9342 73]]'
     warning :
 """
 
 
-def test_denylist_sf_tika(tmp_path, denylist_tika):
-    """..."""
+def _process_captured_out(out):
+    """Process captured output into a list for the purpose of analyzing
+    the Rogue output.
 
-    dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST_TIKA.strip())
-
-    # Analysis from YAML will currently read the results from the YAML
-    # above and output an on-disk sqlite database at tmp_path. This
-    # works perfectly for us. In future, if we need to create an
-    # in-memory database for any reason we can but it will take some
-    # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True, denylist_tika, False, False)
-
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
-    res.analysis_results.denylist_filenames.sort()
-    assert res.analysis_results.denylist_filenames == [
-        (".DS_Store", 1),
-        ("Thumbs.db", 1),
-    ]
-    res.analysis_results.denylist_directories.sort()
-    assert res.analysis_results.denylist_directories == [
-        ("New Folder", 1),
-        ("Untitled Folder", 1),
-    ]
-    res.analysis_results.denylist_ids.sort()
-    assert res.analysis_results.denylist_ids == [
-        ("application/vnd.ms-excel: Microsoft Excel Spreadsheet None", 1),
-        ("text/x-ini: Configuration file None", 1),
-    ]
-    assert res.analysis_results.denylist_exts == [("cfg", 1)]
-    res.analysis_results.rogue_denylist.sort()
-    assert len(res.analysis_results.rogue_denylist) == 7
-    assert res.analysis_results.rogue_denylist == [
-        "denylist/.DS_Store",
-        "denylist/New Folder",
-        "denylist/Thumbs.db",
-        "denylist/Untitled Folder",
-        "denylist/config.cfg",
-        "denylist/config.ini",
-        "denylist/ole2.xls",
-    ]
-
-
-@pytest.fixture(scope="function")
-def rogueconfig(tmp_path):
-    """Read Rogues configuration and supply it to a function as a
-    test fixture.
+    :param out: string that looks like a line-separated list (string)
+    :return: list based on the input data (list)
     """
-    dir_ = tmp_path
-    denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_ROGUES.strip())
-    config = ConfigParser.RawConfigParser()
-    config.read(str(denylist))
-    return config
+    out = io.StringIO(out)
+    out_list = []
+    for line in out:
+        out_list.append(line.strip())
+    out_list.sort()
+    return out_list
 
 
-def test_rogues_droid(tmp_path, denylist, rogueconfig):
-    """..."""
+EXPECTED_DROID = [
+    "/tmp/denylist/New Folder/plain_text",
+    "/tmp/denylist/plain_text",
+    "/tmp/denylist/.git/commit_data",
+    "/tmp/denylist/config.cfg",
+    "/tmp/denylist/Thumbs.db",
+    "/tmp/denylist/ole2",
+    "/tmp/denylist/.DS_Store",
+    "/tmp/denylist/config.ini",
+    "/tmp/denylist/Untitled Folder/plain_text",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+    "/tmp/denylist/plain_text",
+    "/tmp/denylist/.git/commit_data",
+    "/tmp/denylist/Untitled Folder/plain_text",
+    "/tmp/denylist/New Folder/plain_text",
+    "/tmp/denylist/ole2.xls",
+    "/tmp/denylist/config.cfg",
+    "/tmp/denylist/New Folder",
+    "/tmp/denylist/Untitled Folder",
+    "/tmp/denylist/.DS_Store",
+    "/tmp/denylist/config.ini",
+    "/tmp/denylist/pdf.pdf",
+    "/tmp/denylist/Thumbs.db",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
+    "/tmp/denylist/ole2",
+    "X:\\digital\\objects\x039080024060920_1of2.wav",
+    "X:\\digital\\objects\x039080024060920_2of2.wav",
+    "X:\\digital\\objects\x039080024060938_1of2.wav",
+    "X:\\digital\\objects\x039080024060938_2of2.wav",
+    "X:\\digital\\objects\x039080024060946_1of2.wav",
+    "X:\\digital\\objects\x039080024060946_2of2.wav",
+    "X:\\digital\\objects\x039080024060953_1of2.wav",
+    "X:\\digital\\objects\x039080024060953_2of2.wav",
+    "X:\\digital\\objects\x07ccess\x039080024061027_1of2.mp3",
+]
+
+
+def test_rogues_droid_rogues(tmp_path, capsys, denylist, rogueconfig):
+    """Make sure that rogues are output for the DROID report as
+    expected and that totals add up.
+    """
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
@@ -660,20 +440,96 @@ def test_rogues_droid(tmp_path, denylist, rogueconfig):
     # works perfectly for us. In future, if we need to create an
     # in-memory database for any reason we can but it will take some
     # further refactoring.
-    res = analysis_from_csv(str(droid_csv), True, denylist, False, False)
+    res = analysis_from_csv(str(droid_csv), True, denylist, True, False)
+    assert res.analysis_results.filecount == 22
+    # Directory count is used by DROID because it uses absolute paths.
+    assert res.analysis_results.directoryCount == 6
+    rogue_output = rogueoutputclass(res.analysis_results, rogueconfig, False)
+    rogue_output.printTextResults()
+    captured = capsys.readouterr()
+    assert captured.out != "", "stdout is empty"
+    processed = _process_captured_out(captured.out)
+    assert len(set(processed)) == len(set(EXPECTED_DROID))
+    assert len(set(processed)) == 25
+    assert set(processed) == set(EXPECTED_DROID)
 
-    rogue_output = rogueoutputclass(res, rogueconfig, False)
-    # assert rogue_output == None
-    hero_output = rogueoutputclass(res, rogueconfig, True)
-    # assert hero_output == None
+
+EXPECTED_DROID_HEROES = [
+    "/tmp/denylist/xlsx.xlsx",
+    "/tmp/denylist",
+    "/tmp/denylist/.git",
+]
+
+
+def test_rogues_droid_heroes(tmp_path, capsys, denylist, rogueconfig):
+    """Make sure that heroes are output for the DROID report as
+    expected and that totals add up.
+    """
+
+    dir_ = tmp_path
+    droid_csv = dir_ / "droid_💜_test.csv"
+    droid_csv.write_text(DROID_CSV.strip())
+
+    assert rogueconfig is not None
+
+    # Analysis from CSV will currently read the results from the CSV
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(droid_csv), True, denylist, False, True)
+    assert res.analysis_results.filecount == 22
+    # Directory count is used by DROID because it uses absolute paths.
+    assert res.analysis_results.directoryCount == 6
+    heroes_output = rogueoutputclass(res.analysis_results, rogueconfig, True)
+    heroes_output.printTextResults()
+    captured = capsys.readouterr()
+    assert captured.out != "", "stdout is empty"
+    processed = _process_captured_out(captured.out)
+    assert len(set(processed)) == len(set(EXPECTED_DROID_HEROES))
+    assert len(set(processed)) == 3
+    assert set(processed) == set(EXPECTED_DROID_HEROES)
+
+
+EXPECTED_SIEGFRIED_ROGUES = [
+    "denylist",
+    "denylist/config.ini",
+    "denylist/ole2",
+    "denylist/Thumbs.db",
+    "denylist/.git",
+    "denylist/New Folder",
+    "denylist/.DS_Store",
+    "denylist/Untitled Folder",
+    "denylist/.git/commit_data",
+    "denylist/Untitled Folder/plain_text",
+    "denylist/plain_text",
+    "denylist/New Folder/plain_text",
+    "denylist/config.ini",
+    "denylist/pdf.pdf",
+    "denylist/config.cfg",
+    "denylist/.DS_Store",
+    "denylist/Untitled Folder",
+    "denylist/Thumbs.db",
+    "denylist/New Folder",
+    "fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
+    "fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル",
+    "denylist/ole2",
+    "README",
+    "denylist/config.cfg",
+    "denylist/Untitled Folder/plain_text",
+    "denylist/New Folder/plain_text",
+    "denylist/plain_text",
+    "denylist/.git/commit_data",
+    "fixtures/files_with_various_encodings/emoji",
+]
 
 
 def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
-    """..."""
+    """,.."""
 
     dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST.strip())
+    sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
+    sf_yaml.write_text(SF_ROGUE_TEST.strip())
 
     assert rogueconfig is not None
 
@@ -684,53 +540,54 @@ def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True, denylist, True, False)
 
+    assert res.analysis_results.filecount == 15
+    # Directory count is not used by SF because it doesn't use absolute
+    # paths. More names are removed when creating the set.
+    assert res.analysis_results.uniqueDirectoryNames == 6
+
     rogue_output = rogueoutputclass(res.analysis_results, rogueconfig, False)
     rogue_output.printTextResults()
     captured = capsys.readouterr()
-    # assert captured.out == ""
+    assert captured.out != "", "stdout is empty"
+    processed = _process_captured_out(captured.out)
+    assert len(set(processed)) == len(set(EXPECTED_SIEGFRIED_ROGUES))
+    assert len(set(processed)) == 18
+    assert set(processed) == set(EXPECTED_SIEGFRIED_ROGUES)
 
-    hero_output = rogueoutputclass(res.analysis_results, rogueconfig, True)
-    hero_output.printTextResults()
+
+EXPECTED_SIEGFRIED_HEROES = [
+    "fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt",
+    "denylist/ole2.xls",
+    "denylist/xlsx.xlsx",
+]
+
+
+def test_heroes_sf(tmp_path, capsys, denylist, rogueconfig):
+    """,.."""
+
+    dir_ = tmp_path
+    sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
+    sf_yaml.write_text(SF_ROGUE_TEST.strip())
+
+    assert rogueconfig is not None
+
+    # Analysis from YAML will currently read the results from the YAML
+    # above and output an on-disk sqlite database at tmp_path. This
+    # works perfectly for us. In future, if we need to create an
+    # in-memory database for any reason we can but it will take some
+    # further refactoring.
+    res = analysis_from_csv(str(sf_yaml), True, denylist, True, False)
+
+    assert res.analysis_results.filecount == 15
+    # Directory count is not used by SF because it doesn't use absolute
+    # paths. More names are removed when creating the set.
+    assert res.analysis_results.uniqueDirectoryNames == 6
+
+    heroes_output = rogueoutputclass(res.analysis_results, rogueconfig, True)
+    heroes_output.printTextResults()
     captured = capsys.readouterr()
-    out = io.StringIO(captured.out)
-    out_list = []
-    for line in out:
-        out_list.append(line.strip())
-    out_list.sort()
-
-    """assert out_list == [
-        "one_dupe_one",
-        "one_dupe_two",
-        "two_dupe_one",
-        "two_dupe_three",
-        "two_dupe_two",
-    ]"""
-
-
-"""
-        # Rogue related values.
-        self.rogue_pronom_ns_id = None
-        self.rogue_all_paths = None
-        self.rogue_all_dirs = None
-        self.rogue_duplicates = []
-        self.rogue_identified_all = []
-        self.rogue_identified_pronom = []
-        self.rogue_extension_mismatches = []
-        self.rogue_file_name_paths = []  # non-ascii file names
-        self.rogue_dir_name_paths = []  # non-ascii dir names
-
-
-        # Rogue related values.
-        self.rogue_pronom_ns_id = None
-        self.rogue_all_paths = None
-        self.rogue_all_dirs = None
-        self.rogue_denylist = []
-        self.rogue_duplicates = []
-        self.rogue_identified_all = []
-        self.rogue_identified_pronom = []
-        self.rogue_extension_mismatches = []
-        self.rogue_multiple_identification_list = []
-        self.rogue_file_name_paths = []  # non-ascii file names
-        self.rogue_dir_name_paths = []  # non-ascii dir names
-
-"""
+    assert captured.out != "", "stdout is empty"
+    processed = _process_captured_out(captured.out)
+    assert len(set(processed)) == len(set(EXPECTED_SIEGFRIED_HEROES))
+    assert len(set(processed)) == 3
+    assert set(processed) == set(EXPECTED_SIEGFRIED_HEROES)

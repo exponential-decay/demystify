@@ -16,6 +16,7 @@ class HandleDenylist:
     CFG_EXT = "fileextensions"
 
     CFG_ROGUES = "rogues"
+    ROGUE_UNIDENTIFIED = "unidentified"
     ROGUE_DUPE = "duplicatechecksums"
     ROGUE_PRO = "pronomonly"
     ROGUE_DENY = "denylist"

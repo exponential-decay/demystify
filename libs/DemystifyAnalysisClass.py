@@ -213,20 +213,14 @@ class DemystifyAnalysis:
 
     def list_duplicate_files_from_hash(self):
         """Process duplicates based on hash from analysis."""
-
-        # Result will looks as follows: list([HASH, COUNT])
         result = self._querydb(AnalysisQueries.SELECT_COUNT_DUPLICATE_CHECKSUMS)
-
         duplicatelist = []
         duplicate_sum = {}
         roguepaths = []
-
         self.analysis_results.totalHASHduplicates = 0
-
         for res in result:
             count = int(res[1])
             checksum = res[0]
-
             # There is a potential or empty checksums in the database,
             # either through incorrectly writing the data or rogue
             # datasets, avoid processing and outputting those here.
@@ -242,13 +236,12 @@ class DemystifyAnalysis:
                 filename = duplicates[0]
                 pathlist.append(filename)
                 self.analysis_results.duplicatespathlist.append(filename)
-            roguepaths = "{}{}".format(roguepaths, pathlist)
+            roguepaths = pathlist
             duplicate_sum["checksum"] = checksum
             duplicate_sum["count"] = count
             duplicate_sum["examples"] = pathlist
             duplicatelist.append(duplicate_sum)
             duplicate_sum = {}
-
         self.analysis_results.duplicateHASHlisting = duplicatelist
         return roguepaths
 
@@ -290,11 +283,11 @@ class DemystifyAnalysis:
                 self.rogue_names.append(d[0])
 
         dirreport = []
-        for d in dirlist:
+        for dir_ in dirlist:
             try:
-                dirstring = u"{}".format(d[0].decode("utf8"))
+                dirstring = u"{}".format(dir_[0].decode("utf8"))
             except AttributeError:
-                dirstring = u"{}".format(d[0])
+                dirstring = u"{}".format(dir_[0])
             checkedname = charcheck.complete_file_name_analysis(dirstring, True)
             if len(checkedname) > 0:
                 dirreport.append(checkedname)

@@ -250,8 +250,6 @@ class AnalysisQueries:
             "WHERE FREQUENCY > "
         )
         query = "{}{}".format(body, nscount)
-        print(query)
-        # assert False
         return query
 
     def list_duplicate_paths(self, checksum):

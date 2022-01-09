@@ -9,7 +9,6 @@ import pytest
 
 from demystify import analysis_from_csv
 from libs.HandleDenylistClass import HandleDenylist
-from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 
 try:
     import ConfigParser
