@@ -44,45 +44,7 @@ directorynames='Untitled Folder','New Folder'
 fileextensions='.ini','.cfg'
 """
 
-
-DENYLIST_ROGUES = u"""[denylist]
-
-ids=fmt/111,fmt/682,fmt/394,x-fmt/409,x-fmt/410,x-fmt/411,fmt/688,fmt/689,fmt/690,fmt/691,fmt/468,fmt/473,fmt/474,fmt/503,fmt/523,fmt/819,x-fmt/157,x-fmt/418,x-fmt/419,x-fmt/428,x-fmt/429,x-fmt/453,application/x-sh,application/vnd.ms-tnef,application/x-stuffit,application/x-pak,application/x-mswinurl,application/x-executable,x-fmt/263,x-fmt/266,fmt/583,fmt/524
-
-filenames='.DS_Store','Untitled Document','desktop.ini','(copy','ZbThumbnail.info','lorem','New Microsoft Word Document','Bin.dat','Thumbs.db', 'vitae', 'Appointments', 'CV', 'Application', 'Resume', 'Appointment', 'Test', 'list', 'member', 'people', 'address', 'phone'
-
-directorynames='Untitled Folder','New Folder','(copy','.git','lorem'
-
-fileextensions='.ini','.exe','.cfg','.dll','.lnk','.tmp'
-
-[rogues]
-
-; Output duplicate files.
-duplicatechecksums=False
-
-; Output PRONOM only identification.
-pronomonly=True
-
-; Output denylist.
-denylist=True
-
-; Output non-ascii filenames.
-nonasciifilenames=True
-
-; Output non-ascii directories.
-nonasciidirs=True
-
-; Output zero-byte files.
-zerobytefiles=True
-
-; Output multiple IDs.
-multiple-ids=False
-
-; Output extension mismatches.
-extension-mismatches=True
-"""
-
-"""Example layout for denylist.
+"""Example layout for denylist below.
 
     denylist/
     ├── config.cfg
@@ -145,19 +107,23 @@ def denylist_tika(tmp_path):
     return HandleDenylist().denylist(config)
 
 
-def test_denylist_droid(tmp_path, denylist):
-    """Test basic configuration of Denylist and rogues here."""
-
-    dir_ = tmp_path
-    droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
-
+def test_default_denylist(tmp_path, denylist):
+    """Make sure the denylist is parsed and output correctly."""
     assert denylist == {
         "IDS": ["fmt/61", "fmt/480"],
         "FILENAMES": [".DS_Store", "Thumbs.db"],
         "DIRECTORIES": ["Untitled Folder", "New Folder"],
         "EXTENSIONS": [".ini", ".cfg"],
     }
+
+
+def test_denylist_droid(tmp_path, denylist):
+    """Test basic configuration of Denylist and rogues here for DROID.
+    """
+
+    dir_ = tmp_path
+    droid_csv = dir_ / "droid_💜_test.csv"
+    droid_csv.write_text(DROID_CSV.strip())
 
     # Analysis from CSV will currently read the results from the CSV
     # above and output an on-disk sqlite database at tmp_path. This
@@ -378,7 +344,9 @@ matches  :
 
 
 def test_denylist_sf(tmp_path, denylist):
-    """..."""
+    """Ensure that the denylist function works with Siegfried's default
+    PRONOM.
+    """
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
@@ -589,7 +557,9 @@ matches  :
 
 
 def test_denylist_sf_tika(tmp_path, denylist_tika):
-    """..."""
+    """Ensure that denylist works with a different identifier from
+    Siegfried.
+    """
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
@@ -631,106 +601,3 @@ def test_denylist_sf_tika(tmp_path, denylist_tika):
         "denylist/config.ini",
         "denylist/ole2.xls",
     ]
-
-
-@pytest.fixture(scope="function")
-def rogueconfig(tmp_path):
-    """Read Rogues configuration and supply it to a function as a
-    test fixture.
-    """
-    dir_ = tmp_path
-    denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_ROGUES.strip())
-    config = ConfigParser.RawConfigParser()
-    config.read(str(denylist))
-    return config
-
-
-def test_rogues_droid(tmp_path, denylist, rogueconfig):
-    """..."""
-
-    dir_ = tmp_path
-    droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
-
-    assert rogueconfig is not None
-
-    # Analysis from CSV will currently read the results from the CSV
-    # above and output an on-disk sqlite database at tmp_path. This
-    # works perfectly for us. In future, if we need to create an
-    # in-memory database for any reason we can but it will take some
-    # further refactoring.
-    res = analysis_from_csv(str(droid_csv), True, denylist, False, False)
-
-    rogue_output = rogueoutputclass(res, rogueconfig, False)
-    # assert rogue_output == None
-    hero_output = rogueoutputclass(res, rogueconfig, True)
-    # assert hero_output == None
-
-
-def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
-    """..."""
-
-    dir_ = tmp_path
-    sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST.strip())
-
-    assert rogueconfig is not None
-
-    # Analysis from YAML will currently read the results from the YAML
-    # above and output an on-disk sqlite database at tmp_path. This
-    # works perfectly for us. In future, if we need to create an
-    # in-memory database for any reason we can but it will take some
-    # further refactoring.
-    res = analysis_from_csv(str(sf_yaml), True, denylist, True, False)
-
-    rogue_output = rogueoutputclass(res.analysis_results, rogueconfig, False)
-    rogue_output.printTextResults()
-    captured = capsys.readouterr()
-    # assert captured.out == ""
-
-    hero_output = rogueoutputclass(res.analysis_results, rogueconfig, True)
-    hero_output.printTextResults()
-    captured = capsys.readouterr()
-    out = io.StringIO(captured.out)
-    out_list = []
-    for line in out:
-        out_list.append(line.strip())
-    out_list.sort()
-
-    """assert out_list == [
-        "one_dupe_one",
-        "one_dupe_two",
-        "two_dupe_one",
-        "two_dupe_three",
-        "two_dupe_two",
-    ]"""
-
-
-"""
-        # Rogue related values.
-        self.rogue_pronom_ns_id = None
-        self.rogue_all_paths = None
-        self.rogue_all_dirs = None
-        self.rogue_duplicates = []
-        self.rogue_identified_all = []
-        self.rogue_identified_pronom = []
-        self.rogue_extension_mismatches = []
-        self.rogue_file_name_paths = []  # non-ascii file names
-        self.rogue_dir_name_paths = []  # non-ascii dir names
-
-
-        # Rogue related values.
-        self.rogue_pronom_ns_id = None
-        self.rogue_all_paths = None
-        self.rogue_all_dirs = None
-        self.rogue_denylist = []
-        self.rogue_duplicates = []
-        self.rogue_identified_all = []
-        self.rogue_identified_pronom = []
-        self.rogue_extension_mismatches = []
-        self.rogue_multiple_identification_list = []
-        self.rogue_file_name_paths = []  # non-ascii file names
-        self.rogue_dir_name_paths = []  # non-ascii dir names
-
-"""
