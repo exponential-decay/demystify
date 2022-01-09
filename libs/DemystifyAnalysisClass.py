@@ -553,6 +553,9 @@ class DemystifyAnalysis:
         :param match: match line from Siegfried (string)
         :return: offset, sequence_count (list, string)
         """
+        SIG_MARKER = "(signature"
+        if SIG_MARKER in match:
+            match = match.split(SIG_MARKER, 1)[0]
         if "[[[" in match:
             # Canonical example is two brackets, below, so it
             # might be possible to deprecate this.
@@ -663,8 +666,11 @@ class DemystifyAnalysis:
             eof = file_size - pos
             return bof, None, file_size
         for idx, sequence in enumerate(range(sequence_count)):
-            offset = int(basis[sequence * 2])
-            offset_match_length = int(basis[(sequence * 2) + 1])
+            try:
+                offset = int(basis[sequence * 2])
+                offset_match_length = int(basis[(sequence * 2) + 1])
+            except IndexError:
+                continue
             # Understand match sequence length relative to 0 bytes (BOF)
             # or EOF (file size) and use those values to try and create
             # the bounds for the file.
