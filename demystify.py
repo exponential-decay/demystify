@@ -56,7 +56,7 @@ from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from libs.HandleDenylistClass import HandleDenylist
 from libs.IdentifyDatabase import IdentifyDB
 
-# custom output handlers
+# Custom output handlers
 from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
 from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
