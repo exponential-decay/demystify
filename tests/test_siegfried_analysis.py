@@ -3370,7 +3370,7 @@ def test_xml_and_text_identiiers(tmp_path):
         10173,
         10,
     ]
-    assert res.analysis_results.eof_distance == None
+    assert res.analysis_results.eof_distance is None
 
 
 SF_EXT_YAML = u"""---
@@ -3579,8 +3579,8 @@ def test_extension_identifiers(tmp_path):
         ("zip", 1),
     ]
 
-    assert res.analysis_results.bof_distance == None
-    assert res.analysis_results.eof_distance == None
+    assert res.analysis_results.bof_distance is None
+    assert res.analysis_results.eof_distance is None
 
 
 SF_METHODS_YAML = u"""---
@@ -4683,7 +4683,7 @@ def test_duplicates(tmp_path):
         "one_dupe_one",
         "one_dupe_two",
     ]
-    assert res.analysis_results.hashused == True
+    assert res.analysis_results.hashused is True
     assert res.analysis_results.duplicateHASHlisting == [
         {
             "checksum": "64565b5c3348238da6cdc749a1bf2206",

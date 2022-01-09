@@ -11,7 +11,6 @@ except ImportError:
 
 import logging
 import sqlite3
-import sys
 from collections import Counter
 
 from libs import AnalysisResultsClass

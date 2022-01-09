@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import, print_function
 
-import io
 import sys
 
 import pytest
@@ -131,8 +130,8 @@ def test_denylist_droid(tmp_path, denylist):
     # further refactoring.
     res = analysis_from_csv(str(droid_csv), True, denylist, False, False)
 
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
+    assert res.analysis_results.denylist is True
+    assert res.analysis_results.rogue_pronom_ns_id is None
     res.analysis_results.denylist_filenames.sort()
     assert res.analysis_results.denylist_filenames == [
         (".DS_Store", 1),
@@ -358,8 +357,8 @@ def test_denylist_sf(tmp_path, denylist):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True, denylist, False, False)
 
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
+    assert res.analysis_results.denylist is True
+    assert res.analysis_results.rogue_pronom_ns_id is None
     res.analysis_results.denylist_filenames.sort()
     assert res.analysis_results.denylist_filenames == [
         (".DS_Store", 1),
@@ -571,8 +570,8 @@ def test_denylist_sf_tika(tmp_path, denylist_tika):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True, denylist_tika, False, False)
 
-    assert res.analysis_results.denylist == True
-    assert res.analysis_results.rogue_pronom_ns_id == None
+    assert res.analysis_results.denylist is True
+    assert res.analysis_results.rogue_pronom_ns_id is None
     res.analysis_results.denylist_filenames.sort()
     assert res.analysis_results.denylist_filenames == [
         (".DS_Store", 1),

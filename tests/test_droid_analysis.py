@@ -426,7 +426,7 @@ def test_duplicates(tmp_path):
         "/tmp/duplicates/one_dupe_one",
         "/tmp/duplicates/one_dupe_two",
     ]
-    assert res.analysis_results.hashused == True
+    assert res.analysis_results.hashused is True
     assert res.analysis_results.duplicateHASHlisting == [
         {
             "checksum": "93816c18bc0146fb98362b9793abe0ee7b8a9530ba30f5af2ff2ca1b2182015b",

@@ -74,7 +74,7 @@ class rogueoutputclass:
 
     def outputlist(self, path_list):
         for path in path_list:
-            if path == "no value" or path == "" or path == None:
+            if path == "no value" or path == "" or path is None:
                 continue
             print("{}".format(path))
 
