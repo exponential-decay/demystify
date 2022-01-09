@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""Rogue Queries for extracting information about Rogues and Heroes from
+a format identification extract.
+"""
+
 
 class RogueQueries:
 

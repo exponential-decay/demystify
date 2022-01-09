@@ -1,42 +1,54 @@
 # -*- coding: utf-8 -*-
 
+"""Denylist queries for filtering denylist items from a format
+identification extract.
+"""
+
 
 class DenylistQueries:
     def getfilenames(self, filenamelist):
-        fnamequery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME
-                      FROM FILEDATA
-                      WHERE FILEDATA.TYPE != 'Folder'
-                      AND ("""
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(filenamelist)
-        newlist = 'FILEDATA.NAME LIKE "%' + newlist + '%")'
-        return fnamequery + newlist
+        newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
+        fnamequery = (
+            "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME\n"
+            "FROM FILEDATA\n"
+            "WHERE FILEDATA.TYPE != 'Folder'\n"
+            "AND ("
+        )
+        return "{}{}".format(fnamequery, newlist)
 
     def getdirnames(self, dirlist):
-        dirquery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME
-                    FROM FILEDATA
-                    WHERE FILEDATA.TYPE = 'Folder'
-                    AND ("""
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(dirlist)
-        newlist = 'FILEDATA.NAME LIKE "%' + newlist + '%")'
-        return dirquery + newlist
+        newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
+        dirquery = (
+            "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME\n"
+            "FROM FILEDATA\n"
+            "WHERE FILEDATA.TYPE = 'Folder'\n"
+            "AND ("
+        )
+        return "{}{}".format(dirquery, newlist)
 
     def getexts(self, extlist):
-        extquery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, FILEDATA.EXT
-                    FROM FILEDATA
-                    WHERE FILEDATA.TYPE != 'Folder'
-                    AND FILEDATA.EXT in """
         newlist = '","'.join(extlist)
-        newlist = '("' + newlist + '")'
+        newlist = '("{}")'.format(newlist)
         newlist = newlist.replace(".", "")
-        return extquery + newlist
+        extquery = (
+            "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, FILEDATA.EXT\n"
+            "FROM FILEDATA\n"
+            "WHERE FILEDATA.TYPE != 'Folder'\n"
+            "AND FILEDATA.EXT in "
+        )
+        return "{}{}".format(extquery, newlist)
 
     def getids(self, idlist):
-        idquery = """SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, IDDATA.ID || ": " || IDDATA.FORMAT_NAME || " " || IDDATA.FORMAT_VERSION
-                   FROM IDRESULTS
-                   JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID
-                   JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID
-                   WHERE IDDATA.METHOD in ("Text","XML","Container","Signature")
-                   AND IDDATA.ID in """
         newlist = '","'.join(idlist)
-        newlist = '("' + newlist + '")'
-        return idquery + newlist
+        newlist = '("{}")'.format(newlist)
+        idquery = (
+            "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, IDDATA.ID || ': ' || IDDATA.FORMAT_NAME || ' ' || IDDATA.FORMAT_VERSION\n"
+            "FROM IDRESULTS\n"
+            "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
+            "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+            "WHERE IDDATA.METHOD in ('Text','XML','Container','Signature')\n"
+            "AND IDDATA.ID in "
+        )
+        return "{}{}".format(idquery, newlist)
