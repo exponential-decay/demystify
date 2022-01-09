@@ -95,12 +95,7 @@ class DROIDAnalysisHTMLOutput:
     def splitidresults(self, puid):
         identifier = puid[0].rsplit("(", 1)[0]
         namespace = puid[0].split(" ", 1)[0]
-
-        # TODO: Flake8 doesn't like the escape sequence here... `\/` is
-        # this really invalid? What alternatives are there for what we
-        # want to achieve?
-        patt = re.compile("(x-)?fmt\/[0-9]+")  # noqa
-
+        patt = re.compile("(x-)?fmt\\/[0-9]+")  # noqa
         p = re.search(patt, identifier)
         if p is not None:
             p = p.span()
@@ -812,7 +807,7 @@ class DROIDAnalysisHTMLOutput:
             )
 
         if self.analysis_results.extensionOnlyIDList is not None:
-            # Extension Only ID : TODO: Consider usefulness...
+            # Extension Only ID
             self.__outputtable__(
                 self.analysis_results.extensionOnlyIDList,
                 self.STRINGS.HEADING_EXTENSION_ONLY,

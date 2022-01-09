@@ -95,11 +95,7 @@ class DROIDAnalysisTextOutput:
 
     def __outputdupes__(self, list):
         output = ""
-        for (
-            dupes
-        ) in (
-            self.analysis_results.duplicateHASHlisting
-        ):  # TODO: consider count next to HASH val
+        for dupes in self.analysis_results.duplicateHASHlisting:
             output = output + "Checksum: " + str(dupes["checksum"]) + "\n"
             output = output + "Count: " + str(dupes["count"]) + "\n"
             output = output + "Example: " + str(dupes["examples"][0]) + "\n\n"

@@ -29,12 +29,11 @@ class AnalysisError(Exception):
 class DemystifyAnalysis:
     """DemystifyAnalysis"""
 
-    # we need this value because we extract basedirs for all folders, including
-    # the root directory of the extract, creating one additional entry
-    # TODO: consider handling better...
+    # We need this value because we extract basedirs for all folders, including
+    # the root directory of the extract, creating one additional entry.
     NONROOTBASEDIR = 1
 
-    # somenamespaceconsts
+    # Namespace constants.
     NS_CONST_TITLE = "namespace title"
     NS_CONST_DETAILS = "namespace details"
     NS_CONST_XML_COUNT = "xml method count"
