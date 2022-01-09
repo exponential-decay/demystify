@@ -12,6 +12,7 @@ class rogueoutputclass:
 
         self.roguelist = []
 
+        self.unidentified = False
         self.dupes = False
         self.pro = False
         self.denylist = False
@@ -28,6 +29,12 @@ class rogueoutputclass:
     def handleconfig(self, config):
         if config is not False:
             if config.has_section(HandleDenylist.CFG_ROGUES):
+                if config.has_option(
+                    HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_UNIDENTIFIED
+                ):
+                    self.unidentified = config.get(
+                        HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_UNIDENTIFIED
+                    ).lower()
                 if config.has_option(
                     HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_DUPE
                 ):
@@ -82,49 +89,67 @@ class rogueoutputclass:
             if path == "no value" or path == "" or path == None:
                 continue
             print("{}".format(path))
+        assert False, "stuck here"
 
     def rogueorhero(self, pathlist):
-        if pathlist is not False and pathlist is not None:
+        if pathlist:
             self.roguelist = self.roguelist + pathlist
 
     def printTextResults(self):
         if self.dupes == "true":
+            print("dupes")
             if self.analysis_results.hashused is True:
                 self.rogueorhero(self.analysis_results.rogue_duplicates)
 
         if self.zero == "true":
+            print("zero")
             self.rogueorhero(self.analysis_results.zerobytelist)
 
         if self.ext == "true":
+            print("ext")
             self.rogueorhero(self.analysis_results.rogue_extension_mismatches)
 
         if self.multi == "true":
+            print('multi')
             if self.analysis_results.multipleidentificationcount > 0:
                 self.rogueorhero(
                     self.analysis_results.rogue_multiple_identification_list
                 )
         # PRONOM ONLY UNIDENTIFIED
         # output all unidentified files, but also, only when not using DROID output
-        if self.analysis_results.tooltype != "droid":
-            if (
-                self.analysis_results.rogue_pronom_ns_id is not None
-                and self.pro == "true"
-            ):
-                self.rogueorhero(self.analysis_results.rogue_identified_pronom)
+        if self.unidentified == "true":
+            if self.analysis_results.tooltype != "droid":
+                print("blah")
+                if (
+                    self.analysis_results.rogue_pronom_ns_id is not None
+                    and self.pro == "true"
+                ):
+                    self.rogueorhero(self.analysis_results.rogue_identified_pronom)
+                else:
+                    self.rogueorhero(self.analysis_results.rogue_identified_all)
             else:
-                self.rogueorhero(self.analysis_results.rogue_identified_all)
-        else:
-            if self.pro == "true":
-                self.rogueorhero(self.analysis_results.rogue_identified_pronom)
+                print("blah2")
+                if self.pro == "true":
+                    self.rogueorhero(self.analysis_results.rogue_identified_pronom)
         if self.fnames == "true":
+            print("fnames")
             self.rogueorhero(self.analysis_results.rogue_file_name_paths)
         if self.dirs == "true":
+            print("dirs")
             self.rogueorhero(self.analysis_results.rogue_dir_name_paths)
 
         if self.denylist == "true":
+            print("deny")
+            print("XXXXX", self.denylist)
             self.rogueorhero(self.analysis_results.rogue_denylist)
-        number_allfiles = len(set(self.analysis_results.rogue_all_paths))
-        number_alldirs = len(set(self.analysis_results.rogue_all_dirs))
+
+        try:
+            number_allfiles = len(set(self.analysis_results.rogue_all_paths))
+            number_alldirs = len(set(self.analysis_results.rogue_all_dirs))
+        except TypeError:
+            logging.warning("Rogues and heroes lists not created: Check config for Rogues being turned off")
+            return
+
         if self.heroes is True:
             hero_files = set(self.analysis_results.rogue_all_paths) - set(
                 self.roguelist
