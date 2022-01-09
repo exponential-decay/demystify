@@ -4503,7 +4503,10 @@ def test_sf_multiple_ids(tmp_path):
 
 
 def test_bof_eof_extract(tmp_path):
-    """..."""
+    """Test the ability demystify to record the longest byte sequences
+    read in the process of an identification, i.e. how many bytes are
+    read maximum from BOF or EOF to produce an ID.
+    """
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
