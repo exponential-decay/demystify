@@ -81,7 +81,7 @@ class DROIDAnalysisHTMLOutput:
         self.__htmlnewline__(2)
         self.printFormattedText("<hr/>")
 
-    # Trial function we're not using yet... Prettty Print
+    # Trial function we're not using yet... Pretty Print
     def prettyprinthtml():
         # document_root = html.fromstring(self.htmloutput)
         # print document_root
