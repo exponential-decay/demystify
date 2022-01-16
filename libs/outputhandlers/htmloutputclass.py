@@ -32,12 +32,19 @@ class DROIDAnalysisHTMLOutput:
         self.analysis_results = analysisresults
         self.htmloutput = u""
 
-    def STDOUTprintFormattedText(self, text):
-        sys.stdout.write(text)
-        self.__printnewline__()
-
-    def STDOUT__printnewline__(self):
-        sys.stdout.write("\n")
+    @staticmethod
+    def _remove_nones(old_list, format_unknown=False):
+        """Remove None from the given list of tuples."""
+        new_list = []
+        for item in old_list:
+            if item[1] == "None":
+                if not format_unknown:
+                    new_list.append((item[0], ""))
+                    continue
+                new_list.append((item[0], "Format name is unknown"))
+            else:
+                new_list.append((item[0], item[1]))
+        return new_list
 
     def printFormattedText(self, text):
         if isinstance(text, list):
@@ -51,7 +58,7 @@ class DROIDAnalysisHTMLOutput:
             try:
                 newtext = u"{}".format(text)
             except UnicodeDecodeError:
-                newtext = "{}".format(text.decode("utf8"))
+                newtext = u"{}".format(text.decode("utf8"))
         self.htmloutput = u"{}{}".format(self.htmloutput, newtext)
         self.__printnewline__()
 
@@ -459,7 +466,7 @@ class DROIDAnalysisHTMLOutput:
                 string = str(item[0])
             elif count is False:
                 if item[1] == "":
-                    string = "{}, Format name not set".format(item[0])
+                    string = "{}, Format name is unknown".format(item[0])
                 else:
                     string = "{}, {}".format(item[0], item[1])
             else:
@@ -829,8 +836,9 @@ class DROIDAnalysisHTMLOutput:
 
         if self.analysis_results.extensionOnlyIDList is not None:
             # Extension Only ID
+            new_list = self._remove_nones(self.analysis_results.extensionOnlyIDList)
             self.__outputtable__(
-                self.analysis_results.extensionOnlyIDList,
+                new_list,
                 self.STRINGS.HEADING_EXTENSION_ONLY,
                 self.STRINGS.HEADING_DESC_EXTENSION_ONLY,
                 False,
@@ -845,6 +853,7 @@ class DROIDAnalysisHTMLOutput:
                 for item in list(extlist):
                     if "UNKNOWN" in item[0] or "unknown" in item[0]:
                         extlist.remove(item)
+                    extlist = self._remove_nones(extlist, True)
                 if self.analysis_results.tooltype != "droid":
                     # we have basis information so need a bigger table...
                     self.__outputtable__(
