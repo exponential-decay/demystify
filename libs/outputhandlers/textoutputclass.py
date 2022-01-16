@@ -38,17 +38,17 @@ class DROIDAnalysisTextOutput:
         ret = u"{}: {}".format(title, value)
         return ret
 
-    def __itemlist__(self, list):
+    def _itemlist(self, list):
         output = ""
         for item in list:
             "{}{}\n".format(output, item)
         return output.strip("\n")
 
-    def __printNewline__(self):
+    def _printNewline(self):
         self.printFormattedText("\n")
 
-    def __output_list_title__(self, title):
-        self.__printNewline__()
+    def _output_list_title(self, title):
+        self._printNewline()
         self.printFormattedText("{}:".format(title))
 
     def splitidresults(self, puid):
@@ -97,7 +97,7 @@ class DROIDAnalysisTextOutput:
         return self.textoutput
 
     # namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
-    def __frequencyoutput__(self, itemlist, zeros=False):
+    def _frequencyoutput(self, itemlist, zeros=False):
         val = ""
         if not isinstance(itemlist, list):
             logging.error("Not sending a list to a function wanting a list")
@@ -111,7 +111,7 @@ class DROIDAnalysisTextOutput:
 
         return val
 
-    def __aggregatelists__(self, itemlist):
+    def _aggregatelists(self, itemlist):
         outstr = ""
         if not isinstance(itemlist, list):
             logging.error("Not sending a list to a function wanting a list.")
@@ -127,9 +127,9 @@ class DROIDAnalysisTextOutput:
 
     def getDateList(self):
         if self.analysis_results.dateFrequency is not None:
-            return self.__frequencyoutput__(self.analysis_results.dateFrequency)
+            return self._frequencyoutput(self.analysis_results.dateFrequency)
 
-    def __outputdupes__(self, list):
+    def _outputdupes(self, list):
         output = ""
         for dupes in self.analysis_results.duplicateHASHlisting:
             output = "{}Checksum: {}\n".format(output, dupes["checksum"])
@@ -137,7 +137,7 @@ class DROIDAnalysisTextOutput:
             output = "{}Example: {}\n\n".format(output, dupes["examples"][0])
         return output.strip("\n")
 
-    def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
+    def _handlenamespacestats(self, nsdatalist, signaturefrequency):
         """Output statistics about namespace.
 
             e.g.{
@@ -213,7 +213,7 @@ class DROIDAnalysisTextOutput:
             output = u"{}\n\n".format(output)
         return output.strip("\n")
 
-    def __generateOffsetText__(self, offsettext):
+    def _generateOffsetText(self, offsettext):
         offs = offsettext
         if offs is not None:
             ret = u"{}, {} e.g. {} filesize: {}, {} bytes".format(
@@ -275,14 +275,14 @@ class DROIDAnalysisTextOutput:
 
         bof = self._separated_text(
             self.STRINGS.SUMMARY_DISTANCE_BOF,
-            self.__generateOffsetText__(self.analysis_results.bof_distance),
+            self._generateOffsetText(self.analysis_results.bof_distance),
         )
         if self.analysis_results.bof_distance is not None:
             self.printFormattedText(bof)
 
         eof = self._separated_text(
             self.STRINGS.SUMMARY_DISTANCE_EOF,
-            self.__generateOffsetText__(self.analysis_results.eof_distance),
+            self._generateOffsetText(self.analysis_results.eof_distance),
         )
         if self.analysis_results.eof_distance is not None:
             self.printFormattedText(eof)
@@ -465,7 +465,7 @@ class DROIDAnalysisTextOutput:
                 )
 
         if self.analysis_results.signatureidentifiers is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
+            self._output_list_title(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
             signature_id_list.sort(key=lambda keys: int(keys[3]), reverse=True)
             for id_ in signature_id_list:
                 identifier = "{}, {}, {} ({})".format(id_[0], id_[1], id_[2], id_[3])
@@ -482,34 +482,34 @@ class DROIDAnalysisTextOutput:
                 self.analysis_results.binaryidentifiers
             )
             new_list = self._removenamespaceid(new_list)
-            self.printFormattedText(self.__aggregatelists__(new_list))
+            self.printFormattedText(self._aggregatelists(new_list))
 
         if self.analysis_results.xmlidentifiers is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
+            self._output_list_title(self.STRINGS.HEADING_XML_ID)
             new_list = self._remove_version_if_none(
                 self.analysis_results.xmlidentifiers
             )
             new_list = self._removenamespaceid(new_list)
-            self.printFormattedText(self.__aggregatelists__(new_list))
+            self.printFormattedText(self._aggregatelists(new_list))
         if self.analysis_results.textidentifiers is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
+            self._output_list_title(self.STRINGS.HEADING_TEXT_ID)
             new_list = self._remove_version_if_none(
                 self.analysis_results.textidentifiers
             )
             new_list = self._removenamespaceid(new_list)
-            self.printFormattedText(self.__aggregatelists__(new_list))
+            self.printFormattedText(self._aggregatelists(new_list))
         if self.analysis_results.filenameidentifiers is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
+            self._output_list_title(self.STRINGS.HEADING_FILENAME_ID)
             new_list = self._remove_version_if_none(
                 self.analysis_results.filenameidentifiers
             )
             new_list = self._removenamespaceid(new_list)
-            self.printFormattedText(self.__aggregatelists__(new_list))
+            self.printFormattedText(self._aggregatelists(new_list))
 
         if self.analysis_results.extensionIDOnlyCount > 0:
             if self.analysis_results.extensionOnlyIDList is not None:
                 if len(self.analysis_results.extensionOnlyIDList) > 0:
-                    self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
+                    self._output_list_title(self.STRINGS.HEADING_EXTENSION_ONLY)
                     for item in self.analysis_results.extensionOnlyIDList:
                         if item[1] == "None":
                             output = u"{}".format(item[0])
@@ -519,12 +519,12 @@ class DROIDAnalysisTextOutput:
 
         dates = self.getDateList()
         if dates is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_DATE_RANGE)
+            self._output_list_title(self.STRINGS.HEADING_DATE_RANGE)
             self.printFormattedText(dates)
 
         if self.analysis_results.idmethodFrequency is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
-            id_method_frequency = self.__frequencyoutput__(
+            self._output_list_title(self.STRINGS.HEADING_ID_METHOD)
+            id_method_frequency = self._frequencyoutput(
                 self.analysis_results.idmethodFrequency
             )
             # Very specific targeting of None here for ID method frequency.
@@ -542,17 +542,17 @@ class DROIDAnalysisTextOutput:
                 and self.analysis_results.extensionOnlyIDFrequency is not None
             ):
                 if len(self.analysis_results.extensionOnlyIDList) > 0:
-                    self.__output_list_title__(
+                    self._output_list_title(
                         self.STRINGS.HEADING_FREQUENCY_EXTENSION_ONLY
                     )
                     self.printFormattedText(
-                        self.__frequencyoutput__(
+                        self._frequencyoutput(
                             self.analysis_results.extensionOnlyIDFrequency
                         )
                     )
 
         if self.analysis_results.uniqueExtensionsInCollectionList is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
+            self._output_list_title(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
             output = ""
             for item in self.analysis_results.uniqueExtensionsInCollectionList:
                 output = "{}{}, ".format(output, item[0])
@@ -560,37 +560,35 @@ class DROIDAnalysisTextOutput:
 
         if self.analysis_results.rogue_multiple_identification_list is not None:
             if len(self.analysis_results.rogue_multiple_identification_list) > 0:
-                self.__output_list_title__(self.STRINGS.HEADING_LIST_MULTIPLE)
+                self._output_list_title(self.STRINGS.HEADING_LIST_MULTIPLE)
                 self.printFormattedText(
-                    self.__itemlist__(
+                    self._itemlist(
                         self.analysis_results.rogue_multiple_identification_list
                     )
                 )
 
         if self.analysis_results.frequencyOfAllExtensions is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
+            self._output_list_title(self.STRINGS.HEADING_FREQUENCY_EXTENSIONS_ALL)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.frequencyOfAllExtensions)
+                self._frequencyoutput(self.analysis_results.frequencyOfAllExtensions)
             )
 
         if self.analysis_results.mimetypeFrequency is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_FREQUENCY_MIME)
+            self._output_list_title(self.STRINGS.HEADING_FREQUENCY_MIME)
             mimes = self.analysis_results.mimetypeFrequency
             for m in mimes:
                 if m[0] == "":
                     mimes.remove(m)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.mimetypeFrequency)
+                self._frequencyoutput(self.analysis_results.mimetypeFrequency)
             )
 
         if (
             self.analysis_results.signatureidentifiedfrequency is not None
             and self.analysis_results.nsdatalist is not None
         ):
-            self.__output_list_title__(
-                self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS
-            )
-            namespace_results = self.__handlenamespacestats__(
+            self._output_list_title(self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS)
+            namespace_results = self._handlenamespacestats(
                 self.analysis_results.nsdatalist,
                 self.analysis_results.signatureidentifiedfrequency,
             )
@@ -601,25 +599,25 @@ class DROIDAnalysisTextOutput:
             self.analysis_results.xml_identifiers is not None
             and len(self.analysis_results.xml_identifiers) > 0
         ):
-            self.__output_list_title__(self.STRINGS.HEADING_XML_ID_COMPLETE)
+            self._output_list_title(self.STRINGS.HEADING_XML_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.xml_identifiers)
+                self._frequencyoutput(self.analysis_results.xml_identifiers)
             )
         if (
             self.analysis_results.text_identifiers is not None
             and len(self.analysis_results.text_identifiers) > 0
         ):
-            self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID_COMPLETE)
+            self._output_list_title(self.STRINGS.HEADING_TEXT_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.text_identifiers)
+                self._frequencyoutput(self.analysis_results.text_identifiers)
             )
         if (
             self.analysis_results.filename_identifiers is not None
             and len(self.analysis_results.filename_identifiers) > 0
         ):
-            self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID_COMPLETE)
+            self._output_list_title(self.STRINGS.HEADING_FILENAME_ID_COMPLETE)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.filename_identifiers)
+                self._frequencyoutput(self.analysis_results.filename_identifiers)
             )
         # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
 
@@ -631,13 +629,11 @@ class DROIDAnalysisTextOutput:
                     self.analysis_results.zerobytecount,
                 )
             )
-            self.printFormattedText(
-                self.__itemlist__(self.analysis_results.zerobytelist)
-            )
+            self.printFormattedText(self._itemlist(self.analysis_results.zerobytelist))
 
         if self.analysis_results.containertypeslist is not None:
             if len(self.analysis_results.containertypeslist) > 0:
-                self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
+                self._output_list_title(self.STRINGS.HEADING_ARCHIVE_FORMATS)
                 output = ""
                 for archive in self.analysis_results.containertypeslist:
                     output = "{}{}, ".format(output, archive[0])
@@ -654,47 +650,47 @@ class DROIDAnalysisTextOutput:
                     )
                 )
                 self.printFormattedText(
-                    self.__outputdupes__(self.analysis_results.duplicateHASHlisting)
+                    self._outputdupes(self.analysis_results.duplicateHASHlisting)
                 )
 
         if self.analysis_results.badFileNames is not None:
             if len(self.analysis_results.badFileNames) > 0:
-                self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
+                self._output_list_title(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
                 for badnames in self.analysis_results.badFileNames:
                     # Already UTF-8 on way into here...
                     self.printFormattedText(badnames, False)
 
         if self.analysis_results.badDirNames is not None:
             if len(self.analysis_results.badDirNames) > 0:
-                self.__output_list_title__(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
+                self._output_list_title(self.STRINGS.HEADING_TROUBLESOME_FILENAMES)
                 for badnames in self.analysis_results.badDirNames:
                     # Already UTF-8 on way into here...
                     self.printFormattedText(badnames, False)
 
         if self.analysis_results.denylist is True:
             if self.analysis_results.denylist_ids:
-                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_IDS)
+                self._output_list_title(self.STRINGS.HEADING_DENYLIST_IDS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysis_results.denylist_ids)
+                    self._aggregatelists(self.analysis_results.denylist_ids)
                 )
             if self.analysis_results.denylist_exts:
-                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_EXTS)
+                self._output_list_title(self.STRINGS.HEADING_DENYLIST_EXTS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysis_results.denylist_exts)
+                    self._aggregatelists(self.analysis_results.denylist_exts)
                 )
             if self.analysis_results.denylist_filenames:
-                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_FILENAMES)
+                self._output_list_title(self.STRINGS.HEADING_DENYLIST_FILENAMES)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysis_results.denylist_filenames)
+                    self._aggregatelists(self.analysis_results.denylist_filenames)
                 )
             if self.analysis_results.denylist_directories:
-                self.__output_list_title__(self.STRINGS.HEADING_DENYLIST_DIRS)
+                self._output_list_title(self.STRINGS.HEADING_DENYLIST_DIRS)
                 self.printFormattedText(
-                    self.__aggregatelists__(self.analysis_results.denylist_directories)
+                    self._aggregatelists(self.analysis_results.denylist_directories)
                 )
 
         if self.analysis_results.errorlist:
-            self.__output_list_title__(self.STRINGS.HEADING_ERRORS)
+            self._output_list_title(self.STRINGS.HEADING_ERRORS)
             self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.errorlist)
+                self._frequencyoutput(self.analysis_results.errorlist)
             )
