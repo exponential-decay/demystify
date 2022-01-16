@@ -46,6 +46,7 @@ class DemystifyBase(object):
         if total > 0:
             percentage = (subset / total) * 100
             return "%.1f" % round(percentage, 1)
+        return 0
 
 
 class DemystifyAnalysis(DemystifyBase):
@@ -189,36 +190,38 @@ class DemystifyAnalysis(DemystifyBase):
         if not config.has_section("priority"):
             return None
         try:
-            config.get("priority", "pronom").lower() == "true"
+            _ = config.get("priority", "pronom").lower() == "true"
             return self.ID_PRONOM
         except NoOptionError:
             pass
         try:
-            config.get("priority", "freedesktop").lower() == "true"
+            _ = config.get("priority", "freedesktop").lower() == "true"
             return self.ID_FREEDESKTOP
         except NoOptionError:
             pass
         try:
-            config.get("priority", "tika").lower() == "true"
+            _ = config.get("priority", "tika").lower() == "true"
             return self.ID_TIKA
         except NoOptionError:
             pass
         return None
 
     def _querydb(self, query, fetchone=False, numberquery=False, tolist=False):
+        """Query DB helper functions as syntactic sugar for the caller
+        so that a number of different sqlite query calls styles can be
+        used and the caller can do less work to pull those values apart.
+        """
         self.cursor.execute(query.replace("  ", ""))
         if fetchone is True and numberquery is False:
             return self.cursor.fetchone()
         if fetchone is True and numberquery is True:
             return self.cursor.fetchone()[0]
-        else:
-            if tolist is False:
-                return self.cursor.fetchall()
-            else:
-                list = []
-                for result in self.cursor.fetchall():
-                    list.append(result[0])
-                return list
+        if tolist is False:
+            return self.cursor.fetchall()
+        list_ = []
+        for result in self.cursor.fetchall():
+            list_.append(result[0])
+        return list_
 
     # List queries
 
@@ -278,15 +281,15 @@ class DemystifyAnalysis(DemystifyBase):
         self.rogue_dirs = []
 
         namereport = []
-        for d in namelist:
+        for name in namelist:
             try:
-                namestring = u"{}".format(d[0].decode("utf8"))
+                namestring = u"{}".format(name[0].decode("utf8"))
             except AttributeError:
-                namestring = u"{}".format(d[0])
+                namestring = u"{}".format(name[0])
             checkedname = charcheck.complete_file_name_analysis(namestring)
             if len(checkedname) > 0:
                 namereport.append(checkedname)
-                self.rogue_names.append(d[0])
+                self.rogue_names.append(name[0])
 
         dirreport = []
         for dir_ in dirlist:
@@ -297,7 +300,7 @@ class DemystifyAnalysis(DemystifyBase):
             checkedname = charcheck.complete_file_name_analysis(dirstring, True)
             if len(checkedname) > 0:
                 dirreport.append(checkedname)
-                self.rogue_dirs.append(d[0])
+                self.rogue_dirs.append(dir_[0])
 
         self.analysis_results.badFileNames = namereport
         self.analysis_results.badDirNames = dirreport
@@ -486,15 +489,6 @@ class DemystifyAnalysis(DemystifyBase):
         )
 
         for id_ in methodresults:
-            """
-            0  'ns:' || NSDATA.NS_NAME || ' ',
-            1  IDDATA.ID,
-            2  IDDATA.FORMAT_NAME,
-            3  IDDATA.BASIS,
-            4  IDDATA.FORMAT_VERSION,
-            5  IDDATA.NS_ID,
-            6  COUNT(IDDATA.ID
-            """
             ns_id = id_[5]
             name = id_[2]
 
@@ -569,11 +563,10 @@ class DemystifyAnalysis(DemystifyBase):
             # Canonical example is two brackets, below, so it
             # might be possible to deprecate this.
             return self._handle_match_with_square_brackets(match)
-        elif "[[" in match:
+        if "[[" in match:
             # Example: byte match at [[0 16] [77 4] [45015 12]].
             return self._handle_match_with_square_brackets(match)
-        else:
-            return self._handle_match_without_brackets(match)
+        return self._handle_match_without_brackets(match)
 
     @staticmethod
     def _update_stats(stat_list, file_id, match, file_name, file_size, bof_eof):
@@ -585,7 +578,6 @@ class DemystifyAnalysis(DemystifyBase):
         stat_list[4] = bof_eof
         return stat_list
 
-    @staticmethod
     def _get_bases(self, basis):
         """Process the output from the database with Siegfried basis
         results.
@@ -639,7 +631,7 @@ class DemystifyAnalysis(DemystifyBase):
         and end of file in a Siegfried report.
         """
         basis = self._querydb(AnalysisQueries.SELECT_BYTE_MATCH_BASIS)
-        return self._get_bases(self, basis)
+        return self._get_bases(basis)
 
     @staticmethod
     def _get_match_offsets(basis, sequence_count, file_size):
@@ -675,7 +667,7 @@ class DemystifyAnalysis(DemystifyBase):
             bof = pos + pos_len
             eof = file_size - pos
             return bof, None, file_size
-        for idx, sequence in enumerate(range(sequence_count)):
+        for _, sequence in enumerate(range(sequence_count)):
             try:
                 offset = int(basis[sequence * 2])
                 offset_match_length = int(basis[(sequence * 2) + 1])
@@ -858,7 +850,6 @@ class DemystifyAnalysis(DemystifyBase):
             AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True
         )
 
-        # todo: consider merit of each identification bin
         mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
         self.analysis_results.mimetypeFrequency = self._querydb(
             self.query.getmimes(mimeids)
@@ -909,16 +900,6 @@ class DemystifyAnalysis(DemystifyBase):
         self.analysis_results.containertypeslist = self._querydb(
             AnalysisQueries.SELECT_CONTAINER_TYPES
         )
-
-        # MORE WORK NEEDED ON ROGUES NOW... ACCURACY IS PARAMOUNT
-        if len(self.extensionIDonly) > 0:
-            """TODO: The values below are not used - why?"""
-            # extonly = self.query.query_from_ids(self.extensionIDonly)
-            # extrogues = self._querydb(extonly)
-        if len(self.noids) > 0:  # NOT THE SAME AS COMPLETELY UNIDENTIFIED
-            """TODO: The values below are not used - why?"""
-            # none = self.query.query_from_ids(self.noids)
-            # nonerogues = self._querydb(none)
 
         # create a statistic for aggregated binary identification
         if self.binaryIDs is not None and len(self.binaryIDs) > 0:
@@ -1092,11 +1073,7 @@ class DemystifyAnalysis(DemystifyBase):
                 self.query.get_ns_methods(nsid, False, "Extension"), True, True
             )
             nsdict[self.NS_CONST_MULTIPLE_IDS] = self._querydb(
-                self.query.get_ns_multiple_ids(
-                    nsid, self.analysis_results.namespacecount
-                ),
-                True,
-                True,
+                self.query.get_ns_multiple_ids(nsid), True, True
             )
             nsdatalist.append(nsdict)
         self.analysis_results.nsdatalist = nsdatalist

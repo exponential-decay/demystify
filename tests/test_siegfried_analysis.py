@@ -6,11 +6,7 @@ import sys
 
 from demystify import analysis_from_csv
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
-
+PY3 = bool(sys.version_info[0] == 3)
 
 SF_YAML = u"""---
 siegfried   : 1.9.1

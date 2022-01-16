@@ -17,10 +17,7 @@ except ImportError:
     import configparser as ConfigParser
 
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
+PY3 = bool(sys.version_info[0] == 3)
 
 
 DENYLIST_ROGUES = u"""[denylist]
@@ -366,6 +363,20 @@ matches  :
     mime    : 'text/plain'
     basis   : 'extension match pdf; byte match at [[0 8] [9290 44] [9342 73]]'
     warning :
+---
+filename : 'fixtures/dirs_with_various_encodings/shift_jis/hero_only_test/shift-jis_encoded_dirs.txt'
+filesize : 101
+modified : 2020-06-22T19:38:22+02:00
+errors   :
+md5      : a171a2a321e8c429362483e98a80960b
+matches  :
+  - ns      : 'pronom'
+    id      : 'x-fmt/111'
+    format  : 'Plain Text File'
+    version :
+    mime    : 'text/plain'
+    basis   : 'extension match txt; text match ASCII'
+    warning :
 """
 
 
@@ -521,11 +532,16 @@ EXPECTED_SIEGFRIED_ROGUES = [
     u"denylist/plain_text",
     u"denylist/.git/commit_data",
     u"fixtures/files_with_various_encodings/emoji",
+    u"fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt",
+    # Double-check folder handling, hero_only_test and a few others
+    # I think are being picked up in the filename analysis as Unicode
+    # but I am not sure.
+    u"fixtures/dirs_with_various_encodings/shift_jis/hero_only_test",
 ]
 
 
 def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
-    """,.."""
+    """Ensure that rogues are output correctly."""
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
@@ -540,10 +556,10 @@ def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True, denylist, True, False)
 
-    assert res.analysis_results.filecount == 15
+    assert res.analysis_results.filecount == 16
     # Directory count is not used by SF because it doesn't use absolute
     # paths. More names are removed when creating the set.
-    assert res.analysis_results.uniqueDirectoryNames == 6
+    assert res.analysis_results.uniqueDirectoryNames == 7
 
     rogue_output = rogueoutputclass(res.analysis_results, rogueconfig, False)
     rogue_output.printTextResults()
@@ -551,19 +567,19 @@ def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
     assert captured.out != "", "stdout is empty"
     processed = _process_captured_out(captured.out)
     assert len(set(processed)) == len(set(EXPECTED_SIEGFRIED_ROGUES))
-    assert len(set(processed)) == 18
+    assert len(set(processed)) == 20
     assert set(processed) == set(EXPECTED_SIEGFRIED_ROGUES)
 
 
 EXPECTED_SIEGFRIED_HEROES = [
-    u"fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt",
     u"denylist/ole2.xls",
     u"denylist/xlsx.xlsx",
+    u"fixtures/dirs_with_various_encodings/shift_jis/hero_only_test/shift-jis_encoded_dirs.txt",
 ]
 
 
 def test_heroes_sf(tmp_path, capsys, denylist, rogueconfig):
-    """,.."""
+    """Ensure that heroes are output correctly."""
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
@@ -578,10 +594,10 @@ def test_heroes_sf(tmp_path, capsys, denylist, rogueconfig):
     # further refactoring.
     res = analysis_from_csv(str(sf_yaml), True, denylist, True, False)
 
-    assert res.analysis_results.filecount == 15
+    assert res.analysis_results.filecount == 16
     # Directory count is not used by SF because it doesn't use absolute
     # paths. More names are removed when creating the set.
-    assert res.analysis_results.uniqueDirectoryNames == 6
+    assert res.analysis_results.uniqueDirectoryNames == 7
 
     heroes_output = rogueoutputclass(res.analysis_results, rogueconfig, True)
     heroes_output.printTextResults()

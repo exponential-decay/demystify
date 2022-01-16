@@ -10,6 +10,9 @@ import logging
 
 
 class AnalysisQueries:
+    """Object to hold all queries and helpers related to standard
+    analysis functions in Demystify.
+    """
 
     SELECT_FILENAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
     SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
@@ -272,8 +275,8 @@ class AnalysisQueries:
         )
 
     @staticmethod
-    def count_id_instances(id):
-        return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='" + id + "')"
+    def count_id_instances(id_):
+        return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='{}'".format(id_)
 
     def query_from_idrows(self, idlist, priority=None):
         list_ = "WHERE IDRESULTS.ID_ID IN "
@@ -296,7 +299,6 @@ class AnalysisQueries:
             "END\n"
         )
         GROUP_TOTAL = """GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
-        SELECT_NAMESPACE_AND_IDS = SELECT_NAMESPACE_AND_IDS
         query = "{}\n{}".format(SELECT_NAMESPACE_AND_IDS, list_)
         if priority is not None:
             query = "{}{}".format(
@@ -320,7 +322,7 @@ class AnalysisQueries:
                 where = where + str(i) + ", "
         list_ = list_ + where.strip(", ") + ")"
 
-        SELECT_PATHS = "SELECT FILEDATA.FILE_PATH\n" "FROM FILEDATA\n"
+        SELECT_PATHS = "SELECT FILEDATA.FILE_PATH\nFROM FILEDATA\n"
 
         SELECT_NAMESPACE_AND_IDS = (
             "SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID\n"
@@ -333,11 +335,10 @@ class AnalysisQueries:
             SELECT_NAMESPACE_AND_IDS = (
                 SELECT_NAMESPACE_AND_IDS + "'" + idmethod + "'"
             )  # which method?
-            list_ = "OR " + list_
-            return SELECT_NAMESPACE_AND_IDS + "\n" + list_
-        else:
-            list_ = "WHERE " + list_
-            return SELECT_PATHS + "\n" + list_
+            list_ = "OR {}".format(list_)
+            return "{}\n{}".format(SELECT_NAMESPACE_AND_IDS, list_)
+        list_ = "WHERE {}".format(list_)
+        return SELECT_PATHS + "\n" + list_
 
     # NAMESPACE QUERIES
     SELECT_NS_DATA = "SELECT * FROM NSDATA"
@@ -356,7 +357,7 @@ class AnalysisQueries:
         ).format(nsid)
 
     @staticmethod
-    def get_ns_multiple_ids(nsid, nscount):
+    def get_ns_multiple_ids(nsid):
         SELECT_NAMESPACE_BINARY_IDS1 = (
             "SELECT count(*)\n"
             "FROM (SELECT COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
@@ -397,7 +398,7 @@ class AnalysisQueries:
         COUNT_IDS_METHODS = (
             "AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')"
         )
-        ID_METHODS_COUNT = "SELECT COUNT(*) " "FROM IDDATA\n"
+        ID_METHODS_COUNT = "SELECT COUNT(*) FROM IDDATA\n"
         ID_METHODS_METHOD = "AND IDDATA.METHOD="
         query = ""
         if binary is True:
@@ -409,7 +410,6 @@ class AnalysisQueries:
         logging.debug("get_ns_methods: %s", query)
         return query
 
-    # ERRORS, TODO: Place somewhere else?
     ERROR_NOHASH = (
         "Unable to detect duplicates: No HASH algorithm used by identification tool"
     )

@@ -74,7 +74,7 @@ class RogueQueries(object):
     def get_rogue_name_paths(itemlist):
         csv = '","'.join(itemlist)
         csv = '("{}")'.format(csv)
-        PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA\n" "WHERE NAME IN "
+        PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE NAME IN "
         query = "{}{}".format(PATHS, csv)
         return query
 
@@ -84,8 +84,6 @@ class RogueQueries(object):
             return ""
         csv = '","'.join(itemlist)
         csv = '("{}")'.format(csv)
-        PATHS = (
-            "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA\n" "WHERE DIR_NAME IN "
-        )
+        PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE DIR_NAME IN "
         query = "{}{}".format(PATHS, csv)
         return query

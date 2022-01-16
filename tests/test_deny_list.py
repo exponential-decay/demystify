@@ -15,10 +15,7 @@ except ImportError:
     import configparser as ConfigParser
 
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
+PY3 = bool(sys.version_info[0] == 3)
 
 DENYLIST_DENY = u"""[denylist]
 
