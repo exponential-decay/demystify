@@ -132,9 +132,9 @@ class DROIDAnalysisTextOutput:
     def __outputdupes__(self, list):
         output = ""
         for dupes in self.analysis_results.duplicateHASHlisting:
-            output = u"{}Checksum: {}\n".format(output, dupes["checksum"])
-            output = u"{}Count: {}\n".format(output, dupes["count"])
-            output = u"{}Example: {}\n\n".format(output, dupes["examples"][0])
+            output = "{}Checksum: {}\n".format(output, dupes["checksum"])
+            output = "{}Count: {}\n".format(output, dupes["count"])
+            output = "{}Example: {}\n\n".format(output, dupes["examples"][0])
         return output.strip("\n")
 
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
