@@ -34,13 +34,14 @@ class DROIDAnalysisTextOutput:
         self.STRINGS = IN_EN
         self.analysis_results = analysis_results
 
-    def __output_list__(self, title, value):
-        return title + ": " + str(value)
+    def _output_list(self, title, value):
+        ret = u"{}: {}".format(title, value)
+        return ret
 
     def __itemlist__(self, list):
         output = ""
         for item in list:
-            output = output + str(item) + "\n"
+            "{}{}\n".format(output, item)
         return output.strip("\n")
 
     def __printNewline__(self):
@@ -48,7 +49,7 @@ class DROIDAnalysisTextOutput:
 
     def __output_list_title__(self, title):
         self.__printNewline__()
-        self.printFormattedText(title + ":")
+        self.printFormattedText("{}:".format(title))
 
     def splitidresults(self, puid):
         identifier = puid[0].rsplit("(", 1)[0]
@@ -99,9 +100,7 @@ class DROIDAnalysisTextOutput:
     def __frequencyoutput__(self, itemlist, zeros=False):
         val = ""
         if not isinstance(itemlist, list):
-            sys.stderr.write(
-                "LOG: Not sending a list to a function wanting a list." + "\n"
-            )
+            logging.error("Not sending a list to a function wanting a list")
         else:
             for item in itemlist:
                 if zeros is True:
@@ -115,17 +114,15 @@ class DROIDAnalysisTextOutput:
     def __aggregatelists__(self, itemlist):
         outstr = ""
         if not isinstance(itemlist, list):
-            sys.stderr.write(
-                "LOG: Not sending a list to a function wanting a list." + "\n"
-            )
+            logging.error("Not sending a list to a function wanting a list.")
         else:
             for item in itemlist:
                 name = item[0]
                 if item[1] is not None:
-                    count = "(" + str(item[1]) + ")"
-                    outstr = outstr + name + " " + count + "\n"
+                    count = u"({})".format(item[1])
+                    outstr = u"{}{} {}\n".format(outstr, name, count)
                 else:
-                    outstr = outstr + name + "\n"
+                    outstr = u"{}{}\n".format(outstr, name)
         return outstr.strip("\n")
 
     def getDateList(self):
@@ -135,9 +132,9 @@ class DROIDAnalysisTextOutput:
     def __outputdupes__(self, list):
         output = ""
         for dupes in self.analysis_results.duplicateHASHlisting:
-            output = output + "Checksum: " + str(dupes["checksum"]) + "\n"
-            output = output + "Count: " + str(dupes["count"]) + "\n"
-            output = output + "Example: " + str(dupes["examples"][0]) + "\n\n"
+            output = u"{}Checksum: {}\n".format(output, dupes["checksum"])
+            output = u"{}Count: {}\n".format(output, dupes["count"])
+            output = u"{}Example: {}\n\n".format(output, dupes["examples"][0])
         return output.strip("\n")
 
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
@@ -169,90 +166,60 @@ class DROIDAnalysisTextOutput:
             percent_ok = demystify.calculatePercent(
                 self.analysis_results.filecount, identified
             )
-            output = (
-                output
-                + self.STRINGS.HEADING_NAMESPACE
-                + ": "
-                + nstitle
-                + " ("
-                + ns[demystify.NS_CONST_DETAILS]
-                + ")"
-                "\n"
+            output = u"{}{}: {} ({})\n".format(
+                output,
+                self.STRINGS.HEADING_NAMESPACE,
+                nstitle,
+                ns[demystify.NS_CONST_DETAILS],
             )
-            output = (
-                output
-                + self.STRINGS.SUMMARY_IDENTIFIED_FILES
-                + ": "
-                + str(identified)
-                + "\n"
+            output = u"{}{}: {}\n".format(
+                output, self.STRINGS.SUMMARY_IDENTIFIED_FILES, identified
             )
-            output = (
-                output
-                + self.STRINGS.SUMMARY_MULTIPLE
-                + ": "
-                + str(ns[demystify.NS_CONST_MULTIPLE_IDS])
-                + "\n"
+            output = u"{}{}: {}\n".format(
+                output,
+                self.STRINGS.SUMMARY_MULTIPLE,
+                ns[demystify.NS_CONST_MULTIPLE_IDS],
             )
-            output = (
-                output
-                + self.STRINGS.SUMMARY_UNIDENTIFIED
-                + ": "
-                + str(unidentified)
-                + "\n"
+            output = u"{}{}: {}\n".format(
+                output, self.STRINGS.SUMMARY_UNIDENTIFIED, unidentified
             )
-            output = output + self.STRINGS.SUMMARY_EXTENSION_ID + ": " + str(ext) + "\n"
-
+            output = u"{}{}: {}\n".format(
+                output, self.STRINGS.SUMMARY_EXTENSION_ID, ext
+            )
             if self.analysis_results.tooltype != "droid":
-                output = output + self.STRINGS.SUMMARY_XML_ID + ": " + str(xmlid) + "\n"
-                output = output + self.STRINGS.SUMMARY_TEXT_ID + ": " + str(text) + "\n"
-                output = (
-                    output
-                    + self.STRINGS.SUMMARY_FILENAME_ID
-                    + ": "
-                    + str(filename)
-                    + "\n"
+                output = u"{}{}: {}\n".format(
+                    output, self.STRINGS.SUMMARY_XML_ID, xmlid
                 )
-
-            output = (
-                output
-                + self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED
-                + ": "
-                + str(percent_ok)
-                + "\n"
+                output = u"{}{}: {}\n".format(
+                    output, self.STRINGS.SUMMARY_TEXT_ID, text
+                )
+                output = u"{}{}: {}\n".format(
+                    output, self.STRINGS.SUMMARY_FILENAME_ID, str(filename)
+                )
+            output = u"{}{}: {}\n".format(
+                output, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, percent_ok
             )
-            output = (
-                output
-                + self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED
-                + ": "
-                + str(percent_not)
-                + "\n"
+            output = u"{}{}: {}\n".format(
+                output, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, percent_not
             )
-            output = output + "\n"
-            output = output + self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED + "\n"
+            output = u"{}\n".format(output)
+            output = u"{}{}\n".format(
+                output, self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED
+            )
             for idrow in signatureids:
                 if idrow[0] == nstitle:
-                    output = output + idrow[1] + " (" + str(idrow[2]) + "), "
+                    output = u"{}{} ({}), ".format(output, idrow[1], idrow[2])
             output = output.strip(", ")
-            output = output + "\n\n"
-
+            output = u"{}\n\n".format(output)
         return output.strip("\n")
 
     def __generateOffsetText__(self, offsettext):
-        # #########['id','basis','filename','filesize','offset']##########
         offs = offsettext
         if offs is not None:
-            return (
-                offs[0]
-                + ", "
-                + offs[1]
-                + " e.g. "
-                + offs[2]
-                + " filesize: "
-                + str(offs[3])
-                + ", "
-                + str(offs[4])
-                + " bytes"
+            ret = u"{}, {} e.g. {} filesize: {}, {} bytes".format(
+                offs[0], offs[1], offs[2], offs[3], offs[4]
             )
+            return ret
 
     @staticmethod
     def _remove_version_if_none(identifier_list):
@@ -276,49 +243,58 @@ class DROIDAnalysisTextOutput:
             newlist.append((str(item[0]), None))
         return newlist
 
+    @staticmethod
+    def _separated_text(t1, t2):
+        """Concatenate two strings with a colon in listings."""
+        return u"{}: {}".format(t1, t2)
+
     def generateTEXT(self):
         if self.analysis_results.tooltype != "droid":
             self.printFormattedText(self.STRINGS.REPORT_TITLE_SF)
         else:
             self.printFormattedText(self.STRINGS.REPORT_TITLE_DR)
 
-        self.printFormattedText(
-            self.STRINGS.REPORT_VERSION + ": " + self.analysis_results.__version__()
+        # Output common list details, e.g. analysis version.
+        ver = self._separated_text(
+            self.STRINGS.REPORT_VERSION, self.analysis_results.__version__()
         )
-        self.printFormattedText(
-            self.STRINGS.REPORT_FILE + ": " + self.analysis_results.filename
+        self.printFormattedText(ver)
+        filename = self._separated_text(
+            self.STRINGS.REPORT_FILE, self.analysis_results.filename
         )
-        self.printFormattedText(
-            self.STRINGS.REPORT_TOOL + ": " + self.analysis_results.tooltype
+        self.printFormattedText(filename)
+        tool_type = self._separated_text(
+            self.STRINGS.REPORT_TOOL, self.analysis_results.tooltype
         )
+        self.printFormattedText(tool_type)
         self.printFormattedText("")
-        self.printFormattedText(
-            self.STRINGS.NAMESPACES + ": " + str(self.analysis_results.namespacecount)
+        namespace_count = self._separated_text(
+            self.STRINGS.NAMESPACES, self.analysis_results.namespacecount
         )
+        self.printFormattedText(namespace_count)
 
+        bof = self._separated_text(
+            self.STRINGS.SUMMARY_DISTANCE_BOF,
+            self.__generateOffsetText__(self.analysis_results.bof_distance),
+        )
         if self.analysis_results.bof_distance is not None:
-            self.printFormattedText(
-                self.STRINGS.SUMMARY_DISTANCE_BOF
-                + ": "
-                + self.__generateOffsetText__(self.analysis_results.bof_distance)
-            )
+            self.printFormattedText(bof)
 
+        eof = self._separated_text(
+            self.STRINGS.SUMMARY_DISTANCE_EOF,
+            self.__generateOffsetText__(self.analysis_results.eof_distance),
+        )
         if self.analysis_results.eof_distance is not None:
-            self.printFormattedText(
-                self.STRINGS.SUMMARY_DISTANCE_EOF
-                + ": "
-                + self.__generateOffsetText__(self.analysis_results.eof_distance)
-            )
+            self.printFormattedText(eof)
 
         self.printFormattedText("")
-
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_TOTAL_FILES, self.analysis_results.filecount
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_ARCHIVE_FILES, self.analysis_results.containercount
             )
         )
@@ -326,37 +302,37 @@ class DROIDAnalysisTextOutput:
         # even if we have archive files, if the analysis isn't on, we can't output this value
         if self.analysis_results.filesincontainercount > 0:
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_INSIDE_ARCHIVES,
                     self.analysis_results.filesincontainercount,
                 )
             )
 
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_DIRECTORIES, self.analysis_results.directoryCount
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_UNIQUE_DIRNAMES,
                 self.analysis_results.uniqueDirectoryNames,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_IDENTIFIED_FILES,
                 self.analysis_results.identifiedfilecount,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_MULTIPLE,
                 self.analysis_results.multipleidentificationcount,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_UNIDENTIFIED,
                 self.analysis_results.unidentifiedfilecount,
             )
@@ -364,36 +340,36 @@ class DROIDAnalysisTextOutput:
 
         if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_XML_ID, self.analysis_results.xmlidfilecount
                 )
             )
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_TEXT_ID, self.analysis_results.textidfilecount
                 )
             )
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_FILENAME_ID,
                     self.analysis_results.filenameidfilecount,
                 )
             )
 
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_EXTENSION_ID,
                 self.analysis_results.extensionIDOnlyCount,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_EXTENSION_MISMATCH,
                 self.analysis_results.extmismatchCount,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_ID_PUID_COUNT,
                 self.analysis_results.distinctSignaturePuidcount,
             )
@@ -401,58 +377,58 @@ class DROIDAnalysisTextOutput:
 
         if self.analysis_results.tooltype != "droid":
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_OTHER_ID_COUNT,
                     self.analysis_results.distinctOtherIdentifiers,
                 )
             )
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_XML_ID_COUNT,
                     self.analysis_results.distinctXMLIdentifiers,
                 )
             )
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_TEXT_ID_COUNT,
                     self.analysis_results.distinctTextIdentifiers,
                 )
             )
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_FILENAME_ID_COUNT,
                     self.analysis_results.distinctFilenameIdentifiers,
                 )
             )
 
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_UNIQUE_EXTENSIONS,
                 self.analysis_results.distinctextensioncount,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_ZERO_BYTE, self.analysis_results.zerobytecount
             )
         )
 
         if self.analysis_results.hashused > 0:
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_IDENTICAL_FILES,
                     self.analysis_results.totalHASHduplicates,
                 )
             )
 
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED,
                 self.analysis_results.identifiedPercentage,
             )
         )
         self.printFormattedText(
-            self.__output_list__(
+            self._output_list(
                 self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED,
                 self.analysis_results.unidentifiedPercentage,
             )
@@ -463,22 +439,20 @@ class DROIDAnalysisTextOutput:
             and self.analysis_results.identificationgaps is not None
         ):
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.SUMMARY_GAPS_COVERED,
                     self.analysis_results.identificationgaps,
                 )
             )
 
-        # return the size of the collection
+        # Print out the size of the collection.
         size = self.analysis_results.collectionsize  # easier to reference from a var
-        self.printFormattedText(
-            self.STRINGS.HEADING_SIZE
-            + ": "
-            + str(float(size))
-            + " bytes | "
-            + str(round(float(float(size) / (1048576)), 1))
-            + " MiB/MB (Megabytes)"
-        )  # MiB/MB = (2^1024)*2
+        size_text = "{}: {} bytes | {} MiB/MB (Megabytes)".format(
+            self.STRINGS.HEADING_SIZE,
+            float(size),
+            str(round(float(float(size) / (1048576)), 1)),
+        )
+        self.printFormattedText(size_text)  # MiB/MB = (2^1024)*2
 
         signature_id_list = []
         if self.analysis_results.signatureidentifiers is not None:
@@ -581,7 +555,7 @@ class DROIDAnalysisTextOutput:
             self.__output_list_title__(self.STRINGS.HEADING_UNIQUE_EXTENSIONS)
             output = ""
             for item in self.analysis_results.uniqueExtensionsInCollectionList:
-                output = output + item[0] + ", "
+                output = "{}{}, ".format(output, item[0])
             self.printFormattedText(output.strip(", "))
 
         if self.analysis_results.rogue_multiple_identification_list is not None:
@@ -652,7 +626,7 @@ class DROIDAnalysisTextOutput:
         if self.analysis_results.zerobytecount > 0:
             self.printFormattedText("\n")
             self.printFormattedText(
-                self.__output_list__(
+                self._output_list(
                     self.STRINGS.HEADING_LIST_ZERO_BYTES,
                     self.analysis_results.zerobytecount,
                 )
@@ -666,7 +640,7 @@ class DROIDAnalysisTextOutput:
                 self.__output_list_title__(self.STRINGS.HEADING_ARCHIVE_FORMATS)
                 output = ""
                 for archive in self.analysis_results.containertypeslist:
-                    output = output + archive[0] + ", "
+                    output = "{}{}, ".format(output, archive[0])
                 self.printFormattedText(output.strip(", "))
 
         self.printFormattedText("\n", True)
@@ -674,7 +648,7 @@ class DROIDAnalysisTextOutput:
         if self.analysis_results.hashused > 0:
             if self.analysis_results.totalHASHduplicates > 0:
                 self.printFormattedText(
-                    self.__output_list__(
+                    self._output_list(
                         self.STRINGS.HEADING_IDENTICAL_CONTENT,
                         self.analysis_results.totalHASHduplicates,
                     )
