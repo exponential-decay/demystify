@@ -47,6 +47,7 @@ class AnalysisQueries:
         "FROM FILEDATA\n"
         "WHERE FILEDATA.TYPE!='Folder'\n"
         "AND FILEDATA.ERROR!=''\n"
+        "AND FILEDATA.ERROR!='None'\n"
         "GROUP BY FILEDATA.ERROR ORDER BY TOTAL DESC"
     )
 

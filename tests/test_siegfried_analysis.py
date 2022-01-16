@@ -2662,11 +2662,10 @@ def test_run_siegfried_analysis(tmp_path):
     assert res.analysis_results.filesincontainercount == 16
 
     # Errors are a Siegfried only feature.
-    assert len(res.analysis_results.errorlist) == 4
+    assert len(res.analysis_results.errorlist) == 3
     errs = sorted([err[0] for err in res.analysis_results.errorlist])
     expected_errs = sorted(
         [
-            "None",
             "failed to decompress, got: webarchive: invalid ARC version block",
             "failed to decompress, got: EOF",
             "failed to decompress, got: zip: not a valid zip file",
