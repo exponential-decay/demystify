@@ -105,7 +105,8 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
 
     :return: None (Nonetype)
     """
-    ROGUES_TEXT = ("Rogues and Heroes output. "
+    ROGUES_TEXT = (
+        "Rogues and Heroes output. "
         "Rogues and Heroes analysis is still in its early BETA stages. "
         "Please report any feedback you have around its accuracy and helpfulness. "
         "The feedback received will help improve the feature."
