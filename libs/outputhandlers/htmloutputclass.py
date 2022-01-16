@@ -51,7 +51,7 @@ class DROIDAnalysisHTMLOutput:
             try:
                 newtext = u"{}".format(text)
             except UnicodeDecodeError:
-                newtext = "".format(text.decode("utf8"))
+                newtext = "{}".format(text.decode("utf8"))
         self.htmloutput = u"{}{}".format(self.htmloutput, newtext)
         self.__printnewline__()
 
