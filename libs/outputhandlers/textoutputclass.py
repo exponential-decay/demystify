@@ -34,11 +34,13 @@ class DROIDAnalysisTextOutput:
         self.STRINGS = IN_EN
         self.analysis_results = analysis_results
 
-    def _output_list(self, title, value):
+    @staticmethod
+    def _output_list(title, value):
         ret = u"{}: {}".format(title, value)
         return ret
 
-    def _itemlist(self, list):
+    @staticmethod
+    def _itemlist(list):
         output = ""
         for item in list:
             "{}{}\n".format(output, item)
@@ -51,7 +53,8 @@ class DROIDAnalysisTextOutput:
         self._printNewline()
         self.printFormattedText("{}:".format(title))
 
-    def splitidresults(self, puid):
+    @staticmethod
+    def splitidresults(puid):
         identifier = puid[0].rsplit("(", 1)[0]
         namespace = puid[0].split(" ", 1)[0]
         patt = re.compile("(x-)?fmt\\/[0-9]+")  # noqa
@@ -96,8 +99,8 @@ class DROIDAnalysisTextOutput:
         self.generateTEXT()
         return self.textoutput
 
-    # namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
-    def _frequencyoutput(self, itemlist, zeros=False):
+    @staticmethod
+    def _frequencyoutput(itemlist, zeros=False):
         val = ""
         if not isinstance(itemlist, list):
             logging.error("Not sending a list to a function wanting a list")
@@ -111,7 +114,8 @@ class DROIDAnalysisTextOutput:
 
         return val
 
-    def _aggregatelists(self, itemlist):
+    @staticmethod
+    def _aggregatelists(itemlist):
         outstr = ""
         if not isinstance(itemlist, list):
             logging.error("Not sending a list to a function wanting a list.")
@@ -213,7 +217,8 @@ class DROIDAnalysisTextOutput:
             output = u"{}\n\n".format(output)
         return output.strip("\n")
 
-    def _generateOffsetText(self, offsettext):
+    @staticmethod
+    def _generateOffsetText(offsettext):
         offs = offsettext
         if offs is not None:
             ret = u"{}, {} e.g. {} filesize: {}, {} bytes".format(

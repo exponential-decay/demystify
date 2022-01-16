@@ -104,7 +104,8 @@ class AnalysisQueries:
 
     # PRONOM and OTHERS Text identifiers as one result
     # PRONOM and OTHERS Text identifiers as one result
-    def select_count_identifiers(self, method):
+    @staticmethod
+    def select_count_identifiers(method):
         # XML, Text, Filename
         method_pattern = "{{ method }}"
         SELECT_METHOD_IDENTIFIER = (
@@ -117,7 +118,8 @@ class AnalysisQueries:
         )
         return SELECT_METHOD_IDENTIFIER.replace(method_pattern, method)
 
-    def select_frequency_identifier_types(self, method):
+    @staticmethod
+    def select_frequency_identifier_types(method):
         # treating new identifer capabilities as first class citizens
         # %match on filename%    %xml match%    %text match%
         identifier_pattern = "{{ identifier }}"
@@ -148,7 +150,8 @@ class AnalysisQueries:
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
     )
 
-    def getmimes(self, idids):
+    @staticmethod
+    def getmimes(idids):
         """Construct mime query using a set of IDs provided to the
         function.
 
@@ -227,7 +230,8 @@ class AnalysisQueries:
         "AND IDDATA.BASIS LIKE '%byte match%'\n"
     )
 
-    def count_multiple_ids(self, nscount, paths=False):
+    @staticmethod
+    def count_multiple_ids(nscount, paths=False):
         """Count multiple entries for identification where the count is
         greater than the namespace count. E.g. a file has a multiple ID
         if it uses 3 namespaces and the frequency is 4, but not if the
@@ -261,12 +265,14 @@ class AnalysisQueries:
         query = "{}{}".format(body, nscount)
         return query
 
-    def list_duplicate_paths(self, checksum):
+    @staticmethod
+    def list_duplicate_paths(checksum):
         return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(
             checksum
         )
 
-    def count_id_instances(self, id):
+    @staticmethod
+    def count_id_instances(id):
         return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='" + id + "')"
 
     def query_from_idrows(self, idlist, priority=None):
@@ -300,7 +306,8 @@ class AnalysisQueries:
             query = "{}{}".format(query, GROUP_TOTAL)
         return query
 
-    def query_from_ids(self, idlist, idmethod=False):
+    @staticmethod
+    def query_from_ids(idlist, idmethod=False):
         if idmethod is not False:
             list_ = "IDRESULTS.FILE_ID IN "
             where = "("
@@ -335,7 +342,8 @@ class AnalysisQueries:
     # NAMESPACE QUERIES
     SELECT_NS_DATA = "SELECT * FROM NSDATA"
 
-    def get_ns_gap_count_lists(self, nsid):
+    @staticmethod
+    def get_ns_gap_count_lists(nsid):
         """Return a query for files not identified through Signature or
         Container methods for a given namespace ID.
         """
@@ -347,7 +355,8 @@ class AnalysisQueries:
             "AND IDDATA.NS_ID={}"
         ).format(nsid)
 
-    def get_ns_multiple_ids(self, nsid, nscount):
+    @staticmethod
+    def get_ns_multiple_ids(nsid, nscount):
         SELECT_NAMESPACE_BINARY_IDS1 = (
             "SELECT count(*)\n"
             "FROM (SELECT COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
@@ -367,7 +376,8 @@ class AnalysisQueries:
         query = "{}{}".format(part1, part2)
         return query
 
-    def get_ns_methods(self, id_, binary=True, method=False):
+    @staticmethod
+    def get_ns_methods(id_, binary=True, method=False):
         """Retrieve various counts about the data in the report based
         on namespace. E.g.
 

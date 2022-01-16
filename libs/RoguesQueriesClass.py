@@ -5,7 +5,9 @@ a format identification extract.
 """
 
 
-class RogueQueries:
+class RogueQueries(object):
+    """Object for holding queries associated with rogue identification.
+    """
 
     SELECT_ALL_FILEPATHS = (
         """SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE != 'Folder'"""
@@ -22,7 +24,8 @@ class RogueQueries:
         "AND (IDDATA.EXTENSION_MISMATCH='True')"
     )
 
-    def get_pronom_identified_files(self, pro_ns):
+    @staticmethod
+    def get_pronom_identified_files(pro_ns):
         PRONOM_ONLY = (
             "SELECT DISTINCT FILEDATA.FILE_PATH\n"
             "FROM IDRESULTS\n"
@@ -35,7 +38,8 @@ class RogueQueries:
         query = "{}{}".format(PRONOM_ONLY, pro_ns)
         return query
 
-    def get_all_non_ids(self, ids):
+    @staticmethod
+    def get_all_non_ids(ids):
         csv = ",".join(ids)
         csv = "({})".format(csv)
         ALL_IDS = (
@@ -46,7 +50,8 @@ class RogueQueries:
         query = "{}{}".format(ALL_IDS, csv)
         return query
 
-    def count_multiple_ids(self, nscount, paths=False):
+    @staticmethod
+    def count_multiple_ids(nscount, paths=False):
         count = "SELECT count(FREQUENCY)\n"
         pathquery = "SELECT PATH\n"
         body = (
@@ -65,14 +70,16 @@ class RogueQueries:
         query = "{}{}{}".format(pathquery, body, nscount)
         return query
 
-    def get_rogue_name_paths(self, itemlist):
+    @staticmethod
+    def get_rogue_name_paths(itemlist):
         csv = '","'.join(itemlist)
         csv = '("{}")'.format(csv)
         PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA\n" "WHERE NAME IN "
         query = "{}{}".format(PATHS, csv)
         return query
 
-    def get_rogue_dir_paths(self, itemlist):
+    @staticmethod
+    def get_rogue_dir_paths(itemlist):
         if len(itemlist) <= 0:
             return ""
         csv = '","'.join(itemlist)

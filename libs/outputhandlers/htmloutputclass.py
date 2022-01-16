@@ -69,7 +69,8 @@ class DROIDAnalysisHTMLOutput:
         for x in range(no):
             self.printFormattedText("</br>")
 
-    def _make_str(self, str_):
+    @staticmethod
+    def _make_str(str_):
         return u"{}: ".format(str_)
 
     def _make_summary(self, str_):
@@ -96,18 +97,12 @@ class DROIDAnalysisHTMLOutput:
         self._htmlnewline(2)
         self.printFormattedText("<hr/>")
 
-    # Trial function we're not using yet... Pretty Print
-    def prettyprinthtml():
-        # document_root = html.fromstring(self.htmloutput)
-        # print document_root
-        # print(etree.tostring(document_root, encoding='utf-8', pretty_print=True))
-        return None
-
     def printHTMLResults(self):
         self.generateHTML()
         return self.htmloutput
 
-    def splitidresults(self, puid):
+    @staticmethod
+    def splitidresults(puid):
         identifier = puid[0].rsplit("(", 1)[0]
         namespace = puid[0].split(" ", 1)[0]
         patt = re.compile("(x-)?fmt\\/[0-9]+")  # noqa
@@ -133,12 +128,14 @@ class DROIDAnalysisHTMLOutput:
             formatname = identifier
         return namespace, identifier, formatname, count
 
-    def _outputmeter(self, value, minval, maxval):
+    @staticmethod
+    def _outputmeter(value, minval, maxval):
         return '<td><meter style="width: 300px;" value="{}" min="{}" max="{}">&nbsp;METER VISUALISATION AVAILABLE IN GOOGLE CHROME&nbsp;</meter></td>'.format(
             str(value).strip(), minval, maxval
         )
 
-    def _generateOffsetText(self, offsettext):
+    @staticmethod
+    def _generateOffsetText(offsettext):
         """Generate offset text.
 
             Data input should look as follows:
@@ -371,7 +368,8 @@ class DROIDAnalysisHTMLOutput:
                     nslist.append(idrow[1:])
             self._outputtable(nslist, None, None, True, 2, "400")
 
-    def _removenamespaceid(self, oldlist):
+    @staticmethod
+    def _removenamespaceid(oldlist):
         newlist = []
         for item in oldlist:
             newlist.append(str(item[0]))

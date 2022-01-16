@@ -41,7 +41,8 @@ class DemystifyBase(object):
     NS_CONST_BINARY_COUNT = "binary method count"
     NS_CONST_MULTIPLE_IDS = "multiple ids"
 
-    def calculatePercent(self, total, subset):
+    @staticmethod
+    def calculatePercent(total, subset):
         if total > 0:
             percentage = (subset / total) * 100
             return "%.1f" % round(percentage, 1)
@@ -309,7 +310,8 @@ class DemystifyAnalysis(DemystifyBase):
             self.query.count_multiple_ids(nscount, paths), False, False, True
         )
 
-    def _getsplit(self, vals):
+    @staticmethod
+    def _getsplit(vals):
         idlist = vals.split(",", 3)
         if len(idlist) == 4:
             type_ = idlist[1]
@@ -639,7 +641,8 @@ class DemystifyAnalysis(DemystifyBase):
         basis = self._querydb(AnalysisQueries.SELECT_BYTE_MATCH_BASIS)
         return self._get_bases(self, basis)
 
-    def _get_match_offsets(self, basis, sequence_count, file_size):
+    @staticmethod
+    def _get_match_offsets(basis, sequence_count, file_size):
         """Return BOF and EOF values for a match's basis.
 
             Info to improve this moving forward:
@@ -689,7 +692,8 @@ class DemystifyAnalysis(DemystifyBase):
                 eof = tmp_eof
         return bof, eof, file_size
 
-    def _handle_match_with_square_brackets(self, basis):
+    @staticmethod
+    def _handle_match_with_square_brackets(basis):
         """Split the match basis from Siegfried when there are square
         brackets to be dealt with.
         """
@@ -705,7 +709,8 @@ class DemystifyAnalysis(DemystifyBase):
             basis = basis[:-1]
         return basis, int(no_sequences / 2)
 
-    def _handle_match_without_brackets(self, basis):
+    @staticmethod
+    def _handle_match_without_brackets(basis):
         basis = basis.replace("byte match at", "").strip()
         basis = basis.replace("(", ",(")
         basis = basis.replace(" ", "").split(",", 2)[:2]

@@ -6,7 +6,10 @@ identification extract.
 
 
 class DenylistQueries:
-    def getfilenames(self, filenamelist):
+    """Queries for deny list functionality."""
+
+    @staticmethod
+    def getfilenames(filenamelist):
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(filenamelist)
         newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
         fnamequery = (
@@ -17,7 +20,8 @@ class DenylistQueries:
         )
         return "{}{}".format(fnamequery, newlist)
 
-    def getdirnames(self, dirlist):
+    @staticmethod
+    def getdirnames(dirlist):
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(dirlist)
         newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
         dirquery = (
@@ -28,7 +32,8 @@ class DenylistQueries:
         )
         return "{}{}".format(dirquery, newlist)
 
-    def getexts(self, extlist):
+    @staticmethod
+    def getexts(extlist):
         newlist = '","'.join(extlist)
         newlist = '("{}")'.format(newlist)
         newlist = newlist.replace(".", "")
@@ -40,7 +45,8 @@ class DenylistQueries:
         )
         return "{}{}".format(extquery, newlist)
 
-    def getids(self, idlist):
+    @staticmethod
+    def getids(idlist):
         newlist = '","'.join(idlist)
         newlist = '("{}")'.format(newlist)
         idquery = (

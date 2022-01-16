@@ -72,7 +72,8 @@ class rogueoutputclass:
                 config, HandleDenylist.CFG_ROGUES, HandleDenylist.ROGUE_EXT
             )
 
-    def outputlist(self, path_list):
+    @staticmethod
+    def outputlist(path_list):
         for path in path_list:
             if path == "no value" or path == "" or path is None:
                 continue
