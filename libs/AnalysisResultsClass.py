@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""Analysis results module."""
+
 from __future__ import absolute_import
 
 from libs.version import AnalysisVersion
 
 
 class AnalysisResults:
+    """Analysis results object to hold the output of Demystify before
+    a caller maps it to a suitable output format, e.g. HTML, Text.
+    """
+
     def __init__(self):
 
         self.version = 0

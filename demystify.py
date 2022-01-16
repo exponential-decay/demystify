@@ -41,10 +41,7 @@ DATEFORMAT = "%Y-%m-%d %H:%M:%S"
 logging.basicConfig(format=LOGFORMAT, datefmt=DATEFORMAT, level="INFO")
 
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
+PY3 = bool(sys.version_info[0] == 3)
 
 
 try:
@@ -57,9 +54,9 @@ from libs.HandleDenylistClass import HandleDenylist
 from libs.IdentifyDatabase import IdentifyDB
 
 # Custom output handlers
-from libs.outputhandlers.htmloutputclass import DROIDAnalysisHTMLOutput
+from libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
 from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
-from libs.outputhandlers.textoutputclass import DROIDAnalysisTextOutput
+from libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
 from sqlitefid import sqlitefid
 
 rogueconfig = False
@@ -108,21 +105,27 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
 
     :return: None (Nonetype)
     """
+    ROGUES_TEXT = ("Rogues and Heroes output. "
+        "Rogues and Heroes analysis is still in its early BETA stages. "
+        "Please report any feedback you have around its accuracy and helpfulness. "
+        "The feedback received will help improve the feature."
+    )
+
     if txtout is True:
         logging.info("Outputting text report")
-        textoutput = DROIDAnalysisTextOutput(analysis_results)
+        textoutput = FormatAnalysisTextOutput(analysis_results)
         print(textoutput.printTextResults())
     elif rogues is True:
-        logging.info("Rogues reporting is on")
+        logging.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig)
         rogueoutput.printTextResults()
     elif heroes is True:
-        logging.info("Heroes reporting is on")
+        logging.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig, heroes)
         rogueoutput.printTextResults()
     else:
         logging.info("Outputting HTML report")
-        htmloutput = DROIDAnalysisHTMLOutput(analysis_results)
+        htmloutput = FormatAnalysisHTMLOutput(analysis_results)
         if PY3:
             print(htmloutput.printHTMLResults())
         else:

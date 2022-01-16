@@ -23,12 +23,12 @@ class IdentifyDB:
         :param database_path: path to database to read (String)
         :return: `True` if sqlite3 or `False` if not (Boolean)
         """
+        db_magic = None
         try:
-            f = open(database_path, "rb")
+            with open(database_path, "rb") as f:
+                db_magic = f.read(len(self.sqlite3))
         except IOError:
             return False
-        db_magic = f.read(len(self.sqlite3))
-        f.close()
         if db_magic == self.sqlite3:
             return True
         return False

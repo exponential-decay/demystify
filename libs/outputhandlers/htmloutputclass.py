@@ -11,10 +11,7 @@ import sys
 from i18n.internationalstrings import AnalysisStringsEN as IN_EN
 from libs import DemystifyAnalysisClass
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
+PY3 = bool(sys.version_info[0] == 3)
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These
@@ -25,7 +22,9 @@ else:
 NONE_REPLACE_DEBUG = "Replacing 'None': A field in the database is null because there is no data, replacing at the presentation later..."
 
 
-class DROIDAnalysisHTMLOutput:
+class FormatAnalysisHTMLOutput:
+    """Object to help encapsulate HTML output handling functions."""
+
     def __init__(self, analysisresults):
         self.wiki = True
         self.STRINGS = IN_EN
@@ -66,7 +65,7 @@ class DROIDAnalysisHTMLOutput:
         self.htmloutput = u"{}\n".format(self.htmloutput)
 
     def _htmlnewline(self, no=1):
-        for x in range(no):
+        for _ in range(no):
             self.printFormattedText("</br>")
 
     @staticmethod
@@ -81,17 +80,17 @@ class DROIDAnalysisHTMLOutput:
     def _make_list_item(self, title, content, value):
         return '<li title="{}">{}{}</li>'.format(title, self._make_str(content), value)
 
-    def _keyvalue_output(self, list):
+    def _keyvalue_output(self, list_):
         self._htmlnewline()
-        for item in list:
+        for item in list_:
             self.printFormattedText("{}, {}</br>".format(item[0], item[1]))
         self._htmlnewline()
         self.printFormattedText("<hr/>")
 
-    def _csv_output(self, list):
+    def _csv_output(self, list_):
         self._htmlnewline()
         out = ""
-        for item in list:
+        for item in list_:
             out = "{}{}, ".format(out, item[0])
         self.printFormattedText(out.strip(", "))
         self._htmlnewline(2)
@@ -453,7 +452,7 @@ class DROIDAnalysisHTMLOutput:
             if ", None" in item:
                 logging.debug(NONE_REPLACE_DEBUG)
                 item = item.replace(", None", "")
-            if type(item) is str:
+            if isinstance(item, str):
                 if nonewline is False:
                     string = "{}</br></br>".format(item)
                     newline = False

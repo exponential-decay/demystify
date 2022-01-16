@@ -12,10 +12,7 @@ from i18n.internationalstrings import AnalysisStringsEN as IN_EN
 
 from .. import DemystifyAnalysisClass
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
+PY3 = bool(sys.version_info[0] == 3)
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These
@@ -26,7 +23,8 @@ else:
 NONE_REPLACE_DEBUG = "Replacing 'None': A field in the database is null because there is no data, replacing at the presentation later..."
 
 
-class DROIDAnalysisTextOutput:
+class FormatAnalysisTextOutput:
+    """Object to help encapsulate text only output functions."""
 
     textoutput = ""
 
@@ -40,9 +38,9 @@ class DROIDAnalysisTextOutput:
         return ret
 
     @staticmethod
-    def _itemlist(list):
+    def _itemlist(list_):
         output = ""
-        for item in list:
+        for item in list_:
             "{}{}\n".format(output, item)
         return output.strip("\n")
 
@@ -92,7 +90,7 @@ class DROIDAnalysisTextOutput:
         try:
             string = "{}".format(string)
         except UnicodeEncodeError:
-            string = b"{}".format(string.encode("utf8"))
+            string = "{}".format(string.encode("utf8"))
         self.textoutput = "{}{}{}".format(self.textoutput, string, line_end)
 
     def printTextResults(self):
@@ -133,9 +131,10 @@ class DROIDAnalysisTextOutput:
         if self.analysis_results.dateFrequency is not None:
             return self._frequencyoutput(self.analysis_results.dateFrequency)
 
-    def _outputdupes(self, list):
+    @staticmethod
+    def _outputdupes(list_):
         output = ""
-        for dupes in self.analysis_results.duplicateHASHlisting:
+        for dupes in list_:
             output = "{}Checksum: {}\n".format(output, dupes["checksum"])
             output = "{}Count: {}\n".format(output, dupes["count"])
             output = "{}Example: {}\n\n".format(output, dupes["examples"][0])
@@ -225,6 +224,7 @@ class DROIDAnalysisTextOutput:
                 offs[0], offs[1], offs[2], offs[3], offs[4]
             )
             return ret
+        return None
 
     @staticmethod
     def _remove_version_if_none(identifier_list):
