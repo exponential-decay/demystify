@@ -4,6 +4,8 @@
 
 from __future__ import absolute_import, division
 
+import logging
+import re
 import sys
 
 from i18n.internationalstrings import AnalysisStringsEN as IN_EN
@@ -14,6 +16,14 @@ if sys.version_info[0] == 3:
     PY3 = True
 else:
     PY3 = False
+
+# NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
+# needs changing around 'None'/null values from the database. These
+# values are driven by the report, and standard handling in sqlitefid.
+# E.g. if there is no version associated with a format, its version is
+# None. This should be fixed in the data structures used to output the
+# text, or in the database queries, not the presentation layer (arguably).
+NONE_REPLACE_DEBUG = "Replacing 'None': A field in the database is null because there is no data, replacing at the presentation later..."
 
 
 class DROIDAnalysisTextOutput:
@@ -40,17 +50,46 @@ class DROIDAnalysisTextOutput:
         self.__printNewline__()
         self.printFormattedText(title + ":")
 
+    def splitidresults(self, puid):
+        identifier = puid[0].rsplit("(", 1)[0]
+        namespace = puid[0].split(" ", 1)[0]
+        patt = re.compile("(x-)?fmt\\/[0-9]+")  # noqa
+        p = re.search(patt, identifier)
+        if p is not None:
+            p = p.span()
+            identifier = identifier[p[0] : p[1]]
+        else:
+            identifier = identifier.replace(namespace, "").strip()
+            identifier = identifier.split(",", 1)[0]
+        count = puid[0].rsplit("(", 1)[1].replace(")", "")
+        if ", None" in puid[0]:
+            logging.debug(NONE_REPLACE_DEBUG)
+        logging.debug(NONE_REPLACE_DEBUG)
+        # 'None' is usually driven by the database. If there is a format
+        # called "None" it will erroneously replace the name of that.
+        # Usually, version will be replaced below as formats don't all
+        # have versions. This should be fixed at the the data layer.
+        formatname = (
+            puid[0]
+            .replace(namespace, "")
+            .replace("({})".format(count), "")
+            .replace("{}, ".format(identifier), "")
+            .replace(", None", "")
+            .strip(", ")
+        )
+        if formatname == "":
+            formatname = identifier
+        return namespace, identifier, formatname, count
+
     def printFormattedText(self, string, newline=True):
-        lnend = u""
+        line_end = u""
         if newline:
-            lnend = u"\n"
+            line_end = u"\n"
         try:
             string = "{}".format(string)
         except UnicodeEncodeError:
             string = b"{}".format(string.encode("utf8"))
-        self.textoutput = "{}{}{}".format(self.textoutput, string, lnend)
-        # else:
-        # self.textoutput = u"{}{}{}".format(self.textoutput, string.decode("utf8"), lnend)
+        self.textoutput = "{}{}{}".format(self.textoutput, string, line_end)
 
     def printTextResults(self):
         self.generateTEXT()
@@ -59,23 +98,23 @@ class DROIDAnalysisTextOutput:
     # namespace argument is used for anything requiring the output of a namespace too, e.g. IDS
     def __frequencyoutput__(self, itemlist, zeros=False):
         val = ""
-        if type(itemlist) is not list:
+        if not isinstance(itemlist, list):
             sys.stderr.write(
                 "LOG: Not sending a list to a function wanting a list." + "\n"
             )
         else:
             for item in itemlist:
                 if zeros is True:
-                    val = val + str(item[0]) + ", "
+                    val = "{}{}, ".format(val, item[0])
                 else:
-                    val = val + str(item[0]) + " (" + str(item[1]) + "), "
+                    val = "{}{} ({}), ".format(val, item[0], item[1])
             val = val.strip(", ")
 
         return val
 
     def __aggregatelists__(self, itemlist):
         outstr = ""
-        if type(itemlist) is not list:
+        if not isinstance(itemlist, list):
             sys.stderr.write(
                 "LOG: Not sending a list to a function wanting a list." + "\n"
             )
@@ -102,23 +141,32 @@ class DROIDAnalysisTextOutput:
         return output.strip("\n")
 
     def __handlenamespacestats__(self, nsdatalist, signaturefrequency):
-        # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
-        # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
-        ds = DemystifyAnalysisClass.DemystifyAnalysis()
+        """Output statistics about namespace.
+
+            e.g.{
+                    'binary method count': '57',
+                    'text method count': '37',
+                    'namespace title':
+                    'freedesktop.org',
+                    'filename method count': '45',
+                    'namespace details': 'freedesktop.org.xml',
+                }
+        """
+        demystify = DemystifyAnalysisClass.DemystifyBase()
         output = ""
         for ns in nsdatalist:
             signatureids = signaturefrequency
-            nstitle = ns[ds.NS_CONST_TITLE]
-            identified = ns[ds.NS_CONST_BINARY_COUNT]
-            xmlid = ns[ds.NS_CONST_XML_COUNT]
-            text = ns[ds.NS_CONST_TEXT_COUNT]
-            filename = ns[ds.NS_CONST_FILENAME_COUNT]
-            ext = ns[ds.NS_CONST_EXTENSION_COUNT]
+            nstitle = ns[demystify.NS_CONST_TITLE]
+            identified = ns[demystify.NS_CONST_BINARY_COUNT]
+            xmlid = ns[demystify.NS_CONST_XML_COUNT]
+            text = ns[demystify.NS_CONST_TEXT_COUNT]
+            filename = ns[demystify.NS_CONST_FILENAME_COUNT]
+            ext = ns[demystify.NS_CONST_EXTENSION_COUNT]
             unidentified = self.analysis_results.filecount - identified
-            percent_not = ds.calculatePercent(
+            percent_not = demystify.calculatePercent(
                 self.analysis_results.filecount, unidentified
             )
-            percent_ok = ds.calculatePercent(
+            percent_ok = demystify.calculatePercent(
                 self.analysis_results.filecount, identified
             )
             output = (
@@ -127,7 +175,7 @@ class DROIDAnalysisTextOutput:
                 + ": "
                 + nstitle
                 + " ("
-                + ns[ds.NS_CONST_DETAILS]
+                + ns[demystify.NS_CONST_DETAILS]
                 + ")"
                 "\n"
             )
@@ -142,7 +190,7 @@ class DROIDAnalysisTextOutput:
                 output
                 + self.STRINGS.SUMMARY_MULTIPLE
                 + ": "
-                + str(ns[ds.NS_CONST_MULTIPLE_IDS])
+                + str(ns[demystify.NS_CONST_MULTIPLE_IDS])
                 + "\n"
             )
             output = (
@@ -186,6 +234,7 @@ class DROIDAnalysisTextOutput:
                     output = output + idrow[1] + " (" + str(idrow[2]) + "), "
             output = output.strip(", ")
             output = output + "\n\n"
+
         return output.strip("\n")
 
     def __generateOffsetText__(self, offsettext):
@@ -205,9 +254,25 @@ class DROIDAnalysisTextOutput:
                 + " bytes"
             )
 
-    def __removenamespaceid__(self, oldlist):
+    @staticmethod
+    def _remove_version_if_none(identifier_list):
+        """Versions that are None are not presented very nicely in the
+        report. While this should be fixed at the data layer, we can
+        also fix it with this helper.
+        """
+        NONE_STR = ", None"
+        new_list = []
+        for item in identifier_list:
+            if NONE_STR in item[0]:
+                new_list.append((item[0].replace(NONE_STR, "", 2), item[1]))
+            else:
+                new_list.append(item)
+        return new_list
+
+    @staticmethod
+    def _removenamespaceid(oldlist):
         newlist = []
-        for item in self.analysis_results.binaryidentifiers:
+        for item in oldlist:
             newlist.append((str(item[0]), None))
         return newlist
 
@@ -415,39 +480,67 @@ class DROIDAnalysisTextOutput:
             + " MiB/MB (Megabytes)"
         )  # MiB/MB = (2^1024)*2
 
+        signature_id_list = []
         if self.analysis_results.signatureidentifiers is not None:
-            # ('ns:pronom x-fmt/266 GZIP Format, extension match gz; byte match at 0, 3', 1)
+            countlist = []
+            for puid in self.analysis_results.signatureidentifiers:
+                namespace, identifier, formatname, count = self.splitidresults(puid)
+                countlist.append((identifier, int(count)))
+                signature_id_list.append(
+                    (namespace, identifier, formatname, int(count))
+                )
+
+        if self.analysis_results.signatureidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_AGGREGATE_BINARY_IDENTIFIED)
-            for ids in self.analysis_results.signatureidentifiers:
-                self.printFormattedText(ids[0].rstrip(", "))
+            signature_id_list.sort(key=lambda keys: int(keys[3]), reverse=True)
+            for id_ in signature_id_list:
+                identifier = "{}, {}, {} ({})".format(id_[0], id_[1], id_[2], id_[3])
+                # Replacing ", None" here should be safe as it only affects
+                # the identifier field, not 'any' text output.
+                NONE_STR = ", None"
+                if NONE_STR in identifier:
+                    logging.debug(NONE_REPLACE_DEBUG)
+                    identifier = identifier.replace(NONE_STR, "")
+                self.printFormattedText(identifier)
 
         if self.analysis_results.binaryidentifiers is not None:
-            self.__output_list_title__(self.STRINGS.HEADING_BINARY_ID)
-            newlist = self.__removenamespaceid__(
+            new_list = self._remove_version_if_none(
                 self.analysis_results.binaryidentifiers
             )
-            self.printFormattedText(self.__aggregatelists__(newlist))
+            new_list = self._removenamespaceid(new_list)
+            self.printFormattedText(self.__aggregatelists__(new_list))
+
         if self.analysis_results.xmlidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_XML_ID)
-            newlist = self.__removenamespaceid__(self.analysis_results.xmlidentifiers)
-            self.printFormattedText(self.__aggregatelists__(newlist))
+            new_list = self._remove_version_if_none(
+                self.analysis_results.xmlidentifiers
+            )
+            new_list = self._removenamespaceid(new_list)
+            self.printFormattedText(self.__aggregatelists__(new_list))
         if self.analysis_results.textidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_TEXT_ID)
-            newlist = self.__removenamespaceid__(self.analysis_results.textidentifiers)
-            self.printFormattedText(self.__aggregatelists__(newlist))
+            new_list = self._remove_version_if_none(
+                self.analysis_results.textidentifiers
+            )
+            new_list = self._removenamespaceid(new_list)
+            self.printFormattedText(self.__aggregatelists__(new_list))
         if self.analysis_results.filenameidentifiers is not None:
             self.__output_list_title__(self.STRINGS.HEADING_FILENAME_ID)
-            newlist = self.__removenamespaceid__(
+            new_list = self._remove_version_if_none(
                 self.analysis_results.filenameidentifiers
             )
-            self.printFormattedText(self.__aggregatelists__(newlist))
+            new_list = self._removenamespaceid(new_list)
+            self.printFormattedText(self.__aggregatelists__(new_list))
 
         if self.analysis_results.extensionIDOnlyCount > 0:
             if self.analysis_results.extensionOnlyIDList is not None:
                 if len(self.analysis_results.extensionOnlyIDList) > 0:
                     self.__output_list_title__(self.STRINGS.HEADING_EXTENSION_ONLY)
                     for item in self.analysis_results.extensionOnlyIDList:
-                        output = item[0] + ", " + item[1]
+                        if item[1] == "None":
+                            output = u"{}".format(item[0])
+                        else:
+                            output = u"{}, {}".format(item[0], item[1])
                         self.printFormattedText(output)
 
         dates = self.getDateList()
@@ -457,9 +550,17 @@ class DROIDAnalysisTextOutput:
 
         if self.analysis_results.idmethodFrequency is not None:
             self.__output_list_title__(self.STRINGS.HEADING_ID_METHOD)
-            self.printFormattedText(
-                self.__frequencyoutput__(self.analysis_results.idmethodFrequency)
+            id_method_frequency = self.__frequencyoutput__(
+                self.analysis_results.idmethodFrequency
             )
+            # Very specific targeting of None here for ID method frequency.
+            NONE_STR = ", None ("
+            NONE_REPLACE = ", No method ("
+            if NONE_STR in id_method_frequency:
+                id_method_frequency = id_method_frequency.replace(
+                    NONE_STR, NONE_REPLACE, 1
+                )
+            self.printFormattedText(id_method_frequency)
 
         if self.analysis_results.extensionIDOnlyCount > 0:
             if (
@@ -508,7 +609,6 @@ class DROIDAnalysisTextOutput:
                 self.__frequencyoutput__(self.analysis_results.mimetypeFrequency)
             )
 
-        # ##########NS SPECIFIC OUTPUT####################
         if (
             self.analysis_results.signatureidentifiedfrequency is not None
             and self.analysis_results.nsdatalist is not None
@@ -516,13 +616,11 @@ class DROIDAnalysisTextOutput:
             self.__output_list_title__(
                 self.STRINGS.HEADING_NAMESPACE_SPECIFIC_STATISTICS
             )
-            self.printFormattedText(
-                self.__handlenamespacestats__(
-                    self.analysis_results.nsdatalist,
-                    self.analysis_results.signatureidentifiedfrequency,
-                )
+            namespace_results = self.__handlenamespacestats__(
+                self.analysis_results.nsdatalist,
+                self.analysis_results.signatureidentifiedfrequency,
             )
-        # ##########NS SPECIFIC OUTPUT####################
+            self.printFormattedText(namespace_results)
 
         # ##########ID SPECIFIC OUTPUT#################### # XML, TEXT, FILENAME
         if (

@@ -26,12 +26,10 @@ class AnalysisError(Exception):
     """Exception for DemystifyAnalysis object."""
 
 
-class DemystifyAnalysis:
-    """DemystifyAnalysis"""
-
-    # We need this value because we extract basedirs for all folders, including
-    # the root directory of the extract, creating one additional entry.
-    NONROOTBASEDIR = 1
+class DemystifyBase(object):
+    """Super class for Demystify statistics with helpers for Demystify
+    and callers.
+    """
 
     # Namespace constants.
     NS_CONST_TITLE = "namespace title"
@@ -42,6 +40,19 @@ class DemystifyAnalysis:
     NS_CONST_EXTENSION_COUNT = "extension method count"
     NS_CONST_BINARY_COUNT = "binary method count"
     NS_CONST_MULTIPLE_IDS = "multiple ids"
+
+    def calculatePercent(self, total, subset):
+        if total > 0:
+            percentage = (subset / total) * 100
+            return "%.1f" % round(percentage, 1)
+
+
+class DemystifyAnalysis(DemystifyBase):
+    """DemystifyAnalysis"""
+
+    # We need this value because we extract basedirs for all folders, including
+    # the root directory of the extract, creating one additional entry.
+    NONROOTBASEDIR = 1
 
     ID_TIKA = "TIKA"
     ID_PRONOM = "PRONOM"
@@ -84,11 +95,12 @@ class DemystifyAnalysis:
         self.textIDs = None
         self.filenameIDs = None
 
-        # Initialize namespaace data.
+        # Initialize namespace data.
         self._initialize_namespace_details(config)
 
     def __del__(self):
         """Destructor for DemystifyAnalysis object."""
+        logging.debug("DemystifyAnalysis destructor...")
         try:
             self._close_database()
         except AttributeError:
@@ -254,11 +266,6 @@ class DemystifyAnalysis:
         else:
             self.analysis_results.zerobytelist = None
         return self.analysis_results.zerobytecount
-
-    def calculatePercent(self, total, subset):
-        if total > 0:
-            percentage = (subset / total) * 100
-            return "%.1f" % round(percentage, 1)
 
     def msoftfnameanalysis(self):
         namelist = self._querydb(AnalysisQueries.SELECT_FILENAMES)

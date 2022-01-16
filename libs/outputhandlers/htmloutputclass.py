@@ -16,6 +16,14 @@ if sys.version_info[0] == 3:
 else:
     PY3 = False
 
+# NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
+# needs changing around 'None'/null values from the database. These
+# values are driven by the report, and standard handling in sqlitefid.
+# E.g. if there is no version associated with a format, its version is
+# None. This should be fixed in the data structures used to output the
+# text, or in the database queries, not the presentation layer (arguably).
+NONE_REPLACE_DEBUG = "Replacing 'None': A field in the database is null because there is no data, replacing at the presentation later..."
+
 
 class DROIDAnalysisHTMLOutput:
     def __init__(self, analysisresults):
@@ -37,11 +45,13 @@ class DROIDAnalysisHTMLOutput:
                 self.htmloutput = "{}{}</br></br>".format(self.htmloutput, txt)
             self.__printnewline__()
             return
-
         if PY3:
             newtext = text
         else:
-            newtext = u"{}".format(text)
+            try:
+                newtext = u"{}".format(text)
+            except UnicodeDecodeError:
+                newtext = "".format(text.decode("utf8"))
         self.htmloutput = u"{}{}".format(self.htmloutput, newtext)
         self.__printnewline__()
 
@@ -53,7 +63,7 @@ class DROIDAnalysisHTMLOutput:
             self.printFormattedText("</br>")
 
     def __make_str__(self, str_):
-        return u"{}:".format(str_)
+        return u"{}: ".format(str_)
 
     def __make_summary__(self, str_):
         return "<details><summary>{}</br></summary></br>{}</br></details>".format(
@@ -104,11 +114,14 @@ class DROIDAnalysisHTMLOutput:
             identifier = identifier.replace(namespace, "").strip()
             identifier = identifier.split(",", 1)[0]
         count = puid[0].rsplit("(", 1)[1].replace(")", "")
+        if ", None" in puid[0]:
+            logging.debug(NONE_REPLACE_DEBUG)
         formatname = (
             puid[0]
             .replace(namespace, "")
             .replace("({})".format(count), "")
             .replace("{}, ".format(identifier), "")
+            .replace(", None", "")
             .strip(", ")
         )
         if formatname == "":
@@ -180,18 +193,23 @@ class DROIDAnalysisHTMLOutput:
                 self.STRINGS.COLUMN_HEADER_VALUES_COUNT,
             )
         )
-        # ex: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
-        # Tuple object: (namespace, identifier, formatname, int(count))
-        # Can sort using Lambda on count as required... unlikely at first
-        for i in idlist:
-            if "fmt/" in i[1]:
-                markup = '<tr><td style="width: 200px;"><a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}"{}</a></td>'.format(
-                    i[1], i[1]
-                )
+
+        idlist.sort(key=lambda keys: int(keys[3]), reverse=True)
+
+        # Tuple object: (namespace, identifier, format name, int(count))
+        #
+        #   For example: ('ns:pronom fmt/19, Acrobat PDF 1.5 - Portable Document Format, 1.5 (6)', 1)
+        #
+        for id_ in idlist:
+            if "fmt/" in id_[1]:
+                markup = (
+                    '<tr><td style="width: 200px;">\n'
+                    '<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}">{}</a></td>\n'
+                ).format(id_[1], id_[1])
             else:
-                markup = '<tr><td style="width: 100px;">{}</td>'.format(i[1])
+                markup = '<tr><td style="width: 100px;">{}</td>'.format(id_[1])
             markup = '{}<td style="width: 150px;">{}</td><td>{}</td><td style="text-align:center">{}</td></tr>'.format(
-                markup, i[0], i[2], i[3]
+                markup, id_[0], id_[2], id_[3]
             )
             self.printFormattedText(markup)
         self.printFormattedText("</table>")
@@ -241,7 +259,7 @@ class DROIDAnalysisHTMLOutput:
         # e.g.{'binary method count': '57', 'text method count': '37', 'namespace title': 'freedesktop.org',
         # 'filename method count': '45', 'namespace details': 'freedesktop.org.xml'}
         try:
-            ds = DemystifyAnalysisClass.DemystifyAnalysis()
+            demystify = DemystifyAnalysisClass.DemystifyBase()
         except DemystifyAnalysisClass.AnalysisError:
             logging.error(
                 "There shouldn't be a new DemystifyAnalysis object here: not performing NS work..."
@@ -249,17 +267,17 @@ class DROIDAnalysisHTMLOutput:
             return
         for ns in nsdatalist:
             signatureids = signaturefrequency
-            nstitle = ns[ds.NS_CONST_TITLE]
-            identified = ns[ds.NS_CONST_BINARY_COUNT]
-            xmlid = ns[ds.NS_CONST_XML_COUNT]
-            text = ns[ds.NS_CONST_TEXT_COUNT]
-            filename = ns[ds.NS_CONST_FILENAME_COUNT]
-            ext = ns[ds.NS_CONST_EXTENSION_COUNT]
+            nstitle = ns[demystify.NS_CONST_TITLE]
+            identified = ns[demystify.NS_CONST_BINARY_COUNT]
+            xmlid = ns[demystify.NS_CONST_XML_COUNT]
+            text = ns[demystify.NS_CONST_TEXT_COUNT]
+            filename = ns[demystify.NS_CONST_FILENAME_COUNT]
+            ext = ns[demystify.NS_CONST_EXTENSION_COUNT]
             unidentified = self.analysis_results.filecount - identified
-            percent_not = ds.calculatePercent(
+            percent_not = demystify.calculatePercent(
                 self.analysis_results.filecount, unidentified
             )
-            percent_ok = ds.calculatePercent(
+            percent_ok = demystify.calculatePercent(
                 self.analysis_results.filecount, identified
             )
 
@@ -267,7 +285,7 @@ class DROIDAnalysisHTMLOutput:
                 self.__make_list_item__(
                     self.STRINGS.HEADING_DESC_NAMESPACE,
                     "<b>{}</b>".format(self.STRINGS.HEADING_NAMESPACE),
-                    "<i>{} ({})</i>".format(nstitle, ns[ds.NS_CONST_DETAILS]),
+                    "<i>{} ({})</i>".format(nstitle, ns[demystify.NS_CONST_DETAILS]),
                 )
             )
             self.printFormattedText(
@@ -281,7 +299,7 @@ class DROIDAnalysisHTMLOutput:
                 self.__make_list_item__(
                     self.STRINGS.SUMMARY_DESC_MULTIPLE,
                     self.STRINGS.SUMMARY_MULTIPLE,
-                    str(ns[ds.NS_CONST_MULTIPLE_IDS]),
+                    str(ns[demystify.NS_CONST_MULTIPLE_IDS]),
                 )
             )
             self.printFormattedText(
@@ -428,6 +446,9 @@ class DROIDAnalysisHTMLOutput:
             "<table style='border-collapse: collapse; border-color: #222222'><tr>"
         )
         for item in listing:
+            if ", None" in item:
+                logging.debug(NONE_REPLACE_DEBUG)
+                item = item.replace(", None", "")
             if type(item) is str:
                 if nonewline is False:
                     string = "{}</br></br>".format(item)
