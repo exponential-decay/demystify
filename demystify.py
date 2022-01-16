@@ -137,10 +137,9 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     :param denylist: information to filter from denylist (List)
     :param rogues: flag to output rogues (Boolean)
     :param heroes: flag to output heroes (Boolean)
-
     :return: analysis_results (AnalysisResults)
     """
-    logging.info("Analysis from database...")
+    logging.info("Analysis from database: %s", database_path)
     try:
         analysis = DemystifyAnalysis(database_path, get_config(), denylist)
     except AnalysisError as err:
