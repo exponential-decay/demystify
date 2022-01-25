@@ -341,6 +341,9 @@ class DemystifyAnalysis(DemystifyBase):
         to this documentation to make that clearer...
         """
 
+        # Slow query...
+        return []
+
         tooltype = self.analysis_results.tooltype
         query = self.query.methods_return_ns_sort(self.priority_ns_id)
         allids = self._querydb(query)
@@ -856,7 +859,12 @@ class DemystifyAnalysis(DemystifyBase):
             AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True
         )
 
-        mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
+        try:
+            mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
+        except TypeError:
+            # Relies on create_id_breakdown
+            mimeids = []
+
         self.analysis_results.mimetypeFrequency = self._querydb(
             self.query.getmimes(mimeids)
         )
@@ -884,15 +892,19 @@ class DemystifyAnalysis(DemystifyBase):
         )
 
         # most complicated way to retrieve extension only PUIDs
-        if len(self.extensionIDonly) > 0:
-            extid = self.query.query_from_ids(self.extensionIDonly, "Extension")
-            test = self._querydb(extid)
-            combined_list = []
-            for entry in test:
-                entry = " ".join(entry)
-                combined_list.append(entry)
-            sorted_list = Counter(elem for elem in combined_list).most_common()
-            self.analysis_results.extensionOnlyIDFrequency = sorted_list
+        try:
+            if len(self.extensionIDonly) > 0:
+                extid = self.query.query_from_ids(self.extensionIDonly, "Extension")
+                test = self._querydb(extid)
+                combined_list = []
+                for entry in test:
+                    entry = " ".join(entry)
+                    combined_list.append(entry)
+                sorted_list = Counter(elem for elem in combined_list).most_common()
+                self.analysis_results.extensionOnlyIDFrequency = sorted_list
+        except TypeError:
+            # Relies on create_id_breakdown
+            pass
 
         # OKAY stat...
         self.analysis_results.uniqueExtensionsInCollectionList = self._querydb(
