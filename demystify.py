@@ -248,7 +248,7 @@ def main():
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
         analysis = analysis_from_database(
-            args.db, denylist, args.rogues, args.heroes.args.audit
+            args.db, denylist, args.rogues, args.heroes, args.audit
         )
     if analysis and not args.audit:
         handle_output(analysis.analysis_results, args.txt, args.rogues, args.heroes)
