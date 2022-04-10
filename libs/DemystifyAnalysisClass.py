@@ -19,7 +19,7 @@ from libs.DenylistQueriesClass import DenylistQueries
 from libs.HandleDenylistClass import HandleDenylist
 from libs.RoguesQueriesClass import RogueQueries
 from libs.version import AnalysisVersion
-from pathlesstaken import pathlesstaken
+from pathlesstaken.src.pathlesstaken import pathlesstaken
 
 
 class AnalysisError(Exception):
