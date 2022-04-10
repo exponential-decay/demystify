@@ -1,26 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, print_function
-
+import configparser as ConfigParser
 import io
-import sys
 
 import pytest
 
-from demystify import analysis_from_csv
-from libs.HandleDenylistClass import HandleDenylist
-from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+from src.demystify.demystify import analysis_from_csv
+from src.demystify.libs.HandleDenylistClass import HandleDenylist
+from src.demystify.libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
-
-
-PY3 = bool(sys.version_info[0] == 3)
-
-
-DENYLIST_ROGUES = u"""[denylist]
+DENYLIST_ROGUES = """[denylist]
 
 ids=fmt/61,fmt/480
 
@@ -84,7 +73,7 @@ enhanced with data from their respective integration tests.
 
 """
 
-DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/tmp/denylist/","/tmp/denylist","denylist","","Done","","Folder","","2022-01-09T15:27:07","false","","","","","",""
 "8","2","file:/tmp/denylist/.DS_Store","/tmp/denylist/.DS_Store",",DS_Store","","Done","10","File","","2022-01-09T15:22:01","false","cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e","0","","","",""
 "3","2","file:/tmp/denylist/.git/","/tmp/denylist/.git",",git","","Done","","Folder","","2022-01-09T15:26:55","false","","","","","",""
@@ -140,7 +129,7 @@ def rogueconfig(tmp_path):
     return config
 
 
-SF_ROGUE_TEST = u"""---
+SF_ROGUE_TEST = """---
 siegfried   : 1.9.1
 scandate    : 2022-01-09T16:44:18+01:00
 signature   : default.sig
@@ -396,42 +385,42 @@ def _process_captured_out(out):
 
 
 EXPECTED_DROID = [
-    u"/tmp/denylist/New Folder/plain_text",
-    u"/tmp/denylist/plain_text",
-    u"/tmp/denylist/.git/commit_data",
-    u"/tmp/denylist/config.cfg",
-    u"/tmp/denylist/Thumbs.db",
-    u"/tmp/denylist/ole2",
-    u"/tmp/denylist/.DS_Store",
-    u"/tmp/denylist/config.ini",
-    u"/tmp/denylist/Untitled Folder/plain_text",
-    u"/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
-    u"/tmp/denylist/plain_text",
-    u"/tmp/denylist/.git/commit_data",
-    u"/tmp/denylist/Untitled Folder/plain_text",
-    u"/tmp/denylist/New Folder/plain_text",
-    u"/tmp/denylist/ole2.xls",
-    u"/tmp/denylist/config.cfg",
-    u"/tmp/denylist/New Folder",
-    u"/tmp/denylist/Untitled Folder",
-    u"/tmp/denylist/.DS_Store",
-    u"/tmp/denylist/config.ini",
-    u"/tmp/denylist/pdf.pdf",
-    u"/tmp/denylist/Thumbs.db",
-    u"/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
-    u"/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝",
-    u"/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
-    u"/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
-    u"/tmp/denylist/ole2",
-    u"X:\\digital\\objects\x039080024060920_1of2.wav",
-    u"X:\\digital\\objects\x039080024060920_2of2.wav",
-    u"X:\\digital\\objects\x039080024060938_1of2.wav",
-    u"X:\\digital\\objects\x039080024060938_2of2.wav",
-    u"X:\\digital\\objects\x039080024060946_1of2.wav",
-    u"X:\\digital\\objects\x039080024060946_2of2.wav",
-    u"X:\\digital\\objects\x039080024060953_1of2.wav",
-    u"X:\\digital\\objects\x039080024060953_2of2.wav",
-    u"X:\\digital\\objects\x07ccess\x039080024061027_1of2.mp3",
+    "/tmp/denylist/New Folder/plain_text",
+    "/tmp/denylist/plain_text",
+    "/tmp/denylist/.git/commit_data",
+    "/tmp/denylist/config.cfg",
+    "/tmp/denylist/Thumbs.db",
+    "/tmp/denylist/ole2",
+    "/tmp/denylist/.DS_Store",
+    "/tmp/denylist/config.ini",
+    "/tmp/denylist/Untitled Folder/plain_text",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+    "/tmp/denylist/plain_text",
+    "/tmp/denylist/.git/commit_data",
+    "/tmp/denylist/Untitled Folder/plain_text",
+    "/tmp/denylist/New Folder/plain_text",
+    "/tmp/denylist/ole2.xls",
+    "/tmp/denylist/config.cfg",
+    "/tmp/denylist/New Folder",
+    "/tmp/denylist/Untitled Folder",
+    "/tmp/denylist/.DS_Store",
+    "/tmp/denylist/config.ini",
+    "/tmp/denylist/pdf.pdf",
+    "/tmp/denylist/Thumbs.db",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/files_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟.txt",
+    "/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café/midnight/",
+    "/tmp/denylist/ole2",
+    "X:\\digital\\objects\x039080024060920_1of2.wav",
+    "X:\\digital\\objects\x039080024060920_2of2.wav",
+    "X:\\digital\\objects\x039080024060938_1of2.wav",
+    "X:\\digital\\objects\x039080024060938_2of2.wav",
+    "X:\\digital\\objects\x039080024060946_1of2.wav",
+    "X:\\digital\\objects\x039080024060946_2of2.wav",
+    "X:\\digital\\objects\x039080024060953_1of2.wav",
+    "X:\\digital\\objects\x039080024060953_2of2.wav",
+    "X:\\digital\\objects\x07ccess\x039080024061027_1of2.mp3",
 ]
 
 
@@ -466,9 +455,9 @@ def test_rogues_droid_rogues(tmp_path, capsys, denylist, rogueconfig):
 
 
 EXPECTED_DROID_HEROES = [
-    u"/tmp/denylist/xlsx.xlsx",
-    u"/tmp/denylist",
-    u"/tmp/denylist/.git",
+    "/tmp/denylist/xlsx.xlsx",
+    "/tmp/denylist",
+    "/tmp/denylist/.git",
 ]
 
 
@@ -503,40 +492,40 @@ def test_rogues_droid_heroes(tmp_path, capsys, denylist, rogueconfig):
 
 
 EXPECTED_SIEGFRIED_ROGUES = [
-    u"denylist",
-    u"denylist/config.ini",
-    u"denylist/ole2",
-    u"denylist/Thumbs.db",
-    u"denylist/.git",
-    u"denylist/New Folder",
-    u"denylist/.DS_Store",
-    u"denylist/Untitled Folder",
-    u"denylist/.git/commit_data",
-    u"denylist/Untitled Folder/plain_text",
-    u"denylist/plain_text",
-    u"denylist/New Folder/plain_text",
-    u"denylist/config.ini",
-    u"denylist/pdf.pdf",
-    u"denylist/config.cfg",
-    u"denylist/.DS_Store",
-    u"denylist/Untitled Folder",
-    u"denylist/Thumbs.db",
-    u"denylist/New Folder",
-    u"fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
-    u"fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル",
-    u"denylist/ole2",
-    u"README",
-    u"denylist/config.cfg",
-    u"denylist/Untitled Folder/plain_text",
-    u"denylist/New Folder/plain_text",
-    u"denylist/plain_text",
-    u"denylist/.git/commit_data",
-    u"fixtures/files_with_various_encodings/emoji",
-    u"fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt",
+    "denylist",
+    "denylist/config.ini",
+    "denylist/ole2",
+    "denylist/Thumbs.db",
+    "denylist/.git",
+    "denylist/New Folder",
+    "denylist/.DS_Store",
+    "denylist/Untitled Folder",
+    "denylist/.git/commit_data",
+    "denylist/Untitled Folder/plain_text",
+    "denylist/plain_text",
+    "denylist/New Folder/plain_text",
+    "denylist/config.ini",
+    "denylist/pdf.pdf",
+    "denylist/config.cfg",
+    "denylist/.DS_Store",
+    "denylist/Untitled Folder",
+    "denylist/Thumbs.db",
+    "denylist/New Folder",
+    "fixtures/files_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝.txt",
+    "fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル",
+    "denylist/ole2",
+    "README",
+    "denylist/config.cfg",
+    "denylist/Untitled Folder/plain_text",
+    "denylist/New Folder/plain_text",
+    "denylist/plain_text",
+    "denylist/.git/commit_data",
+    "fixtures/files_with_various_encodings/emoji",
+    "fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル/shift-jis_encoded_dirs.txt",
     # Double-check folder handling, hero_only_test and a few others
     # I think are being picked up in the filename analysis as Unicode
     # but I am not sure.
-    u"fixtures/dirs_with_various_encodings/shift_jis/hero_only_test",
+    "fixtures/dirs_with_various_encodings/shift_jis/hero_only_test",
 ]
 
 
@@ -572,9 +561,9 @@ def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
 
 
 EXPECTED_SIEGFRIED_HEROES = [
-    u"denylist/ole2.xls",
-    u"denylist/xlsx.xlsx",
-    u"fixtures/dirs_with_various_encodings/shift_jis/hero_only_test/shift-jis_encoded_dirs.txt",
+    "denylist/ole2.xls",
+    "denylist/xlsx.xlsx",
+    "fixtures/dirs_with_various_encodings/shift_jis/hero_only_test/shift-jis_encoded_dirs.txt",
 ]
 
 

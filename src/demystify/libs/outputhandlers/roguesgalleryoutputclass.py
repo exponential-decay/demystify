@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-
+import configparser as ConfigParser
 import logging
 
-from libs.HandleDenylistClass import HandleDenylist
-
 try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
+    from src.demystify.libs.HandleDenylistClass import HandleDenylist
+except ModuleNotFoundError:
+    # Needed for PyPi import.
+    from demystify.libs.HandleDenylistClass import HandleDenylist
 
 
 class rogueoutputclass:

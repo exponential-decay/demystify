@@ -5,6 +5,8 @@
 Helper class to return the version of this application to the caller.
 """
 
+__version__ = "2.0.0"
+
 
 class AnalysisVersion:
     """Analysis version class to store version information and return
@@ -16,8 +18,8 @@ class AnalysisVersion:
 
         # 0.6.7-BETA - Python 2 only, first iteration.
         # 1.0.0 - Python 2 and 3, refactor and final Python 2 release.
-        self.version = "1.0.0"
+        self.__version__ = __version__
 
     def getVersion(self):
         """Return version number to the caller."""
-        return self.version
+        return self.__version__

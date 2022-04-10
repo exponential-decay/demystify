@@ -2,24 +2,24 @@
 
 # pylint: disable=W1633
 
-from __future__ import absolute_import, division, print_function
-
-try:
-    from ConfigParser import NoOptionError
-except ImportError:
-    from configparser import NoOptionError
-
 import logging
 import sqlite3
 from collections import Counter
+from configparser import NoOptionError
 
-from libs import AnalysisResultsClass
-from libs.AnalysisQueriesClass import AnalysisQueries
-from libs.DenylistQueriesClass import DenylistQueries
-from libs.HandleDenylistClass import HandleDenylist
-from libs.RoguesQueriesClass import RogueQueries
-from libs.version import AnalysisVersion
-from pathlesstaken import pathlesstaken
+try:
+    # Required for imports calling from repository root.
+    from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken
+except ModuleNotFoundError:
+    # Required for Pypi install.
+    from ..pathlesstaken.src.pathlesstaken import pathlesstaken
+
+from . import AnalysisResultsClass
+from .AnalysisQueriesClass import AnalysisQueries
+from .DenylistQueriesClass import DenylistQueries
+from .HandleDenylistClass import HandleDenylist
+from .RoguesQueriesClass import RogueQueries
+from .version import AnalysisVersion
 
 
 class AnalysisError(Exception):
@@ -283,9 +283,9 @@ class DemystifyAnalysis(DemystifyBase):
         namereport = []
         for name in namelist:
             try:
-                namestring = u"{}".format(name[0].decode("utf8"))
+                namestring = "{}".format(name[0].decode("utf8"))
             except AttributeError:
-                namestring = u"{}".format(name[0])
+                namestring = "{}".format(name[0])
             checkedname = charcheck.complete_file_name_analysis(namestring)
             if len(checkedname) > 0:
                 namereport.append(checkedname)
@@ -294,9 +294,9 @@ class DemystifyAnalysis(DemystifyBase):
         dirreport = []
         for dir_ in dirlist:
             try:
-                dirstring = u"{}".format(dir_[0].decode("utf8"))
+                dirstring = "{}".format(dir_[0].decode("utf8"))
             except AttributeError:
-                dirstring = u"{}".format(dir_[0])
+                dirstring = "{}".format(dir_[0])
             checkedname = charcheck.complete_file_name_analysis(dirstring, True)
             if len(checkedname) > 0:
                 dirreport.append(checkedname)
@@ -979,8 +979,8 @@ class DemystifyAnalysis(DemystifyBase):
                 )
 
             if self.analysis_results.multipleidentificationcount > 0:
-                self.analysis_results.rogue_multiple_identification_list = self.multiple_id_paths(
-                    self.analysis_results.namespacecount
+                self.analysis_results.rogue_multiple_identification_list = (
+                    self.multiple_id_paths(self.analysis_results.namespacecount)
                 )
 
             if self.rogueanalysis:

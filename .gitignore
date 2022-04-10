@@ -13,3 +13,4 @@ tests/fixtures
 *.sf
 sqlitefid/*
 pathlesstaken/*
+tar-package/*

@@ -1,4 +1,7 @@
-########################################################################
+# -*- coding: utf-8 -*-
+
+
+denylist_template = """########################################################################
 # Denylist and Rogues output configuration for demystify.
 #
 # Denylist: describes files or filenames to highlight in a Demystify
@@ -120,3 +123,4 @@ multipleids=False
 
 ; Output extension mismatches.
 extensionmismatches=True
+"""

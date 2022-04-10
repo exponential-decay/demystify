@@ -4,8 +4,6 @@
 information as possible from a format identification extract.
 """
 
-from __future__ import absolute_import
-
 import logging
 
 

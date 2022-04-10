@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - python-version: "2.7"
-            toxenv: "py27"
+          - python-version: "3.6"
+            toxenv: "py36"
           - python-version: "3.9"
             toxenv: "py39"
     steps:

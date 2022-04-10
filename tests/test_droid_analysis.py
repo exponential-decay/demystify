@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, print_function
+from src.demystify.demystify import analysis_from_csv
 
-import sys
-
-from demystify import analysis_from_csv
-
-DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA1_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA1_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures","fixtures","","Done","","Folder","","2021-07-25T17:04:51","false","","","","","",""
 "40","2","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types","archive-types","","Done","","Folder","","2021-07-25T17:04:59","false","","","","","",""
 "41","40","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-four.tar.gz","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-four.tar.gz","container-example-four.tar.gz","Signature","Done","726","Container","gz","2021-07-25T17:04:42","false","bc1e24e8a86dc7286df56ee5e474d31bc8b29b4b","1","x-fmt/266","application/gzip","GZIP Format",""
@@ -121,8 +117,6 @@ DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZ
 "111","47","zip:file:///home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-one.zip!/container-objects/x-fmt-401-container-signature-id-23125.sda","","x-fmt-401-container-signature-id-23125.sda","Container","Done","2560","File","sda","2020-11-30T03:21:36","false","660ca1d7ce34caba8be18203018d9555d937cf0f","1","x-fmt/401","application/vnd.stardivision.draw","StarOffice Draw","5.x"
 "109","47","zip:file:///home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-one.zip!/container-objects/x-fmt-88-container-signature-id-3130.ppt","","x-fmt-88-container-signature-id-3130.ppt","Container","Done","2560","File","ppt","2020-11-30T03:21:36","false","2fd03bafdcf3d9d9d60f773efa37115c322e5175","1","x-fmt/88","application/vnd.ms-powerpoint","Microsoft Powerpoint Presentation","4.0"
 """
-
-PY3 = bool(sys.version_info[0] == 3)
 
 
 def test_run_droid_analysis(tmp_path):
@@ -361,7 +355,7 @@ def test_run_droid_analysis(tmp_path):
     ]
 
 
-DROID_CSV_EMPTY = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV_EMPTY = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/test_dir/empty_files/","/test_dir/empty_files","empty_files","","Done","","Folder","","2022-01-08T18:14:57","false","","","","","",""
 "3","2","file:/test_dir/empty_files/empty_file_one","/test_dir/empty_files/empty_file_one","empty_file_one","","Done","0","File","","2022-01-08T18:14:56","false","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","0","","","",""
 "4","2","file:/test_dir/empty_files/empty_file_two","/test_dir/empty_files/empty_file_two","empty_file_two","","Done","0","File","","2022-01-08T18:14:57","false","e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","0","","","",""
@@ -390,7 +384,7 @@ def test_empty_files(tmp_path):
     ]
 
 
-DROID_CSV_DUPLICATES = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV_DUPLICATES = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/tmp/duplicates/","/tmp/duplicates","duplicates","","Done","","Folder","","2022-01-08T19:11:14","false","","","","","",""
 "7","2","file:/tmp/duplicates/one_dupe_one","/tmp/duplicates/one_dupe_one","one_dupe_one","","Done","5","File","","2022-01-08T19:10:40","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
 "5","2","file:/tmp/duplicates/one_dupe_two","/tmp/duplicates/one_dupe_two","one_dupe_two","","Done","5","File","","2022-01-08T19:10:42","false","6667b2d1aab6a00caa5aee5af8ad9f1465e567abf1c209d15727d57b3e8f6e5f","0","","","",""
@@ -461,32 +455,32 @@ def test_name_issue_detection(tmp_path):
     res = analysis_from_csv(str(droid_csv), True)
 
     assert res.analysis_results.badFileNames == [
-        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
-        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
-        u"File: 's�ster' contains, characters outside of ASCII range: '0xfffd, REPLACEMENT CHARACTER: �'\n",
-        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
-        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "File: 's�ster' contains, characters outside of ASCII range: '0xfffd, REPLACEMENT CHARACTER: �'\n",
+        "File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
     ]
     assert res.analysis_results.badDirNames == [
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "Directory: '/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
     ]
 
 
@@ -563,7 +557,7 @@ def test_extension_tests(tmp_path):
     ]
 
 
-DROID_CSV_MULTI = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV_MULTI = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "31","2","file:/X:/digital/objects/39080024060920_1of2.wav","X:\\digital\\objects\39080024060920_1of2.wav","39080024060920_1of2.wav","Signature","Done","1575017726","File","wav","2017-12-23T21:04:35","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""
 "32","2","file:/X:/digital/objects/39080024060920_2of2.wav","X:\\digital\\objects\39080024060920_2of2.wav","39080024060920_2of2.wav","Signature","Done","1602958526","File","wav","2017-12-23T21:04:35","true",,"3","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)","","fmt/134","audio/mpeg","MPEG 1/2 Audio Layer 3",""
 "29","2","file:/X:/digital/objects/39080024060938_1of2.wav","X:\\digital\\objects\39080024060938_1of2.wav","39080024060938_1of2.wav","Signature","Done","1599605894","File","wav","2017-12-23T21:13:25","false",,"2","fmt/704","audio/x-wav","Broadcast WAVE","1 PCM Encoding","fmt/142","audio/x-wav","Waveform Audio (WAVEFORMATEX)",""

@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, print_function
+from src.demystify.demystify import analysis_from_csv
 
-import sys
-
-from demystify import analysis_from_csv
-
-PY3 = bool(sys.version_info[0] == 3)
-
-SF_YAML = u"""---
+SF_YAML = """---
 siegfried   : 1.9.1
 scandate    : 2021-07-25T17:11:02+02:00
 signature   : default.sig
@@ -3020,7 +3014,7 @@ def test_run_siegfried_analysis(tmp_path):
     ]
 
 
-SF_TEXT_XML_YAML = u"""---
+SF_TEXT_XML_YAML = """---
 siegfried   : 1.9.1
 scandate    : 2021-11-08T22:55:20+01:00
 signature   : default.sig
@@ -3287,7 +3281,7 @@ def test_xml_and_text_identiiers(tmp_path):
     """Test more esoteric SF outputs."""
 
     dir_ = tmp_path
-    sf_yaml = dir_ / u"sf_💜_test_xml.yaml"
+    sf_yaml = dir_ / "sf_💜_test_xml.yaml"
     sf_yaml.write_text(SF_TEXT_XML_YAML.strip())
 
     # Analysis from YAML will currently read the results from the YAML
@@ -3368,7 +3362,7 @@ def test_xml_and_text_identiiers(tmp_path):
     assert res.analysis_results.eof_distance is None
 
 
-SF_EXT_YAML = u"""---
+SF_EXT_YAML = """---
 siegfried   : 1.9.1
 scandate    : 2021-12-05T19:21:39+01:00
 signature   : default.sig
@@ -3528,7 +3522,7 @@ def test_extension_identifiers(tmp_path):
     """
 
     dir_ = tmp_path
-    sf_yaml = dir_ / u"sf_💜_test_extensions.yaml"
+    sf_yaml = dir_ / "sf_💜_test_extensions.yaml"
     sf_yaml.write_text(SF_EXT_YAML.strip())
 
     # Analysis from YAML will currently read the results from the YAML
@@ -3578,7 +3572,7 @@ def test_extension_identifiers(tmp_path):
     assert res.analysis_results.eof_distance is None
 
 
-SF_METHODS_YAML = u"""---
+SF_METHODS_YAML = """---
 siegfried   : 1.9.1
 scandate    : 2021-12-05T20:27:50+01:00
 signature   : default.sig
@@ -4314,7 +4308,7 @@ matches  :
 def test_sf_methods(tmp_path):
     """Test ID method and MIMEType frequency results."""
     dir_ = tmp_path
-    sf_yaml = dir_ / u"sf_💜_test_methods.yaml"
+    sf_yaml = dir_ / "sf_💜_test_methods.yaml"
     sf_yaml.write_text(SF_METHODS_YAML.strip())
 
     # Analysis from YAML will currently read the results from the YAML
@@ -4368,7 +4362,7 @@ def test_sf_methods(tmp_path):
     # assert False
 
 
-SF_MULTI_YAML = u"""---
+SF_MULTI_YAML = """---
 siegfried   : 1.9.1
 scandate    : 2021-12-05T20:27:50+01:00
 signature   : default.sig
@@ -4533,7 +4527,7 @@ def test_bof_eof_extract(tmp_path):
     ]
 
 
-SF_EMPTY_TEST = u"""---
+SF_EMPTY_TEST = """---
 siegfried   : 1.9.1
 scandate    : 2022-01-08T18:09:07+01:00
 signature   : default.sig
@@ -4574,7 +4568,7 @@ def test_empty_files(tmp_path):
     assert res.analysis_results.zerobytelist == ["empty_file"]
 
 
-SF_DUPES_TEST = u"""---
+SF_DUPES_TEST = """---
 siegfried   : 1.9.1
 scandate    : 2022-01-08T19:11:23+01:00
 signature   : default.sig
@@ -4709,37 +4703,37 @@ def test_name_issue_detection(tmp_path):
     res = analysis_from_csv(str(sf_yaml), True)
 
     assert res.analysis_results.badFileNames == [
-        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"File: 's?ster' contains, non-recommended character: '0x3f, QUESTION MARK: ?'\n",
-        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
-        u"File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
-        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
-        u"File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "File: 'año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "File: 'café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'chess-♕♖♗♘♙♚♛♜♝♞♟.txt' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 'hearts-❤💖💙💚💛💜💝.txt' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "File: 's?ster' contains, non-recommended character: '0x3f, QUESTION MARK: ?'\n",
+        "File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "File: 'søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "File: 'ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "File: '廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
     ]
     assert res.analysis_results.badDirNames == [
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
-        u"Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
-        u"Directory: 'fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
+        "Directory: 'fixtures/archive-types/container-example-four.tar.gz#container-example-four.tar#dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/big5/廣州' contains, characters outside of ASCII range: '0x5ee3, None: 廣'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/cp437/año' contains, characters outside of ASCII range: '0xf1, LATIN SMALL LETTER N WITH TILDE: ñ'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/cp437/café' contains, characters outside of ASCII range: '0xe9, LATIN SMALL LETTER E WITH ACUTE: é'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/emoji/chess-♕♖♗♘♙♚♛♜♝♞♟' contains, characters outside of ASCII range: '0x2655, WHITE CHESS QUEEN: ♕'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/emoji/hearts-❤💖💙💚💛💜💝' contains, characters outside of ASCII range: '0x2764, HEAVY BLACK HEART: ❤'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/shift_jis/ぽっぷるメイル' contains, characters outside of ASCII range: '0x307d, HIRAGANA LETTER PO: ぽ'\n",
+        "Directory: 'fixtures/dirs_with_various_encodings/windows_1252/søster' contains, characters outside of ASCII range: '0xf8, LATIN SMALL LETTER O WITH STROKE: ø'\n",
     ]

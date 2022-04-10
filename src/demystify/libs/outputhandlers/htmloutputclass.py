@@ -2,16 +2,16 @@
 
 # pylint: disable=W1633
 
-from __future__ import absolute_import, division
-
 import logging
 import re
-import sys
 
-from i18n.internationalstrings import AnalysisStringsEN as IN_EN
-from libs import DemystifyAnalysisClass
-
-PY3 = bool(sys.version_info[0] == 3)
+try:
+    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from src.demystify.libs import DemystifyAnalysisClass
+except ModuleNotFoundError:
+    # Needed to run from root dir.
+    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from demystify.libs import DemystifyAnalysisClass
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These
@@ -29,7 +29,7 @@ class FormatAnalysisHTMLOutput:
         self.wiki = True
         self.STRINGS = IN_EN
         self.analysis_results = analysisresults
-        self.htmloutput = u""
+        self.htmloutput = ""
 
     @staticmethod
     def _remove_nones(old_list, format_unknown=False):
@@ -51,18 +51,12 @@ class FormatAnalysisHTMLOutput:
                 self.htmloutput = "{}{}</br></br>".format(self.htmloutput, txt)
             self._printnewline()
             return
-        if PY3:
-            newtext = text
-        else:
-            try:
-                newtext = u"{}".format(text)
-            except UnicodeDecodeError:
-                newtext = u"{}".format(text.decode("utf8"))
-        self.htmloutput = u"{}{}".format(self.htmloutput, newtext)
+        newtext = text
+        self.htmloutput = "{}{}".format(self.htmloutput, newtext)
         self._printnewline()
 
     def _printnewline(self):
-        self.htmloutput = u"{}\n".format(self.htmloutput)
+        self.htmloutput = "{}\n".format(self.htmloutput)
 
     def _htmlnewline(self, no=1):
         for _ in range(no):
@@ -70,7 +64,7 @@ class FormatAnalysisHTMLOutput:
 
     @staticmethod
     def _make_str(str_):
-        return u"{}: ".format(str_)
+        return "{}: ".format(str_)
 
     def _make_summary(self, str_):
         return "<details><summary>{}</br></summary></br>{}</br></details>".format(
@@ -137,9 +131,9 @@ class FormatAnalysisHTMLOutput:
     def _generateOffsetText(offsettext):
         """Generate offset text.
 
-            Data input should look as follows:
+        Data input should look as follows:
 
-                * ['id','basis','filename','filesize','offset']
+            * ['id','basis','filename','filesize','offset']
         """
         offs = offsettext
         if offs is not None:
@@ -501,7 +495,7 @@ class FormatAnalysisHTMLOutput:
         )
         # SO: SVG as Favicon: https://stackoverflow.com/questions/5199902/how-to-save-up-another-precious-http-request-for-the-tiny-favicon
         self.printFormattedText(
-            u"<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3E🕵️%3C/text%3E%3C/svg%3E\" type=\"image/svg+xml\" />"
+            "<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3E🕵️%3C/text%3E%3C/svg%3E\" type=\"image/svg+xml\" />"
         )
         self.printFormattedText("</head>")
 
@@ -976,9 +970,9 @@ class FormatAnalysisHTMLOutput:
                     self.printFormattedText("<code>")
                     for ex in dupes["examples"]:
                         try:
-                            text = u"{}<br/>".format(ex.decode("utf8"))
+                            text = "{}<br/>".format(ex.decode("utf8"))
                         except (AttributeError, UnicodeEncodeError):
-                            text = u"{}<br/>".format(ex)
+                            text = "{}<br/>".format(ex)
                         self.printFormattedText(text)
                     self.printFormattedText("</code>")
                     self._htmlnewline()

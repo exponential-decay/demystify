@@ -2,17 +2,16 @@
 
 # pylint: disable=W1633
 
-from __future__ import absolute_import, division
-
 import logging
 import re
-import sys
 
-from i18n.internationalstrings import AnalysisStringsEN as IN_EN
-
-from .. import DemystifyAnalysisClass
-
-PY3 = bool(sys.version_info[0] == 3)
+try:
+    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from src.demystify.libs import DemystifyAnalysisClass
+except ModuleNotFoundError:
+    # Needed to run from root dir.
+    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from demystify.libs import DemystifyAnalysisClass
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These
@@ -34,7 +33,7 @@ class FormatAnalysisTextOutput:
 
     @staticmethod
     def _output_list(title, value):
-        ret = u"{}: {}".format(title, value)
+        ret = "{}: {}".format(title, value)
         return ret
 
     @staticmethod
@@ -84,9 +83,9 @@ class FormatAnalysisTextOutput:
         return namespace, identifier, formatname, count
 
     def printFormattedText(self, string, newline=True):
-        line_end = u""
+        line_end = ""
         if newline:
-            line_end = u"\n"
+            line_end = "\n"
         try:
             string = "{}".format(string)
         except UnicodeEncodeError:
@@ -121,10 +120,10 @@ class FormatAnalysisTextOutput:
             for item in itemlist:
                 name = item[0]
                 if item[1] is not None:
-                    count = u"({})".format(item[1])
-                    outstr = u"{}{} {}\n".format(outstr, name, count)
+                    count = "({})".format(item[1])
+                    outstr = "{}{} {}\n".format(outstr, name, count)
                 else:
-                    outstr = u"{}{}\n".format(outstr, name)
+                    outstr = "{}{}\n".format(outstr, name)
         return outstr.strip("\n")
 
     def getDateList(self):
@@ -143,14 +142,14 @@ class FormatAnalysisTextOutput:
     def _handlenamespacestats(self, nsdatalist, signaturefrequency):
         """Output statistics about namespace.
 
-            e.g.{
-                    'binary method count': '57',
-                    'text method count': '37',
-                    'namespace title':
-                    'freedesktop.org',
-                    'filename method count': '45',
-                    'namespace details': 'freedesktop.org.xml',
-                }
+        e.g.{
+                'binary method count': '57',
+                'text method count': '37',
+                'namespace title':
+                'freedesktop.org',
+                'filename method count': '45',
+                'namespace details': 'freedesktop.org.xml',
+            }
         """
         demystify = DemystifyAnalysisClass.DemystifyBase()
         output = ""
@@ -169,58 +168,52 @@ class FormatAnalysisTextOutput:
             percent_ok = demystify.calculatePercent(
                 self.analysis_results.filecount, identified
             )
-            output = u"{}{}: {} ({})\n".format(
+            output = "{}{}: {} ({})\n".format(
                 output,
                 self.STRINGS.HEADING_NAMESPACE,
                 nstitle,
                 ns[demystify.NS_CONST_DETAILS],
             )
-            output = u"{}{}: {}\n".format(
+            output = "{}{}: {}\n".format(
                 output, self.STRINGS.SUMMARY_IDENTIFIED_FILES, identified
             )
-            output = u"{}{}: {}\n".format(
+            output = "{}{}: {}\n".format(
                 output,
                 self.STRINGS.SUMMARY_MULTIPLE,
                 ns[demystify.NS_CONST_MULTIPLE_IDS],
             )
-            output = u"{}{}: {}\n".format(
+            output = "{}{}: {}\n".format(
                 output, self.STRINGS.SUMMARY_UNIDENTIFIED, unidentified
             )
-            output = u"{}{}: {}\n".format(
-                output, self.STRINGS.SUMMARY_EXTENSION_ID, ext
-            )
+            output = "{}{}: {}\n".format(output, self.STRINGS.SUMMARY_EXTENSION_ID, ext)
             if self.analysis_results.tooltype != "droid":
-                output = u"{}{}: {}\n".format(
-                    output, self.STRINGS.SUMMARY_XML_ID, xmlid
-                )
-                output = u"{}{}: {}\n".format(
-                    output, self.STRINGS.SUMMARY_TEXT_ID, text
-                )
-                output = u"{}{}: {}\n".format(
+                output = "{}{}: {}\n".format(output, self.STRINGS.SUMMARY_XML_ID, xmlid)
+                output = "{}{}: {}\n".format(output, self.STRINGS.SUMMARY_TEXT_ID, text)
+                output = "{}{}: {}\n".format(
                     output, self.STRINGS.SUMMARY_FILENAME_ID, str(filename)
                 )
-            output = u"{}{}: {}\n".format(
+            output = "{}{}: {}\n".format(
                 output, self.STRINGS.SUMMARY_PERCENTAGE_IDENTIFIED, percent_ok
             )
-            output = u"{}{}: {}\n".format(
+            output = "{}{}: {}\n".format(
                 output, self.STRINGS.SUMMARY_PERCENTAGE_UNIDENTIFIED, percent_not
             )
-            output = u"{}\n".format(output)
-            output = u"{}{}\n".format(
+            output = "{}\n".format(output)
+            output = "{}{}\n".format(
                 output, self.STRINGS.HEADING_FREQUENCY_PUIDS_IDENTIFIED
             )
             for idrow in signatureids:
                 if idrow[0] == nstitle:
-                    output = u"{}{} ({}), ".format(output, idrow[1], idrow[2])
+                    output = "{}{} ({}), ".format(output, idrow[1], idrow[2])
             output = output.strip(", ")
-            output = u"{}\n\n".format(output)
+            output = "{}\n\n".format(output)
         return output.strip("\n")
 
     @staticmethod
     def _generateOffsetText(offsettext):
         offs = offsettext
         if offs is not None:
-            ret = u"{}, {} e.g. {} filesize: {}, {} bytes".format(
+            ret = "{}, {} e.g. {} filesize: {}, {} bytes".format(
                 offs[0], offs[1], offs[2], offs[3], offs[4]
             )
             return ret
@@ -251,7 +244,7 @@ class FormatAnalysisTextOutput:
     @staticmethod
     def _separated_text(t1, t2):
         """Concatenate two strings with a colon in listings."""
-        return u"{}: {}".format(t1, t2)
+        return "{}: {}".format(t1, t2)
 
     def generateTEXT(self):
         if self.analysis_results.tooltype != "droid":
@@ -517,9 +510,9 @@ class FormatAnalysisTextOutput:
                     self._output_list_title(self.STRINGS.HEADING_EXTENSION_ONLY)
                     for item in self.analysis_results.extensionOnlyIDList:
                         if item[1] == "None":
-                            output = u"{}".format(item[0])
+                            output = "{}".format(item[0])
                         else:
-                            output = u"{}, {}".format(item[0], item[1])
+                            output = "{}, {}".format(item[0], item[1])
                         self.printFormattedText(output)
 
         dates = self.getDateList()

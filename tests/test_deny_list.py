@@ -1,23 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, print_function
-
-import sys
+import configparser as ConfigParser
 
 import pytest
 
-from demystify import analysis_from_csv
-from libs.HandleDenylistClass import HandleDenylist
+from src.demystify.demystify import analysis_from_csv
+from src.demystify.libs.HandleDenylistClass import HandleDenylist
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
-
-
-PY3 = bool(sys.version_info[0] == 3)
-
-DENYLIST_DENY = u"""[denylist]
+DENYLIST_DENY = """[denylist]
 
 ids=fmt/61,fmt/480
 
@@ -28,7 +18,7 @@ directorynames='Untitled Folder','New Folder'
 fileextensions='.ini','.cfg'
 """
 
-DENYLIST_DENY_TIKA = u"""[denylist]
+DENYLIST_DENY_TIKA = """[denylist]
 
 ids='application/vnd.ms-excel',text/x-ini
 
@@ -60,7 +50,7 @@ fileextensions='.ini','.cfg'
 
 """
 
-DROID_CSV = u""""ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
+DROID_CSV = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE","TYPE","EXT","LAST_MODIFIED","EXTENSION_MISMATCH","SHA256_HASH","FORMAT_COUNT","PUID","MIME_TYPE","FORMAT_NAME","FORMAT_VERSION"
 "2","","file:/tmp/denylist/","/tmp/denylist","denylist","","Done","","Folder","","2022-01-09T15:27:07","false","","","","","",""
 "8","2","file:/tmp/denylist/.DS_Store","/tmp/denylist/.DS_Store",".DS_Store","","Done","10","File","","2022-01-09T15:22:01","false","cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e","0","","","",""
 "3","2","file:/tmp/denylist/.git/","/tmp/denylist/.git",".git","","Done","","Folder","","2022-01-09T15:26:55","false","","","","","",""
@@ -113,8 +103,7 @@ def test_default_denylist(tmp_path, denylist):
 
 
 def test_denylist_droid(tmp_path, denylist):
-    """Test basic configuration of Denylist and rogues here for DROID.
-    """
+    """Test basic configuration of Denylist and rogues here for DROID."""
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
@@ -159,7 +148,7 @@ def test_denylist_droid(tmp_path, denylist):
     ]
 
 
-SF_DENY_TEST = u"""---
+SF_DENY_TEST = """---
 siegfried   : 1.9.1
 scandate    : 2022-01-09T16:44:18+01:00
 signature   : default.sig
@@ -384,7 +373,7 @@ def test_denylist_sf(tmp_path, denylist):
     ]
 
 
-SF_DENY_TEST_TIKA = u"""---
+SF_DENY_TEST_TIKA = """---
 siegfried   : 1.9.1
 scandate    : 2022-01-09T16:42:53+01:00
 signature   : default.sig
