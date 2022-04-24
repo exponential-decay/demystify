@@ -12,7 +12,7 @@ try:
     from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
     from src.demystify.libs import DemystifyAnalysisClass
 except ModuleNotFoundError:
-    # Needed to run from main.
+    # Needed to run from root dir.
     from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
     from demystify.libs import DemystifyAnalysisClass
 

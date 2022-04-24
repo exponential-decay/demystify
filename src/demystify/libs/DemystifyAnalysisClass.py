@@ -10,7 +10,6 @@ except ImportError:
     from configparser import NoOptionError
 
 import logging
-import sqlite3
 from collections import Counter
 
 try:
@@ -69,9 +68,9 @@ class DemystifyAnalysis(DemystifyBase):
 
     TOOLTYPE_DROID = "droid"
 
-    def __init__(self, database_path=None, config=False, denylist=None):
+    def __init__(self, database_path=None, config=False, denylist=False, label=False):
         """Constructor for DemystifyAnalysis object."""
-        logging.debug(
+        logging.info(
             "Analysis __init__(): database_path: %s config: %s denylist: %s",
             database_path,
             config,
@@ -89,11 +88,46 @@ class DemystifyAnalysis(DemystifyBase):
         self.analysis_results = AnalysisResultsClass.AnalysisResults()
         self.query = AnalysisQueries()
 
+        # For demystify-lite, given a label, output it here.
+        if label:
+            self.analysis_results.filename = label
+
         # Initialize database connection variables.
-        self._open_database(database_path)
+        self.cursor = database_path.cursor()
         self.analysis_results.tooltype = self._querydb(self.query.SELECT_TOOL, True)[0]
 
-        self.denylist = denylist
+        # TODO: There seems to be something wrong with the way this
+        # parameter arrives here. We also have a mix of flags to do
+        # something, but also, want to store state.
+        self.use_denylist = denylist
+        self.denylist = {
+            "IDS": [],
+            "FILENAMES": [
+                ".DS_Store",
+                "Untitled Document",
+                "desktop.ini",
+                "(copy",
+                "ZbThumbnail.info",
+                "lorem",
+                "New Microsoft Word Document",
+                "Bin.dat",
+                "Thumbs.db",
+                " vitae",
+                " Appointments",
+                " CV",
+                " Application",
+                " Resume",
+                " Appointment",
+                " Test",
+                " list",
+                " member",
+                " people",
+                " address",
+                " phone",
+            ],
+            "DIRECTORIES": ["Untitled Folder", "New Folder", "(copy", ".git", "lorem"],
+            "EXTENSIONS": [".ini", ".exe", ".cfg", ".dll", ".lnk", ".tmp"],
+        }
 
         # Initialize instance variables.
         self.extensionIDonly = None
@@ -119,19 +153,6 @@ class DemystifyAnalysis(DemystifyBase):
         v = AnalysisVersion()
         self.analysis_results.__version_no__ = v.getVersion()
         return self.analysis_results.__version_no__
-
-    def _open_database(self, dbfilename):
-        """Open the database connection and initialize the instance
-        variables needed to run the demystify analysis.
-        """
-        self.analysis_results.filename = dbfilename.rstrip(".db")
-        self.conn = sqlite3.connect(dbfilename)
-        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
-        self.cursor = self.conn.cursor()
-
-    def _close_database(self):
-        """Close the database connection."""
-        self.conn.close()
 
     def _initialize_namespace_details(self, config):
         """Initialize namespace data.
@@ -968,7 +989,7 @@ class DemystifyAnalysis(DemystifyBase):
             # ###################################################################################
             # ######DENYLIST RESULTS: GET RESULTS SPECIFIC TO THE DENYLIST FUNCTIONALITY#######
             # ###################################################################################
-            if self.denylist is not None:
+            if self.use_denylist is not None:
                 self.analysis_results.denylist = True
                 self.getdenylistresults()
 
