@@ -46,8 +46,6 @@ from .libs.IdentifyDatabase import IdentifyDB
 
 # Custom output handlers
 from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
-from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
-from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
 from .sqlitefid.src.sqlitefid import sqlitefid
 
 # Don't write .pyc files.
@@ -108,32 +106,14 @@ def handle_output(
 
     :return: None (Nonetype)
     """
-    ROGUES_TEXT = (
-        "Rogues and Heroes output. "
-        "Rogues and Heroes analysis is still in its early BETA stages. "
-        "Please report any feedback you have around its accuracy and helpfulness. "
-        "The feedback received will help improve the feature."
-    )
-
-    if txtout is True:
-        logging.info("Outputting text report")
-        textoutput = FormatAnalysisTextOutput(analysis_results)
-        print(textoutput.printTextResults())
-    elif rogues is True:
-        logging.info(ROGUES_TEXT)
-        rogueoutput = rogueoutputclass(analysis_results, rogueconfig)
-        rogueoutput.printTextResults()
-    elif heroes is True:
-        logging.info(ROGUES_TEXT)
-        rogueoutput = rogueoutputclass(analysis_results, rogueconfig, heroes)
-        rogueoutput.printTextResults()
-    else:
-        logging.info("Outputting HTML report")
-        htmloutput = FormatAnalysisHTMLOutput(analysis_results)
-        print(htmloutput.printHTMLResults())
+    logging.info("Outputting HTML report")
+    htmloutput = FormatAnalysisHTMLOutput(analysis_results)
+    return htmloutput.printHTMLResults()
 
 
-def analysis_from_database(database_path, denylist=None, rogues=False, heroes=False):
+def analysis_from_database(
+    database_path, denylist=False, rogues=False, heroes=False, label=False
+):
     """Analysis of format identification report from existing database.
 
     :param database_path: path to sqlite database containing analysis
@@ -145,7 +125,7 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     """
     logging.info("Analysis from database: %s", database_path)
     try:
-        analysis = DemystifyAnalysis(database_path, get_config(), denylist)
+        analysis = DemystifyAnalysis(database_path, get_config(), denylist, label=label)
     except AnalysisError as err:
         raise AnalysisError(err)
     rogue_analysis = False
@@ -155,7 +135,15 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     return analysis
 
 
-def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes=None):
+def analysis_from_csv(
+    format_report,
+    analyze,
+    in_memory=True,
+    denylist=False,
+    rogues=False,
+    heroes=False,
+    label=False,
+):
     """Analysis of format identification report from raw data, i.e.
     DROID CSV, SF YAML etc.
 
@@ -168,15 +156,19 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     :return: None (Nonetype)
     """
     logging.info("Generating database from input report...")
-    database_path = sqlitefid.identify_and_process_input(format_report)
-    logging.info("Database path: %s", database_path)
-    if database_path is None:
-        logging.error("No database filename supplied: %s", database_path)
+    database_cursor = sqlitefid.identify_and_process_input(
+        format_report, in_memory=in_memory
+    )
+    if not database_cursor:
+        return "Export cannot be identified, ensure that the input file is one of the supported DROID CSV, or Siegfried YAML types."
+    logging.info("Database path: %s", database_cursor)
+    if database_cursor is None:
+        logging.error("No database filename supplied: %s", database_cursor)
         return
     if analyze is not True:
         logging.error("Analysis is not set: %s", analyze)
         return
-    analysis = analysis_from_database(database_path, denylist, rogues, heroes)
+    analysis = analysis_from_database(database_cursor, denylist, rogues, heroes, label)
     return analysis
 
 
