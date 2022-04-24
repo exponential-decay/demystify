@@ -11,7 +11,8 @@ import sys
 try:
     from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
 except ModuleNotFoundError:
-    from ..i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    # Needed to run from root dir.
+    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
 
 from .. import DemystifyAnalysisClass
 
