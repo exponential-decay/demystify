@@ -49,15 +49,15 @@ try:
 except ImportError:
     import configparser as ConfigParser
 
-from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
-from libs.HandleDenylistClass import HandleDenylist
-from libs.IdentifyDatabase import IdentifyDB
+from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
+from .libs.HandleDenylistClass import HandleDenylist
+from .libs.IdentifyDatabase import IdentifyDB
 
 # Custom output handlers
-from libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
-from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
-from libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
-from sqlitefid import sqlitefid
+from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
+from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
+from .sqlitefid.src.sqlitefid import sqlitefid
 
 rogueconfig = False
 

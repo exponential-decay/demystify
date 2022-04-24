@@ -4,7 +4,7 @@ from __future__ import absolute_import, print_function
 
 import sys
 
-from demystify import analysis_from_csv
+from src.demystify.demystify import analysis_from_csv
 
 PY3 = bool(sys.version_info[0] == 3)
 

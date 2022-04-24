@@ -8,7 +8,10 @@ import logging
 import re
 import sys
 
-from i18n.internationalstrings import AnalysisStringsEN as IN_EN
+try:
+    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+except ModuleNotFoundError:
+    from ..i18n.internationalstrings import AnalysisStringsEN as IN_EN
 
 from .. import DemystifyAnalysisClass
 

@@ -4,7 +4,7 @@
 
 from __future__ import absolute_import
 
-from libs.version import AnalysisVersion
+from .version import AnalysisVersion
 
 
 class AnalysisResults:

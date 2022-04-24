@@ -6,8 +6,8 @@ import sys
 
 import pytest
 
-from demystify import analysis_from_csv
-from libs.HandleDenylistClass import HandleDenylist
+from src.demystify.demystify import analysis_from_csv
+from src.demystify.libs.HandleDenylistClass import HandleDenylist
 
 try:
     import ConfigParser

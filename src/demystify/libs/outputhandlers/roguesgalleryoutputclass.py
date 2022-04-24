@@ -4,7 +4,11 @@ from __future__ import absolute_import
 
 import logging
 
-from libs.HandleDenylistClass import HandleDenylist
+try:
+    from src.demystify.libs.HandleDenylistClass import HandleDenylist
+except ModuleNotFoundError:
+    # Needed for PyPi import.
+    from demystify.libs.HandleDenylistClass import HandleDenylist
 
 try:
     import ConfigParser

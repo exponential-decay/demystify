@@ -13,13 +13,19 @@ import logging
 import sqlite3
 from collections import Counter
 
-from libs import AnalysisResultsClass
-from libs.AnalysisQueriesClass import AnalysisQueries
-from libs.DenylistQueriesClass import DenylistQueries
-from libs.HandleDenylistClass import HandleDenylist
-from libs.RoguesQueriesClass import RogueQueries
-from libs.version import AnalysisVersion
-from pathlesstaken.src.pathlesstaken import pathlesstaken
+try:
+    # Required for imports calling from repository root.
+    from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken
+except ModuleNotFoundError:
+    # Required for Pypi install.
+    from ..pathlesstaken.src.pathlesstaken import pathlesstaken
+
+from . import AnalysisResultsClass
+from .AnalysisQueriesClass import AnalysisQueries
+from .DenylistQueriesClass import DenylistQueries
+from .HandleDenylistClass import HandleDenylist
+from .RoguesQueriesClass import RogueQueries
+from .version import AnalysisVersion
 
 
 class AnalysisError(Exception):

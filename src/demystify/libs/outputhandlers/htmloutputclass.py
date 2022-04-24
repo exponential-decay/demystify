@@ -8,8 +8,13 @@ import logging
 import re
 import sys
 
-from i18n.internationalstrings import AnalysisStringsEN as IN_EN
-from libs import DemystifyAnalysisClass
+try:
+    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from src.demystify.libs import DemystifyAnalysisClass
+except ModuleNotFoundError:
+    # Needed for PyPi import.
+    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from demystify.libs import DemystifyAnalysisClass
 
 PY3 = bool(sys.version_info[0] == 3)
 
