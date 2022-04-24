@@ -6,8 +6,7 @@ a format identification extract.
 
 
 class RogueQueries(object):
-    """Object for holding queries associated with rogue identification.
-    """
+    """Object for holding queries associated with rogue identification."""
 
     SELECT_ALL_FILEPATHS = (
         """SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE != 'Folder'"""

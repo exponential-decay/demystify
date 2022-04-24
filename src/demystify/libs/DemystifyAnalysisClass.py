@@ -289,9 +289,9 @@ class DemystifyAnalysis(DemystifyBase):
         namereport = []
         for name in namelist:
             try:
-                namestring = u"{}".format(name[0].decode("utf8"))
+                namestring = "{}".format(name[0].decode("utf8"))
             except AttributeError:
-                namestring = u"{}".format(name[0])
+                namestring = "{}".format(name[0])
             checkedname = charcheck.complete_file_name_analysis(namestring)
             if len(checkedname) > 0:
                 namereport.append(checkedname)
@@ -300,9 +300,9 @@ class DemystifyAnalysis(DemystifyBase):
         dirreport = []
         for dir_ in dirlist:
             try:
-                dirstring = u"{}".format(dir_[0].decode("utf8"))
+                dirstring = "{}".format(dir_[0].decode("utf8"))
             except AttributeError:
-                dirstring = u"{}".format(dir_[0])
+                dirstring = "{}".format(dir_[0])
             checkedname = charcheck.complete_file_name_analysis(dirstring, True)
             if len(checkedname) > 0:
                 dirreport.append(checkedname)
@@ -985,8 +985,8 @@ class DemystifyAnalysis(DemystifyBase):
                 )
 
             if self.analysis_results.multipleidentificationcount > 0:
-                self.analysis_results.rogue_multiple_identification_list = self.multiple_id_paths(
-                    self.analysis_results.namespacecount
+                self.analysis_results.rogue_multiple_identification_list = (
+                    self.multiple_id_paths(self.analysis_results.namespacecount)
                 )
 
             if self.rogueanalysis:
