@@ -111,7 +111,6 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
         "Please report any feedback you have around its accuracy and helpfulness. "
         "The feedback received will help improve the feature."
     )
-
     if txtout is True:
         logging.info("Outputting text report")
         textoutput = FormatAnalysisTextOutput(analysis_results)
@@ -133,7 +132,9 @@ def handle_output(analysis_results, txtout=False, rogues=False, heroes=False):
             print(htmloutput.printHTMLResults().encode("utf8"))
 
 
-def analysis_from_database(database_path, denylist=None, rogues=False, heroes=False):
+def analysis_from_database(
+    database_path, denylist=None, rogues=False, heroes=False, audit=False
+):
     """Analysis of format identification report from existing database.
 
     :param database_path: path to sqlite database containing analysis
@@ -145,7 +146,7 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     """
     logging.info("Analysis from database: %s", database_path)
     try:
-        analysis = DemystifyAnalysis(database_path, get_config(), denylist)
+        analysis = DemystifyAnalysis(database_path, get_config(), denylist, audit)
     except AnalysisError as err:
         raise AnalysisError(err)
     rogue_analysis = False
@@ -155,7 +156,9 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     return analysis
 
 
-def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes=None):
+def analysis_from_csv(
+    format_report, analyze, denylist=None, rogues=None, heroes=None, audit=False
+):
     """Analysis of format identification report from raw data, i.e.
     DROID CSV, SF YAML etc.
 
@@ -176,7 +179,7 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     if analyze is not True:
         logging.error("Analysis is not set: %s", analyze)
         return
-    analysis = analysis_from_database(database_path, denylist, rogues, heroes)
+    analysis = analysis_from_database(database_path, denylist, rogues, heroes, audit)
     return analysis
 
 
@@ -221,6 +224,11 @@ def main():
         help="Output 'Heroes Gallery' listing",
         action="store_true",
     )
+    parser.add_argument(
+        "--audit",
+        help="Output a listing of all database queries used for a report",
+        action="store_true",
+    )
     start_time = time.time()
     if len(sys.argv) == 1:
         parser.print_help()
@@ -233,16 +241,18 @@ def main():
     if args.export:
         args.db = False
         analysis = analysis_from_csv(
-            args.export, True, denylist, args.rogues, args.heroes
+            args.export, True, denylist, args.rogues, args.heroes, args.audit
         )
     if args.db:
         if not IdentifyDB().identify_export(args.db):
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
-        analysis = analysis_from_database(args.db, denylist, args.rogues, args.heroes)
-    if analysis:
+        analysis = analysis_from_database(
+            args.db, denylist, args.rogues, args.heroes.args.audit
+        )
+    if analysis and not args.audit:
         handle_output(analysis.analysis_results, args.txt, args.rogues, args.heroes)
-        output_time(start_time)
+    output_time(start_time)
     logging.info("Demystify: ...analysis complete")
 
 

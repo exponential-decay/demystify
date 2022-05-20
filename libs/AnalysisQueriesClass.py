@@ -14,38 +14,70 @@ class AnalysisQueries:
     analysis functions in Demystify.
     """
 
-    SELECT_FILENAMES = "SELECT FILEDATA.NAME FROM FILEDATA"
-    SELECT_DIRNAMES = "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
+    SELECT_FILENAMES = (
+        "/* demystify: select all filenames from the filedata table \n*/\n"
+        "SELECT FILEDATA.NAME FROM FILEDATA"
+    )
+    SELECT_DIRNAMES = (
+        "/* demystify: select distinct file names from the database \n*/\n"
+        "SELECT DISTINCT FILEDATA.DIR_NAME FROM FILEDATA"
+    )
 
-    SELECT_HASH = "SELECT DBMD.HASH_TYPE FROM DBMD"
-    SELECT_TOOL = "SELECT DBMD.TOOL_TYPE FROM DBMD"
+    SELECT_HASH = (
+        "/* demystify: select the checksum type used by the database \n*/\n"
+        "SELECT DBMD.HASH_TYPE FROM DBMD"
+    )
+    SELECT_TOOL = (
+        "/* demystify: select the format identification tool used \n*/\n"
+        "SELECT DBMD.TOOL_TYPE FROM DBMD"
+    )
 
-    SELECT_COLLECTION_SIZE = "SELECT SUM(FILEDATA.SIZE) FROM FILEDATA"
-    SELECT_COUNT_FILES = "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
-
+    SELECT_COLLECTION_SIZE = (
+        "/* demystify: sum the total bytes used by all files in the database \n*/\n"
+        "SELECT SUM(FILEDATA.SIZE) FROM FILEDATA"
+    )
+    SELECT_COUNT_FILES = (
+        "/* demystify: count all files in the database \n*/\n"
+        "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
+    )
     SELECT_COUNT_CONTAINERS = (
+        "/* demystify: count the number of container files in the database \n*/\n"
         "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE FILEDATA.TYPE='Container'"
     )
     SELECT_CONTAINER_TYPES = (
+        "/* demystify: list extensions of container objects in the database \n*/\n"
         "SELECT DISTINCT FILEDATA.EXT FROM FILEDATA WHERE FILEDATA.TYPE='Container'"
     )
-    SELECT_COUNT_FILES_IN_CONTAINERS = "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE (FILEDATA.URI_SCHEME!='file') AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
-
-    SELECT_COUNT_ZERO_BYTE_FILES = "SELECT COUNT(FILEDATA.SIZE) FROM FILEDATA WHERE (FILEDATA.TYPE!='Folder') AND (FILEDATA.SIZE='0')"
-    SELECT_ZERO_BYTE_FILEPATHS = "SELECT FILEDATA.FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE='File' AND FILEDATA.SIZE='0'"
-
+    SELECT_COUNT_FILES_IN_CONTAINERS = (
+        "/* demystify: count the number of files in container objects, e.g. zip \n*/\n"
+        "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE (FILEDATA.URI_SCHEME!='file') AND (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
+    )
+    SELECT_COUNT_ZERO_BYTE_FILES = (
+        "/* demystify: count the number of zero-byte files in the database \n*/\n"
+        "SELECT COUNT(FILEDATA.SIZE) FROM FILEDATA WHERE (FILEDATA.TYPE!='Folder') AND (FILEDATA.SIZE='0')"
+    )
+    SELECT_ZERO_BYTE_FILEPATHS = (
+        "/* demystify: list the paths of the zero-byte files in the database \n*/\n"
+        "SELECT FILEDATA.FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE!='Folder' AND FILEDATA.SIZE='0'"
+    )
     SELECT_COUNT_FOLDERS = (
+        "/* demystify: count the number of unique identifications \n*/\n"
         "SELECT COUNT(FILEDATA.FILE_ID) FROM FILEDATA WHERE FILEDATA.TYPE='Folder'"
     )
-
-    SELECT_COUNT_UNIQUE_FILENAMES = "SELECT COUNT(DISTINCT FILEDATA.NAME) FROM FILEDATA WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
+    SELECT_COUNT_UNIQUE_FILENAMES = (
+        "/* demystify: count the number of distinct files in the database \n*/\n"
+        "SELECT COUNT(DISTINCT FILEDATA.NAME) FROM FILEDATA WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
+    )
     SELECT_COUNT_UNIQUE_DIRNAMES = (
+        "/* demystify: count the number of unique directories in the database \n*/\n"
         "SELECT COUNT(DISTINCT FILEDATA.DIR_NAME) FROM FILEDATA"
     )
-
-    SELECT_COUNT_NAMESPACES = "SELECT COUNT(NSDATA.NS_ID) FROM NSDATA"
-
+    SELECT_COUNT_NAMESPACES = (
+        "/* demystify: count the number of namespaces used by an identification report \n*/\n"
+        "SELECT COUNT(NSDATA.NS_ID) FROM NSDATA"
+    )
     SELECT_FREQUENCY_ERRORS = (
+        "/* demystify: create a frequency list of unique errors output by the identification tool \n*/\n"
         "SELECT FILEDATA.ERROR, COUNT(*) AS TOTAL\n"
         "FROM FILEDATA\n"
         "WHERE FILEDATA.TYPE!='Folder'\n"
@@ -56,6 +88,7 @@ class AnalysisQueries:
 
     ns_pattern = "{{ ns_id }}"
     SELECT_COUNT_ID_METHODS_PATTERN = (
+        "/* demystify: select all identification results across the database and order by namespace \n*/\n"
         "SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID\n"
         "FROM IDRESULTS\n"
         "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
@@ -65,9 +98,9 @@ class AnalysisQueries:
         "ELSE 2\n"
         "END\n"
     )
-
     # Prority of results is based on order input to database...
     SELECT_COUNT_ID_METHODS_NONE = (
+        "/* demystify: select all identification results from across the database \n*/\n"
         "SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID\n"
         "FROM IDRESULTS\n"
         "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID"
@@ -81,6 +114,7 @@ class AnalysisQueries:
         return self.SELECT_COUNT_ID_METHODS_NONE
 
     SELECT_COUNT_EXT_MISMATCHES = (
+        "/* demystify: count of all extension mismatches \n*/\n"
         "SELECT COUNT(distinct(IDRESULTS.FILE_ID))\n"
         "FROM IDRESULTS\n"
         "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
@@ -88,6 +122,7 @@ class AnalysisQueries:
     )
 
     SELECT_COUNT_FORMAT_COUNT = (
+        "/* demystify: cpunt of pronom signature or container identification results \n*/\n"
         "SELECT COUNT(DISTINCT IDDATA.ID)\n"
         "FROM IDRESULTS\n"
         "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -97,6 +132,7 @@ class AnalysisQueries:
     )
 
     SELECT_COUNT_OTHER_FORMAT_COUNT = (
+        "/* demystify: count of non-pronom signature or container identification results \n*/\n"
         "SELECT COUNT(DISTINCT IDDATA.ID)\n"
         "FROM IDRESULTS\n"
         "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -105,13 +141,13 @@ class AnalysisQueries:
         "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
     )
 
-    # PRONOM and OTHERS Text identifiers as one result
-    # PRONOM and OTHERS Text identifiers as one result
+    # PRONOM and OTHER identifiers as one result.
     @staticmethod
     def select_count_identifiers(method):
         # XML, Text, Filename
         method_pattern = "{{ method }}"
         SELECT_METHOD_IDENTIFIER = (
+            "/* demystify: count all identification results for all identifiers as one \n*/\n"
             "SELECT COUNT(DISTINCT IDMETHOD)\n"
             "FROM (SELECT IDRESULTS.FILE_ID, IDDATA.ID as IDMETHOD\n"
             "FROM IDRESULTS\n"
@@ -137,6 +173,7 @@ class AnalysisQueries:
             identifier_text = "%match on filename%"
 
         SELECT_IDENTIFIER_COUNT = (
+            "/* demystify: select information about namespace and identification based on the given identification method  \n*/\n"
             "SELECT 'ns:' || NSDATA.NS_NAME || ' ' || IDDATA.ID, count(IDDATA.ID) as TOTAL\n"
             "FROM IDDATA\n"
             "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -148,6 +185,7 @@ class AnalysisQueries:
         return SELECT_IDENTIFIER_COUNT.replace(identifier_pattern, identifier_text)
 
     SELECT_COUNT_EXTENSION_RANGE = (
+        "/* demystify: count of extensions for all signature and container identified files in the database \n*/\n"
         "SELECT COUNT(DISTINCT FILEDATA.EXT)\n"
         "FROM FILEDATA\n"
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')"
@@ -163,6 +201,7 @@ class AnalysisQueries:
         """
         mimes = [id_[1] for id_ in idids]
         query1 = (
+            "/* demystify: select information about all mimetypes recorded in the database where a mimetype is listed \n*/\n"
             "SELECT IDDATA.MIME_TYPE, COUNT(*) AS total\n"
             "FROM IDRESULTS\n"
             "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
@@ -177,6 +216,7 @@ class AnalysisQueries:
         return query
 
     SELECT_BINARY_MATCH_COUNT = (
+        "/* demystify: select information about all signature or container identified files in the database \n*/\n"
         "SELECT NSDATA.NS_NAME, IDDATA.ID, COUNT(IDDATA.ID) as TOTAL\n"
         "FROM IDRESULTS\n"
         "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -186,6 +226,7 @@ class AnalysisQueries:
     )
 
     SELECT_YEAR_FREQUENCY_COUNT = (
+        "/* demystify: create a frequency listing of all 'last-modified' years in the database \n*/\n"
         "SELECT FILEDATA.YEAR, COUNT(FILEDATA.YEAR) AS total\n"
         "FROM FILEDATA\n"
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')\n"
@@ -193,12 +234,14 @@ class AnalysisQueries:
     )
 
     SELECT_PUIDS_EXTENSION_ONLY = (
+        "/* demystify: select information about files identified by extension only \n*/\n"
         "SELECT DISTINCT IDDATA.ID, IDDATA.FORMAT_NAME\n"
         "FROM IDDATA\n"
         "WHERE (IDDATA.METHOD='Extension')"
     )
 
     SELECT_ALL_UNIQUE_EXTENSIONS = (
+        "/* demystify: select all unique file format extensions in the database \n*/\n"
         "SELECT DISTINCT FILEDATA.EXT\n"
         "FROM FILEDATA\n"
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')\n"
@@ -206,6 +249,7 @@ class AnalysisQueries:
     )
 
     SELECT_COUNT_EXTENSION_FREQUENCY = (
+        "/* demystify: create a frequency listing of file format extensions in the database \n*/\n"
         "SELECT FILEDATA.EXT, COUNT(*) AS total\n"
         "FROM FILEDATA\n"
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')\n"
@@ -214,6 +258,7 @@ class AnalysisQueries:
     )
 
     SELECT_COUNT_DUPLICATE_CHECKSUMS = (
+        "/* demystify: create a frequency listing of duplicate files in the database \n*/\n"
         "SELECT FILEDATA.HASH, COUNT(*) AS TOTAL\n"
         "FROM FILEDATA\n"
         "WHERE FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container'\n"
@@ -225,6 +270,7 @@ class AnalysisQueries:
 
     # Siegfried only queries...
     SELECT_BYTE_MATCH_BASIS = (
+        "/* demystify: select metadata about objects with a byte match identification \n*/\n"
         "SELECT DISTINCT IDDATA.BASIS, IDDATA.ID, FILEDATA.NAME, FILEDATA.SIZE\n"
         "FROM IDRESULTS\n"
         "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
@@ -242,6 +288,7 @@ class AnalysisQueries:
         """
         if paths is False:
             body = (
+                "/* demystify: count of files with multiple identifications \n*/\n"
                 "SELECT count(FREQUENCY)\n"
                 "FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
                 "FROM IDRESULTS\n"
@@ -255,6 +302,7 @@ class AnalysisQueries:
             query = "{}{}".format(body, nscount)
             return query
         body = (
+            "/* demystify: select paths for files with multiple identifications \n*/\n"
             "SELECT PATH\n"
             "FROM (SELECT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
             "FROM IDRESULTS\n"
@@ -270,13 +318,21 @@ class AnalysisQueries:
 
     @staticmethod
     def list_duplicate_paths(checksum):
-        return "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(
-            checksum
+        dupes = (
+            "/* demystify: select paths from the database for files with a given checksum \n*/\n"
+            "SELECT FILE_PATH FROM FILEDATA WHERE FILEDATA.HASH='{}' ORDER BY FILEDATA.FILE_PATH;".format(
+                checksum
+            )
         )
+        return dupes
 
     @staticmethod
     def count_id_instances(id_):
-        return "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='{}'".format(id_)
+        id_instances = (
+            "/* demystify: count of all items with a given identification \n*/\n"
+            "SELECT COUNT(*) AS total FROM IDDATA WHERE (IDDATA.ID='{}'".format(id_)
+        )
+        return id_instances
 
     def query_from_idrows(self, idlist, priority=None):
         list_ = "WHERE IDRESULTS.ID_ID IN "
@@ -285,6 +341,7 @@ class AnalysisQueries:
             where = "{}{}, ".format(where, i[1])
         list_ = "{}{})\n".format(list_, where.strip(", "))
         SELECT_NAMESPACE_AND_IDS = (
+            "/* demystify: select metadata about all results ordered by namespace \n*/\n"
             "SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID, IDDATA.FORMAT_NAME, IDDATA.BASIS, IDDATA.FORMAT_VERSION, IDDATA.NS_ID, COUNT(IDDATA.ID) AS TOTAL\n"
             "FROM IDRESULTS\n"
             "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -299,7 +356,7 @@ class AnalysisQueries:
             "END\n"
         )
         GROUP_TOTAL = """GROUP BY IDDATA.ID ORDER BY TOTAL DESC"""
-        query = "{}\n{}".format(SELECT_NAMESPACE_AND_IDS, list_)
+        query = "{}{}".format(SELECT_NAMESPACE_AND_IDS, list_)
         if priority is not None:
             query = "{}{}".format(
                 query, PRIORITY_ID.replace(self.ns_pattern, str(priority))
@@ -322,9 +379,13 @@ class AnalysisQueries:
                 where = where + str(i) + ", "
         list_ = list_ + where.strip(", ") + ")"
 
-        SELECT_PATHS = "SELECT FILEDATA.FILE_PATH\nFROM FILEDATA\n"
+        SELECT_PATHS = (
+            "/* demystify: select file paths for a given identification method \n*/\n"
+            "SELECT FILEDATA.FILE_PATH\nFROM FILEDATA\n"
+        )
 
         SELECT_NAMESPACE_AND_IDS = (
+            "/* demystify: select metadata about identifications for a given identification method \n*/\n"
             "SELECT 'ns:' || NSDATA.NS_NAME || ' ', IDDATA.ID\n"
             "FROM IDRESULTS\n"
             "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
@@ -341,7 +402,9 @@ class AnalysisQueries:
         return SELECT_PATHS + "\n" + list_
 
     # NAMESPACE QUERIES
-    SELECT_NS_DATA = "SELECT * FROM NSDATA"
+    SELECT_NS_DATA = (
+        "/* demystify: select all namespace data \n*/\n" "SELECT * FROM NSDATA"
+    )
 
     @staticmethod
     def get_ns_gap_count_lists(nsid):
@@ -349,6 +412,7 @@ class AnalysisQueries:
         Container methods for a given namespace ID.
         """
         return (
+            "/* demystify: identify gaps across all namespaces used in an identification run \n*/\n"
             "SELECT IDRESULTS.FILE_ID\n"
             "FROM IDRESULTS\n"
             "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
@@ -359,6 +423,7 @@ class AnalysisQueries:
     @staticmethod
     def get_ns_multiple_ids(nsid):
         SELECT_NAMESPACE_BINARY_IDS1 = (
+            "/* demystify: count of files from the database with multiple identifications for a given namespace id \n*/\n"
             "SELECT count(*)\n"
             "FROM (SELECT COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
             "FROM IDRESULTS\n"
@@ -391,6 +456,7 @@ class AnalysisQueries:
         """
         WHERE_NS = "WHERE NS_ID={}".format(id_)
         COUNT_IDS_NS = (
+            "/* demystify: count of files from the database identified using signature or container methods for a given namespace \n*/\n"
             "SELECT COUNT(DISTINCT IDRESULTS.FILE_ID)\n"
             "FROM IDRESULTS\n"
             "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
@@ -398,7 +464,10 @@ class AnalysisQueries:
         COUNT_IDS_METHODS = (
             "AND (IDDATA.METHOD='Signature' or IDDATA.METHOD='Container')"
         )
-        ID_METHODS_COUNT = "SELECT COUNT(*) FROM IDDATA\n"
+        ID_METHODS_COUNT = (
+            "/* demystify: count all rows in the iddata table \n*/\n"
+            "SELECT COUNT(*) FROM IDDATA\n"
+        )
         ID_METHODS_METHOD = "AND IDDATA.METHOD="
         query = ""
         if binary is True:

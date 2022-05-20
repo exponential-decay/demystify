@@ -13,6 +13,7 @@ class DenylistQueries:
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(filenamelist)
         newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
         fnamequery = (
+            "/* deny-list: select file paths and names from the database for file names in a given list \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME\n"
             "FROM FILEDATA\n"
             "WHERE FILEDATA.TYPE != 'Folder'\n"
@@ -25,6 +26,7 @@ class DenylistQueries:
         newlist = '%" or FILEDATA.NAME LIKE "%'.join(dirlist)
         newlist = 'FILEDATA.NAME LIKE "%{}%")'.format(newlist)
         dirquery = (
+            "/* deny-list: select file paths and names from the database for folder names in a given list \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME\n"
             "FROM FILEDATA\n"
             "WHERE FILEDATA.TYPE = 'Folder'\n"
@@ -38,6 +40,7 @@ class DenylistQueries:
         newlist = '("{}")'.format(newlist)
         newlist = newlist.replace(".", "")
         extquery = (
+            "/* deny-list: select file paths and file names from the database for a set of files with extensions in a given list \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, FILEDATA.EXT\n"
             "FROM FILEDATA\n"
             "WHERE FILEDATA.TYPE != 'Folder'\n"
@@ -50,6 +53,7 @@ class DenylistQueries:
         newlist = '","'.join(idlist)
         newlist = '("{}")'.format(newlist)
         idquery = (
+            "/* deny-list: select file and id metadata from the database for a set of files in a given list of format ids \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH, FILEDATA.NAME, IDDATA.ID || ': ' || IDDATA.FORMAT_NAME || ' ' || IDDATA.FORMAT_VERSION\n"
             "FROM IDRESULTS\n"
             "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
