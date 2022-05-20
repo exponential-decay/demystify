@@ -11,6 +11,7 @@ except ImportError:
 
 import logging
 import sqlite3
+import time
 from collections import Counter
 
 from libs import AnalysisResultsClass
@@ -63,7 +64,7 @@ class DemystifyAnalysis(DemystifyBase):
 
     TOOLTYPE_DROID = "droid"
 
-    def __init__(self, database_path=None, config=False, denylist=None):
+    def __init__(self, database_path=None, config=False, denylist=None, audit=False):
         """Constructor for DemystifyAnalysis object."""
         logging.debug(
             "Analysis __init__(): database_path: %s config: %s denylist: %s",
@@ -82,6 +83,7 @@ class DemystifyAnalysis(DemystifyBase):
         # generate data for that.
         self.analysis_results = AnalysisResultsClass.AnalysisResults()
         self.query = AnalysisQueries()
+        self.audit = audit
 
         # Initialize database connection variables.
         self._open_database(database_path)
@@ -211,7 +213,12 @@ class DemystifyAnalysis(DemystifyBase):
         so that a number of different sqlite query calls styles can be
         used and the caller can do less work to pull those values apart.
         """
+        query_start_time = time.time()
         self.cursor.execute(query.replace("  ", ""))
+        if self.audit:
+            print("---")
+            print(query.strip())
+            print("Query took: {} seconds".format((time.time() - query_start_time)))
         if fetchone is True and numberquery is False:
             return self.cursor.fetchone()
         if fetchone is True and numberquery is True:
@@ -333,6 +340,9 @@ class DemystifyAnalysis(DemystifyBase):
         End result is an array of tuples I think, but need to come back
         to this documentation to make that clearer...
         """
+
+        # Slow query...
+        return []
 
         tooltype = self.analysis_results.tooltype
         query = self.query.methods_return_ns_sort(self.priority_ns_id)
@@ -487,7 +497,6 @@ class DemystifyAnalysis(DemystifyBase):
         methodresults = self._querydb(
             self.query.query_from_idrows(methodids, self.priority_ns_id)
         )
-
         for id_ in methodresults:
             ns_id = id_[5]
             name = id_[2]
@@ -850,7 +859,12 @@ class DemystifyAnalysis(DemystifyBase):
             AnalysisQueries.SELECT_COUNT_EXTENSION_RANGE, True, True
         )
 
-        mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
+        try:
+            mimeids = self.binaryIDs + self.xmlIDs + self.textIDs
+        except TypeError:
+            # Relies on create_id_breakdown
+            mimeids = []
+
         self.analysis_results.mimetypeFrequency = self._querydb(
             self.query.getmimes(mimeids)
         )
@@ -878,15 +892,19 @@ class DemystifyAnalysis(DemystifyBase):
         )
 
         # most complicated way to retrieve extension only PUIDs
-        if len(self.extensionIDonly) > 0:
-            extid = self.query.query_from_ids(self.extensionIDonly, "Extension")
-            test = self._querydb(extid)
-            combined_list = []
-            for entry in test:
-                entry = " ".join(entry)
-                combined_list.append(entry)
-            sorted_list = Counter(elem for elem in combined_list).most_common()
-            self.analysis_results.extensionOnlyIDFrequency = sorted_list
+        try:
+            if len(self.extensionIDonly) > 0:
+                extid = self.query.query_from_ids(self.extensionIDonly, "Extension")
+                test = self._querydb(extid)
+                combined_list = []
+                for entry in test:
+                    entry = " ".join(entry)
+                    combined_list.append(entry)
+                sorted_list = Counter(elem for elem in combined_list).most_common()
+                self.analysis_results.extensionOnlyIDFrequency = sorted_list
+        except TypeError:
+            # Relies on create_id_breakdown
+            pass
 
         # OKAY stat...
         self.analysis_results.uniqueExtensionsInCollectionList = self._querydb(

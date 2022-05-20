@@ -10,13 +10,16 @@ class RogueQueries(object):
     """
 
     SELECT_ALL_FILEPATHS = (
-        """SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE != 'Folder'"""
+        "/* rogues: select all non-folder file paths from the filedata table \n*/\n"
+        "SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE != 'Folder'"
     )
     SELECT_ALL_FOLDERS = (
-        """SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE = 'Folder'"""
+        "/* rogues: select all 'folder' file paths from the filedata table \n*/\n"
+        "SELECT DISTINCT FILE_PATH FROM FILEDATA WHERE FILEDATA.TYPE = 'Folder'"
     )
 
     SELECT_EXTENSION_MISMATCHES = (
+        "/* rogues: select files from the database that have extension mismatches \n*/\n"
         "SELECT DISTINCT FILEDATA.FILE_PATH\n"
         "FROM IDRESULTS\n"
         "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
@@ -27,6 +30,7 @@ class RogueQueries(object):
     @staticmethod
     def get_pronom_identified_files(pro_ns):
         PRONOM_ONLY = (
+            "/* rogues: select files identified using signatures or containers using PRONOM \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH\n"
             "FROM IDRESULTS\n"
             "JOIN FILEDATA on IDRESULTS.FILE_ID = FILEDATA.FILE_ID\n"
@@ -43,6 +47,7 @@ class RogueQueries(object):
         csv = ",".join(ids)
         csv = "({})".format(csv)
         ALL_IDS = (
+            "/* rogues: select file paths from the database not in a given list \n*/\n"
             "SELECT DISTINCT FILEDATA.FILE_PATH\n"
             "FROM FILEDATA\n"
             "WHERE FILE_ID NOT IN"
@@ -52,7 +57,10 @@ class RogueQueries(object):
 
     @staticmethod
     def count_multiple_ids(nscount, paths=False):
-        count = "SELECT count(FREQUENCY)\n"
+        count = (
+            "/* rogues: select file paths and counts from the database with multiple id results \n*/\n"
+            "SELECT count(FREQUENCY)\n"
+        )
         pathquery = "SELECT PATH\n"
         body = (
             "FROM (SELECT DISTINCT FILEDATA.FILE_PATH AS PATH, COUNT(FILEDATA.FILE_ID) AS FREQUENCY\n"
@@ -74,7 +82,10 @@ class RogueQueries(object):
     def get_rogue_name_paths(itemlist):
         csv = '","'.join(itemlist)
         csv = '("{}")'.format(csv)
-        PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE NAME IN "
+        PATHS = (
+            "/* rogues: select file paths from the database where the name is in a given list \n*/\n"
+            "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE NAME IN "
+        )
         query = "{}{}".format(PATHS, csv)
         return query
 
@@ -84,6 +95,9 @@ class RogueQueries(object):
             return ""
         csv = '","'.join(itemlist)
         csv = '("{}")'.format(csv)
-        PATHS = "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE DIR_NAME IN "
+        PATHS = (
+            "/* rogues:  select file paths from the database where the name is in a given list \n*/\n"
+            "SELECT DISTINCT FILEDATA.FILE_PATH FROM FILEDATA WHERE DIR_NAME IN "
+        )
         query = "{}{}".format(PATHS, csv)
         return query
