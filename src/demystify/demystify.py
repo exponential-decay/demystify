@@ -156,6 +156,8 @@ def analysis_from_csv(
     database_cursor = sqlitefid.identify_and_process_input(
         format_report, in_memory=in_memory
     )
+    if not database_cursor:
+        return "Export cannot be identified, ensure that the input file is one of the supported DROID CSV, or Siegfried YAML types."
     logging.info("Database path: %s", database_cursor)
     if database_cursor is None:
         logging.error("No database filename supplied: %s", database_cursor)
