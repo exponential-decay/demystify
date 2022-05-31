@@ -204,7 +204,7 @@ def main():
         default=False,
     )
     parser.add_argument(
-        "--txt", "--text", help="Output HTML instead of text", action="store_true"
+        "--txt", "--text", help="Output text instead of HTML", action="store_true"
     )
     parser.add_argument(
         "--denylist", help="Use configured denylist", action="store_true"
