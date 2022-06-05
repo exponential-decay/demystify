@@ -13,7 +13,7 @@ with open("src/demystify/libs/version.py") as fp:
     exec(fp.read(), version)
 
 setup(
-    name="demystify",
+    name="demystify-digipres",
     version=version.get("__version__"),
     description="Static analysis tool for file format identification reports",
     long_description=long_description,
