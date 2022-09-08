@@ -110,7 +110,7 @@ def denylist(tmp_path):
     """Return a processed Denylist to provide to Demystify analysis."""
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_ROGUES.strip())
+    denylist.write_text(DENYLIST_ROGUES.strip(), encoding="UTF-8")
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
     return HandleDenylist().denylist(config)
@@ -123,7 +123,7 @@ def rogueconfig(tmp_path):
     """
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_ROGUES.strip())
+    denylist.write_text(DENYLIST_ROGUES.strip(), encoding="UTF-8")
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
     return config
@@ -431,7 +431,7 @@ def test_rogues_droid_rogues(tmp_path, capsys, denylist, rogueconfig):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     assert rogueconfig is not None
 
@@ -468,7 +468,7 @@ def test_rogues_droid_heroes(tmp_path, capsys, denylist, rogueconfig):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     assert rogueconfig is not None
 
@@ -534,7 +534,7 @@ def test_rogues_sf(tmp_path, capsys, denylist, rogueconfig):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
-    sf_yaml.write_text(SF_ROGUE_TEST.strip())
+    sf_yaml.write_text(SF_ROGUE_TEST.strip(), encoding="UTF-8")
 
     assert rogueconfig is not None
 
@@ -572,7 +572,7 @@ def test_heroes_sf(tmp_path, capsys, denylist, rogueconfig):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_rogue_test.yaml"
-    sf_yaml.write_text(SF_ROGUE_TEST.strip())
+    sf_yaml.write_text(SF_ROGUE_TEST.strip(), encoding="UTF-8")
 
     assert rogueconfig is not None
 

@@ -124,7 +124,7 @@ def test_run_droid_analysis(tmp_path):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     # Analysis from CSV will currently read the results from the CSV
     # above and output an on-disk sqlite database at tmp_path. This
@@ -367,7 +367,7 @@ def test_empty_files(tmp_path):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV_EMPTY.strip())
+    droid_csv.write_text(DROID_CSV_EMPTY.strip(), encoding="UTF-8")
 
     # Analysis from CSV will currently read the results from the CSV
     # above and output an on-disk sqlite database at tmp_path. This
@@ -401,7 +401,7 @@ def test_duplicates(tmp_path):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV_DUPLICATES.strip())
+    droid_csv.write_text(DROID_CSV_DUPLICATES.strip(), encoding="UTF-8")
 
     # Analysis from CSV will currently read the results from the CSV
     # above and output an on-disk sqlite database at tmp_path. This
@@ -445,7 +445,7 @@ def test_name_issue_detection(tmp_path):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_name_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -488,7 +488,7 @@ def test_extension_tests(tmp_path):
     """Ensure that extension only matches work as anticipated."""
     dir_ = tmp_path
     droid_csv = dir_ / "droid_ext_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -575,7 +575,7 @@ def test_sf_multiple_ids(tmp_path):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test_multi.csv"
-    droid_csv.write_text(DROID_CSV_MULTI.strip())
+    droid_csv.write_text(DROID_CSV_MULTI.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This

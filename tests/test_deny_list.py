@@ -75,7 +75,7 @@ def denylist(tmp_path):
     """Return a processed Denylist to provide to Demystify analysis."""
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_DENY.strip())
+    denylist.write_text(DENYLIST_DENY.strip(), encoding="UTF-8")
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
     return HandleDenylist().denylist(config)
@@ -86,7 +86,7 @@ def denylist_tika(tmp_path):
     """Return a processed Denylist to provide to Demystify analysis."""
     dir_ = tmp_path
     denylist = dir_ / "deny_💜_list.cfg"
-    denylist.write_text(DENYLIST_DENY_TIKA.strip())
+    denylist.write_text(DENYLIST_DENY_TIKA.strip(), encoding="UTF-8")
     config = ConfigParser.RawConfigParser()
     config.read(str(denylist))
     return HandleDenylist().denylist(config)
@@ -107,7 +107,7 @@ def test_denylist_droid(tmp_path, denylist):
 
     dir_ = tmp_path
     droid_csv = dir_ / "droid_💜_test.csv"
-    droid_csv.write_text(DROID_CSV.strip())
+    droid_csv.write_text(DROID_CSV.strip(), encoding="UTF-8")
 
     # Analysis from CSV will currently read the results from the CSV
     # above and output an on-disk sqlite database at tmp_path. This
@@ -334,7 +334,7 @@ def test_denylist_sf(tmp_path, denylist):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST.strip())
+    sf_yaml.write_text(SF_DENY_TEST.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -547,7 +547,7 @@ def test_denylist_sf_tika(tmp_path, denylist_tika):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DENY_TEST_TIKA.strip())
+    sf_yaml.write_text(SF_DENY_TEST_TIKA.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This

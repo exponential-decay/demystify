@@ -2577,7 +2577,7 @@ def test_run_siegfried_analysis(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_YAML.strip())
+    sf_yaml.write_text(SF_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -3282,7 +3282,7 @@ def test_xml_and_text_identiiers(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_xml.yaml"
-    sf_yaml.write_text(SF_TEXT_XML_YAML.strip())
+    sf_yaml.write_text(SF_TEXT_XML_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -3523,7 +3523,7 @@ def test_extension_identifiers(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_extensions.yaml"
-    sf_yaml.write_text(SF_EXT_YAML.strip())
+    sf_yaml.write_text(SF_EXT_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4309,7 +4309,7 @@ def test_sf_methods(tmp_path):
     """Test ID method and MIMEType frequency results."""
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_methods.yaml"
-    sf_yaml.write_text(SF_METHODS_YAML.strip())
+    sf_yaml.write_text(SF_METHODS_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4466,7 +4466,7 @@ def test_sf_multiple_ids(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test_multi.yaml"
-    sf_yaml.write_text(SF_MULTI_YAML.strip())
+    sf_yaml.write_text(SF_MULTI_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4499,7 +4499,7 @@ def test_bof_eof_extract(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_YAML.strip())
+    sf_yaml.write_text(SF_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4555,7 +4555,7 @@ def test_empty_files(tmp_path):
     """Ensure that zero byte files are accounted for correctly."""
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_EMPTY_TEST.strip())
+    sf_yaml.write_text(SF_EMPTY_TEST.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4656,7 +4656,7 @@ def test_duplicates(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_DUPES_TEST.strip())
+    sf_yaml.write_text(SF_DUPES_TEST.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
@@ -4693,7 +4693,7 @@ def test_name_issue_detection(tmp_path):
 
     dir_ = tmp_path
     sf_yaml = dir_ / "sf_💜_test.yaml"
-    sf_yaml.write_text(SF_YAML.strip())
+    sf_yaml.write_text(SF_YAML.strip(), encoding="UTF-8")
 
     # Analysis from YAML will currently read the results from the YAML
     # above and output an on-disk sqlite database at tmp_path. This
