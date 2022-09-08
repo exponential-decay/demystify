@@ -3552,12 +3552,12 @@ def test_extension_identifiers(tmp_path):
         ("x-fmt/23", "Microsoft Excel Backup"),
     ]
     assert res.analysis_results.uniqueExtensionsInCollectionList == [
-        ("zip",),
-        ("md",),
-        ("txt",),
         ("csv",),
+        ("md",),
         ("tsv",),
+        ("txt",),
         ("xlk",),
+        ("zip",),
     ]
     assert res.analysis_results.frequencyOfAllExtensions == [
         ("xlk", 2),

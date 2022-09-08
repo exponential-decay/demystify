@@ -201,6 +201,7 @@ class AnalysisQueries:
         "FROM FILEDATA\n"
         "WHERE (FILEDATA.TYPE='File' OR FILEDATA.TYPE='Container')\n"
         "AND FILEDATA.EXT!=''"
+        "ORDER BY FILEDATA.EXT ASC"
     )
 
     SELECT_COUNT_EXTENSION_FREQUENCY = (
