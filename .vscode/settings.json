@@ -1,0 +1,30 @@
+{
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "python.linting.mypyEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.lintOnSave": true,
+    "git.inputValidationSubjectLength": 50,
+    "git.inputValidationLength": 72,
+    "[git-commit]": {
+        "editor.rulers": [
+            50,
+            72,
+        ]},
+    "[python]": {
+        "editor.rulers": [
+            72,
+            79,
+            120,
+        ],
+        "editor.formatOnSave": true,
+    },
+    "[markdown]": {
+        "editor.rulers": [80],
+    },
+    "python.formatting.provider": "black",
+}
