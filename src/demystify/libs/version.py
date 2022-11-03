@@ -5,7 +5,7 @@
 Helper class to return the version of this application to the caller.
 """
 
-__version__ = "2.0.0rc3-demystify-lite"
+__version__ = "3.0.0alpha1"
 
 
 class AnalysisVersion:
