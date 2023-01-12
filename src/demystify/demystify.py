@@ -267,6 +267,7 @@ def get_denylist_template() -> str:
 
 def main():
     """Primary entry point for Demystify from the command line."""
+
     parser = argparse.ArgumentParser(
         description="Analyse DROID and Siegfried results stored in a SQLite database"
     )
@@ -312,10 +313,21 @@ def main():
         required=False,
         action="store_true",
     )
-    start_time = time.time()
+
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
+
+    encoding = sys.stdout.encoding
+    logging.info("console encoding: %s", encoding)
+    if encoding != "utf-8":
+        logging.warning("encoding '%s' may result in the script failing", encoding)
+        logging.warning(
+            "please try `set PYTHONIOENCODING=utf-8` (Windows) `export PYTHONIOENCODING=utf-8` (Linux)"
+        )
+
+    start_time = time.time()
+
     global args
     args = parser.parse_args()
     if args.version:
