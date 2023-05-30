@@ -1,0 +1,11 @@
+.gitattributes export-ignore
+govdocs-selected-corpus-output export-ignore
+opf-test-corpus-test-output export-ignore
+.gitignore export-ignore
+.gitmodules export-ignore
+.github export-ignore
+*.pyc export-ignore
+__pycache__ export-ignore
+test-data export-ignore
+CODE_OF_CONDUCT export-ignore
+tar-package export-ignore

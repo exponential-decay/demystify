@@ -1,0 +1,8 @@
+-r base.txt
+black==22.3.0; python_version >= '3.0'
+flake8==3.9.2;
+isort==5.6.4; python_version >= '3.0'
+pytest
+pylint==2.8.3; python_version >= '3.0'
+tox==3.23.1
+git-archive-all

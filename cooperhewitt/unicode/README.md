@@ -1,4 +1,5 @@
-Copy of library from Cooper Hewitt to enable writing of plain text descriptions of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
+Copy of library from Cooper Hewitt to enable writing of plain text descriptions
+of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
 
 ### License
 
