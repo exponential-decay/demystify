@@ -6,6 +6,34 @@
 # numerous as to be too noisy, potentially missing more important
 # output that pylint can provide.
 
+[MAIN]
+
+ignore=
+    LICENSE,
+    .pylintrc,
+
+ignore-patterns=
+    ^(.+).ini$,
+    ^(.+).md$,
+    ^(.+).sh$,
+    ^(.+).service$,
+    ^(.+).json,
+    ^(.+).yml,
+    ^(.+).yaml,
+    ^(.+).toml,
+    ^(.+).env,
+    ^(.+).cfg,
+    ^(.+).gif,
+    ^(.+).png,
+    ^(.+).htm,
+    ^(.+).txt,
+    ^\.,
+
+ignore-paths=
+    requirements/.,
+    tests/fixtures/vcrpy/.,
+    Makefile,
+
 [MESSAGES CONTROL]
 
 disable=
