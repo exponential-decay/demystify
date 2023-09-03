@@ -1,4 +1,13 @@
 repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-json
+    -   id: check-toml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: check-case-conflict
 -   repo: https://github.com/psf/black
     rev: 23.3.0
     hooks:
@@ -9,8 +18,29 @@ repos:
   hooks:
   - id: isort
     language_version: python3
-- repo: https://github.com/pycqa/flake8
-  rev: 6.1.0
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.0.270
   hooks:
-  - id: flake8
-    language_version: python3
+    - id: ruff
+      args: ["--fix", "--show-fixes"]
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.35.0
+  hooks:
+  - id: markdownlint
+- repo: https://github.com/codespell-project/codespell
+  rev: v2.2.4
+  hooks:
+    - id: codespell
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: pylint
+      language: python
+      language_version: python3
+      args:
+        [
+          "-rn", # Only display messages.
+          "-sn", # Don't display the pylint score.
+          "--rcfile=.pylintrc"
+        ]
