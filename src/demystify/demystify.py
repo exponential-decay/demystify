@@ -26,21 +26,13 @@ rsync style lists for filtering on disk.
 """
 
 import argparse
+import configparser as ConfigParser
 import logging
 import os
 import pathlib
 import sqlite3
 import sys
 import time
-
-LOGFORMAT = (
-    "%(asctime)-15s %(levelname)s: %(filename)s:%(lineno)s:%(funcName)s(): %(message)s"
-)
-DATEFORMAT = "%Y-%m-%d %H:%M:%S"
-
-logging.basicConfig(format=LOGFORMAT, datefmt=DATEFORMAT, level="INFO")
-
-import configparser as ConfigParser
 
 from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from .libs.HandleDenylistClass import HandleDenylist
@@ -51,6 +43,19 @@ from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
 from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
 from .sqlitefid.src.sqlitefid import sqlitefid
+
+logging.basicConfig(
+    format="%(asctime)-15s %(levelname)s :: %(filename)s:%(lineno)s:%(funcName)s() :: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level="INFO",
+)
+
+
+# Default to UTC time.
+logging.Formatter.converter = time.gmtime
+
+logger = logging.getLogger(__name__)
+
 
 # Don't write .pyc files.
 sys.dont_write_bytecode = True
@@ -68,7 +73,7 @@ def get_config():
     """
     CONFIG = "config.cfg"
     if not os.path.isfile(CONFIG):
-        logging.error("Not using config config file doesn't exist: %s", CONFIG)
+        logger.error("not using config config file doesn't exist: %s", CONFIG)
         return None
     config = ConfigParser.ConfigParser()
     config.read(CONFIG)
@@ -118,19 +123,19 @@ def handle_output(
     )
 
     if txtout is True:
-        logging.info("Outputting text report")
+        logger.info("outputting text report")
         textoutput = FormatAnalysisTextOutput(analysis_results)
         print(textoutput.printTextResults())
     elif rogues is True:
-        logging.info(ROGUES_TEXT)
+        logger.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig)
         rogueoutput.printTextResults()
     elif heroes is True:
-        logging.info(ROGUES_TEXT)
+        logger.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig, heroes)
         rogueoutput.printTextResults()
     else:
-        logging.info("Outputting HTML report")
+        logger.info("Outputting HTML report")
         htmloutput = FormatAnalysisHTMLOutput(analysis_results)
         print(htmloutput.printHTMLResults())
 
@@ -151,7 +156,7 @@ def analysis_from_database(
     :param heroes: flag to output heroes (Boolean)
     :return: analysis_results (AnalysisResults)
     """
-    logging.info("analysis being run for: %s", label)
+    logger.info("analysis being run for: %s", label)
     try:
         analysis = DemystifyAnalysis(
             database_connection=database_connection,
@@ -186,13 +191,13 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     :param heroes: flag to output heroes (Boolean)
     :return: None (Nonetype)
     """
-    logging.info("generating database from input report... %s", format_report)
+    logger.info("generating database from input report... %s", format_report)
     database_connection = sqlitefid.identify_and_process_input(format_report)
     if not database_connection:
-        logging.error("no database result: %s", database_connection)
+        logger.error("no database result: %s", database_connection)
         return
     if not analyze:
-        logging.error("analysis flag is not set: %s", analyze)
+        logger.error("analysis flag is not set: %s", analyze)
         return
     analysis = analysis_from_database(
         database_connection=database_connection,
@@ -206,7 +211,7 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
 
 def output_time(start_time):
     """Output a time taken to process string given a start_time."""
-    logging.info("Output took: %s seconds", (time.time() - start_time))
+    logger.info("Output took: %s seconds", (time.time() - start_time))
 
 
 def get_denylist_template() -> str:
@@ -272,7 +277,7 @@ def main():
         try:
             denylist, rogueconfig = _handle_denylist_config()
         except DenyListError as err:
-            logging.warning(err)
+            logger.warning(err)
             sys.exit(1)
     if args.export:
         args.db = False
@@ -281,7 +286,7 @@ def main():
         )
     if args.db:
         if not IdentifyDB().identify_export(args.db):
-            logging.error("Not a recognized sqlite database: %s", args.db)
+            logger.error("not a recognized sqlite database: %s", args.db)
             sys.exit(1)
         connection = sqlite3.connect(args.db)
         analysis = analysis_from_database(
@@ -296,7 +301,7 @@ def main():
             analysis.analysis_results, args.txt, args.rogues, args.heroes, rogueconfig
         )
         output_time(start_time)
-    logging.info("Demystify: ...analysis complete")
+    logger.info("demystify: ...analysis complete")
 
 
 if __name__ == "__main__":
