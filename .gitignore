@@ -17,3 +17,5 @@ tar-package/*
 venv/
 *.htm
 *.html
+dist/*
+src/demystify_digipres*
