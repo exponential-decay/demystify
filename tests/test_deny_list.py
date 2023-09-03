@@ -92,7 +92,7 @@ def denylist_tika(tmp_path):
     return HandleDenylist().denylist(config)
 
 
-def test_default_denylist(tmp_path, denylist):
+def test_default_denylist(denylist):
     """Make sure the denylist is parsed and output correctly."""
     assert denylist == {
         "IDS": ["fmt/61", "fmt/480"],

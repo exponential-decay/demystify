@@ -11,6 +11,7 @@
 ignore=
     LICENSE,
     .pylintrc,
+    Makefile,
 
 ignore-patterns=
     ^(.+).ini$,
@@ -27,6 +28,11 @@ ignore-patterns=
     ^(.+).png,
     ^(.+).htm,
     ^(.+).txt,
+    ^(.+).csv,
+    ^(.+).sf,
+    ^(.+).droid,
+    ^(.+).db,
+    ^(.+)Makefile,
     ^\.,
 
 ignore-paths=
@@ -51,3 +57,8 @@ disable=
         R0915,  # tmp: too many statements, find better builder pattern for string output.
         R0912,  # tmp: too many branches, we can be more EAFP (easier to ask forgiveness).
         R0916,  # tmp: too many boolean expressions in an if. Can possibly be clearer, e.g. namespace handling.
+        R0913,  # tmp: too many arguments.
+        W0621,  # tmp: redefining name from outer scope.
+        W0511,  # tmp: inline TODO.
+        R1710,  # tmp: all statements need to return or none.
+        W0603,  # tmp: using global.

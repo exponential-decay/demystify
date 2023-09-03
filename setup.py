@@ -10,6 +10,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 version = {}
 with open("src/demystify/libs/version.py") as fp:
+    # pylint: disable=W0122
     exec(fp.read(), version)
 
 setup(

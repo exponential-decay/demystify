@@ -2,6 +2,8 @@
 
 
 class AnalysisStringsEN:
+    """Object to hold English strings for demystify."""
+
     REPORT_TITLE_DR = "DROID Analysis Results"
     REPORT_TITLE_SF = "Siegfried Analysis Results"
     REPORT_SUMMARY = "Summary Statistics"

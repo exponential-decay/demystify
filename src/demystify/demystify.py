@@ -34,6 +34,7 @@ import sqlite3
 import sys
 import time
 
+from .denylist_template import denylist_template
 from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from .libs.HandleDenylistClass import HandleDenylist
 from .libs.IdentifyDatabase import IdentifyDB
@@ -59,6 +60,8 @@ logger = logging.getLogger(__name__)
 
 # Don't write .pyc files.
 sys.dont_write_bytecode = True
+
+args = None
 
 
 class DenyListError(Exception):
@@ -216,8 +219,6 @@ def output_time(start_time):
 
 def get_denylist_template() -> str:
     """Return a denylist to be piped to a file by the caller."""
-    from .denylist_template import denylist_template
-
     return denylist_template
 
 
