@@ -13,12 +13,11 @@ except ModuleNotFoundError:
     # Required for Pypi install.
     from ..pathlesstaken.src.pathlesstaken import pathlesstaken
 
-from . import AnalysisResultsClass
+from . import AnalysisResultsClass, version
 from .AnalysisQueriesClass import AnalysisQueries
 from .DenylistQueriesClass import DenylistQueries
 from .HandleDenylistClass import HandleDenylist
 from .RoguesQueriesClass import RogueQueries
-from .version import AnalysisVersion
 
 
 class AnalysisError(Exception):
@@ -115,8 +114,7 @@ class DemystifyAnalysis(DemystifyBase):
 
     def __version__(self):
         """Return a version number for the analysis."""
-        v = AnalysisVersion()
-        self.analysis_results.__version_no__ = v.getVersion()
+        self.analysis_results.__version_no__ = version.get_version()
         return self.analysis_results.__version_no__
 
     def _close_database(self):

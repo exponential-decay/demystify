@@ -2,7 +2,7 @@
 
 """Analysis results module."""
 
-from .version import AnalysisVersion
+from .version import get_version
 
 
 class AnalysisResults:
@@ -114,7 +114,6 @@ class AnalysisResults:
         self.rogue_file_name_paths = []  # non-ascii file names
         self.rogue_dir_name_paths = []  # non-ascii dir names
 
-    def __version__(self):
-        v = AnalysisVersion()
-        self.version = v.getVersion()
-        return self.version
+    @staticmethod
+    def __version__():
+        return get_version()

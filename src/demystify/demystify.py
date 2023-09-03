@@ -35,6 +35,7 @@ import sys
 import time
 
 from .denylist_template import denylist_template
+from .libs import version
 from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from .libs.HandleDenylistClass import HandleDenylist
 from .libs.IdentifyDatabase import IdentifyDB
@@ -305,12 +306,21 @@ def main():
         help="Output a denylist template for your own configuration",
         action="store_true",
     )
+    parser.add_argument(
+        "--version",
+        help="return code version",
+        required=False,
+        action="store_true",
+    )
     start_time = time.time()
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
     global args
     args = parser.parse_args()
+    if args.version:
+        print(version.get_version())
+        sys.exit(1)
     denylist = None
     if args.denylist_template:
         print(get_denylist_template())
