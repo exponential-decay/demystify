@@ -24,7 +24,7 @@ readme = "README.md"
 license = {file = "LICENSE.txt"}
 
 # Supported python versions. Optional, but helpful.
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 authors = [
   {name = "Ross Spencer"},
