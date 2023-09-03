@@ -13,18 +13,18 @@
     "[git-commit]": {
         "editor.rulers": [
             50,
-            72,
+            72
         ]},
     "[python]": {
         "editor.rulers": [
             72,
             79,
-            120,
+            120
         ],
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": true
     },
     "[markdown]": {
-        "editor.rulers": [80],
+        "editor.rulers": [80]
     },
     "python.formatting.provider": "black",
     "cSpell.words": [
@@ -36,5 +36,5 @@
         "roguesgalleryoutputclass",
         "sqlitefid",
         "textoutputclass"
-    ],
+    ]
 }
