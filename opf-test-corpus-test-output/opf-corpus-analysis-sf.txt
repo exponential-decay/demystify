@@ -210,15 +210,15 @@ Extension Only Identification in the Accession/Extract:
 application/pdf, Portable Document Format
 application/pdf, PDF document
 application/x-adobe-indesign, Adobe InDesign document
-application/octet-stream, 
-application/x-mobipocket-ebook, 
-application/vnd.palm, 
+application/octet-stream,
+application/x-mobipocket-ebook,
+application/vnd.palm,
 application/x-ruby, Ruby script
-video/mj2, 
-video/jpm, 
+video/mj2,
+video/jpm,
 application/vnd.lotus-1-2-3, Lotus 1-2-3 spreadsheet
-application/vnd.wordperfect, 
-application/x-msaccess, 
+application/vnd.wordperfect,
+application/x-msaccess,
 application/msword, Microsoft Word Document
 application/msword, Word document
 x-fmt/100, AutoCAD Script

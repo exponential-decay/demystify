@@ -23,4 +23,3 @@ disable=
         R0915,  # tmp: too many statements, find better builder pattern for string output.
         R0912,  # tmp: too many branches, we can be more EAFP (easier to ask forgiveness).
         R0916,  # tmp: too many boolean expressions in an if. Can possibly be clearer, e.g. namespace handling.
-

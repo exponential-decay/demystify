@@ -11,7 +11,6 @@ class AnalysisResults:
     """
 
     def __init__(self):
-
         self.version = 0
         self.filename = ""
         self.tooltype = None
