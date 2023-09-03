@@ -27,4 +27,7 @@
         "editor.rulers": [80],
     },
     "python.formatting.provider": "black",
+    "cSpell.words": [
+        "sqlitefid"
+    ],
 }
