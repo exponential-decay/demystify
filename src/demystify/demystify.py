@@ -182,7 +182,47 @@ def get_report_label(report_path: str):
     return report_path.stem
 
 
-def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes=None):
+# pylint: disable=W0613
+# pylint: disable=W0613
+def analysis_from_csv_lite(format_report, analyze=True, denylist=None, label=None):
+    """Provide an entry point for demystify-lite."""
+
+    denylist = {
+        "IDS": [],
+        "FILENAMES": [
+            ".DS_Store",
+            "Untitled Document",
+            "desktop.ini",
+            "(copy",
+            "ZbThumbnail.info",
+            "lorem",
+            "New Microsoft Word Document",
+            "Bin.dat",
+            "Thumbs.db",
+            " vitae",
+            " Appointments",
+            " CV",
+            " Application",
+            " Resume",
+            " Appointment",
+            " Test",
+            " list",
+            " member",
+            " people",
+            " address",
+            " phone",
+        ],
+        "DIRECTORIES": ["Untitled Folder", "New Folder", "(copy", ".git", "lorem"],
+        "EXTENSIONS": [".ini", ".exe", ".cfg", ".dll", ".lnk", ".tmp"],
+    }
+    return analysis_from_csv(
+        format_report=format_report, analyze=True, denylist=denylist, label=label
+    )
+
+
+def analysis_from_csv(
+    format_report, analyze, denylist=None, rogues=None, heroes=None, label=None
+):
     """Analysis of format identification report from raw data, i.e.
     DROID CSV, SF YAML etc.
 
@@ -198,16 +238,18 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     database_connection = sqlitefid.identify_and_process_input(format_report)
     if not database_connection:
         logger.error("no database result: %s", database_connection)
-        return
+        return "ensure that the input file is one of the supported DROID CSV, or Siegfried YAML types."
     if not analyze:
         logger.error("analysis flag is not set: %s", analyze)
         return
+    if not label:
+        label = get_report_label(format_report)
     analysis = analysis_from_database(
         database_connection=database_connection,
         denylist=denylist,
         rogues=rogues,
         heroes=heroes,
-        label=get_report_label(format_report),
+        label=label,
     )
     return analysis
 
