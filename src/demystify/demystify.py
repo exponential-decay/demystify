@@ -28,6 +28,8 @@ rsync style lists for filtering on disk.
 import argparse
 import logging
 import os
+import pathlib
+import sqlite3
 import sys
 import time
 
@@ -133,7 +135,13 @@ def handle_output(
         print(htmloutput.printHTMLResults())
 
 
-def analysis_from_database(database_path, denylist=None, rogues=False, heroes=False):
+def analysis_from_database(
+    database_connection=sqlite3.Connection,
+    denylist=None,
+    rogues=False,
+    heroes=False,
+    label=None,
+):
     """Analysis of format identification report from existing database.
 
     :param database_path: path to sqlite database containing analysis
@@ -143,16 +151,27 @@ def analysis_from_database(database_path, denylist=None, rogues=False, heroes=Fa
     :param heroes: flag to output heroes (Boolean)
     :return: analysis_results (AnalysisResults)
     """
-    logging.info("Analysis from database: %s", database_path)
+    logging.info("analysis being run for: %s", label)
     try:
-        analysis = DemystifyAnalysis(database_path, get_config(), denylist)
+        analysis = DemystifyAnalysis(
+            database_connection=database_connection,
+            config=get_config(),
+            denylist=denylist,
+            label=label,
+        )
     except AnalysisError as err:
-        raise AnalysisError(err)
+        raise AnalysisError(f"problem running analysis: {err}") from err
     rogue_analysis = False
     if rogues is not False or heroes is not False:
         rogue_analysis = True
     analysis.runanalysis(rogue_analysis)
     return analysis
+
+
+def get_report_label(report_path: str):
+    """Create a label for the identification report."""
+    report_path = pathlib.Path(report_path)
+    return report_path.stem
 
 
 def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes=None):
@@ -167,16 +186,21 @@ def analysis_from_csv(format_report, analyze, denylist=None, rogues=None, heroes
     :param heroes: flag to output heroes (Boolean)
     :return: None (Nonetype)
     """
-    logging.info("Generating database from input report...")
-    database_path = sqlitefid.identify_and_process_input(format_report)
-    logging.info("Database path: %s", database_path)
-    if database_path is None:
-        logging.error("No database filename supplied: %s", database_path)
+    logging.info("generating database from input report... %s", format_report)
+    database_connection = sqlitefid.identify_and_process_input(format_report)
+    if not database_connection:
+        logging.error("no database result: %s", database_connection)
         return
-    if analyze is not True:
-        logging.error("Analysis is not set: %s", analyze)
+    if not analyze:
+        logging.error("analysis flag is not set: %s", analyze)
         return
-    analysis = analysis_from_database(database_path, denylist, rogues, heroes)
+    analysis = analysis_from_database(
+        database_connection=database_connection,
+        denylist=denylist,
+        rogues=rogues,
+        heroes=heroes,
+        label=get_report_label(format_report),
+    )
     return analysis
 
 
@@ -259,7 +283,14 @@ def main():
         if not IdentifyDB().identify_export(args.db):
             logging.error("Not a recognized sqlite database: %s", args.db)
             sys.exit(1)
-        analysis = analysis_from_database(args.db, denylist, args.rogues, args.heroes)
+        connection = sqlite3.connect(args.db)
+        analysis = analysis_from_database(
+            database_connection=connection,
+            denylist=denylist,
+            rogues=args.rogues,
+            heroes=args.heroes,
+            label=get_report_label(args.db),
+        )
     if analysis:
         handle_output(
             analysis.analysis_results, args.txt, args.rogues, args.heroes, rogueconfig
