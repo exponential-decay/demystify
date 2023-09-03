@@ -64,7 +64,7 @@ class AnalysisQueries:
         "END\n"
     )
 
-    # Prority of results is based on order input to database...
+    # Priority of results is based on order input to database...
     SELECT_COUNT_ID_METHODS_NONE = (
         "SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID\n"
         "FROM IDRESULTS\n"
@@ -121,7 +121,7 @@ class AnalysisQueries:
 
     @staticmethod
     def select_frequency_identifier_types(method):
-        # treating new identifer capabilities as first class citizens
+        # treating new identifier capabilities as first class citizens
         # %match on filename%    %xml match%    %text match%
         identifier_pattern = "{{ identifier }}"
         identifier_text = ""

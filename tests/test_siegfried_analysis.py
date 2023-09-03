@@ -2504,7 +2504,7 @@ matches  :
     basis   :
     warning : 'no match'
 ---
-filename : 'fixtures/synthetically_unknown_formats/debateable.format'
+filename : 'fixtures/synthetically_unknown_formats/debatable.format'
 filesize : 52
 modified : 2020-01-15T20:17:02+01:00
 errors   :

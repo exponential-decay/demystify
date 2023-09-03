@@ -184,7 +184,7 @@ class AnalysisStringsEN:
     HEADING_DESC_ERRORS = (
         "Tools like Siegfried may report on file processing errors during a scan. "
         "A processing error may indicate a file with no payload (zero-byte file) or another "
-        "problem that might be important ot understand as it may affect its access and preservation."
+        "problem that might be important to understand as it may affect its access and preservation."
         + COUNT_TEXT
     )
 
