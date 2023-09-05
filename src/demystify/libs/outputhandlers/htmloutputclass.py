@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=W1633
-
 import logging
 import re
 

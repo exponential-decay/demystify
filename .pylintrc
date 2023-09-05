@@ -62,3 +62,6 @@ disable=
         W0511,  # tmp: inline TODO.
         R1710,  # tmp: all statements need to return or none.
         W0603,  # tmp: using global.
+        C0209,  # tmp: formatting a regular string which could be f-string.
+        C0201,  # tmp: consider iterating dictionary.
+        C1803,  # tmp: list comparison can be simplified.
