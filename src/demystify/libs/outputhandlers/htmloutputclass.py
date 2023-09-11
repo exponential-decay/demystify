@@ -757,6 +757,12 @@ class FormatAnalysisHTMLOutput:
         self._htmlnewline(2)
         self.printFormattedText("<hr/>")
 
+        # classification.
+        self._outputheading("Classification", "Classification")
+        for item in self.analysis_results.classification_breakdown:
+            self.printFormattedText(item)
+            self.printFormattedText("<br>")
+
         signature_id_list = []
         if self.analysis_results.signatureidentifiers is not None:
             countlist = []

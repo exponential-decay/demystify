@@ -103,6 +103,14 @@ class AnalysisQueries:
         "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
     )
 
+    SELECT_CLASSIFICATION = (
+        "SELECT classification AS class,\n"
+        "COUNT(*) as count\n"
+        "FROM iddata\n"
+        "GROUP BY class\n"
+        "ORDER BY count desc;\n"
+    )
+
     # PRONOM and OTHERS Text identifiers as one result
     # PRONOM and OTHERS Text identifiers as one result
     @staticmethod

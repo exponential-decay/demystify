@@ -979,6 +979,11 @@ class DemystifyAnalysis(DemystifyBase):
             if self.rogueanalysis:
                 self._handle_rogue_analysis()
 
+            self.analysis_results.classification_breakdown = self._querydb(
+                query=AnalysisQueries.SELECT_CLASSIFICATION,
+                fetchone=False,
+            )
+
         return self.analysis_results
 
     def _handle_rogue_analysis(self):
