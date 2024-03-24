@@ -96,6 +96,9 @@ class AnalysisResults:
         self.badFileNames = None
         self.badDirNames = None
 
+        self.classifications_count = 0
+        self.classifications = []
+
         # Hash related values.
         self.hashused = False
         self.duplicateHASHlisting = None

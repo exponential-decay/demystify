@@ -103,6 +103,27 @@ class AnalysisQueries:
         "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
     )
 
+    SELECT_CLASSIFICATION_COUNT = (
+        "SELECT COUNT(IDDATA.classification)\n"
+        "FROM IDRESULTS\n"
+        "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE (NSDATA.NS_NAME='pronom')\n"
+        "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
+        "AND IDDATA.classification != 'None'"
+    )
+
+    SELECT_CLASSIFICATION_FREQUENCY = (
+        "SELECT IDDATA.classification,\n"
+        "COUNT(*) as TOTAL\n"
+        "FROM IDRESULTS\n"
+        "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE (NSDATA.NS_NAME='pronom')\n"
+        "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
+        "GROUP BY IDDATA.classification ORDER BY TOTAL DESC"
+    )
+
     # PRONOM and OTHERS Text identifiers as one result
     # PRONOM and OTHERS Text identifiers as one result
     @staticmethod

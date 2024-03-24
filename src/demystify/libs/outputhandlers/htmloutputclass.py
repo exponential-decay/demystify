@@ -768,6 +768,49 @@ class FormatAnalysisHTMLOutput:
                 )
             self.identifierchart(countlist)
 
+        #######################################################################
+        ### CLASSIFICATION
+        #######################################################################
+
+        if self.analysis_results.classifications_count > 0:
+            self._outputheading(
+                self.STRINGS.HEADING_CLASSIFICATION,
+                self.STRINGS.HEADING_DESC_CLASSIFICATION,
+            )
+            self.printFormattedText("<table>")
+            self.printFormattedText(
+                '<table><th style="text-align: left;">{}</a></th><th style="text-align: left;">{}</th>'.format(
+                    self.STRINGS.COLUMN_HEADER_VALUES_CLASSIFICATION,
+                    self.STRINGS.COLUMN_HEADER_VALUES_COUNT,
+                )
+            )
+
+            for format_classification in self.analysis_results.classifications:
+                classification = format_classification[0]
+                if classification.lower() == "none":
+                    classification = "No format type classification"
+                self.printFormattedText('<tr><td style="width: 300px;">')
+                self.printFormattedText(f"{classification}")
+                self.printFormattedText(
+                    "</td><td>{}</td>".format(format_classification[1])
+                )
+
+                # Unused Meter Code...
+                self.printFormattedText(
+                    self._outputmeter(
+                        format_classification[1], 0, self.analysis_results.filecount
+                    )
+                )
+                self.printFormattedText("</tr>")
+
+            self.printFormattedText("</table>")
+            self._htmlnewline()
+            self.printFormattedText("<hr/>")
+
+        #######################################################################
+        ### DATE RANGE
+        #######################################################################
+
         if self.analysis_results.dateFrequency is not None:
             # Date Ranges
             self._outputheading(

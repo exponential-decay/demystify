@@ -979,6 +979,18 @@ class DemystifyAnalysis(DemystifyBase):
             if self.rogueanalysis:
                 self._handle_rogue_analysis()
 
+            self.analysis_results.classifications_count = int(
+                self._querydb(
+                    AnalysisQueries.SELECT_CLASSIFICATION_COUNT,
+                    True,
+                    True,
+                )
+            )
+
+            self.analysis_results.classifications = self._querydb(
+                AnalysisQueries.SELECT_CLASSIFICATION_FREQUENCY
+            )
+
         return self.analysis_results
 
     def _handle_rogue_analysis(self):
