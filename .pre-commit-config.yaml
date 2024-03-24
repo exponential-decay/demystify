@@ -24,13 +24,14 @@ repos:
     - id: ruff
       args: ["--fix", "--show-fixes"]
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.35.0
+  rev: v0.39.0
   hooks:
   - id: markdownlint
 - repo: https://github.com/codespell-project/codespell
   rev: v2.2.4
   hooks:
     - id: codespell
+      args: [-I, .codespellignore]
 - repo: local
   hooks:
     - id: pylint

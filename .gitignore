@@ -19,3 +19,5 @@ venv/
 *.html
 dist/*
 src/demystify_digipres*
+node_modules/*
+package*
