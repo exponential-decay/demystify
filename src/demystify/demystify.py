@@ -185,39 +185,14 @@ def get_report_label(report_path: str):
 
 # pylint: disable=W0613
 # pylint: disable=W0613
-def analysis_from_csv_lite(format_report, analyze=True, denylist=None, label=None):
+def analysis_from_csv_lite(format_report, denylist=None, label=None):
     """Provide an entry point for demystify-lite."""
-
-    denylist = {
-        "IDS": [],
-        "FILENAMES": [
-            ".DS_Store",
-            "Untitled Document",
-            "desktop.ini",
-            "(copy",
-            "ZbThumbnail.info",
-            "lorem",
-            "New Microsoft Word Document",
-            "Bin.dat",
-            "Thumbs.db",
-            " vitae",
-            " Appointments",
-            " CV",
-            " Application",
-            " Resume",
-            " Appointment",
-            " Test",
-            " list",
-            " member",
-            " people",
-            " address",
-            " phone",
-        ],
-        "DIRECTORIES": ["Untitled Folder", "New Folder", "(copy", ".git", "lorem"],
-        "EXTENSIONS": [".ini", ".exe", ".cfg", ".dll", ".lnk", ".tmp"],
-    }
     return analysis_from_csv(
-        format_report=format_report, analyze=True, denylist=denylist, label=label
+        format_report=format_report,
+        analyze=True,
+        denylist=denylist,
+        label=label,
+        rogues=None,
     )
 
 
