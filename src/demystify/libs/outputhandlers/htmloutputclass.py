@@ -159,7 +159,7 @@ class FormatAnalysisHTMLOutput:
             self.printFormattedText('<tr><td style="width: 220px;">')
             if "fmt/" in sig[0]:
                 self.printFormattedText(
-                    '<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}">{}</a>'.format(
+                    '<a target="_blank" href="https://nationalarchives.gov.uk/PRONOM/{}">{}</a>'.format(
                         sig[0], sig[0]
                     )
                 )
@@ -202,7 +202,7 @@ class FormatAnalysisHTMLOutput:
             if "fmt/" in id_[1]:
                 markup = (
                     '<tr><td style="width: 200px;">\n'
-                    '<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}">{}</a></td>\n'
+                    '<a target="_blank" href="https://nationalarchives.gov.uk/PRONOM/{}">{}</a></td>\n'
                 ).format(id_[1], id_[1])
             else:
                 markup = '<tr><td style="width: 100px;">{}</td>'.format(id_[1])
