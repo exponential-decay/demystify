@@ -1,3 +1,49 @@
+[project]
+# For more information on package metadata see:
+#
+#   * https://packaging.python.org/specifications/core-metadata/
+#
+# For even greater information on this file, see the pypa/sampleproject:
+#
+#   * https://github.com/pypa/sampleproject/blob/fc8d83efd5749853507be959d858629d0aaf5c6e/pyproject.toml
+#
+
+# Required.
+name = "demystify-digipres"
+
+# Required.
+#
+# For now, version.py contains a blank placeholder for development.
+# Deployed versions of this code should be done via Python whl, e.g.
+# via PyPi or generated from `make package-source` in this repository.
+#
+dynamic = ["version"]
+
+description = "engine for the analysis of DROID and Siegfried file format reports"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+
+# Supported python versions. Optional, but helpful.
+requires-python = ">=3.8"
+
+authors = [
+  {name = "Ross Spencer"},
+]
+
+dependencies = [
+
+]
+
+[project.urls]
+"Bug Reports" = "https://github.com/exponential-decay/demystify/issues/"
+"Source" = "https://github.com/exponential-decay/demystify"
+
+[project.scripts]
+demystify = "demystify.demystify:main"
+
 [build-system]
-requires = ["setuptools>=43.0.0", "wheel"]
+requires = ["setuptools>=67.8.0", "wheel", "setuptools_scm[toml]>=7.1.0"]
+
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]

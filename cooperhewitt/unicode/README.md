@@ -1,7 +1,11 @@
-Copy of library from Cooper Hewitt to enable writing of plain text descriptions
-of characters: https://github.com/cooperhewitt/py-cooperhewitt-unicode
+# Py-Cooperhewitt-Unicode
 
-### License
+Copy of library from Cooper Hewitt to enable writing of plain text descriptions
+of characters: [here][unicode-1].
+
+[unicode-1]: https://github.com/cooperhewitt/py-cooperhewitt-unicode
+
+## License
 
 Copyright (c) 2014, Cooper Hewitt Smithsonian Design Museum
 All rights reserved.

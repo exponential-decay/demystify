@@ -14,7 +14,6 @@ class rogueoutputclass:
     """Object to help encapsulate rogue output functions."""
 
     def __init__(self, analysis_results, config, heroes=False):
-
         self.roguelist = []
 
         self.unidentified = False

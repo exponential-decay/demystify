@@ -64,7 +64,7 @@ class AnalysisQueries:
         "END\n"
     )
 
-    # Prority of results is based on order input to database...
+    # Priority of results is based on order input to database...
     SELECT_COUNT_ID_METHODS_NONE = (
         "SELECT IDRESULTS.FILE_ID, IDDATA.ID_ID, IDDATA.METHOD, IDDATA.NS_ID\n"
         "FROM IDRESULTS\n"
@@ -103,6 +103,27 @@ class AnalysisQueries:
         "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
     )
 
+    SELECT_CLASSIFICATION_COUNT = (
+        "SELECT COUNT(IDDATA.classification)\n"
+        "FROM IDRESULTS\n"
+        "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE (NSDATA.NS_NAME='pronom')\n"
+        "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
+        "AND IDDATA.classification != 'None'"
+    )
+
+    SELECT_CLASSIFICATION_FREQUENCY = (
+        "SELECT IDDATA.classification,\n"
+        "COUNT(*) as TOTAL\n"
+        "FROM IDRESULTS\n"
+        "JOIN NSDATA on IDDATA.NS_ID = NSDATA.NS_ID\n"
+        "JOIN IDDATA on IDRESULTS.ID_ID = IDDATA.ID_ID\n"
+        "WHERE (NSDATA.NS_NAME='pronom')\n"
+        "AND (IDDATA.METHOD='Signature' OR IDDATA.METHOD='Container')"
+        "GROUP BY IDDATA.classification ORDER BY TOTAL DESC"
+    )
+
     # PRONOM and OTHERS Text identifiers as one result
     # PRONOM and OTHERS Text identifiers as one result
     @staticmethod
@@ -121,7 +142,7 @@ class AnalysisQueries:
 
     @staticmethod
     def select_frequency_identifier_types(method):
-        # treating new identifer capabilities as first class citizens
+        # treating new identifier capabilities as first class citizens
         # %match on filename%    %xml match%    %text match%
         identifier_pattern = "{{ identifier }}"
         identifier_text = ""

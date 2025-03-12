@@ -2,7 +2,7 @@
 
 """Analysis results module."""
 
-from .version import AnalysisVersion
+from .version import get_version
 
 
 class AnalysisResults:
@@ -11,7 +11,6 @@ class AnalysisResults:
     """
 
     def __init__(self):
-
         self.version = 0
         self.filename = ""
         self.tooltype = None
@@ -97,6 +96,9 @@ class AnalysisResults:
         self.badFileNames = None
         self.badDirNames = None
 
+        self.classifications_count = 0
+        self.classifications = []
+
         # Hash related values.
         self.hashused = False
         self.duplicateHASHlisting = None
@@ -115,7 +117,6 @@ class AnalysisResults:
         self.rogue_file_name_paths = []  # non-ascii file names
         self.rogue_dir_name_paths = []  # non-ascii dir names
 
-    def __version__(self):
-        v = AnalysisVersion()
-        self.version = v.getVersion()
-        return self.version
+    @staticmethod
+    def __version__():
+        return get_version()

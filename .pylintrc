@@ -6,6 +6,40 @@
 # numerous as to be too noisy, potentially missing more important
 # output that pylint can provide.
 
+[MAIN]
+
+ignore=
+    LICENSE,
+    .pylintrc,
+    Makefile,
+
+ignore-patterns=
+    ^(.+).ini$,
+    ^(.+).md$,
+    ^(.+).sh$,
+    ^(.+).service$,
+    ^(.+).json,
+    ^(.+).yml,
+    ^(.+).yaml,
+    ^(.+).toml,
+    ^(.+).env,
+    ^(.+).cfg,
+    ^(.+).gif,
+    ^(.+).png,
+    ^(.+).htm,
+    ^(.+).txt,
+    ^(.+).csv,
+    ^(.+).sf,
+    ^(.+).droid,
+    ^(.+).db,
+    ^(.+)Makefile,
+    ^\.,
+
+ignore-paths=
+    requirements/.,
+    tests/fixtures/vcrpy/.,
+    Makefile,
+
 [MESSAGES CONTROL]
 
 disable=
@@ -23,4 +57,11 @@ disable=
         R0915,  # tmp: too many statements, find better builder pattern for string output.
         R0912,  # tmp: too many branches, we can be more EAFP (easier to ask forgiveness).
         R0916,  # tmp: too many boolean expressions in an if. Can possibly be clearer, e.g. namespace handling.
-
+        R0913,  # tmp: too many arguments.
+        W0621,  # tmp: redefining name from outer scope.
+        W0511,  # tmp: inline TODO.
+        R1710,  # tmp: all statements need to return or none.
+        W0603,  # tmp: using global.
+        C0209,  # tmp: formatting a regular string which could be f-string.
+        C0201,  # tmp: consider iterating dictionary.
+        C1803,  # tmp: list comparison can be simplified.

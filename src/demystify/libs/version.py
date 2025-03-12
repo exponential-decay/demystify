@@ -5,21 +5,16 @@
 Helper class to return the version of this application to the caller.
 """
 
-__version__ = "2.0.0rc3"
+from importlib.metadata import PackageNotFoundError, version
 
 
-class AnalysisVersion:
-    """Analysis version class to store version information and return
-    it to the caller.
-    """
-
-    def __init__(self):
-        """Constructor for the version class."""
-
-        # 0.6.7-BETA - Python 2 only, first iteration.
-        # 1.0.0 - Python 2 and 3, refactor and final Python 2 release.
-        self.__version__ = __version__
-
-    def getVersion(self):
-        """Return version number to the caller."""
-        return self.__version__
+def get_version():
+    """Returns a version string to the caller."""
+    semver = "0.0.0"
+    __version__ = f"{semver}-dev"
+    try:
+        __version__ = version("demystify_digipres")
+    except PackageNotFoundError:
+        # package is not installed
+        pass
+    return __version__

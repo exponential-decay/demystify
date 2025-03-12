@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=W1633
-
 import logging
-import sqlite3
 from collections import Counter
 from configparser import NoOptionError
 
@@ -14,12 +11,11 @@ except ModuleNotFoundError:
     # Required for Pypi install.
     from ..pathlesstaken.src.pathlesstaken import pathlesstaken
 
-from . import AnalysisResultsClass
+from . import AnalysisResultsClass, version
 from .AnalysisQueriesClass import AnalysisQueries
 from .DenylistQueriesClass import DenylistQueries
 from .HandleDenylistClass import HandleDenylist
 from .RoguesQueriesClass import RogueQueries
-from .version import AnalysisVersion
 
 
 class AnalysisError(Exception):
@@ -63,28 +59,31 @@ class DemystifyAnalysis(DemystifyBase):
 
     TOOLTYPE_DROID = "droid"
 
-    def __init__(self, database_path=None, config=False, denylist=None):
+    def __init__(
+        self, database_connection=None, config=False, denylist=None, label=None
+    ):
         """Constructor for DemystifyAnalysis object."""
-        logging.debug(
-            "Analysis __init__(): database_path: %s config: %s denylist: %s",
-            database_path,
-            config,
-            denylist,
-        )
-        if database_path is None:
+        if not database_connection:
             raise AnalysisError(
                 "Cannot initialize analysis class without a database: {}".format(
-                    database_path
+                    database_connection
                 )
             )
 
+        logging.debug(
+            "Analysis __init__(): database_connection: %s config: %s denylist: %s",
+            database_connection,
+            config,
+            denylist,
+        )
         # Give the object a place to hold results and the powers to
         # generate data for that.
         self.analysis_results = AnalysisResultsClass.AnalysisResults()
         self.query = AnalysisQueries()
 
         # Initialize database connection variables.
-        self._open_database(database_path)
+        self.cursor = database_connection.cursor()
+
         self.analysis_results.tooltype = self._querydb(self.query.SELECT_TOOL, True)[0]
 
         self.denylist = denylist
@@ -97,6 +96,9 @@ class DemystifyAnalysis(DemystifyBase):
         self.textIDs = None
         self.filenameIDs = None
 
+        if label:
+            self.analysis_results.filename = label
+
         # Initialize namespace data.
         self._initialize_namespace_details(config)
 
@@ -105,27 +107,17 @@ class DemystifyAnalysis(DemystifyBase):
         logging.debug("DemystifyAnalysis destructor...")
         try:
             self._close_database()
-        except AttributeError:
-            logging.error("Destructor should not reach here...")
+        except AttributeError as err:
+            logging.error("Destructor should not reach here: %s", err)
 
     def __version__(self):
         """Return a version number for the analysis."""
-        v = AnalysisVersion()
-        self.analysis_results.__version_no__ = v.getVersion()
+        self.analysis_results.__version_no__ = version.get_version()
         return self.analysis_results.__version_no__
-
-    def _open_database(self, dbfilename):
-        """Open the database connection and initialize the instance
-        variables needed to run the demystify analysis.
-        """
-        self.analysis_results.filename = dbfilename.rstrip(".db")
-        self.conn = sqlite3.connect(dbfilename)
-        self.conn.text_factory = str  # encoded as ascii, not unicode / return ascii
-        self.cursor = self.conn.cursor()
 
     def _close_database(self):
         """Close the database connection."""
-        self.conn.close()
+        self.cursor.close()
 
     def _initialize_namespace_details(self, config):
         """Initialize namespace data.
@@ -779,8 +771,9 @@ class DemystifyAnalysis(DemystifyBase):
             types.
         """
         logging.info("Querying database")
+
         self.hashtype = self._querydb(AnalysisQueries.SELECT_HASH, True)[0]
-        if self.hashtype == "None" or self.hashtype == "False":
+        if not self.hashtype:
             logging.info(AnalysisQueries.ERROR_NOHASH)
             self.analysis_results.hashused = False
         else:
@@ -985,6 +978,18 @@ class DemystifyAnalysis(DemystifyBase):
 
             if self.rogueanalysis:
                 self._handle_rogue_analysis()
+
+            self.analysis_results.classifications_count = int(
+                self._querydb(
+                    AnalysisQueries.SELECT_CLASSIFICATION_COUNT,
+                    True,
+                    True,
+                )
+            )
+
+            self.analysis_results.classifications = self._querydb(
+                AnalysisQueries.SELECT_CLASSIFICATION_FREQUENCY
+            )
 
         return self.analysis_results
 

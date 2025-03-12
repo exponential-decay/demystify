@@ -2,6 +2,7 @@
 
 
 class AnalysisStringsEN:
+    """Object to hold English strings for demystify."""
 
     REPORT_TITLE_DR = "DROID Analysis Results"
     REPORT_TITLE_SF = "Siegfried Analysis Results"
@@ -35,7 +36,7 @@ class AnalysisStringsEN:
     )
 
     SUMMARY_UNIQUE_EXTENSIONS = "Total Unique Extensions Across Accession/Extract"
-    SUMMARY_ZERO_BYTE = "Total Zero-byte Files in Accession/Extract"
+    SUMMARY_ZERO_BYTE = "Total Zero-byte Files in the Accession/Extract"
     SUMMARY_IDENTICAL_FILES = "Total Files with Identical Content (Checksum Value)"
     SUMMARY_PERCENTAGE_IDENTIFIED = "Percentage of Accession/Extract Identified"
     SUMMARY_PERCENTAGE_UNIDENTIFIED = "Percentage of Accession/Extract Unidentified"
@@ -122,9 +123,7 @@ class AnalysisStringsEN:
         "understand an accession/extract."
     )
 
-    HEADING_BINARY_ID = (
-        "Aggregated Frequency of File Format Signature Identifiers in Accession/Extract"
-    )
+    HEADING_BINARY_ID = "Aggregated Frequency of File Format Signature Identifiers in the Accession/Extract"
     HEADING_DESC_BINARY_ID = (
         "Listing of format identification, namespace, count, and match basis for files "
         "identified using file format signatures. Some tools can report what the basis "
@@ -134,7 +133,7 @@ class AnalysisStringsEN:
         + COUNT_TEXT
     )
 
-    HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in Accession/Extract"
+    HEADING_XML_ID = "Aggregated Frequency of XML Identifiers in the Accession/Extract"
     HEADING_DESC_XML_ID = (
         "Listing of format identification, namespace, count, and match basis for files "
         "identified using XML based identification. Some tools can report what the basis "
@@ -144,7 +143,9 @@ class AnalysisStringsEN:
         + COUNT_TEXT
     )
 
-    HEADING_TEXT_ID = "Aggregated Frequency of Text Identifiers in Accession/Extract"
+    HEADING_TEXT_ID = (
+        "Aggregated Frequency of Text Identifiers in the Accession/Extract"
+    )
     HEADING_DESC_TEXT_ID = (
         "Listing of format identification, namespace, count, and match basis for files "
         "identified using Text based identification. Some tools can report what the basis "
@@ -155,7 +156,7 @@ class AnalysisStringsEN:
     )
 
     HEADING_FILENAME_ID = (
-        "Aggregated Frequency of Filename Identifiers in Accession/Extract"
+        "Aggregated Frequency of Filename Identifiers in the Accession/Extract"
     )
     HEADING_DESC_FILENAME_ID = (
         "Listing of format identification, namespace, count, and match basis for files "
@@ -185,7 +186,7 @@ class AnalysisStringsEN:
     HEADING_DESC_ERRORS = (
         "Tools like Siegfried may report on file processing errors during a scan. "
         "A processing error may indicate a file with no payload (zero-byte file) or another "
-        "problem that might be important ot understand as it may affect its access and preservation."
+        "problem that might be important to understand as it may affect its access and preservation."
         + COUNT_TEXT
     )
 
@@ -233,7 +234,7 @@ class AnalysisStringsEN:
     )
 
     HEADING_AGGREGATE_BINARY_IDENTIFIED = (
-        "Aggregated File Format Signature Identifiers in Accession/Extract"
+        "Aggregated File Format Signature Identifiers in the Accession/Extract"
     )
     HEADING_DESC_IDENTIFIED = (
         "A list of ID values and format names to provide a clear picture of diversity/complexity of the "
@@ -247,11 +248,14 @@ class AnalysisStringsEN:
     HEADING_FREQUENCY_PUIDS_IDENTIFIED = (
         "Frequency of File Format Signature Identified IDs"
     )
+    HEADING_CLASSIFICATION = (
+        "Range of format type classifciation in the Accession/Extract"
+    )
     HEADING_DATE_RANGE = "Date Range of Items in the Accession/Extract"
     HEADING_EXTENSION_ONLY = "Extension Only Identification in the Accession/Extract"
     HEADING_ID_METHOD = "Identification Method Frequency"
     HEADING_FREQUENCY_EXTENSION_ONLY = (
-        "Frequency of Extension Only Identification In Accession/Extract"
+        "Frequency of Extension Only Identification in the Accession/Extract"
     )
     HEADING_UNIQUE_EXTENSIONS = (
         "Unique Extensions Identified Across All Objects (ID and non-ID)"
@@ -259,8 +263,8 @@ class AnalysisStringsEN:
     HEADING_LIST_MULTIPLE = "List of Files With Multiple Identifications"
     HEADING_FREQUENCY_EXTENSIONS_ALL = "Frequency of All Extensions"
     HEADING_FREQUENCY_MIME = "MIME Type (Internet Media Type) Frequency"
-    HEADING_LIST_ZERO_BYTES = "Zero-byte files in Accession/Extract"
-    HEADING_ARCHIVE_FORMATS = "Archive File Types in Accession/Extract"
+    HEADING_LIST_ZERO_BYTES = "Zero-byte files in the Accession/Extract"
+    HEADING_ARCHIVE_FORMATS = "Archive File Types in the Accession/Extract"
     HEADING_IDENTICAL_CONTENT = "Files With Identical Content (Checksum Value)"
     HEADING_TROUBLESOME_FILENAMES = "Identifying Non-ASCII and System File Names"
     HEADING_TROUBLESOME_DIRNAMES = "Identifying Non-ASCII and System Directory Names"
@@ -362,6 +366,12 @@ class AnalysisStringsEN:
         "is represented in the accession/extract, in a descending list from most frequent to least."
     )
 
+    HEADING_DESC_CLASSIFICATION = (
+        "Count and visialization giving a clear illustration of the distribution of file format type classifications "
+        "across the accession/extract. The list is sorted by count in descending order and provides a measure "
+        "of how homogenous a collection is which is potentially indicative of its complexity to preserve."
+    )
+
     HEADING_DESC_DATE_RANGE = (
         "Count and visualization giving a clear illustration of the distribution of file modification dates across the "
         "accession/extract. The list is in descending order based on the number of files last modified on any given year. "
@@ -402,7 +412,7 @@ class AnalysisStringsEN:
     )
 
     HEADING_DESC_FREQUENCY_EXTENSIONS_ALL = (
-        "Lists the gamut of file extensions alongside how many times they appear in accession/extract "
+        "Lists the gamut of file extensions alongside how many times they appear in the accession/extract "
         "in descending order. This information can be used to identify the diversity/complexity of the "
         "accession/extract, but also to identify the consistency with which extensions may have been "
         "used in the accession/extract and may indicate how much work may be needed to correct "
@@ -453,10 +463,12 @@ class AnalysisStringsEN:
         "<a href='https://msdn.microsoft.com/en-nz/library/windows/desktop/aa365247%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396'>Microsoft</a>"
     )
 
-    HEADING_DENYLIST_IDS = "Denylist Identifiers found in Accession/Extract"
-    HEADING_DENYLIST_EXTS = "Denylist Filename Extensions found in Accession/Extract"
-    HEADING_DENYLIST_DIRS = "Denylist Directory Names found in Accession/Extract"
-    HEADING_DENYLIST_FILENAMES = "Denylist Filenames found in Accession/Extract"
+    HEADING_DENYLIST_IDS = "Denylist Identifiers found in the Accession/Extract"
+    HEADING_DENYLIST_EXTS = (
+        "Denylist Filename Extensions found in the Accession/Extract"
+    )
+    HEADING_DENYLIST_DIRS = "Denylist Directory Names found in the Accession/Extract"
+    HEADING_DENYLIST_FILENAMES = "Denylist Filenames found in the Accession/Extract"
     HEADING_DESC_DENYLIST = """Lists objects which are considered undesirable inside an accession/extract.
                                The denylist is entirely configurable by user and may contain files that can be
                                identified as undesirable, e.g. system files; or file names that may need pre-conditioning
@@ -465,15 +477,15 @@ class AnalysisStringsEN:
                                strings using a wildcard search. IDs e.g. PUID identifiers, and filename extension searches
                                are understandably more precise."""
 
-    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in Accession/Extract"
-    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in Accession/Extract"
+    TEXT_ONLY_FIVE_TOP_PUIDS = "Five Top PUIDs in the Accession/Extract"
+    TEXT_ONLY_FIVE_TOP_EXTENSIONS = "Five Top Extensions in the Accession/Extract"
 
     COLUMN_HEADER_VALUES_NAMESPACE = "Namespace"
     COLUMN_HEADER_VALUES_ID = "ID"
     COLUMN_HEADER_VALUES_FORMAT = "Format Name"
     COLUMN_HEADER_VALUES_COUNT = "Count"
     COLUMN_HEADER_VALUES_YEAR = "Year"
-    COLUMN_HEADER_VALUES_YEAR = "Volume"
+    COLUMN_HEADER_VALUES_CLASSIFICATION = "Classification"
 
     FNAME_CHECK_ASCII = "contains, characters outside of ASCII range"
     FNAME_CHECK_PERIOD = "has a period '.' as its last character"

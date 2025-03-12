@@ -840,17 +840,17 @@ ns:freedesktop.org application/mbox, mailbox file,  [byte match at 0, 5] (45)
 
 
 Extension Only Identification in the Accession/Extract:
-application/java-archive, 
+application/java-archive,
 application/pdf, PDF document
 application/pdf, Portable Document Format
 application/postscript, PS document
 application/postscript, PostScript
-application/rtf, 
+application/rtf,
 application/rtf, RTF document
 application/sql, SQL code
 application/vnd.adobe.flash.movie, Shockwave Flash file
-application/vnd.framemaker, 
-application/vnd.google-earth.kml+xml, 
+application/vnd.framemaker,
+application/vnd.google-earth.kml+xml,
 application/vnd.google-earth.kml+xml, KML geographic data
 application/vnd.lotus-1-2-3, Lotus 1-2-3 spreadsheet
 application/vnd.ms-excel, Excel spreadsheet
@@ -858,31 +858,31 @@ application/vnd.ms-excel, Microsoft Excel Spreadsheet
 application/vnd.ms-publisher, Microsoft Publisher document
 application/vnd.openxmlformats-officedocument.wordprocessingml.document, Office Open XML Document
 application/vnd.openxmlformats-officedocument.wordprocessingml.document, Word 2007 document
-application/winhlp, 
+application/winhlp,
 application/winhlp, WinHelp help file
-application/x-font-ttf, 
+application/x-font-ttf,
 application/x-font-ttf, TrueType font
 application/x-java-archive, Java archive
-application/x-mspublisher, 
+application/x-mspublisher,
 application/x-shockwave-flash, Adobe Flash
-application/x-tex, 
-application/xml, 
+application/x-tex,
+application/xml,
 application/xml, XML document
 fmt/206, Structured Query Language Data
 fmt/879, Fortran
 image/fax-g3, CCITT G3 fax
-image/g3fax, 
+image/g3fax,
 image/x-eps, EPS image
-image/x-xbitmap, 
+image/x-xbitmap,
 image/x-xbitmap, XBM image
-model/vnd.dwf, 
-text/csv, 
+model/vnd.dwf,
+text/csv,
 text/csv, CSV document
-text/html, 
+text/html,
 text/html, HTML document
-text/sgml, 
+text/sgml,
 text/sgml, SGML document
-text/x-fortran, 
+text/x-fortran,
 text/x-fortran, Fortran source code
 text/x-java, Java source code
 text/x-log, application log

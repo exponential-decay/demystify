@@ -85,7 +85,7 @@ DROID_CSV = """"ID","PARENT_ID","URI","FILE_PATH","NAME","METHOD","STATUS","SIZE
 "35","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/baseball.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/baseball.format","baseball.format","","Done","52","File","format","2020-01-15T20:17:02","false","98653b8ba394cce54882085b364bef3901175fbc","0","","","",""
 "46","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/caboose.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/caboose.format","caboose.format","","Done","52","File","format","2020-01-15T20:17:02","false","bee62ff431a072f6f6932ba081e60697f3d38ef7","0","","","",""
 "36","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/cassette.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/cassette.format","cassette.format","","Done","52","File","format","2020-01-15T20:17:02","false","2a7a5004b42079f79ce5616f68173f7e30f96a65","0","","","",""
-"45","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/debateable.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/debateable.format","debateable.format","","Done","52","File","format","2020-01-15T20:17:02","false","f5ae2731456e03aa5af537f66542ba08ee4c7bc0","0","","","",""
+"45","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/debatable.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/debatable.format","debatable.format","","Done","52","File","format","2020-01-15T20:17:02","false","f5ae2731456e03aa5af537f66542ba08ee4c7bc0","0","","","",""
 "37","33","file:/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/looseleaf.format","/home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/synthetically_unknown_formats/looseleaf.format","looseleaf.format","","Done","52","File","format","2020-01-15T20:17:02","false","89f55e08287c1d34a900c2974039c5b3088461c4","0","","","",""
 "55","41","gz:file:///home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-four.tar.gz!/container-example-four.tar","","container-example-four.tar","Signature","Done","20480","Container","tar","","false","85d25d3668c2dbc287c345e787789a179018c89e","1","x-fmt/265","application/x-tar","Tape Archive Format",""
 "86","55","tar:gz:file:///home/ross-spencer/git/exponential-decay/demystify/tests/fixtures/archive-types/container-example-four.tar.gz!/container-example-four.tar!/dirs_with_various_encodings/","","dirs_with_various_encodings","","Done","","Folder","","2021-07-25T17:09:09","false","","","","","",""
@@ -178,7 +178,7 @@ def test_run_droid_analysis(tmp_path):
     # Extension + blank identification (if possible) and type File.
     assert res.analysis_results.unidentifiedfilecount == 24
 
-    # URI isn't file:// and type isn't File or Conainer.
+    # URI isn't file:// and type isn't File or Container.
     assert res.analysis_results.filesincontainercount == 15
 
     # Duplicate checking, looks to be working okay.

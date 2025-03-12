@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# pylint: disable=W1633
-
 import logging
 import re
 
@@ -161,7 +159,7 @@ class FormatAnalysisHTMLOutput:
             self.printFormattedText('<tr><td style="width: 220px;">')
             if "fmt/" in sig[0]:
                 self.printFormattedText(
-                    '<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}">{}</a>'.format(
+                    '<a target="_blank" href="https://nationalarchives.gov.uk/PRONOM/{}">{}</a>'.format(
                         sig[0], sig[0]
                     )
                 )
@@ -204,7 +202,7 @@ class FormatAnalysisHTMLOutput:
             if "fmt/" in id_[1]:
                 markup = (
                     '<tr><td style="width: 200px;">\n'
-                    '<a target="_blank" href="http://apps.nationalarchives.gov.uk/PRONOM/{}">{}</a></td>\n'
+                    '<a target="_blank" href="https://nationalarchives.gov.uk/PRONOM/{}">{}</a></td>\n'
                 ).format(id_[1], id_[1])
             else:
                 markup = '<tr><td style="width: 100px;">{}</td>'.format(id_[1])
@@ -769,6 +767,49 @@ class FormatAnalysisHTMLOutput:
                     (namespace, identifier, formatname, int(count))
                 )
             self.identifierchart(countlist)
+
+        #######################################################################
+        ### CLASSIFICATION
+        #######################################################################
+
+        if self.analysis_results.classifications_count > 0:
+            self._outputheading(
+                self.STRINGS.HEADING_CLASSIFICATION,
+                self.STRINGS.HEADING_DESC_CLASSIFICATION,
+            )
+            self.printFormattedText("<table>")
+            self.printFormattedText(
+                '<table><th style="text-align: left;">{}</a></th><th style="text-align: left;">{}</th>'.format(
+                    self.STRINGS.COLUMN_HEADER_VALUES_CLASSIFICATION,
+                    self.STRINGS.COLUMN_HEADER_VALUES_COUNT,
+                )
+            )
+
+            for format_classification in self.analysis_results.classifications:
+                classification = format_classification[0]
+                if classification.lower() == "none":
+                    classification = "No format type classification"
+                self.printFormattedText('<tr><td style="width: 300px;">')
+                self.printFormattedText(f"{classification}")
+                self.printFormattedText(
+                    "</td><td>{}</td>".format(format_classification[1])
+                )
+
+                # Unused Meter Code...
+                self.printFormattedText(
+                    self._outputmeter(
+                        format_classification[1], 0, self.analysis_results.filecount
+                    )
+                )
+                self.printFormattedText("</tr>")
+
+            self.printFormattedText("</table>")
+            self._htmlnewline()
+            self.printFormattedText("<hr/>")
+
+        #######################################################################
+        ### DATE RANGE
+        #######################################################################
 
         if self.analysis_results.dateFrequency is not None:
             # Date Ranges

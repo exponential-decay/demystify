@@ -72,11 +72,11 @@ There are three components to the tool.
 Adds identification data to an SQLite database that forms the basis of the
 entire analysis. There are five tables.
 
-- DBMD - Database Metadata
-- FILEDATA - File manifest and filesystem metadata
-- IDDATA - Identification metadata
-- IDRESULTS - FILEDATA/IDRESULTS junction table
-- NSDATA - Namespace metadata, also secondary key (NS_ID) in IDDATA table
+* DBMD - Database Metadata
+* FILEDATA - File manifest and filesystem metadata
+* IDDATA - Identification metadata
+* IDRESULTS - FILEDATA/IDRESULTS junction table
+* NSDATA - Namespace metadata, also secondary key (NS_ID) in IDDATA table
 
 Will also augment DROID or Siegfried export data with additional columns:
 
@@ -191,12 +191,12 @@ Installation should be easy. Until the utility is packaged, you need to do the
 following:
 
 1. Find a directory you want to install demystify to.
-2. `git clone `
-3. Navigate into the demystify repository, `cd demystify`.
-4. Checkout the sub-modules (pathlesstaken, and sqlitefid):
+1. Run `git clone`.
+1. Navigate into the demystify repository, `cd demystify`.
+1. Checkout the sub-modules (pathlesstaken, and sqlitefid):
 `git submodule update --init --recursive`.
-5. Install `lxml`: `python -m pip install -r requirements/production.txt`.
-5. Run tests to make sure everything works: `tox -e py39`.
+1. Install `lxml`: `python -m pip install -r requirements/production.txt`.
+1. Run tests to make sure everything works: `tox -e py39`.
 
 **NB.** `tox` is cool. If you're working on this code and want to format it
 idiomatically, run `tox -e linting`. If there are errors, they will point to
