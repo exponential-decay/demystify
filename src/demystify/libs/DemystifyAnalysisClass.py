@@ -232,7 +232,7 @@ class DemystifyAnalysis(DemystifyBase):
             # There is a potential or empty checksums in the database,
             # either through incorrectly writing the data or rogue
             # datasets, avoid processing and outputting those here.
-            if checksum == "":
+            if checksum in ("", None):
                 continue
 
             self.analysis_results.totalHASHduplicates = (

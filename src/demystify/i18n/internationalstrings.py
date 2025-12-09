@@ -12,7 +12,7 @@ class AnalysisStringsEN:
     REPORT_TOOL = "Analysis Tool"
     NAMESPACES = "Namespaces Used"
 
-    REPORT_MORE_INFORMATION = "More Detail:"
+    REPORT_MORE_INFORMATION = "More Detail"
 
     COUNT_TEXT = " Counts are shown for each entry in round () brackets."
 
@@ -315,8 +315,8 @@ class AnalysisStringsEN:
     )
 
     SUMMARY_DESC_EXTENSION_ID = (
-        'Files that can only be identified by their extension (e.g. ".DOC" might be a Microsoft Word '
-        'file, ".MP3" might be an audio file) This is a sub-set of the "Total unidentified files".'
+        "Files that can only be identified by their extension (e.g. '.DOC' might be a Microsoft Word "
+        "file, '.MP3' might be an audio file) This is a sub-set of the 'Total unidentified files'."
     )
 
     SUMMARY_DESC_EXTENSION_MISMATCH = "This is the total number of cases where the extension used does not match with the file signature."
