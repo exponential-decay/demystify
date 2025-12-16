@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# pylint: disable=R0917
+
 """Demystify
 
 Demystify is a utility for static analysis of file format identification
@@ -305,6 +307,7 @@ def main():
 
     global args
     args = parser.parse_args()
+    analysis = None
     if args.version:
         print(version.get_version())
         sys.exit(1)

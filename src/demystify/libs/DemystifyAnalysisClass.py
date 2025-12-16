@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# pylint: disable=R0917; too-many positional args.
+
 import logging
 from collections import Counter
 from configparser import NoOptionError
