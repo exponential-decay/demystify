@@ -1,9 +1,14 @@
--r base.txt
-black==24.3.0
-flake8==3.9.2;
-isort==5.12.0
-pytest==7.4.1
-pylint==2.17.5
-ruff==0.0.287
-tox==4.11.1
+# requirements to run locally and for development.
+-r requirements.txt
+
+pdoc3==0.11.6
+pip-upgrader==1.4.15
+pre-commit==4.3.0
+pylint==4.0.2
+pytest==8.4.2
+pytest-asyncio==1.2.0
+pytest-cov==7.0.0
+pytest-mock==3.15.1
+pytest-random-order==1.2.0
+tox==4.32.0
 git-archive-all
