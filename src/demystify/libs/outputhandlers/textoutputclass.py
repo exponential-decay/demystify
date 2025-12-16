@@ -4,12 +4,16 @@ import logging
 import re
 
 try:
-    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
-    from src.demystify.libs import DemystifyAnalysisClass
+    from i18n.internationalstrings import AnalysisStringsEN as IN_EN
+    from libs import DemystifyAnalysisClass
 except ModuleNotFoundError:
-    # Needed to run from root dir.
-    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
-    from demystify.libs import DemystifyAnalysisClass
+    try:
+        from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from src.demystify.libs import DemystifyAnalysisClass
+    except ModuleNotFoundError:
+        # Needed to run from root dir.
+        from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from demystify.libs import DemystifyAnalysisClass
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These

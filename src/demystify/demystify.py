@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# pylint: disable=R0917
-
-"""Demystify
+"""Demystify.
 
 Demystify is a utility for static analysis of file format identification
 tool results. The utility analyses all aspects of a format
@@ -27,6 +23,8 @@ your workplaces is one of those rare entities that want to filter on
 rsync style lists for filtering on disk.
 """
 
+# pylint: disable=R0917
+
 import argparse
 import configparser as ConfigParser
 import logging
@@ -36,17 +34,59 @@ import sqlite3
 import sys
 import time
 
-from .denylist_template import denylist_template
-from .libs import version
-from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
-from .libs.HandleDenylistClass import HandleDenylist
-from .libs.IdentifyDatabase import IdentifyDB
+sys.dont_write_bytecode = True
 
-# Custom output handlers
-from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
-from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
-from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
-from .sqlitefid.src.sqlitefid import sqlitefid
+try:
+    from denylist_template import denylist_template
+    from libs import version
+    from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
+    from libs.HandleDenylistClass import HandleDenylist
+    from libs.IdentifyDatabase import IdentifyDB
+    from libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
+    from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+    from libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
+except ModuleNotFoundError:
+    try:
+        from src.demystify.denylist_template import denylist_template
+        from src.demystify.libs import version
+        from src.demystify.libs.DemystifyAnalysisClass import (
+            AnalysisError,
+            DemystifyAnalysis,
+        )
+        from src.demystify.libs.HandleDenylistClass import HandleDenylist
+        from src.demystify.libs.IdentifyDatabase import IdentifyDB
+        from src.demystify.libs.outputhandlers.htmloutputclass import (
+            FormatAnalysisHTMLOutput,
+        )
+        from src.demystify.libs.outputhandlers.roguesgalleryoutputclass import (
+            rogueoutputclass,
+        )
+        from src.demystify.libs.outputhandlers.textoutputclass import (
+            FormatAnalysisTextOutput,
+        )
+    except ModuleNotFoundError:
+        from demystify.denylist_template import denylist_template
+        from demystify.libs import version
+        from demystify.libs.DemystifyAnalysisClass import (
+            AnalysisError,
+            DemystifyAnalysis,
+        )
+        from demystify.libs.HandleDenylistClass import HandleDenylist
+        from demystify.libs.IdentifyDatabase import IdentifyDB
+        from demystify.libs.outputhandlers.htmloutputclass import (
+            FormatAnalysisHTMLOutput,
+        )
+        from demystify.libs.outputhandlers.roguesgalleryoutputclass import (
+            rogueoutputclass,
+        )
+        from demystify.libs.outputhandlers.textoutputclass import (
+            FormatAnalysisTextOutput,
+        )
+
+# pylint: disable=E0401; unable to import (not needed for local tests).
+# pylint: disable=C0413; import not at top of file.
+sys.path.insert(0, "./src/demystify/sqlitefid/src/sqlitefid/")
+import sqlitefid  # noqa: E402
 
 logging.basicConfig(
     format="%(asctime)-15s %(levelname)s :: %(filename)s:%(lineno)s:%(funcName)s() :: %(message)s",

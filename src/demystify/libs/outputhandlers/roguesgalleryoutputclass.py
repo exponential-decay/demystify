@@ -4,10 +4,12 @@ import configparser as ConfigParser
 import logging
 
 try:
-    from src.demystify.libs.HandleDenylistClass import HandleDenylist
+    from libs.HandleDenylistClass import HandleDenylist
 except ModuleNotFoundError:
-    # Needed for PyPi import.
-    from demystify.libs.HandleDenylistClass import HandleDenylist
+    try:
+        from src.demystify.libs.HandleDenylistClass import HandleDenylist
+    except ModuleNotFoundError:
+        from demystify.libs.HandleDenylistClass import HandleDenylist
 
 
 class rogueoutputclass:
