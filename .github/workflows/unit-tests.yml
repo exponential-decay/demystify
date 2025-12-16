@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
         experimental: [false]
         # Include experimental or bleeding-edge releases.
         # Windows is not included as it can be unreliable, e.g.
