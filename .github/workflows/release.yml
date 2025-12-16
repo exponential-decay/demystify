@@ -1,0 +1,27 @@
+name: pyreleaser
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v4
+      - name: "fetch unshallow"
+        run: git fetch --prune --unshallow
+      - name: "list"
+        run: pwd && ls -la
+      - name: install just
+        run: cargo install just
+      - name: "deps"
+        run: python -m pip install -r requirements/local.txt
+      - name: "package"
+        run: just package-source
+      - name: "list"
+        run: ls -la ./dist/
+      - name: "release"
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "dist/*"
