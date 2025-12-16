@@ -17,33 +17,46 @@ name = "demystify-digipres"
 # Deployed versions of this code should be done via Python whl, e.g.
 # via PyPi or generated from `make package-source` in this repository.
 #
-dynamic = ["version"]
+dynamic = ["version", "dependencies"]
 
 description = "engine for the analysis of DROID and Siegfried file format reports"
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+
+license-files = [ "LICENSE.txt" ]
 
 # Supported python versions. Optional, but helpful.
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 
 authors = [
-  {name = "Ross Spencer"},
+  {name = "R. Spencer", email = "all.along.the.watchtower2001+github@gmail.com" },
 ]
 
-dependencies = [
+maintainers = [
+  {name = "R. Spencer", email = "all.along.the.watchtower2001+github@gmail.com" }
+]
 
+classifiers = [
+  "Development Status :: 6 - Mature",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
 ]
 
 [project.urls]
+"Homepage" = "https://github.com/exponential-decay/demystify"
 "Bug Reports" = "https://github.com/exponential-decay/demystify/issues/"
 "Source" = "https://github.com/exponential-decay/demystify"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements/requirements.txt"]}
 
 [project.scripts]
 demystify = "demystify.demystify:main"
 
 [build-system]
-requires = ["setuptools>=67.8.0", "wheel", "setuptools_scm[toml]>=7.1.0"]
-
+requires = ["setuptools>=80.9.0", "wheel>=0.45.1", "setuptools_scm[toml]>=9.2.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
