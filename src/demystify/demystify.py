@@ -46,7 +46,17 @@ from .libs.IdentifyDatabase import IdentifyDB
 from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
 from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
 from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
-from .sqlitefid.src.sqlitefid import sqlitefid
+
+# pylint: disable=E0401; unable to import (not needed for local tests).
+# pylint: disable=C0413; import not at top of file.
+# pylint: disable=C0411; order of third-party imports.
+sys.path.insert(0, str(pathlib.Path("./src/demystify/sqlitefid/src/sqlitefid/")))
+print(
+    "PATH: %s %s",
+    os.path.exists(str(pathlib.Path("./src/demystify/sqlitefid/src/sqlitefid/"))),
+    file=sys.stderr,
+)
+import sqlitefid  # noqa: E402
 
 logging.basicConfig(
     format="%(asctime)-15s %(levelname)s :: %(filename)s:%(lineno)s:%(funcName)s() :: %(message)s",
