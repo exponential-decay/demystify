@@ -172,10 +172,10 @@ def analysis_from_database(
         )
     except AnalysisError as err:
         raise AnalysisError(f"problem running analysis: {err}") from err
-    rogue_analysis = False
-    if rogues is not False or heroes is not False:
-        rogue_analysis = True
-    analysis.runanalysis(rogue_analysis)
+    if not rogues and not heroes:
+        analysis.runanalysis(False)
+        return analysis
+    analysis.runanalysis(True)
     return analysis
 
 
@@ -194,7 +194,7 @@ def analysis_from_csv_lite(format_report, denylist=None, label=None):
         analyze=True,
         denylist=denylist,
         label=label,
-        rogues=None,
+        rogues=False,
     )
 
 
