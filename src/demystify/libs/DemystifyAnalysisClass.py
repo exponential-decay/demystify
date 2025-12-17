@@ -2,17 +2,23 @@
 
 # pylint: disable=R0917; too-many positional args.
 
+import sys
 import logging
 from collections import Counter
 from configparser import NoOptionError
 
-try:
-    # Required for imports calling from repository root.
-    from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken
-except ModuleNotFoundError:
-    # Required for Pypi install.
-    from ..pathlesstaken.src.pathlesstaken import pathlesstaken
+from pathlib import Path
+import os
 
+# pylint: disable=E0401; unable to import (not needed for local tests).
+# pylint: disable=C0413; import not at top of file.
+sys.path.insert(0, str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/")))
+print(
+    "PATH: %s %s",
+    os.path.exists(str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/"))),
+    file=sys.stderr,
+)
+import pathlesstaken  # noqa: E402
 from . import AnalysisResultsClass, version
 from .AnalysisQueriesClass import AnalysisQueries
 from .DenylistQueriesClass import DenylistQueries
