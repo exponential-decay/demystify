@@ -28,9 +28,11 @@ except ModuleNotFoundError:
         from demystify.libs.HandleDenylistClass import HandleDenylist
         from demystify.libs.RoguesQueriesClass import RogueQueries
 
+from pathlib import Path
+
 # pylint: disable=E0401; unable to import (not needed for local tests).
 # pylint: disable=C0413; import not at top of file.
-sys.path.insert(0, "./src/demystify/pathlesstaken/src/pathlesstaken/")
+sys.path.insert(0, str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/")))
 import pathlesstaken  # noqa: E402
 
 # from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken

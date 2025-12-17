@@ -83,9 +83,11 @@ except ModuleNotFoundError:
             FormatAnalysisTextOutput,
         )
 
+from pathlib import Path
+
 # pylint: disable=E0401; unable to import (not needed for local tests).
 # pylint: disable=C0413; import not at top of file.
-sys.path.insert(0, "./src/demystify/sqlitefid/src/sqlitefid/")
+sys.path.insert(0, str(Path("./src/demystify/sqlitefid/src/sqlitefid/")))
 import sqlitefid  # noqa: E402
 
 logging.basicConfig(
