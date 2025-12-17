@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Text output for output formatted as plain-text."""
 
 import logging
 import re

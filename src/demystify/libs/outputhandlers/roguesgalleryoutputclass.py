@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Rogue output."""
 
 import configparser as ConfigParser
 import logging

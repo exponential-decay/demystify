@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""HTML Output Class for HTML formatted results."""
 
 # pylint: disable=R0917; too-many positional args.
 

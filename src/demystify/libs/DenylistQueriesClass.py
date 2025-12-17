@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Denylist queries for filtering denylist items from a format
 identification extract.
 """

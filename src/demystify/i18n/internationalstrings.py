@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Analysis strings for i18n."""
 
 
 class AnalysisStringsEN:

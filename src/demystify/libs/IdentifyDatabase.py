@@ -1,6 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-
-"""IdentifyDatabase
+﻿"""IdentifyDatabase
 
 Enables identification of a sqlite3 database to ensure that the input
 data for the calling application is correct.
@@ -14,7 +12,7 @@ class IdentifyDB:
     UNKNOWN_DB = "unknown"
 
     # 'SQLite format 3'
-    sqlite3 = b"\x53\x51\x4C\x69\x74\x65\x20\x66\x6F\x72\x6D\x61\x74\x20\x33"
+    sqlite3 = b"\x53\x51\x4c\x69\x74\x65\x20\x66\x6f\x72\x6d\x61\x74\x20\x33"
 
     def identify_export(self, database_path):
         """Reads an input file and checks whether it is an sqlite3

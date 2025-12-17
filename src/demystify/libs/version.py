@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Version.py
 
 Helper class to return the version of this application to the caller.

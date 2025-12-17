@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Demystify analysis class for collecting demystify results."""
 
 # pylint: disable=R0917; too-many positional args.
 

@@ -1,6 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-
-"""Analysis Queries to be used by Demystify to extract as much
+﻿"""Analysis Queries to be used by Demystify to extract as much
 information as possible from a format identification extract.
 """
 
