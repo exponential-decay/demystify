@@ -38,9 +38,11 @@ import time
 
 from .denylist_template import denylist_template
 from .libs import version
+from .libs.AnalysisResultsClass import AnalysisResults
 from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
 from .libs.HandleDenylistClass import HandleDenylist
 from .libs.IdentifyDatabase import IdentifyDB
+from .libs.outputhandlers import noclasshtml as nc
 
 # Custom output handlers
 from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
@@ -109,7 +111,12 @@ def _handle_denylist_config() -> tuple:
 
 
 def handle_output(
-    analysis_results, txtout=False, rogues=False, heroes=False, rogueconfig=None
+    analysis_results: AnalysisResults,
+    txtout: bool = False,
+    legacy: bool = False,
+    rogues: bool = False,
+    heroes: bool = False,
+    rogueconfig: ConfigParser = None,
 ):
     """Handle output from the analysis.
 
@@ -132,18 +139,28 @@ def handle_output(
         logger.info("outputting text report")
         textoutput = FormatAnalysisTextOutput(analysis_results)
         print(textoutput.printTextResults())
-    elif rogues is True:
+        return
+
+    if rogues is True:
         logger.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig)
         rogueoutput.printTextResults()
-    elif heroes is True:
+        return
+
+    if heroes is True:
         logger.info(ROGUES_TEXT)
         rogueoutput = rogueoutputclass(analysis_results, rogueconfig, heroes)
         rogueoutput.printTextResults()
-    else:
+        return
+
+    if legacy:
         logger.info("Outputting HTML report")
         htmloutput = FormatAnalysisHTMLOutput(analysis_results)
         print(htmloutput.printHTMLResults())
+
+    else:
+        htm = nc.html(analysis_results)
+        print(htm)
 
 
 def analysis_from_database(
@@ -216,9 +233,14 @@ def analysis_from_csv(
     database_connection = sqlitefid.identify_and_process_input(format_report)
     if not database_connection:
         logger.error("no database result: %s", database_connection)
-        return "ensure that the input file is one of the supported DROID CSV, or Siegfried YAML types."
+        logger.error(
+            "ensure that the input file is one of the supported DROID CSV, or Siegfried YAML types."
+        )
+        sys.exit(1)
     if not analyze:
-        logger.error("analysis flag is not set: %s", analyze)
+        logger.warning(
+            "analysis flag is not set: '%s' only a database will be created", analyze
+        )
         return
     if not label:
         label = get_report_label(format_report)
@@ -262,10 +284,21 @@ def main():
         default=False,
     )
     parser.add_argument(
-        "--txt", "--text", help="Output text instead of HTML", action="store_true"
+        "--txt",
+        "--text",
+        help="Output text instead of HTML",
+        action="store_true",
     )
     parser.add_argument(
-        "--denylist", help="Use configured denylist", action="store_true"
+        "--legacy",
+        "-l",
+        help="Output legacy HTML",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--denylist",
+        help="Use configured denylist",
+        action="store_true",
     )
     parser.add_argument(
         "--rogues",
@@ -341,7 +374,12 @@ def main():
         )
     if analysis:
         handle_output(
-            analysis.analysis_results, args.txt, args.rogues, args.heroes, rogueconfig
+            analysis_results=analysis.analysis_results,
+            txtout=args.txt,
+            legacy=args.legacy,
+            rogues=args.rogues,
+            heroes=args.heroes,
+            rogueconfig=rogueconfig,
         )
         output_time(start_time)
     logger.info("demystify: ...analysis complete")
