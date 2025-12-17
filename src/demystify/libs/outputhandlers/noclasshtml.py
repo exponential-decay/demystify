@@ -83,7 +83,7 @@ def html_header(htm_string: str, analysis_results: AnalysisResults):
             details > summary {
                 display: none !important;
             }
-            ::details-content {
+            details::details-content {
                 border: none  !important;;
                 content-visibility: visible;
                 height: auto !important;
