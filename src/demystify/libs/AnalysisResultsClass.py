@@ -1,12 +1,17 @@
 """Analysis results module."""
 
-try:
-    from libs import version
-except ModuleNotFoundError:
+import os
+
+if os.name != "nt":
     try:
-        from src.demystify.libs import version
+        from libs import version
     except ModuleNotFoundError:
-        from demystify.libs import version
+        try:
+            from src.demystify.libs import version
+        except ModuleNotFoundError:
+            from demystify.libs import version
+else:
+    from .version import version
 
 
 class AnalysisResults:

@@ -33,62 +33,80 @@ import pathlib
 import sqlite3
 import sys
 import time
+from pathlib import Path
+
 
 sys.dont_write_bytecode = True
 
-try:
-    from denylist_template import denylist_template
-    from libs import version
-    from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
-    from libs.HandleDenylistClass import HandleDenylist
-    from libs.IdentifyDatabase import IdentifyDB
-    from libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
-    from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
-    from libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
-except ModuleNotFoundError:
+if os.name != "nt":
     try:
-        from src.demystify.denylist_template import denylist_template
-        from src.demystify.libs import version
-        from src.demystify.libs.DemystifyAnalysisClass import (
-            AnalysisError,
-            DemystifyAnalysis,
-        )
-        from src.demystify.libs.HandleDenylistClass import HandleDenylist
-        from src.demystify.libs.IdentifyDatabase import IdentifyDB
-        from src.demystify.libs.outputhandlers.htmloutputclass import (
-            FormatAnalysisHTMLOutput,
-        )
-        from src.demystify.libs.outputhandlers.roguesgalleryoutputclass import (
-            rogueoutputclass,
-        )
-        from src.demystify.libs.outputhandlers.textoutputclass import (
-            FormatAnalysisTextOutput,
-        )
+        from denylist_template import denylist_template
+        from libs import version
+        from libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
+        from libs.HandleDenylistClass import HandleDenylist
+        from libs.IdentifyDatabase import IdentifyDB
+        from libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
+        from libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+        from libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
     except ModuleNotFoundError:
-        from demystify.denylist_template import denylist_template
-        from demystify.libs import version
-        from demystify.libs.DemystifyAnalysisClass import (
-            AnalysisError,
-            DemystifyAnalysis,
-        )
-        from demystify.libs.HandleDenylistClass import HandleDenylist
-        from demystify.libs.IdentifyDatabase import IdentifyDB
-        from demystify.libs.outputhandlers.htmloutputclass import (
-            FormatAnalysisHTMLOutput,
-        )
-        from demystify.libs.outputhandlers.roguesgalleryoutputclass import (
-            rogueoutputclass,
-        )
-        from demystify.libs.outputhandlers.textoutputclass import (
-            FormatAnalysisTextOutput,
-        )
+        try:
+            from src.demystify.denylist_template import denylist_template
+            from src.demystify.libs import version
+            from src.demystify.libs.DemystifyAnalysisClass import (
+                AnalysisError,
+                DemystifyAnalysis,
+            )
+            from src.demystify.libs.HandleDenylistClass import HandleDenylist
+            from src.demystify.libs.IdentifyDatabase import IdentifyDB
+            from src.demystify.libs.outputhandlers.htmloutputclass import (
+                FormatAnalysisHTMLOutput,
+            )
+            from src.demystify.libs.outputhandlers.roguesgalleryoutputclass import (
+                rogueoutputclass,
+            )
+            from src.demystify.libs.outputhandlers.textoutputclass import (
+                FormatAnalysisTextOutput,
+            )
+        except ModuleNotFoundError:
+            from demystify.denylist_template import denylist_template
+            from demystify.libs import version
+            from demystify.libs.DemystifyAnalysisClass import (
+                AnalysisError,
+                DemystifyAnalysis,
+            )
+            from demystify.libs.HandleDenylistClass import HandleDenylist
+            from demystify.libs.IdentifyDatabase import IdentifyDB
+            from demystify.libs.outputhandlers.htmloutputclass import (
+                FormatAnalysisHTMLOutput,
+            )
+            from demystify.libs.outputhandlers.roguesgalleryoutputclass import (
+                rogueoutputclass,
+            )
+            from demystify.libs.outputhandlers.textoutputclass import (
+                FormatAnalysisTextOutput,
+            )
 
-from pathlib import Path
+    # pylint: disable=E0401; unable to import (not needed for local tests).
+    # pylint: disable=C0413; import not at top of file.
+    sys.path.insert(0, str(Path("./src/demystify/sqlitefid/src/sqlitefid/")))
+    print(
+        "PATH: %s %s",
+        os.path.exists(str(Path("./src/demystify/sqlitefid/src/sqlitefid/"))),
+        file=sys.stderr,
+    )
+    import sqlitefid  # noqa: E402
 
-# pylint: disable=E0401; unable to import (not needed for local tests).
-# pylint: disable=C0413; import not at top of file.
-sys.path.insert(0, str(Path("./src/demystify/sqlitefid/src/sqlitefid/")))
-import sqlitefid  # noqa: E402
+else:
+    from .denylist_template import denylist_template
+    from .libs import version
+    from .libs.DemystifyAnalysisClass import AnalysisError, DemystifyAnalysis
+    from .libs.HandleDenylistClass import HandleDenylist
+    from .libs.IdentifyDatabase import IdentifyDB
+    from .libs.outputhandlers.htmloutputclass import FormatAnalysisHTMLOutput
+    from .libs.outputhandlers.roguesgalleryoutputclass import rogueoutputclass
+    from .libs.outputhandlers.textoutputclass import FormatAnalysisTextOutput
+    from .sqlitefid.src.sqlitefid import sqlitefid
+
 
 logging.basicConfig(
     format="%(asctime)-15s %(levelname)s :: %(filename)s:%(lineno)s:%(funcName)s() :: %(message)s",

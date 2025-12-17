@@ -3,16 +3,28 @@
 # pylint: disable=R0917; too-many positional args.
 
 import logging
+import os
 import re
 
-try:
-    from i18n.internationalstrings import AnalysisStringsEN as IN_EN
-    from libs import DemystifyAnalysisClass
-except ModuleNotFoundError:
+if os.name != "nt":
+    try:
+        from i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from libs import DemystifyAnalysisClass
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.i18n.internationalstrings import (
+                AnalysisStringsEN as IN_EN,
+            )
+            from src.demystify.libs import DemystifyAnalysisClass
+        except ModuleNotFoundError:
+            from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+            from demystify.libs import DemystifyAnalysisClass
+else:
     try:
         from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
         from src.demystify.libs import DemystifyAnalysisClass
     except ModuleNotFoundError:
+        # Needed to run from root dir.
         from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
         from demystify.libs import DemystifyAnalysisClass
 

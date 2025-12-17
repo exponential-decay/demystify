@@ -3,39 +3,56 @@
 # pylint: disable=R0917; too-many positional args.
 
 import logging
+import os
 import sys
 from collections import Counter
 from configparser import NoOptionError
-
-try:
-    import AnalysisResultsClass
-    import version
-    from AnalysisQueriesClass import AnalysisQueries
-    from DenylistQueriesClass import DenylistQueries
-    from HandleDenylistClass import HandleDenylist
-    from RoguesQueriesClass import RogueQueries
-except ModuleNotFoundError:
-    try:
-        from src.demystify.libs import AnalysisResultsClass, version
-        from src.demystify.libs.AnalysisQueriesClass import AnalysisQueries
-        from src.demystify.libs.DenylistQueriesClass import DenylistQueries
-        from src.demystify.libs.HandleDenylistClass import HandleDenylist
-        from src.demystify.libs.RoguesQueriesClass import RogueQueries
-    except ModuleNotFoundError:
-        from demystify.libs import AnalysisResultsClass, version
-        from demystify.libs.AnalysisQueriesClass import AnalysisQueries
-        from demystify.libs.DenylistQueriesClass import DenylistQueries
-        from demystify.libs.HandleDenylistClass import HandleDenylist
-        from demystify.libs.RoguesQueriesClass import RogueQueries
-
 from pathlib import Path
 
-# pylint: disable=E0401; unable to import (not needed for local tests).
-# pylint: disable=C0413; import not at top of file.
-sys.path.insert(0, str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/")))
-import pathlesstaken  # noqa: E402
+if os.name != "nt":
+    try:
+        import AnalysisResultsClass
+        import version
+        from AnalysisQueriesClass import AnalysisQueries
+        from DenylistQueriesClass import DenylistQueries
+        from HandleDenylistClass import HandleDenylist
+        from RoguesQueriesClass import RogueQueries
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.libs import AnalysisResultsClass, version
+            from src.demystify.libs.AnalysisQueriesClass import AnalysisQueries
+            from src.demystify.libs.DenylistQueriesClass import DenylistQueries
+            from src.demystify.libs.HandleDenylistClass import HandleDenylist
+            from src.demystify.libs.RoguesQueriesClass import RogueQueries
+        except ModuleNotFoundError:
+            from demystify.libs import AnalysisResultsClass, version
+            from demystify.libs.AnalysisQueriesClass import AnalysisQueries
+            from demystify.libs.DenylistQueriesClass import DenylistQueries
+            from demystify.libs.HandleDenylistClass import HandleDenylist
+            from demystify.libs.RoguesQueriesClass import RogueQueries
 
-# from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken
+    # pylint: disable=E0401; unable to import (not needed for local tests).
+    # pylint: disable=C0413; import not at top of file.
+    sys.path.insert(0, str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/")))
+    print(
+        "PATH: %s %s",
+        os.path.exists(str(Path("./src/demystify/pathlesstaken/src/pathlesstaken/"))),
+        file=sys.stderr,
+    )
+    import pathlesstaken  # noqa: E402
+else:
+    try:
+        # Required for imports calling from repository root.
+        from src.demystify.pathlesstaken.src.pathlesstaken import pathlesstaken
+    except ModuleNotFoundError:
+        # Required for Pypi install.
+        from ..pathlesstaken.src.pathlesstaken import pathlesstaken
+
+    from . import AnalysisResultsClass, version
+    from .AnalysisQueriesClass import AnalysisQueries
+    from .DenylistQueriesClass import DenylistQueries
+    from .HandleDenylistClass import HandleDenylist
+    from .RoguesQueriesClass import RogueQueries
 
 
 class AnalysisError(Exception):

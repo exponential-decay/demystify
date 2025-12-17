@@ -2,13 +2,21 @@
 
 import configparser as ConfigParser
 import logging
+import os
 
-try:
-    from libs.HandleDenylistClass import HandleDenylist
-except ModuleNotFoundError:
+if os.name != "nt":
+    try:
+        from libs.HandleDenylistClass import HandleDenylist
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.libs.HandleDenylistClass import HandleDenylist
+        except ModuleNotFoundError:
+            from demystify.libs.HandleDenylistClass import HandleDenylist
+else:
     try:
         from src.demystify.libs.HandleDenylistClass import HandleDenylist
     except ModuleNotFoundError:
+        # Needed for PyPi import.
         from demystify.libs.HandleDenylistClass import HandleDenylist
 
 
