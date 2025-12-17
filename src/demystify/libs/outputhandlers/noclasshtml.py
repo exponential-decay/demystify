@@ -1271,7 +1271,7 @@ def html_body(htm_string: str, analysis_results: AnalysisResults):
 
     htm_string = make_text(
         htm_string,
-        "<body>\n<main class='container' style='width: 1000px;'>\n",
+        "<body>\n<main class='container' style='width: 850px;'>\n",
     )
 
     for section in SECTIONS:
