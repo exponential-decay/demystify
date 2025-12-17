@@ -1,17 +1,32 @@
-# -*- coding: utf-8 -*-
+"""HTML Output Class for HTML formatted results."""
 
 # pylint: disable=R0917; too-many positional args.
 
 import logging
+import os
 import re
 
-try:
-    from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
-    from src.demystify.libs import DemystifyAnalysisClass
-except ModuleNotFoundError:
-    # Needed to run from root dir.
-    from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
-    from demystify.libs import DemystifyAnalysisClass
+if os.name != "nt":
+    try:
+        from i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from libs import DemystifyAnalysisClass
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.i18n.internationalstrings import (
+                AnalysisStringsEN as IN_EN,
+            )
+            from src.demystify.libs import DemystifyAnalysisClass
+        except ModuleNotFoundError:
+            from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+            from demystify.libs import DemystifyAnalysisClass
+else:
+    try:
+        from src.demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from src.demystify.libs import DemystifyAnalysisClass
+    except ModuleNotFoundError:
+        # Needed to run from root dir.
+        from demystify.i18n.internationalstrings import AnalysisStringsEN as IN_EN
+        from demystify.libs import DemystifyAnalysisClass
 
 # NONE_REPLACE_DEBUG is a logging prompt to help us to understand what
 # needs changing around 'None'/null values from the database. These

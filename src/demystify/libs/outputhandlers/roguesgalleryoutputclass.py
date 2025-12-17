@@ -1,13 +1,23 @@
-# -*- coding: utf-8 -*-
+"""Rogue output."""
 
 import configparser as ConfigParser
 import logging
+import os
 
-try:
-    from src.demystify.libs.HandleDenylistClass import HandleDenylist
-except ModuleNotFoundError:
-    # Needed for PyPi import.
-    from demystify.libs.HandleDenylistClass import HandleDenylist
+if os.name != "nt":
+    try:
+        from libs.HandleDenylistClass import HandleDenylist
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.libs.HandleDenylistClass import HandleDenylist
+        except ModuleNotFoundError:
+            from demystify.libs.HandleDenylistClass import HandleDenylist
+else:
+    try:
+        from src.demystify.libs.HandleDenylistClass import HandleDenylist
+    except ModuleNotFoundError:
+        # Needed for PyPi import.
+        from demystify.libs.HandleDenylistClass import HandleDenylist
 
 
 class rogueoutputclass:

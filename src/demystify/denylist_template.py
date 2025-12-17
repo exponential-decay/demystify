@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+"""Denylist template."""
 
 denylist_template = """########################################################################
 # Denylist and Rogues output configuration for demystify.

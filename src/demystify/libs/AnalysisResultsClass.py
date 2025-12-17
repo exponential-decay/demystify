@@ -1,8 +1,17 @@
-# -*- coding: utf-8 -*-
-
 """Analysis results module."""
 
-from .version import get_version
+import os
+
+if os.name != "nt":
+    try:
+        from libs import version
+    except ModuleNotFoundError:
+        try:
+            from src.demystify.libs import version
+        except ModuleNotFoundError:
+            from demystify.libs import version
+else:
+    from .version import version
 
 
 class AnalysisResults:
@@ -119,4 +128,4 @@ class AnalysisResults:
 
     @staticmethod
     def __version__():
-        return get_version()
+        return version.get_version()

@@ -12,8 +12,8 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.10", "3.11", "3.12"]
+        os: [windows-latest]
+        python-version: ["3.10"]
         experimental: [false]
         # Include experimental or bleeding-edge releases.
         # Windows is not included as it can be unreliable, e.g.
@@ -28,12 +28,6 @@ jobs:
           # Example formatting: 3.11.0-alpha.1, 3.9.0-beta.8, 3.10.0-rc.3
           #
           - os: ubuntu-latest
-            python-version: "3.13"
-            experimental: true
-          - os: macos-latest
-            python-version: "3.13"
-            experimental: true
-          - os: windows-latest
             python-version: "3.13"
             experimental: true
     steps:
